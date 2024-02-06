@@ -83,8 +83,8 @@ const {
      * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} value
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
-    async function operator1(left, template) {
-      const { shake, json, error } = await generateTemplate(left);
+    async function operator1(value, template) {
+      const { shake, json, error } = await generateTemplate(value);
 
       const templ = [
         [/%value%/g, shake],
@@ -329,445 +329,115 @@ const {
       );
     }
 
+    class TestGenerator {
+      /**
+       * @param {string} name
+       * @param {Function} generator
+       * @param {number} argNum
+       */
+      constructor(name, generator, argNum) {
+        this.name = name;
+        this.generator = generator;
+        this.argNum = argNum;
+        this.level = 0;
+      }
+    }
+
+    const levels = [
+      [new TestGenerator("priority", priority, 1)],
+      [
+        new TestGenerator("unary_minus", unaryMinus, 1),
+        new TestGenerator("unary_plus", unaryPlus, 1),
+        new TestGenerator("logical_not", logicalNot, 1),
+        new TestGenerator("bitwise_not", bitwiseNot, 1),
+      ],
+      [new TestGenerator("power", pow, 2)],
+      [
+        new TestGenerator("multiplication", mul, 2),
+        new TestGenerator("division", div, 2),
+        new TestGenerator("modulus", mod, 2),
+      ],
+      [
+        new TestGenerator("addition", add, 2),
+        new TestGenerator("subtraction", sub, 2),
+      ],
+
+      // bitwise
+      [new TestGenerator("bitwise_and", bitwiseAnd, 2)],
+      [new TestGenerator("bitwise_xor", bitwiseXor, 2)],
+      [new TestGenerator("bitwise_or", bitwiseOr, 2)],
+
+      // logical
+      [new TestGenerator("logical_and", logicalAnd, 2)],
+      [new TestGenerator("logical_xor", logicalXor, 2)],
+      [new TestGenerator("logical_or", logicalOr, 2)],
+    ];
+
+    levels.forEach((generators, j) => {
+      generators.forEach((generator) => {
+        generator.level = j;
+      });
+    });
+
+    const generators = levels.flat();
+
     [
       [120, 7, 19],
       [77, 3, 25],
       [1, 2, 3],
-    ].forEach(async ([a, b, c, d, e], i) => {
-      // Normal additon
-      generate(`simple_addition${i}`, add(literal(a), literal(b)));
-      generate(`simple_subtraction${i}`, sub(literal(a), literal(b)));
-      generate(`simple_multiplication${i}`, mul(literal(a), literal(b)));
-      generate(`simple_division${i}`, div(literal(a), literal(b)));
-      generate(`simple_modulus${i}`, mod(literal(a), literal(b)));
-      generate(`simple_power${i}`, pow(literal(a), literal(b)));
-      generate(`simple_priority${i}`, priority(literal(a)));
-
-      generate(
-        `addition_addition${i}`,
-        add(add(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `addition_subtraction${i}`,
-        add(sub(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `addition_multiplication${i}`,
-        add(mul(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `addition_division${i}`,
-        add(div(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `addition_modulus${i}`,
-        add(mod(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `addition_power${i}`,
-        add(pow(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_addition${i}`,
-        sub(add(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_subtraction${i}`,
-        sub(sub(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_multiplication${i}`,
-        sub(mul(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_division${i}`,
-        sub(div(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_modulus${i}`,
-        sub(mod(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `subtraction_power${i}`,
-        sub(pow(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `multiplication_addition${i}`,
-        add(literal(a), mul(literal(b), literal(c)))
-      );
-
-      generate(
-        `multiplication_subtraction${i}`,
-        sub(literal(a), mul(literal(b), literal(c)))
-      );
-
-      generate(
-        `multiplication_multiplication${i}`,
-        mul(mul(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `multiplication_division${i}`,
-        mul(div(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `multiplication_modulus${i}`,
-        mul(mod(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `multiplication_power${i}`,
-        mul(pow(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `division_addition${i}`,
-        add(literal(a), div(literal(b), literal(c)))
-      );
-
-      generate(
-        `division_subtraction${i}`,
-        sub(literal(a), div(literal(b), literal(c)))
-      );
-
-      generate(
-        `division_multiplication${i}`,
-        div(mul(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `division_division${i}`,
-        div(div(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `division_modulus${i}`,
-        div(mod(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `division_power${i}`,
-        div(pow(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `modulus_addition${i}`,
-        add(literal(a), mod(literal(b), literal(c)))
-      );
-
-      generate(
-        `modulus_subtraction${i}`,
-        sub(literal(a), mod(literal(b), literal(c)))
-      );
-
-      generate(
-        `modulus_multiplication${i}`,
-        mod(mul(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `modulus_division${i}`,
-        mod(div(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `modulus_modulus${i}`,
-        mod(mod(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `modulus_power${i}`,
-        mod(pow(literal(a), literal(b)), literal(c))
-      );
-
-      generate(
-        `power_addition${i}`,
-        add(literal(a), pow(literal(b), literal(c)))
-      );
-
-      generate(
-        `power_subtraction${i}`,
-        sub(literal(a), pow(literal(b), literal(c)))
-      );
-
-      generate(
-        `power_multiplication${i}`,
-        mul(literal(a), pow(literal(b), literal(c)))
-      );
-
-      generate(
-        `power_division${i}`,
-        div(literal(a), pow(literal(b), literal(c)))
-      );
-
-      generate(
-        `power_modulus${i}`,
-        mod(literal(a), pow(literal(b), literal(c)))
-      );
-
-      generate(`power_power${i}`, pow(pow(literal(a), literal(b)), literal(c)));
-
-      generate(`unary_minus${i}`, unaryMinus(literal(a)));
-      generate(
-        `unary_minus_addition${i}`,
-        add(unaryMinus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_minus_subtraction${i}`,
-        sub(unaryMinus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_minus_multiplication${i}`,
-        mul(unaryMinus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_minus_division${i}`,
-        div(unaryMinus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_minus_modulus${i}`,
-        mod(unaryMinus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_minus_power${i}`,
-        pow(unaryMinus(literal(a)), literal(b))
-      );
-
-      generate(`unary_plus${i}`, unaryPlus(literal(a)));
-      generate(
-        `unary_plus_addition${i}`,
-        add(unaryPlus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_plus_subtraction${i}`,
-        sub(unaryPlus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_plus_multiplication${i}`,
-        mul(unaryPlus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_plus_division${i}`,
-        div(unaryPlus(literal(a)), literal(b))
-      );
-      generate(
-        `unary_plus_modulus${i}`,
-        mod(unaryPlus(literal(a)), literal(b))
-      );
-      generate(`unary_plus_power${i}`, pow(unaryPlus(literal(a)), literal(b)));
-
-      generate(`priority_addition${i}`, priority(add(literal(a), literal(b))));
-
-      generate(
-        `priority_subtraction${i}`,
-        priority(sub(literal(a), literal(b)))
-      );
-
-      generate(
-        `priority_multiplication${i}`,
-        priority(mul(literal(a), literal(b)))
-      );
-
-      generate(`priority_division${i}`, priority(div(literal(a), literal(b))));
-
-      generate(`priority_modulus${i}`, priority(mod(literal(a), literal(b))));
-
-      generate(`priority_power${i}`, priority(pow(literal(a), literal(b))));
-
-      generate(`priority_priority${i}`, priority(priority(literal(a))));
-
-      generate(
-        `priority_addition_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_addition_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_addition_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_addition_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_addition_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_addition_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_subtraction_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_multiplication_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_division_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_modulus_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_addition${i}`,
-        add(literal(a), priority(add(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_subtraction${i}`,
-        sub(literal(a), priority(sub(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_multiplication${i}`,
-        mul(literal(a), priority(mul(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_division${i}`,
-        div(literal(a), priority(div(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_modulus${i}`,
-        mod(literal(a), priority(mod(literal(b), literal(c))))
-      );
-
-      generate(
-        `priority_power_over_power${i}`,
-        pow(literal(a), priority(pow(literal(b), literal(c))))
-      );
+    ].forEach(async (literals, i) => {
+      generators.forEach(async (generator) => {
+        generate(
+          `simple_${generator.name}${i}.shake`,
+          generator.generator(
+            ...literals.slice(0, generator.argNum).map(literal)
+          )
+        );
+
+        generators.forEach(async (generator2) => {
+          // The expression should look like this:
+          // a operator1 b operator2 c
+          // we need to know which operator has higher priority
+
+          if (generator.level > generator2.level) {
+            // a operator1 (b operator2 c)
+            // The result of the second operator will be put into the last argument of the first operator
+            await generate(
+              `nested_${generator.name}_${generator2.name}${i}`,
+              generator.generator(
+                ...literals.slice(0, generator.argNum - 1).map(literal),
+                generator2.generator(
+                  ...literals
+                    .slice(
+                      generator.argNum - 1,
+                      generator2.argNum + generator.argNum - 1
+                    )
+                    .map(literal)
+                )
+              )
+            );
+          } else {
+            // (a operator1 b) operator2 c
+            // The result of the first operator will be put into the first argument of the second operator
+            // This can also handle operator1.level === operator2.level (because then we will parse from left to right)
+
+            await generate(
+              `nested_${generator.name}_${generator2.name}${i}`,
+              generator2.generator(
+                generator.generator(
+                  ...literals.slice(0, generator.argNum).map(literal)
+                ),
+                ...literals
+                  .slice(
+                    generator.argNum,
+                    generator2.argNum + generator.argNum - 1
+                  )
+                  .map(literal)
+              )
+            );
+          }
+        });
+      });
     });
   })();
 })();
