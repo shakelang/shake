@@ -1,0 +1,30 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakeVariableDeclarationNode",
+      "variable_name": "field",
+      "type": {
+        "name": "ShakeVariableType",
+        "type": "integer"
+      },
+      "access": "package",
+      "assignment": {
+        "name": "ShakeLogicalAndNode",
+        "left": {
+          "name": "ShakeUnaryMinusNode",
+          "value": {
+            "name": "ShakeIntegerNode",
+            "value": 120
+          }
+        },
+        "right": {
+          "name": "ShakeIntegerNode",
+          "value": 7
+        }
+      },
+      "is_static": false,
+      "is_final": false
+    }
+  ]
+}
