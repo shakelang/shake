@@ -109,10 +109,12 @@ module.exports.relativize = relativize;
  */
 function applyReplaceTemplate(string, template) {
   for (const [from, to] of template) {
-    string = string.replace(from, to);
+    string = string?.replace(from, to);
   }
   return string;
 }
+
+module.exports.applyReplaceTemplate = applyReplaceTemplate;
 
 module.exports.primitiveTypes = [
   ["byte", "byte"],
@@ -180,7 +182,7 @@ async function generateTest(
     console.log(`Generated ${relativize(testFile)}...`);
   });
 
-  if (output !== null) {
+  if (output !== null && output !== undefined) {
     run(async () => {
       await fs.writeFile(
         outputFile,
@@ -191,7 +193,7 @@ async function generateTest(
     });
   }
 
-  if (error !== null) {
+  if (error !== null && error !== undefined) {
     run(async () => {
       await fs.writeFile(
         errorFile,
