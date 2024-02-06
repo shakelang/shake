@@ -23,6 +23,7 @@ const {
     const types = primitiveTypes;
 
     const baseTemplate = new Template("expr/base");
+    const priorityTemplate = new Template("expr/priority");
     const literalTemplate = new Template("expr/literal");
     const addTemplate = new Template("expr/add");
     const subTemplate = new Template("expr/sub");
@@ -30,6 +31,19 @@ const {
     const divTemplate = new Template("expr/div");
     const modTemplate = new Template("expr/mod");
     const powTemplate = new Template("expr/pow");
+
+    /**
+     * Generate Template
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} value
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function generateTemplate(value) {
+      value = await value;
+      const shake = typeof value === "string" ? value : value.shake;
+      const json = typeof value === "string" ? value : value.json;
+      const error = typeof value === "string" ? value : value.error;
+      return { shake, json, error };
+    }
 
     /**
      * Literal
@@ -45,16 +59,24 @@ const {
     }
 
     /**
-     * Generate Template
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} value
+     * Priority
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
-    async function generateTemplate(value) {
-      value = await value;
-      const shake = typeof value === "string" ? value : value.shake;
-      const json = typeof value === "string" ? value : value.json;
-      const error = typeof value === "string" ? value : value.error;
-      return { shake, json, error };
+    async function priority(value) {
+      const { shake, json, error } = await generateTemplate(value);
+
+      const template = [
+        [/%literal%/g, shake],
+        [/%literal_json%/g, json],
+        [/%literal_error%/g, error],
+      ];
+
+      return {
+        shake: applyReplaceTemplate(await priorityTemplate.shake, template),
+        json: applyReplaceTemplate(await priorityTemplate.json, template),
+        error: applyReplaceTemplate(await priorityTemplate.error, template),
+      };
     }
 
     /**
@@ -173,16 +195,414 @@ const {
       };
     }
 
-    const { shake, json, error } = await generateTemplate(
-      base(add(literal("1"), literal("2")))
-    );
+    /**
+     * Generate Test
+     * @param {string} name
+     * @param { Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} contents
+     * @returns {Promise<void>}
+     */
+    async function generate(name, contents) {
+      const { shake, json, error } = await generateTemplate(base(contents));
 
-    await generateTest(
-      path.resolve(exprTestDirectory, `1`),
-      shake,
-      JSON.stringify(JSON.parse(json), null, 2),
-      error,
-      []
-    );
+      return generateTest(
+        path.resolve(exprTestDirectory, name),
+        shake,
+        JSON.stringify(JSON.parse(json), null, 2),
+        error,
+        []
+      );
+    }
+
+    [
+      [120, 7, 19],
+      [77, 3, 25],
+      [1, 2, 3],
+    ].forEach(async ([a, b, c, d, e], i) => {
+      // Normal additon
+      generate(`simple_addition${i}`, add(literal(a), literal(b)));
+      generate(`simple_subtraction${i}`, sub(literal(a), literal(b)));
+      generate(`simple_multiplication${i}`, mul(literal(a), literal(b)));
+      generate(`simple_division${i}`, div(literal(a), literal(b)));
+      generate(`simple_modulus${i}`, mod(literal(a), literal(b)));
+      generate(`simple_power${i}`, pow(literal(a), literal(b)));
+      generate(`simple_priority${i}`, priority(literal(a)));
+
+      generate(
+        `addition_addition${i}`,
+        add(add(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `addition_subtraction${i}`,
+        add(sub(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `addition_multiplication${i}`,
+        add(mul(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `addition_division${i}`,
+        add(div(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `addition_modulus${i}`,
+        add(mod(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `addition_power${i}`,
+        add(pow(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_addition${i}`,
+        sub(add(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_subtraction${i}`,
+        sub(sub(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_multiplication${i}`,
+        sub(mul(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_division${i}`,
+        sub(div(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_modulus${i}`,
+        sub(mod(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `subtraction_power${i}`,
+        sub(pow(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `multiplication_addition${i}`,
+        add(literal(a), mul(literal(b), literal(c)))
+      );
+
+      generate(
+        `multiplication_subtraction${i}`,
+        sub(literal(a), mul(literal(b), literal(c)))
+      );
+
+      generate(
+        `multiplication_multiplication${i}`,
+        mul(mul(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `multiplication_division${i}`,
+        mul(div(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `multiplication_modulus${i}`,
+        mul(mod(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `multiplication_power${i}`,
+        mul(pow(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `division_addition${i}`,
+        add(literal(a), div(literal(b), literal(c)))
+      );
+
+      generate(
+        `division_subtraction${i}`,
+        sub(literal(a), div(literal(b), literal(c)))
+      );
+
+      generate(
+        `division_multiplication${i}`,
+        div(mul(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `division_division${i}`,
+        div(div(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `division_modulus${i}`,
+        div(mod(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `division_power${i}`,
+        div(pow(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `modulus_addition${i}`,
+        add(literal(a), mod(literal(b), literal(c)))
+      );
+
+      generate(
+        `modulus_subtraction${i}`,
+        sub(literal(a), mod(literal(b), literal(c)))
+      );
+
+      generate(
+        `modulus_multiplication${i}`,
+        mod(mul(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `modulus_division${i}`,
+        mod(div(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `modulus_modulus${i}`,
+        mod(mod(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `modulus_power${i}`,
+        mod(pow(literal(a), literal(b)), literal(c))
+      );
+
+      generate(
+        `power_addition${i}`,
+        add(literal(a), pow(literal(b), literal(c)))
+      );
+
+      generate(
+        `power_subtraction${i}`,
+        sub(literal(a), pow(literal(b), literal(c)))
+      );
+
+      generate(
+        `power_multiplication${i}`,
+        mul(literal(a), pow(literal(b), literal(c)))
+      );
+
+      generate(
+        `power_division${i}`,
+        div(literal(a), pow(literal(b), literal(c)))
+      );
+
+      generate(
+        `power_modulus${i}`,
+        mod(literal(a), pow(literal(b), literal(c)))
+      );
+
+      generate(`power_power${i}`, pow(pow(literal(a), literal(b)), literal(c)));
+
+      generate(`priority_addition${i}`, priority(add(literal(a), literal(b))));
+
+      generate(
+        `priority_subtraction${i}`,
+        priority(sub(literal(a), literal(b)))
+      );
+
+      generate(
+        `priority_multiplication${i}`,
+        priority(mul(literal(a), literal(b)))
+      );
+
+      generate(`priority_division${i}`, priority(div(literal(a), literal(b))));
+
+      generate(`priority_modulus${i}`, priority(mod(literal(a), literal(b))));
+
+      generate(`priority_power${i}`, priority(pow(literal(a), literal(b))));
+
+      generate(`priority_priority${i}`, priority(priority(literal(a))));
+
+      generate(
+        `priority_addition_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_addition_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_addition_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_addition_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_addition_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_addition_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_subtraction_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_multiplication_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_division_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_modulus_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_addition${i}`,
+        add(literal(a), priority(add(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_subtraction${i}`,
+        sub(literal(a), priority(sub(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_multiplication${i}`,
+        mul(literal(a), priority(mul(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_division${i}`,
+        div(literal(a), priority(div(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_modulus${i}`,
+        mod(literal(a), priority(mod(literal(b), literal(c))))
+      );
+
+      generate(
+        `priority_power_over_power${i}`,
+        pow(literal(a), priority(pow(literal(b), literal(c))))
+      );
+    });
   })();
 })();

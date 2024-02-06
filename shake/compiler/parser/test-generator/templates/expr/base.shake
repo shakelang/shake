@@ -1,1 +1,1 @@
-int i  = %expr%
+int field  = %expr%
