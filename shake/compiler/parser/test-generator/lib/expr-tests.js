@@ -1,5 +1,5 @@
 // This file automatically generates tests for classes.
-// Its output is stored into the commonTest/resources/tests/classes directory.
+// Its output is stored into the commonTest/resources/generated-tests/expr directory.
 
 const path = require("path");
 const fs = require("fs-extra").promises;
@@ -12,12 +12,9 @@ const {
 } = require("./api");
 
 (async () => {
-  // Class Tests
+  // Expression Tests
   const exprTestDirectory = fromBaseDir("expr");
   await fs.mkdir(exprTestDirectory, { recursive: true });
-
-  // The following code will generate tests for a single field in a class
-  // The tests will be stored in the commonTest/resources/tests/classes/fields directory
 
   await (async () => {
     const types = primitiveTypes;
@@ -25,12 +22,21 @@ const {
     const baseTemplate = new Template("expr/base");
     const priorityTemplate = new Template("expr/priority");
     const literalTemplate = new Template("expr/literal");
+
     const addTemplate = new Template("expr/add");
     const subTemplate = new Template("expr/sub");
     const mulTemplate = new Template("expr/mul");
     const divTemplate = new Template("expr/div");
     const modTemplate = new Template("expr/mod");
     const powTemplate = new Template("expr/pow");
+
+    const logicalOrTemplate = new Template("expr/logical-or");
+    const logicalAndTemplate = new Template("expr/logical-and");
+    const logicalNotTemplate = new Template("expr/logical-not");
+
+    const bitwiseOrTemplate = new Template("expr/bitwise-or");
+    const bitwiseAndTemplate = new Template("expr/bitwise-and");
+    const bitwiseNotTemplate = new Template("expr/bitwise-not");
 
     /**
      * Generate Template
@@ -64,18 +70,27 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function priority(value) {
-      const { shake, json, error } = await generateTemplate(value);
+      return operator1(value, priorityTemplate);
+    }
 
-      const template = [
-        [/%literal%/g, shake],
-        [/%literal_json%/g, json],
-        [/%literal_error%/g, error],
+    /**
+     * Calculation Template
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} value
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function operator1(left, template) {
+      const { shake, json, error } = await generateTemplate(left);
+
+      const templ = [
+        [/%value%/g, shake],
+        [/%value_json%/g, json],
+        [/%value_error%/g, error],
       ];
 
       return {
-        shake: applyReplaceTemplate(await priorityTemplate.shake, template),
-        json: applyReplaceTemplate(await priorityTemplate.json, template),
-        error: applyReplaceTemplate(await priorityTemplate.error, template),
+        shake: applyReplaceTemplate(await template.shake, templ),
+        json: applyReplaceTemplate(await template.json, templ),
+        error: applyReplaceTemplate(await template.error, templ),
       };
     }
 
@@ -85,7 +100,7 @@ const {
      * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} right
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
-    async function calc(left, right, template) {
+    async function operator2(left, right, template) {
       const {
         shake: leftShake,
         json: leftJson,
@@ -121,7 +136,7 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function add(left, right) {
-      return calc(left, right, addTemplate);
+      return operator2(left, right, addTemplate);
     }
 
     /**
@@ -131,7 +146,7 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function sub(left, right) {
-      return calc(left, right, subTemplate);
+      return operator2(left, right, subTemplate);
     }
 
     /**
@@ -141,7 +156,7 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function mul(left, right) {
-      return calc(left, right, mulTemplate);
+      return operator2(left, right, mulTemplate);
     }
 
     /**
@@ -151,7 +166,7 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function div(left, right) {
-      return calc(left, right, divTemplate);
+      return operator2(left, right, divTemplate);
     }
 
     /**
@@ -161,7 +176,7 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function mod(left, right) {
-      return calc(left, right, modTemplate);
+      return operator2(left, right, modTemplate);
     }
 
     /**
@@ -171,7 +186,85 @@ const {
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function pow(left, right) {
-      return calc(left, right, powTemplate);
+      return operator2(left, right, powTemplate);
+    }
+
+    /**
+     * Logical Or
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function logicalOr(left, right) {
+      return operator2(left, right, logicalOrTemplate);
+    }
+
+    /**
+     * Logical And
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function logicalAnd(left, right) {
+      return operator2(left, right, logicalAndTemplate);
+    }
+
+    /**
+     * Logical Xor
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function logicalXor(left, right) {
+      return operator2(left, right, logicalXorTemplate);
+    }
+
+    /**
+     * Logical Not
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function logicalNot(value) {
+      return operator1(value, logicalNotTemplate);
+    }
+
+    /**
+     * Bitwise Or
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function bitwiseOr(left, right) {
+      return operator2(left, right, bitwiseOrTemplate);
+    }
+
+    /**
+     * Bitwise And
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} left
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} right
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function bitwiseAnd(left, right) {
+      return operator2(left, right, bitwiseAndTemplate);
+    }
+
+    /**
+     * Bitwise Xor
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} left
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} right
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function bitwiseXor(left, right) {
+      return operator2(left, right, bitwiseXorTemplate);
+    }
+
+    /**
+     * Bitwise Not
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function bitwiseNot(value) {
+      return operator1(value, bitwiseNotTemplate);
     }
 
     /**

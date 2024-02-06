@@ -1,5 +1,5 @@
 // This file automatically generates tests for classes.
-// Its output is stored into the commonTest/resources/tests/classes directory.
+// Its output is stored into the commonTest/resources/generated-tests/classes directory.
 
 const path = require("path");
 const fs = require("fs-extra").promises;
@@ -17,7 +17,7 @@ const {
   await fs.mkdir(classTestDirectory, { recursive: true });
 
   // The following code will generate tests for a single field in a class
-  // The tests will be stored in the commonTest/resources/tests/classes/fields directory
+  // The tests will be stored in the commonTest/resources/generated-tests/classes/fields directory
 
   await (async () => {
     // Class Fields
