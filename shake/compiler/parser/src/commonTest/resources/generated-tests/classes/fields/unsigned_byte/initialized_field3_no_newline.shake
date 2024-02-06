@@ -1,4 +1,0 @@
-// Class with a field of type unsigned_byte
-class Test {
-    protected unsigned byte field
-}

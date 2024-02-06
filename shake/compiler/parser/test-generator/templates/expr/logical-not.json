@@ -1,4 +1,4 @@
 {
     "name": "ShakeLogicalNotNode", 
-    "value": %literal_json%
+    "value": %value_json%
 }

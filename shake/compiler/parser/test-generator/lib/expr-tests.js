@@ -33,10 +33,15 @@ const {
     const logicalOrTemplate = new Template("expr/logical-or");
     const logicalAndTemplate = new Template("expr/logical-and");
     const logicalNotTemplate = new Template("expr/logical-not");
+    const logicalXorTemplate = new Template("expr/logical-xor");
 
     const bitwiseOrTemplate = new Template("expr/bitwise-or");
     const bitwiseAndTemplate = new Template("expr/bitwise-and");
     const bitwiseNotTemplate = new Template("expr/bitwise-not");
+    const bitwiseXorTemplate = new Template("expr/bitwise-xor");
+
+    const unaryMinusTemplate = new Template("expr/unary-minus");
+    const unaryPlusTemplate = new Template("expr/unary-plus");
 
     /**
      * Generate Template
@@ -58,9 +63,9 @@ const {
      */
     async function literal(value) {
       return {
-        shake: (await literalTemplate.shake)?.replace(/%literal%/g, value),
-        json: (await literalTemplate.json)?.replace(/%literal%/g, value),
-        error: (await literalTemplate.error)?.replace(/%literal%/g, value),
+        shake: (await literalTemplate.shake)?.replace(/%value%/g, value),
+        json: (await literalTemplate.json)?.replace(/%value%/g, value),
+        error: (await literalTemplate.error)?.replace(/%value%/g, value),
       };
     }
 
@@ -265,6 +270,24 @@ const {
      */
     async function bitwiseNot(value) {
       return operator1(value, bitwiseNotTemplate);
+    }
+
+    /**
+     * Unary Minus
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function unaryMinus(value) {
+      return operator1(value, unaryMinusTemplate);
+    }
+
+    /**
+     * Unary Plus
+     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
+     * @returns {Promise<{shake: string, json: string, error: string}>}
+     */
+    async function unaryPlus(value) {
+      return operator1(value, unaryPlusTemplate);
     }
 
     /**
@@ -496,6 +519,55 @@ const {
       );
 
       generate(`power_power${i}`, pow(pow(literal(a), literal(b)), literal(c)));
+
+      generate(`unary_minus${i}`, unaryMinus(literal(a)));
+      generate(
+        `unary_minus_addition${i}`,
+        add(unaryMinus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_minus_subtraction${i}`,
+        sub(unaryMinus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_minus_multiplication${i}`,
+        mul(unaryMinus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_minus_division${i}`,
+        div(unaryMinus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_minus_modulus${i}`,
+        mod(unaryMinus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_minus_power${i}`,
+        pow(unaryMinus(literal(a)), literal(b))
+      );
+
+      generate(`unary_plus${i}`, unaryPlus(literal(a)));
+      generate(
+        `unary_plus_addition${i}`,
+        add(unaryPlus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_plus_subtraction${i}`,
+        sub(unaryPlus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_plus_multiplication${i}`,
+        mul(unaryPlus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_plus_division${i}`,
+        div(unaryPlus(literal(a)), literal(b))
+      );
+      generate(
+        `unary_plus_modulus${i}`,
+        mod(unaryPlus(literal(a)), literal(b))
+      );
+      generate(`unary_plus_power${i}`, pow(unaryPlus(literal(a)), literal(b)));
 
       generate(`priority_addition${i}`, priority(add(literal(a), literal(b))));
 

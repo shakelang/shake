@@ -1,4 +1,0 @@
-// Class with a field of type unsigned_short
-class Test {
-    static protected unsigned short field
-}

@@ -52,16 +52,23 @@ class TestFiles : FreeSpec(
                         throw e
                     }
                 } else {
-                    val ast = json.stringify(ParserTestUtil.parse(inputFile.path, inputFile.contentsAsString()).json)
-                    val expected = json.stringify(json.parse(outputFile.contentsAsString()).toJsonObject().toMap())
-
                     try {
-                        ast shouldBe expected
+                        val ast = json.stringify(ParserTestUtil.parse(inputFile.path, inputFile.contentsAsString()).json)
+                        val expected = json.stringify(json.parse(outputFile.contentsAsString()).toJsonObject().toMap())
+
+                        try {
+                            ast shouldBe expected
+                        } catch (e: Throwable) {
+                            println("Source: \n${inputFile.contentsAsString()}")
+                            println()
+                            println("AST: $ast")
+                            println("Expected: $expected")
+                            throw e
+                        }
                     } catch (e: Throwable) {
                         println("Source: \n${inputFile.contentsAsString()}")
                         println()
-                        println("AST: $ast")
-                        println("Expected: $expected")
+                        println("Error: ${e.message}")
                         throw e
                     }
                 }
