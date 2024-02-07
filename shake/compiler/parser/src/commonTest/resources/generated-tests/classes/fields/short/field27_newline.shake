@@ -1,0 +1,4 @@
+// Class with a field of type short
+class Test {
+    static final private short field
+}

@@ -14,7 +14,7 @@
             "name": "ShakeVariableType",
             "type": "unsigned_integer"
           },
-          "access": "protected",
+          "access": "public",
           "assignment": null,
           "is_static": false,
           "is_final": false

@@ -14,9 +14,9 @@
             "name": "ShakeVariableType",
             "type": "unsigned_long"
           },
-          "access": "package",
+          "access": "private",
           "assignment": null,
-          "is_static": true,
+          "is_static": false,
           "is_final": false
         }
       ],

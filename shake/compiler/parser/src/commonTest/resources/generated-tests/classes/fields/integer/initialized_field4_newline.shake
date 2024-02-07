@@ -1,4 +1,4 @@
 // Class with a field of type integer
 class Test {
-    static int field
+    private int field
 }

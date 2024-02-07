@@ -1,4 +1,4 @@
 // Class with a field of type boolean
 class Test {
-    private static boolean field
+    final static boolean field
 }

@@ -1,4 +1,4 @@
 // Class with a field of type unsigned_byte
 class Test {
-    private final static unsigned byte field
+    final static public unsigned byte field
 }

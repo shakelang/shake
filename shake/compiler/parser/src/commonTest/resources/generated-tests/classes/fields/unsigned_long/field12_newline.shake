@@ -1,4 +1,4 @@
 // Class with a field of type unsigned_long
 class Test {
-    public final unsigned long field
+    static private unsigned long field
 }

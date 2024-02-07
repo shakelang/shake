@@ -1,4 +1,4 @@
 // Class with a field of type byte
 class Test {
-    final static protected byte field
+    final private static byte field
 }

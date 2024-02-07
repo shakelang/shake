@@ -1,4 +1,4 @@
 // Class with a field of type integer
 class Test {
-    public int field
+    final int field
 }

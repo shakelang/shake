@@ -1,4 +1,4 @@
 // Class with a field of type long
 class Test {
-    final public long field
+    private final long field
 }

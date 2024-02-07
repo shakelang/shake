@@ -14,7 +14,7 @@
             "name": "ShakeVariableType",
             "type": "boolean"
           },
-          "access": "public",
+          "access": "private",
           "assignment": null,
           "is_static": false,
           "is_final": true

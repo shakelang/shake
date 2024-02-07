@@ -1,4 +1,4 @@
 // Class with a field of type double
 class Test {
-    static private double field
+    final protected double field
 }

@@ -1,4 +1,4 @@
 // Class with a field of type unsigned_short
 class Test {
-    public final static unsigned short field
+    protected static unsigned short field
 }

@@ -1,4 +1,4 @@
 // Class with a field of type float
 class Test {
-    static protected float field
+    static final float field
 }

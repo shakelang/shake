@@ -1,0 +1,4 @@
+// Class with a field of type boolean
+class Test {
+    static final public boolean field
+}

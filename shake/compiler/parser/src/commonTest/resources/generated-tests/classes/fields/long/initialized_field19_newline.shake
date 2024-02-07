@@ -1,4 +1,4 @@
 // Class with a field of type long
 class Test {
-    public final static long field
+    protected static long field
 }

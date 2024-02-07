@@ -59,7 +59,7 @@ const path = require("path");
      * @param {Template} template
      * @param {string} nameBase
      */
-    async function generate(generator, template, nameBase) {
+    async function generate(template, nameBase) {
       combineTokens(["final", ["public", "private", "protected"]]).forEach(
         async (attributes, i) => {
           const finalVal = attributes.includes("final") + "";
@@ -82,9 +82,9 @@ const path = require("path");
       );
     }
 
-    generate(generateTemplates, template0, "field");
-    generate(generateTemplates, template1, "initialized_field");
-    generate(generateTemplates, template2, "static_field");
-    generate(generateTemplates, template3, "static_initialized_field");
+    generate(template0, "field");
+    generate(template1, "initialized_field");
+    generate(template2, "static_field");
+    generate(template3, "static_initialized_field");
   }
 })();

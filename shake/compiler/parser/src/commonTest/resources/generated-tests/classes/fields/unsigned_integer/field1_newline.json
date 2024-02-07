@@ -14,10 +14,10 @@
             "name": "ShakeVariableType",
             "type": "unsigned_integer"
           },
-          "access": "public",
+          "access": "package",
           "assignment": null,
           "is_static": false,
-          "is_final": false
+          "is_final": true
         }
       ],
       "methods": [],

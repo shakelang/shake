@@ -1,0 +1,4 @@
+// Class with a field of type double
+class Test {
+    static private final double field
+}

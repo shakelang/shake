@@ -14,10 +14,10 @@
             "name": "ShakeVariableType",
             "type": "boolean"
           },
-          "access": "private",
+          "access": "package",
           "assignment": null,
           "is_static": true,
-          "is_final": false
+          "is_final": true
         }
       ],
       "methods": [],

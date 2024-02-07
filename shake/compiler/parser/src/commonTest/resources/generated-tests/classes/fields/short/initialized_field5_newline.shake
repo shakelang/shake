@@ -1,4 +1,4 @@
 // Class with a field of type short
 class Test {
-    public static short field
+    protected short field
 }

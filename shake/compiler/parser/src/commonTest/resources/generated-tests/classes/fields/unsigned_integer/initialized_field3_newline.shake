@@ -1,4 +1,4 @@
 // Class with a field of type unsigned_integer
 class Test {
-    protected unsigned int field
+    public unsigned int field
 }

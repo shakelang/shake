@@ -14,10 +14,10 @@
             "name": "ShakeVariableType",
             "type": "float"
           },
-          "access": "package",
+          "access": "public",
           "assignment": null,
-          "is_static": false,
-          "is_final": true
+          "is_static": true,
+          "is_final": false
         }
       ],
       "methods": [],

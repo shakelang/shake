@@ -1,4 +1,4 @@
 // Class with a field of type char
 class Test {
-    protected final static char field
+    final static private char field
 }

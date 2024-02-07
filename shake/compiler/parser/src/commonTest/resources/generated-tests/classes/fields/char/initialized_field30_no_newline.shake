@@ -1,0 +1,4 @@
+// Class with a field of type char
+class Test {
+    static private final char field
+}

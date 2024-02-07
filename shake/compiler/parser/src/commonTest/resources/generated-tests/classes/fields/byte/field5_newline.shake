@@ -1,4 +1,4 @@
 // Class with a field of type byte
 class Test {
-    public static byte field
+    protected byte field
 }

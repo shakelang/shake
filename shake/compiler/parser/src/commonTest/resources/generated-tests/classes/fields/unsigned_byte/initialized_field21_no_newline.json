@@ -14,7 +14,7 @@
             "name": "ShakeVariableType",
             "type": "unsigned_byte"
           },
-          "access": "protected",
+          "access": "private",
           "assignment": null,
           "is_static": true,
           "is_final": true

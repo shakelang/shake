@@ -1,4 +1,4 @@
 // Class with a field of type boolean
 class Test {
-    public static boolean field
+    protected boolean field
 }
