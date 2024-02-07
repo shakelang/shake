@@ -17,6 +17,37 @@ const {
   const classTestDirectory = fromBaseDir("classes");
   await fs.mkdir(classTestDirectory, { recursive: true });
 
+  await (async () => {
+    combineTokens(["final", ["public", "private", "protected"]]).map(
+      async (attributes, i) => {
+        const finalVal = attributes.includes("final");
+        const staticVal = attributes.includes("static");
+        const access = attributes.includes("public")
+          ? "public"
+          : attributes.includes("protected")
+          ? "protected"
+          : attributes.includes("private")
+          ? "private"
+          : "package";
+
+        const template = new Template("classes/class");
+
+        generateTest(
+          path.resolve(classTestDirectory, `class${i}`),
+          await template.shake,
+          await template.json,
+          await template.error,
+          [
+            [/%final%/g, finalVal],
+            [/%static%/g, staticVal],
+            [/%access%/g, access],
+            [/%attributes%/g, attributes],
+          ]
+        );
+      }
+    );
+  })();
+
   // The following code will generate tests for a single field in a class
   // The tests will be stored in the commonTest/resources/generated-tests/classes/fields directory
 

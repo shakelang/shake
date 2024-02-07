@@ -1,0 +1,15 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakeClassDeclarationNode",
+      "access": "protected",
+      "is_static": false,
+      "is_final": true,
+      "fields": [],
+      "methods": [],
+      "classes": [],
+      "constructors": []
+    }
+  ]
+}
