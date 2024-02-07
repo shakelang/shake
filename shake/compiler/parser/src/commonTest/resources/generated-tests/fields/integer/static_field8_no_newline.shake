@@ -1,2 +1,2 @@
 // Field of type integer
-static final public int field
+static public final int field

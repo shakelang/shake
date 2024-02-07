@@ -1,2 +1,2 @@
 // Field of type long
-protected long field
+public long field

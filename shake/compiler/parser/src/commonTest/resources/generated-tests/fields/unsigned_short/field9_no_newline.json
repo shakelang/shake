@@ -8,7 +8,7 @@
         "name": "ShakeVariableType",
         "type": "unsigned_short"
       },
-      "access": "protected",
+      "access": "private",
       "assignment": null,
       "is_static": false,
       "is_final": true

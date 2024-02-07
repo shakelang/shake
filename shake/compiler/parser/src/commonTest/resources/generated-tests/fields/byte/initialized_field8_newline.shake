@@ -1,2 +1,2 @@
 // Field of type byte
-final public byte field = 42
+public final byte field = 42

@@ -206,3 +206,53 @@ async function generateTest(
 }
 
 module.exports.generateTest = generateTest;
+
+/**
+ * Combine given tokens in every possible way
+ * @param {(string | string[])[]} words
+ * @returns {string[]}
+ */
+function combineTokens(words) {
+  const combinations = [""];
+
+  // get all possible combinations of the given length
+  function choose(words, length) {
+    const combinations = [];
+    for (let i = 0; i < words.length; i++) {
+      const first = words[i];
+      const rest = [...words.slice(0, i), ...words.slice(i + 1)];
+      if (length === 1) {
+        if (Array.isArray(first)) {
+          for (const f of first) {
+            combinations.push([f]);
+          }
+        } else {
+          combinations.push([first]);
+        }
+        continue;
+      }
+
+      for (const other of choose(rest, length - 1)) {
+        if (Array.isArray(first)) {
+          for (const f of first) {
+            combinations.push([f, ...other]);
+          }
+        } else combinations.push([first, ...other]);
+      }
+    }
+
+    return combinations;
+  }
+
+  for (let i = 1; i <= words.length; i++) {
+    combinations.push(
+      ...choose(words, i).map((c) => c.join(" ") + " ")
+      //.flat()
+      //.map((c) => c + " ")
+    );
+  }
+
+  return combinations;
+}
+
+module.exports.combineTokens = combineTokens;

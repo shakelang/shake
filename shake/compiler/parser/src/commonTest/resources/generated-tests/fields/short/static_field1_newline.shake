@@ -1,2 +1,2 @@
 // Field of type short
-static public short field
+static final short field

@@ -1,2 +1,2 @@
 // Field of type long
-static private final long field
+static final protected long field

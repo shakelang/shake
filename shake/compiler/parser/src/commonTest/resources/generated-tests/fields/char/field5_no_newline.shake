@@ -1,2 +1,2 @@
 // Field of type char
-public final char field
+final public char field

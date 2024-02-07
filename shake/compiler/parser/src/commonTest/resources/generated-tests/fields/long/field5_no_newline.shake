@@ -1,2 +1,2 @@
 // Field of type long
-public final long field
+final public long field

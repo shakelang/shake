@@ -1,2 +1,2 @@
 // Field of type char
-protected char field
+public char field

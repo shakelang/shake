@@ -1,2 +1,2 @@
 // Field of type byte
-static protected final byte field = 10
+static final private byte field = 10

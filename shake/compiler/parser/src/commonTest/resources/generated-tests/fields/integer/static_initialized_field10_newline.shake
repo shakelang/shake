@@ -1,2 +1,2 @@
 // Field of type integer
-static final private int field = 10
+static protected final int field = 10

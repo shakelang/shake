@@ -8,7 +8,7 @@
         "name": "ShakeVariableType",
         "type": "boolean"
       },
-      "access": "private",
+      "access": "protected",
       "assignment": null,
       "is_static": false,
       "is_final": true

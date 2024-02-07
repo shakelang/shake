@@ -1,2 +1,2 @@
 // Field of type double
-static final public double field
+static public final double field

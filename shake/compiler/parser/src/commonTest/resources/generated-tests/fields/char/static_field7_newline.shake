@@ -1,2 +1,2 @@
 // Field of type char
-static private final char field
+static final protected char field

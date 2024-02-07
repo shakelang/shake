@@ -1,2 +1,2 @@
 // Field of type unsigned_byte
-static final public unsigned byte field
+static public final unsigned byte field

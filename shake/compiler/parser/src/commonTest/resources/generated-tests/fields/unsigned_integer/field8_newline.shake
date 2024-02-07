@@ -1,2 +1,2 @@
 // Field of type unsigned_integer
-final public unsigned int field
+public final unsigned int field

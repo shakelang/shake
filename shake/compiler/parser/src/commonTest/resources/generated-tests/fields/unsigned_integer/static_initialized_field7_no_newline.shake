@@ -1,2 +1,2 @@
 // Field of type unsigned_integer
-static private final unsigned int field = 10
+static final protected unsigned int field = 10

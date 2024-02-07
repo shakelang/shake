@@ -8,10 +8,10 @@
         "name": "ShakeVariableType",
         "type": "unsigned_long"
       },
-      "access": "package",
+      "access": "protected",
       "assignment": null,
       "is_static": false,
-      "is_final": true
+      "is_final": false
     }
   ]
 }

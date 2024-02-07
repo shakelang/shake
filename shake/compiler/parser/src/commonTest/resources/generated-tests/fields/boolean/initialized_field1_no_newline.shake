@@ -1,2 +1,2 @@
 // Field of type boolean
-public boolean field = 42
+final boolean field = 42

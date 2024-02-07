@@ -1,2 +1,2 @@
 // Field of type float
-public final float field
+final public float field

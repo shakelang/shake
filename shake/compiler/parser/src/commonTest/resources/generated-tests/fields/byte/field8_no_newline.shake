@@ -1,2 +1,2 @@
 // Field of type byte
-final public byte field
+public final byte field

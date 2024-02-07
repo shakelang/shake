@@ -1,2 +1,2 @@
 // Field of type char
-static public char field
+static final char field

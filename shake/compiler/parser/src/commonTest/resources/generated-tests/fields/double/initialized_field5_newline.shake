@@ -1,2 +1,2 @@
 // Field of type double
-public final double field = 42
+final public double field = 42

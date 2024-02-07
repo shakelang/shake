@@ -8,13 +8,13 @@
         "name": "ShakeVariableType",
         "type": "unsigned_short"
       },
-      "access": "package",
+      "access": "protected",
       "assignment": {
         "name": "ShakeIntegerNode",
         "value": 42
       },
       "is_static": false,
-      "is_final": true
+      "is_final": false
     }
   ]
 }

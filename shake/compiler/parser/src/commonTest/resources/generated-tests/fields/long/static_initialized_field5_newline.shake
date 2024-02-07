@@ -1,2 +1,2 @@
 // Field of type long
-static public final long field = 10
+static final public long field = 10

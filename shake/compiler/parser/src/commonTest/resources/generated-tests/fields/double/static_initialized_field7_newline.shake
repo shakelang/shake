@@ -1,2 +1,2 @@
 // Field of type double
-static private final double field = 10
+static final protected double field = 10

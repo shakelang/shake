@@ -1,2 +1,2 @@
 // Field of type double
-protected double field = 42
+public double field = 42

@@ -1,2 +1,2 @@
 // Field of type boolean
-protected boolean field
+public boolean field

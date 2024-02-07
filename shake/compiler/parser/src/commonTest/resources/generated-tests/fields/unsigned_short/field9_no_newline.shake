@@ -1,2 +1,2 @@
 // Field of type unsigned_short
-final protected unsigned short field
+private final unsigned short field

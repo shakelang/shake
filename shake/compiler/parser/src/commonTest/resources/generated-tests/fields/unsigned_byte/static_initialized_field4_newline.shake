@@ -1,2 +1,2 @@
 // Field of type unsigned_byte
-static final unsigned byte field = 10
+static protected unsigned byte field = 10

@@ -1,2 +1,2 @@
 // Field of type unsigned_integer
-protected unsigned int field
+public unsigned int field

@@ -1,2 +1,2 @@
 // Field of type integer
-final int field
+protected int field

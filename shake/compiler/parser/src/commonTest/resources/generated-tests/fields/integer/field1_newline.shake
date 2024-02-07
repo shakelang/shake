@@ -1,2 +1,2 @@
 // Field of type integer
-public int field
+final int field

@@ -1,2 +1,2 @@
 // Field of type integer
-protected int field = 42
+public int field = 42

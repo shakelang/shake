@@ -1,2 +1,2 @@
 // Field of type boolean
-static final private boolean field
+static protected final boolean field

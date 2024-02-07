@@ -1,2 +1,2 @@
 // Field of type byte
-static final public byte field = 10
+static public final byte field = 10

@@ -1,2 +1,2 @@
 // Field of type short
-static protected final short field
+static final private short field

@@ -1,2 +1,2 @@
 // Field of type unsigned_long
-public unsigned long field = 42
+final unsigned long field = 42

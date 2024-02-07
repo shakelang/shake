@@ -1,2 +1,2 @@
 // Field of type char
-static public final char field = 10
+static final public char field = 10

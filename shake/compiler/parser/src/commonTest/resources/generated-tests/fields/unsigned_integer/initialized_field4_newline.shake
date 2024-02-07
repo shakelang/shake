@@ -1,2 +1,2 @@
 // Field of type unsigned_integer
-final unsigned int field = 42
+protected unsigned int field = 42

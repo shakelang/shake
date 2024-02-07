@@ -1,2 +1,2 @@
 // Field of type float
-final float field = 42
+protected float field = 42

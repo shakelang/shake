@@ -1,2 +1,2 @@
 // Field of type unsigned_short
-final public unsigned short field = 42
+public final unsigned short field = 42

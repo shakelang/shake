@@ -1,2 +1,2 @@
 // Field of type integer
-static protected int field
+static public int field

@@ -8,7 +8,7 @@
         "name": "ShakeVariableType",
         "type": "boolean"
       },
-      "access": "protected",
+      "access": "public",
       "assignment": {
         "name": "ShakeIntegerNode",
         "value": 42
