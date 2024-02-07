@@ -70,17 +70,9 @@ const {
     }
 
     /**
-     * Priority
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function priority(value) {
-      return operator1(value, priorityTemplate);
-    }
-
-    /**
      * Calculation Template
      * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} value
+     * @param {Template} template
      * @returns {Promise<{shake: string, json: string, error: string}>}
      */
     async function operator1(value, template) {
@@ -97,6 +89,15 @@ const {
         json: applyReplaceTemplate(await template.json, templ),
         error: applyReplaceTemplate(await template.error, templ),
       };
+    }
+
+    /**
+     * Generate an Operator 1 function
+     * @param {Template} template
+     * @return {function(Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string): Promise<{shake: string, json: string, error: string}>}
+     */
+    function gop1(template) {
+      return (value) => operator1(value, template);
     }
 
     /**
@@ -135,160 +136,31 @@ const {
     }
 
     /**
-     * Add
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
+     * Generate an Operator 2 function
+     * @param {Template} template
+     * @return {function(Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string, Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string): Promise<{shake: string, json: string, error: string}>}
      */
-    async function add(left, right) {
-      return operator2(left, right, addTemplate);
+    function gop2(template) {
+      return (left, right) => operator2(left, right, template);
     }
 
-    /**
-     * Sub
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function sub(left, right) {
-      return operator2(left, right, subTemplate);
-    }
-
-    /**
-     * Mul
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function mul(left, right) {
-      return operator2(left, right, mulTemplate);
-    }
-
-    /**
-     * Div
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function div(left, right) {
-      return operator2(left, right, divTemplate);
-    }
-
-    /**
-     * Mod
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function mod(left, right) {
-      return operator2(left, right, modTemplate);
-    }
-
-    /**
-     * Pow
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function pow(left, right) {
-      return operator2(left, right, powTemplate);
-    }
-
-    /**
-     * Logical Or
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function logicalOr(left, right) {
-      return operator2(left, right, logicalOrTemplate);
-    }
-
-    /**
-     * Logical And
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function logicalAnd(left, right) {
-      return operator2(left, right, logicalAndTemplate);
-    }
-
-    /**
-     * Logical Xor
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function logicalXor(left, right) {
-      return operator2(left, right, logicalXorTemplate);
-    }
-
-    /**
-     * Logical Not
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function logicalNot(value) {
-      return operator1(value, logicalNotTemplate);
-    }
-
-    /**
-     * Bitwise Or
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function bitwiseOr(left, right) {
-      return operator2(left, right, bitwiseOrTemplate);
-    }
-
-    /**
-     * Bitwise And
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} left
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} right
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function bitwiseAnd(left, right) {
-      return operator2(left, right, bitwiseAndTemplate);
-    }
-
-    /**
-     * Bitwise Xor
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} left
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string} right
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function bitwiseXor(left, right) {
-      return operator2(left, right, bitwiseXorTemplate);
-    }
-
-    /**
-     * Bitwise Not
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function bitwiseNot(value) {
-      return operator1(value, bitwiseNotTemplate);
-    }
-
-    /**
-     * Unary Minus
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function unaryMinus(value) {
-      return operator1(value, unaryMinusTemplate);
-    }
-
-    /**
-     * Unary Plus
-     * @param {Promise<{shake: string, json: string, error: string}> | {shake: string, json: string, error: string} | string}
-     * @returns {Promise<{shake: string, json: string, error: string}>}
-     */
-    async function unaryPlus(value) {
-      return operator1(value, unaryPlusTemplate);
-    }
+    const add = gop2(addTemplate);
+    const sub = gop2(subTemplate);
+    const mul = gop2(mulTemplate);
+    const div = gop2(divTemplate);
+    const mod = gop2(modTemplate);
+    const pow = gop2(powTemplate);
+    const logicalOr = gop2(logicalOrTemplate);
+    const logicalAnd = gop2(logicalAndTemplate);
+    const logicalXor = gop2(logicalXorTemplate);
+    const bitwiseOr = gop2(bitwiseOrTemplate);
+    const bitwiseAnd = gop2(bitwiseAndTemplate);
+    const bitwiseXor = gop2(bitwiseXorTemplate);
+    const bitwiseNot = gop1(bitwiseNotTemplate);
+    const logicalNot = gop1(logicalNotTemplate);
+    const unaryMinus = gop1(unaryMinusTemplate);
+    const unaryPlus = gop1(unaryPlusTemplate);
+    const priority = gop1(priorityTemplate);
 
     /**
      * Base Template
