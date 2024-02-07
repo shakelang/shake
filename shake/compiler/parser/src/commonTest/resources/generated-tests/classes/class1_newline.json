@@ -3,9 +3,9 @@
   "children": [
     {
       "name": "ShakeClassDeclarationNode",
-      "access": "package",
       "is_static": false,
       "is_final": true,
+      "access": "package",
       "fields": [],
       "methods": [],
       "classes": [],
