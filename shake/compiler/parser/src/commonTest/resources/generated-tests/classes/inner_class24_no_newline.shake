@@ -1,0 +1,4 @@
+// Class declaration
+class Test {
+    final private static class Test1 {}
+}

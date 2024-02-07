@@ -1,0 +1,4 @@
+// Class declaration
+class Test {
+    static final public class Test1 {}
+}
