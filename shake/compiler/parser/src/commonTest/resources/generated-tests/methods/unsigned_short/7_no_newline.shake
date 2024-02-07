@@ -1,0 +1,2 @@
+// Method with no attributes
+final protected unsigned short m() {}

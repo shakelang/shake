@@ -131,6 +131,11 @@ module.exports.primitiveTypes = [
   ["unsigned long", "unsigned_long"],
 ];
 
+module.exports.primitiveTypesIncludingVoid = [
+  ...module.exports.primitiveTypes,
+  ["void", "void"],
+];
+
 /**
  * Generate a test case
  *

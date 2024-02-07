@@ -1,0 +1,15 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakeFunctionDeclarationNode",
+      "function_name": "m",
+      "args": [],
+      "body": { "name": "ShakeBlockNode", "children": [] },
+      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"void\"}",
+      "access": "private",
+      "is_static": false,
+      "is_final": true
+    }
+  ]
+}

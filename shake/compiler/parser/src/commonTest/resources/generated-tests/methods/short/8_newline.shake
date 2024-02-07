@@ -1,0 +1,2 @@
+// Method with no attributes
+public final short m() {}
