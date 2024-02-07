@@ -12,7 +12,7 @@
       "assignment": {
         "name": "ShakeLogicalOrNode",
         "left": {
-          "name": "ShakeBinaryXorNode",
+          "name": "ShakeBitwiseXOrNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 120

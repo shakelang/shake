@@ -10,7 +10,7 @@
       },
       "access": "package",
       "assignment": {
-        "name": "ShakeBinaryAndNode",
+        "name": "ShakeBitwiseAndNode",
         "left": {
           "name": "ShakeAddNode",
           "left": {

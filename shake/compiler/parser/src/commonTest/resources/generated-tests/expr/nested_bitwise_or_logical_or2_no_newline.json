@@ -12,7 +12,7 @@
       "assignment": {
         "name": "ShakeLogicalOrNode",
         "left": {
-          "name": "ShakeBinaryOrNode",
+          "name": "ShakeBitwiseOrNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 1

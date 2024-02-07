@@ -10,9 +10,9 @@
       },
       "access": "package",
       "assignment": {
-        "name": "ShakeBinaryXorNode",
+        "name": "ShakeBitwiseXOrNode",
         "left": {
-          "name": "ShakeBinaryXorNode",
+          "name": "ShakeBitwiseXOrNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 77

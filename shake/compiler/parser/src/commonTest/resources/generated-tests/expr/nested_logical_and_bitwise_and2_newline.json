@@ -16,7 +16,7 @@
           "value": 1
         },
         "right": {
-          "name": "ShakeBinaryAndNode",
+          "name": "ShakeBitwiseAndNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 2

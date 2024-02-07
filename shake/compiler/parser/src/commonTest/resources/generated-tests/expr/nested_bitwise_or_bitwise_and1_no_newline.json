@@ -10,13 +10,13 @@
       },
       "access": "package",
       "assignment": {
-        "name": "ShakeBinaryOrNode",
+        "name": "ShakeBitwiseOrNode",
         "left": {
           "name": "ShakeIntegerNode",
           "value": 77
         },
         "right": {
-          "name": "ShakeBinaryAndNode",
+          "name": "ShakeBitwiseAndNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 3

@@ -16,7 +16,7 @@
           "value": 77
         },
         "right": {
-          "name": "ShakeBinaryXorNode",
+          "name": "ShakeBitwiseXOrNode",
           "left": {
             "name": "ShakeIntegerNode",
             "value": 3

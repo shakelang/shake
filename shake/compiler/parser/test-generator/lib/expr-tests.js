@@ -388,13 +388,27 @@ const {
     ].forEach(async (literals, i) => {
       generators.forEach(async (generator) => {
         generate(
-          `simple_${generator.name}${i}.shake`,
+          `simple_${generator.name}${i}`,
           generator.generator(
             ...literals.slice(0, generator.argNum).map(literal)
           )
         );
 
         generators.forEach(async (generator2) => {
+          if (
+            generator.name === "unary_minus" &&
+            generator2.name === "unary_minus"
+          ) {
+            return;
+          }
+
+          if (
+            generator.name === "unary_plus" &&
+            generator2.name === "unary_plus"
+          ) {
+            return;
+          }
+
           // The expression should look like this:
           // a operator1 b operator2 c
           // we need to know which operator has higher priority
