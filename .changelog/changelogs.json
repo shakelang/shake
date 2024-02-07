@@ -876,6 +876,12 @@
           "changes": [
             "Automatically make compile tasks depend on embedGenerateSources"
           ]
+        },
+        {
+          "version": "0.2.2",
+          "changes": [
+            "Fix for large amount of sources: Split into multiple functions"
+          ]
         }
       ]
     },

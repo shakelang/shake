@@ -1,10 +1,7 @@
 package com.shakelang.util.embed.plugin
 
 import com.shakelang.util.embed.api.EmbedFolder
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
@@ -90,6 +87,7 @@ constructor(
             fun storeFunction() {
                 val name = "init$functionId"
                 val function = FunSpec.builder(name)
+                function.addModifiers(KModifier.PRIVATE)
                 function.addCode(functionBlock.build())
                 functionBlock = CodeBlock.builder()
                 functionId++

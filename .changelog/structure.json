@@ -38,11 +38,11 @@
         "unspecified:path-browserify:1.0.1",
         ":util:commander:commander:0.1.0",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":util:logger:logger:0.5.2",
         ":util:embed:api:api:0.1.1",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0",
         ":shake:compiler:jsgenerator:jsgenerator:0.1.0",
         ":shake:compiler:shakelib:shakelib:0.1.0",
@@ -100,7 +100,7 @@
       "dependencies": [
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.3.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":util:markdown:markdown:0.2.1"
       ]
     },
@@ -168,7 +168,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0"
       ]
@@ -244,7 +244,7 @@
       "license": "",
       "dependencies": [
         "unspecified:unspecified:unspecified",
-        ":util:shason:shason:0.4.1"
+        ":util:shason:shason:0.4.2"
       ]
     },
     {
@@ -372,9 +372,9 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
       ]
     },
@@ -400,7 +400,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":util:logger:logger:0.5.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT"
       ]
@@ -416,12 +416,12 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0",
         ":util:logger:logger:0.5.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT"
+        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT"
       ]
     },
     {
@@ -486,7 +486,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.1",
+        ":util:shason:shason:0.4.2",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0"
       ]
@@ -520,7 +520,7 @@
     {
       "path": ":util:embed:plugin",
       "name": "com.shakelang.util.embed:plugin",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Gradle plugin for embedding resources into kotlin source",
       "author": "com.shakelang.util.embed",
       "license": "",
@@ -531,5 +531,5 @@
       ]
     }
   ],
-  "lastUpdate": 1706918610860
+  "lastUpdate": 1707298373555
 }
