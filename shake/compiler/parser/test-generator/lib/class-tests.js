@@ -1,5 +1,5 @@
 // This file automatically generates tests for classes.
-// Its output is stored into the commonTest/resources/tests/classes directory.
+// Its output is stored into the commonTest/resources/generated-tests/classes directory.
 
 const path = require("path");
 const fs = require("fs-extra").promises;
@@ -9,6 +9,7 @@ const {
   fromBaseDir,
   primitiveTypes,
   generateTest,
+  combineTokens,
 } = require("./api");
 
 (async () => {
@@ -16,8 +17,72 @@ const {
   const classTestDirectory = fromBaseDir("classes");
   await fs.mkdir(classTestDirectory, { recursive: true });
 
+  // Base class
+  await (async () => {
+    combineTokens(["final", ["public", "private", "protected"]]).map(
+      async (attributes, i) => {
+        const finalVal = attributes.includes("final");
+        const staticVal = attributes.includes("static");
+        const access = attributes.includes("public")
+          ? "public"
+          : attributes.includes("protected")
+          ? "protected"
+          : attributes.includes("private")
+          ? "private"
+          : "package";
+
+        const template = new Template("classes/class");
+
+        generateTest(
+          path.resolve(classTestDirectory, `class${i}`),
+          await template.shake,
+          await template.json,
+          await template.error,
+          [
+            [/%final%/g, finalVal],
+            [/%static%/g, staticVal],
+            [/%access%/g, access],
+            [/%attributes%/g, attributes],
+          ]
+        );
+      }
+    );
+  })();
+
+  // Inner class
+  await (async () => {
+    combineTokens(["final", "static", ["public", "private", "protected"]]).map(
+      async (attributes, i) => {
+        const finalVal = attributes.includes("final");
+        const staticVal = attributes.includes("static");
+        const access = attributes.includes("public")
+          ? "public"
+          : attributes.includes("protected")
+          ? "protected"
+          : attributes.includes("private")
+          ? "private"
+          : "package";
+
+        const template = new Template("classes/inner-class");
+
+        generateTest(
+          path.resolve(classTestDirectory, `inner_class${i}`),
+          await template.shake,
+          await template.json,
+          await template.error,
+          [
+            [/%final%/g, finalVal],
+            [/%static%/g, staticVal],
+            [/%access%/g, access],
+            [/%attributes%/g, attributes],
+          ]
+        );
+      }
+    );
+  })();
+
   // The following code will generate tests for a single field in a class
-  // The tests will be stored in the commonTest/resources/tests/classes/fields directory
+  // The tests will be stored in the commonTest/resources/generated-tests/classes/fields directory
 
   await (async () => {
     // Class Fields
@@ -44,36 +109,25 @@ const {
         [/%name%/g, "field"],
       ];
 
-      for (const entry of [
-        gentry("", "package", false, false),
-        gentry("public ", "public", false, false),
-        gentry("private ", "private", false, false),
-        gentry("protected ", "protected", false, false),
+      for (const entry of combineTokens([
+        "final",
+        "static",
+        ["public", "private", "protected"],
+      ])
+        .map(async (attributes, i) => {
+          const finalVal = attributes.includes("final");
+          const staticVal = attributes.includes("static");
+          const access = attributes.includes("public")
+            ? "public"
+            : attributes.includes("protected")
+            ? "protected"
+            : attributes.includes("private")
+            ? "private"
+            : "package";
 
-        gentry("static ", "package", false, true),
-        gentry("public static ", "public", false, true),
-        gentry("private static ", "private", false, true),
-        gentry("protected static ", "protected", false, true),
-        gentry("static public ", "public", false, true),
-        gentry("static private ", "private", false, true),
-        gentry("static protected ", "protected", false, true),
-
-        gentry("final ", "package", true, false),
-        gentry("public final ", "public", true, false),
-        gentry("private final ", "private", true, false),
-        gentry("protected final ", "protected", true, false),
-        gentry("final public ", "public", true, false),
-        gentry("final private ", "private", true, false),
-        gentry("final protected ", "protected", true, false),
-
-        gentry("final static ", "package", true, true),
-        gentry("public final static ", "public", true, true),
-        gentry("private final static ", "private", true, true),
-        gentry("protected final static ", "protected", true, true),
-        gentry("final static public ", "public", true, true),
-        gentry("final static private ", "private", true, true),
-        gentry("final static protected ", "protected", true, true),
-      ].map((value, index) => ({ value, index }))) {
+          return gentry(attributes, access, finalVal, staticVal);
+        })
+        .map((value, index) => ({ value, index }))) {
         generateTest(
           path.resolve(
             classFieldsDirectory,
@@ -82,7 +136,7 @@ const {
           await template.shake,
           await template.json,
           await template.error,
-          [...base, ...entry.value]
+          [...base, ...(await entry.value)]
         );
         generateTest(
           path.resolve(
@@ -92,7 +146,7 @@ const {
           await template.shake,
           await template.json,
           await template.error,
-          [...base, ...entry.value]
+          [...base, ...(await entry.value)]
         );
       }
     }

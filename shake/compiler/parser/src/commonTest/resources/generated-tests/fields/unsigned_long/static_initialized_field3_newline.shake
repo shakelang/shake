@@ -1,2 +1,0 @@
-// Field of type unsigned_long
-static private unsigned long field = 10

@@ -1,5 +1,5 @@
 // This file automatically generates tests for fields.
-// Its output is stored into the commonTest/resources/tests/fields directory.
+// Its output is stored into the commonTest/resources/generated-tests/fields directory.
 
 const fs = require("fs-extra").promises;
 const {
@@ -8,6 +8,7 @@ const {
   fromBaseDir,
   primitiveTypes,
   generateTest,
+  combineTokens,
 } = require("./api");
 const path = require("path");
 
@@ -58,99 +59,32 @@ const path = require("path");
      * @param {Template} template
      * @param {string} nameBase
      */
-    async function generate(generator, template, nameBase) {
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}0`,
-        "package",
-        "false",
-        ""
-      );
+    async function generate(template, nameBase) {
+      combineTokens(["final", ["public", "private", "protected"]]).forEach(
+        async (attributes, i) => {
+          const finalVal = attributes.includes("final") + "";
+          const access = attributes.includes("public")
+            ? "public"
+            : attributes.includes("protected")
+            ? "protected"
+            : attributes.includes("private")
+            ? "private"
+            : "package";
 
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}1`,
-        "public",
-        "false",
-        "public "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}2`,
-        "protected",
-        "false",
-        "protected "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}3`,
-        "private",
-        "false",
-        "private "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}4`,
-        "package",
-        "true",
-        "final "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}5`,
-        "public",
-        "true",
-        "public final "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}6`,
-        "protected",
-        "true",
-        "protected final "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}7`,
-        "private",
-        "true",
-        "private final "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}8`,
-        "public",
-        "true",
-        "final public "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}9`,
-        "protected",
-        "true",
-        "final protected "
-      );
-
-      generateTemplates(
-        template,
-        `${forFileName(type[1])}/${nameBase}10`,
-        "private",
-        "true",
-        "final private "
+          generateTemplates(
+            template,
+            `${forFileName(type[1])}/${nameBase}${i}`,
+            access,
+            finalVal,
+            attributes
+          );
+        }
       );
     }
 
-    generate(generateTemplates, template0, "field");
-    generate(generateTemplates, template1, "initialized_field");
-    generate(generateTemplates, template2, "static_field");
-    generate(generateTemplates, template3, "static_initialized_field");
+    generate(template0, "field");
+    generate(template1, "initialized_field");
+    generate(template2, "static_field");
+    generate(template3, "static_initialized_field");
   }
 })();

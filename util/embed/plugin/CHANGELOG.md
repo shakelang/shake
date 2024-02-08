@@ -19,3 +19,7 @@ Prints the current version
 ### 0.2.1
 
 * Automatically make compile tasks depend on embedGenerateSources
+
+### 0.2.2
+
+* Fix for large amount of sources: Split into multiple functions
