@@ -17,10 +17,10 @@
         }
       ],
       "body": { "name": "ShakeBlockNode", "children": [] },
-      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"void\"}",
-      "access": "package",
-      "is_static": false,
-      "is_final": false
+      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type_name%\"}",
+      "access": "%access%",
+      "is_static": %static%,
+      "is_final": %final%
     }
   ]
 }

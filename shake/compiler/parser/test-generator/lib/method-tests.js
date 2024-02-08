@@ -10,6 +10,7 @@ const {
   generateTest,
   combineTokens,
   primitiveTypesIncludingVoid,
+  checkers,
 } = require("./api");
 const path = require("path");
 
@@ -17,87 +18,87 @@ const path = require("path");
   const methodsDirectory = fromBaseDir("methods");
   await fs.mkdir(methodsDirectory, { recursive: true });
 
-  (async () => {
-    const template = new Template("methods/method");
-    for (const type of primitiveTypesIncludingVoid) {
-      combineTokens(["final", ["public", "private", "protected"]]).forEach(
-        async (attributes, i) => {
-          const access = attributes.includes("private")
-            ? "private"
-            : attributes.includes("protected")
-            ? "protected"
-            : attributes.includes("public")
-            ? "public"
-            : "package";
-          const finalVal = attributes.includes("final");
+  const template0 = new Template("methods/method");
+  const template1 = new Template("methods/parameter-method");
+  const template2 = new Template("methods/parameter2-method");
 
-          await generateTest(
-            path.join(methodsDirectory, `${forFileName(type[1])}/${i}`),
-            await template.shake,
-            await template.json,
-            await template.error,
-            [
-              [/%type%/g, type[0]],
-              [/%type_name%/g, type[1]],
-              [/%name%/g, "m"],
-              [/%access%/g, access],
-              [/%final%/g, finalVal],
-              [/%attributes%/g, attributes],
-            ]
-          );
-        }
-      );
-    }
-  })();
-
-  (async () => {
-    const template = new Template("methods/parameter-method");
-    for (const type of primitiveTypes) {
-      generateTest(
-        path.join(methodsDirectory, `parameter/1/${forFileName(type[1])}`),
-        await template.shake,
-        await template.json,
-        await template.error,
-        [
-          [/%type%/g, type[0]],
-          [/%type_name%/g, type[1]],
-          [/%name%/g, "m"],
-          [/%access%/g, "protected"],
-          [/%final%/g, "false"],
-          [/%attributes%/g, ""],
-          [/%type0%/g, type[0]],
-          [/%type0_name%/g, type[1]],
-        ]
-      );
-    }
-  })();
-
-  (async () => {
-    const template = new Template("methods/parameter-method");
-    for (const type of primitiveTypes) {
-      for (const type1 of primitiveTypes) {
+  combineTokens(["final", ["public", "private", "protected"]]).forEach(
+    async (attributes, i) => {
+      const { isFinal, isStatic, access } = checkers.check(attributes);
+      for (const type of primitiveTypesIncludingVoid) {
         generateTest(
-          path.join(
-            methodsDirectory,
-            `parameter/2/${forFileName(type[1])}_${forFileName(type1[1])}`
-          ),
-          await template.shake,
-          await template.json,
-          await template.error,
+          path.join(methodsDirectory, `${forFileName(type[1])}/0/${i}`),
+          await template0.shake,
+          await template0.json,
+          await template0.error,
           [
             [/%type%/g, type[0]],
             [/%type_name%/g, type[1]],
             [/%name%/g, "m"],
-            [/%access%/g, "protected"],
-            [/%final%/g, "false"],
-            [/%attributes%/g, ""],
-            [/%type0%/g, type[0]],
-            [/%type0_name%/g, type[1]],
-            [/%type1%/g, type1[0]],
-            [/%type1_name%/g, type1[1]],
+            [/%access%/g, access],
+            [/%final%/g, isFinal],
+            [/%static%/g, isStatic],
+            [/%attributes%/g, attributes],
           ]
         );
       }
+
+      const type_ = "void";
+      for (const type0 of primitiveTypes) {
+        generateTest(
+          path.join(
+            methodsDirectory,
+            `${forFileName(type_[1])}/1/${forFileName(type0[1])}${i}`
+          ),
+          await template1.shake,
+          await template1.json,
+          await template1.error,
+          [
+            [/%type%/g, type0[0]],
+            [/%type_name%/g, type0[1]],
+            [/%name%/g, "m"],
+            [/%access%/g, "protected"],
+            [/%final%/g, "false"],
+            [/%attributes%/g, ""],
+            [/%type%/g, type0[0]],
+            [/%type_name%/g, type0[1]],
+            [/%type0%/g, type0[0]],
+            [/%type0_name%/g, type0[1]],
+          ]
+        );
+      }
+
+      const type = "void";
+
+      for (const type0 of primitiveTypes) {
+        for (const type1 of primitiveTypes) {
+          generateTest(
+            path.join(
+              methodsDirectory,
+              `${forFileName(type_[1])}/2/${forFileName(
+                type0[1]
+              )}_${forFileName(type1[1])}${i}`
+            ),
+            await template2.shake,
+            await template2.json,
+            await template2.error,
+            [
+              [/%type%/g, type0[0]],
+              [/%type_name%/g, type0[1]],
+              [/%name%/g, "m"],
+              [/%access%/g, "protected"],
+              [/%final%/g, "false"],
+              [/%attributes%/g, ""],
+              [/%type%/g, type0[0]],
+              [/%type_name%/g, type0[1]],
+              [/%type0%/g, type0[0]],
+              [/%type0_name%/g, type0[1]],
+              [/%type1%/g, type1[0]],
+              [/%type1_name%/g, type1[1]],
+            ]
+          );
+        }
+      }
     }
-  })();
+  );
 })();

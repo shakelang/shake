@@ -262,3 +262,30 @@ function combineTokens(words) {
 }
 
 module.exports.combineTokens = combineTokens;
+
+module.exports.checkers = {
+  isStatic: (type) => type.includes("static"),
+  isFinal: (type) => type.includes("final"),
+  isAbstract: (type) => type.includes("abstract"),
+  access: (type) => {
+    if (type.includes("public")) return "public";
+    if (type.includes("protected")) return "protected";
+    if (type.includes("private")) return "private";
+    return "package";
+  },
+
+  check: (type) => ({
+    get isStatic() {
+      return module.exports.checkers.isStatic(type);
+    },
+    get isFinal() {
+      return module.exports.checkers.isFinal(type);
+    },
+    get isAbstract() {
+      return module.exports.checkers.isAbstract(type);
+    },
+    get access() {
+      return module.exports.checkers.access(type);
+    },
+  }),
+};

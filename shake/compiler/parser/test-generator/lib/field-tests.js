@@ -9,6 +9,7 @@ const {
   primitiveTypes,
   generateTest,
   combineTokens,
+  checkers,
 } = require("./api");
 const path = require("path");
 
@@ -62,20 +63,13 @@ const path = require("path");
     async function generate(template, nameBase) {
       combineTokens(["final", ["public", "private", "protected"]]).forEach(
         async (attributes, i) => {
-          const finalVal = attributes.includes("final") + "";
-          const access = attributes.includes("public")
-            ? "public"
-            : attributes.includes("protected")
-            ? "protected"
-            : attributes.includes("private")
-            ? "private"
-            : "package";
+          const { isFinal, access } = checkers.check(attributes);
 
           generateTemplates(
             template,
             `${forFileName(type[1])}/${nameBase}${i}`,
             access,
-            finalVal,
+            isFinal,
             attributes
           );
         }

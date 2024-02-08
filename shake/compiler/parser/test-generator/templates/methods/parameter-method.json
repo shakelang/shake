@@ -12,10 +12,10 @@
         }
       ],
       "body": { "name": "ShakeBlockNode", "children": [] },
-      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"void\"}",
-      "access": "package",
+      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type_name%\"}",
+      "access": "%access%",
       "is_static": false,
-      "is_final": false
+      "is_final": %final%
     }
   ]
 }

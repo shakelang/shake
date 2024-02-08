@@ -1,2 +1,2 @@
 // Method with no attributes
-void %name%(%type0% p, %type1% p) {}
+%attributes%%type% %name%(%type0% p, %type1% p) {}

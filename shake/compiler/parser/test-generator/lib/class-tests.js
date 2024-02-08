@@ -10,6 +10,7 @@ const {
   primitiveTypes,
   generateTest,
   combineTokens,
+  checkers,
 } = require("./api");
 
 (async () => {
@@ -21,15 +22,7 @@ const {
   await (async () => {
     combineTokens(["final", ["public", "private", "protected"]]).map(
       async (attributes, i) => {
-        const finalVal = attributes.includes("final");
-        const staticVal = attributes.includes("static");
-        const access = attributes.includes("public")
-          ? "public"
-          : attributes.includes("protected")
-          ? "protected"
-          : attributes.includes("private")
-          ? "private"
-          : "package";
+        const { isFinal, isStatic, access } = checkers.check(attributes);
 
         const template = new Template("classes/class");
 
@@ -39,8 +32,8 @@ const {
           await template.json,
           await template.error,
           [
-            [/%final%/g, finalVal],
-            [/%static%/g, staticVal],
+            [/%final%/g, isFinal],
+            [/%static%/g, isStatic],
             [/%access%/g, access],
             [/%attributes%/g, attributes],
           ]

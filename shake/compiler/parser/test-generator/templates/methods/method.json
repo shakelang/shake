@@ -8,7 +8,7 @@
       "body": { "name": "ShakeBlockNode", "children": [] },
       "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type_name%\"}",
       "access": "%access%",
-      "is_static": false,
+      "is_static": %static%,
       "is_final": %final%
     }
   ]
