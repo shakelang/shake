@@ -67,3 +67,11 @@ val generateTests by tasks.registering(NodeTask::class) {
     outputs.dir(file("src/commonTest/resources/generated-tests"))
     args.set(listOf())
 }
+
+val cleanGeneratedTests by tasks.registering(Delete::class) {
+    group = "build"
+    description = "Cleans the generated test files"
+    delete(file("src/commonTest/resources/generated-tests"))
+}
+
+tasks.getByName("clean").dependsOn(cleanGeneratedTests)
