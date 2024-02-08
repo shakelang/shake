@@ -1,0 +1,21 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakeFunctionDeclarationNode",
+      "function_name": "m",
+      "args": [
+        {
+          "name": "ShakeFunctionParameterNode",
+          "argument_name": "p",
+          "type": "{\"name\":\"ShakeVariableType\",\"type\":\"boolean\"}"
+        }
+      ],
+      "body": { "name": "ShakeBlockNode", "children": [] },
+      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"void\"}",
+      "access": "package",
+      "is_static": false,
+      "is_final": false
+    }
+  ]
+}

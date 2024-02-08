@@ -71,4 +71,33 @@ const path = require("path");
       );
     }
   })();
+
+  (async () => {
+    const template = new Template("methods/parameter-method");
+    for (const type of primitiveTypes) {
+      for (const type1 of primitiveTypes) {
+        generateTest(
+          path.join(
+            methodsDirectory,
+            `parameter/2/${forFileName(type[1])}_${forFileName(type1[1])}`
+          ),
+          await template.shake,
+          await template.json,
+          await template.error,
+          [
+            [/%type%/g, type[0]],
+            [/%type_name%/g, type[1]],
+            [/%name%/g, "m"],
+            [/%access%/g, "protected"],
+            [/%final%/g, "false"],
+            [/%attributes%/g, ""],
+            [/%type0%/g, type[0]],
+            [/%type0_name%/g, type[1]],
+            [/%type1%/g, type1[0]],
+            [/%type1_name%/g, type1[1]],
+          ]
+        );
+      }
+    }
+  })();
 })();
