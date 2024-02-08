@@ -1,4 +1,0 @@
-// Class with a field of type float
-class Test {
-    final static public float field
-}

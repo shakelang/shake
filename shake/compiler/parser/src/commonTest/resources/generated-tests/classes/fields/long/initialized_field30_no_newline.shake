@@ -1,4 +1,0 @@
-// Class with a field of type long
-class Test {
-    static private final long field
-}

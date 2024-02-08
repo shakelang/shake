@@ -1,4 +1,0 @@
-// Class with a field of type byte
-class Test {
-    final public static byte field
-}

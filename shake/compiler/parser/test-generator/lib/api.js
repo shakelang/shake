@@ -3,6 +3,7 @@
 
 const fs = require("fs").promises;
 const path = require("path");
+const debug = require("debug")("test-generator");
 
 class TaskRunner {
   constructor(parallelism = 1) {
@@ -50,7 +51,7 @@ class TaskRunner {
   async run() {
     while (this.runners.length < this.parallelism && this.tasks.length > 0) {
       this.runner();
-      console.log(`Starting runner ${this.runners.length + 1}...`);
+      debug(`Starting runner ${this.runners.length + 1}...`);
     }
 
     await Promise.all(this.runners);
@@ -80,9 +81,9 @@ module.exports.forFileName = function forFileName(input) {
 module.exports.Template = class Template {
   constructor(name) {
     this.name = name;
-    this.shakeFile = `templates/${name}.shake`;
-    this.jsonFile = `templates/${name}.json`;
-    this.errorFile = `templates/${name}.error`;
+    this.shakeFile = path.resolve(__dirname, "..", `templates/${name}.shake`);
+    this.jsonFile = path.resolve(__dirname, "..", `templates/${name}.json`);
+    this.errorFile = path.resolve(__dirname, "..", `templates/${name}.error`);
     this.shake = fs.readFile(this.shakeFile, "utf8").catch(() => null);
     this.json = fs.readFile(this.jsonFile, "utf8").catch(() => null);
     this.error = fs.readFile(this.errorFile, "utf8").catch(() => null);
@@ -184,7 +185,7 @@ async function generateTest(
 
   run(async () => {
     await fs.writeFile(testFile, applyReplaceTemplate(input, Template), "utf8");
-    console.log(`Generated ${relativize(testFile)}...`);
+    debug(`Generated ${relativize(testFile)}...`);
   });
 
   if (output !== null && output !== undefined) {
@@ -194,7 +195,7 @@ async function generateTest(
         applyReplaceTemplate(output, Template),
         "utf8"
       );
-      console.log(`Generated ${relativize(outputFile)}...`);
+      debug(`Generated ${relativize(outputFile)}...`);
     });
   }
 
@@ -205,7 +206,7 @@ async function generateTest(
         applyReplaceTemplate(error, Template),
         "utf8"
       );
-      console.log(`Generated ${relativize(errorFile)}...`);
+      debug(`Generated ${relativize(errorFile)}...`);
     });
   }
 }

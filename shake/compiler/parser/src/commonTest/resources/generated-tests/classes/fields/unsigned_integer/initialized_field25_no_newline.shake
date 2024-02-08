@@ -1,4 +1,0 @@
-// Class with a field of type unsigned_integer
-class Test {
-    final protected static unsigned int field
-}

@@ -1,4 +1,0 @@
-// Class declaration
-class Test {
-    private final class Test1 {}
-}

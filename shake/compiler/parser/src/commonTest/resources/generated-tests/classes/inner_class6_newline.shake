@@ -1,4 +1,0 @@
-// Class declaration
-class Test {
-    final static class Test1 {}
-}

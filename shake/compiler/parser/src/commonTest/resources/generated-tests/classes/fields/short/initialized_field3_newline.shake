@@ -1,4 +1,0 @@
-// Class with a field of type short
-class Test {
-    public short field
-}

@@ -1,4 +1,0 @@
-// Class with a field of type integer
-class Test {
-    protected static final int field
-}

@@ -1,4 +1,0 @@
-// Class with a field of type char
-class Test {
-    public final static char field
-}
