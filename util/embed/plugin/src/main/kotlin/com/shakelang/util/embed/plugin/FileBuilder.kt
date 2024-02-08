@@ -1,9 +1,7 @@
 package com.shakelang.util.embed.plugin
 
 import com.shakelang.util.embed.api.EmbedFolder
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
@@ -22,10 +20,18 @@ constructor(
     @OutputDirectory
     val outputDir = project.objects.directoryProperty()
 
+    @Input
+    val maxStatements = project.objects.property(Int::class.java)
+
+    @Input
+    val maxBytes = project.objects.property(Int::class.java)
+
     init {
         description = "Builds the embedded files for the $sourceSet source set"
         group = "build"
         outputDir.convention(project.layout.buildDirectory.dir("generated/embed"))
+        maxStatements.convention(1024)
+        maxBytes.convention(1024 * 1024)
     }
 
     @TaskAction
@@ -71,10 +77,38 @@ constructor(
 
             val initBlock = CodeBlock.builder()
 
-            for ((path, bytes) in files) {
-                // Let's add the file
-                initBlock.addStatement("EmbedFolder.insert(this, %S, %S)", path, bytes.decodeToString())
+            val maxStatements = this.maxStatements.get()
+            val maxBytes = this.maxBytes.get()
+            var statementCounter = 0
+            var byteCounter = 0
+            var functionId = 0
+            var functionBlock = CodeBlock.builder()
+
+            fun storeFunction() {
+                val name = "init$functionId"
+                val function = FunSpec.builder(name)
+                function.addModifiers(KModifier.PRIVATE)
+                function.addCode(functionBlock.build())
+                functionBlock = CodeBlock.builder()
+                functionId++
+                initBlock.addStatement("this.$name()")
+                folder.addFunction(function.build())
+                statementCounter = 0
+                byteCounter = 0
             }
+
+            for ((path, bytes) in files) {
+                statementCounter += 1
+                byteCounter += bytes.size
+
+                if (statementCounter > 1 && (statementCounter > maxStatements || byteCounter > maxBytes)) {
+                    storeFunction()
+                }
+
+                functionBlock.addStatement("EmbedFolder.insert(this, %S, %S)", path, bytes.decodeToString())
+            }
+
+            storeFunction()
 
             folder.addInitializerBlock(initBlock.build())
 
