@@ -20,7 +20,6 @@ class AutoMethodTests : FreeSpec(
                             template("methods/method") to "method",
                         )
 
-
                         templates.forEach {
 
                             val template = it.first
@@ -45,8 +44,6 @@ class AutoMethodTests : FreeSpec(
                     }
                 }
 
-
-
                 primitiveTypes.forEach { (type, typeName) ->
                     primitiveTypes.forEach { (type0, typeName0) ->
                         combineAttributes().forEachIndexed { i, attributeInfo ->
@@ -54,7 +51,6 @@ class AutoMethodTests : FreeSpec(
                             val templates = listOf(
                                 template("methods/parameter-method") to "method",
                             )
-
 
                             templates.forEach {
 
@@ -74,7 +70,7 @@ class AutoMethodTests : FreeSpec(
                                     ),
                                 )
 
-                                test("1/${typeName}/${typeName0}/${it.second}$i", isIgnored = false) {
+                                test("1/$typeName/$typeName0/${it.second}$i", isIgnored = false) {
                                     this.input = template.code
                                     this.expectedJson = template.json
                                 }
@@ -90,7 +86,6 @@ class AutoMethodTests : FreeSpec(
                             val templates = listOf(
                                 template("methods/parameter2-method") to "method",
                             )
-
 
                             templates.forEach {
 
@@ -112,7 +107,7 @@ class AutoMethodTests : FreeSpec(
                                     ),
                                 )
 
-                                test("2/${typeName0}/${typeName1}/${it.second}$i", isIgnored = false) {
+                                test("2/$typeName0/$typeName1/${it.second}$i", isIgnored = false) {
                                     this.input = template.code
                                     this.expectedJson = template.json
                                 }
@@ -124,4 +119,3 @@ class AutoMethodTests : FreeSpec(
         }
     },
 )
-

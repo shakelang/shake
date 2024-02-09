@@ -20,7 +20,6 @@ class AutoClassTests : FreeSpec(
                             template("classes/initialized-class-field") to "class_field_initialized",
                         )
 
-
                         templates.forEach {
 
                             val template = it.first
@@ -52,7 +51,6 @@ class AutoClassTests : FreeSpec(
                         template("classes/inner-class") to "inner_class",
                     )
 
-
                     templates.forEach {
 
                         val template = it.first
@@ -71,7 +69,6 @@ class AutoClassTests : FreeSpec(
                             this.input = template.code
                             this.expectedJson = template.json
                         }
-
                     }
                 }
             }

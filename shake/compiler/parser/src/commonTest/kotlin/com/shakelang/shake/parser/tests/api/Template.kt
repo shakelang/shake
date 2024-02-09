@@ -37,7 +37,7 @@ class Template(
         template._shake = this._shake?.let { replace.apply(it) }
         template._json = this._json?.let { replace.apply(it) }
         template._error = this._error?.let { replace.apply(it) }
-        return  template
+        return template
     }
 }
 
