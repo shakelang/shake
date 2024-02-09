@@ -76,7 +76,6 @@ class AutoExpressionTests : FreeSpec(
                     )
                 }
 
-
                 class TestGenerator(
                     val name: String,
                     val generator: Function<Template>,
@@ -84,7 +83,6 @@ class AutoExpressionTests : FreeSpec(
                 ) {
                     var level = 0
                 }
-
 
                 val levels = arrayOf(
                     arrayOf(TestGenerator("priority", gop1(priorityTemplate), 1)),
@@ -133,8 +131,13 @@ class AutoExpressionTests : FreeSpec(
                             "simple_${generator.name}$i",
                         ) {
                             @Suppress("UNCHECKED_CAST")
-                            val generatorResult = base(if (generator.argNum == 1) (generator.generator as Gop1)(literal(literals[0]))
-                            else (generator.generator as Gop2)(literal(literals[0]), literal(literals[1])))
+                            val generatorResult = base(
+                                if (generator.argNum == 1) {
+                                    (generator.generator as Gop1)(literal(literals[0]))
+                                } else {
+                                    (generator.generator as Gop2)(literal(literals[0]), literal(literals[1]))
+                                },
+                            )
 
                             input = generatorResult.code
                             expectedJson = generatorResult.json
@@ -155,28 +158,43 @@ class AutoExpressionTests : FreeSpec(
 
                                     @Suppress("UNCHECKED_CAST")
                                     val generator2Result =
-                                        if (generator2.argNum == 1) (generator2.generator as Gop1)(literal(literals[generator.argNum - 1]))
-                                        else (generator2.generator as Gop2)(literal(literals[0]), literal(literals[generator.argNum]))
+                                        if (generator2.argNum == 1) {
+                                            (generator2.generator as Gop1)(literal(literals[generator.argNum - 1]))
+                                        } else {
+                                            (generator2.generator as Gop2)(literal(literals[0]), literal(literals[generator.argNum]))
+                                        }
 
                                     @Suppress("UNCHECKED_CAST")
-                                    val generator1Result = base(if (generator.argNum == 1) (generator.generator as Gop1)(generator2Result)
-                                    else (generator.generator as Gop2)(literal(literals[0]), generator2Result))
+                                    val generator1Result = base(
+                                        if (generator.argNum == 1) {
+                                            (generator.generator as Gop1)(generator2Result)
+                                        } else {
+                                            (generator.generator as Gop2)(literal(literals[0]), generator2Result)
+                                        },
+                                    )
 
                                     input = generator1Result.code
                                     expectedJson = generator1Result.json
-
                                 } else {
                                     // (an operator1 b) operator2 c
                                     // The result of the first operator will be put into the first argument of the second operator
                                     // This can also handle operator1.level === operator2.level (because then we will parse from left to right)
 
                                     @Suppress("UNCHECKED_CAST")
-                                    val generator1Result = if (generator.argNum == 1) (generator.generator as Gop1)(literal(literals[0]))
-                                    else (generator.generator as Gop2)(literal(literals[0]), literal(literals[1]))
+                                    val generator1Result = if (generator.argNum == 1) {
+                                        (generator.generator as Gop1)(literal(literals[0]))
+                                    } else {
+                                        (generator.generator as Gop2)(literal(literals[0]), literal(literals[1]))
+                                    }
 
                                     @Suppress("UNCHECKED_CAST")
-                                    val generator2Result = base(if (generator2.argNum == 1) (generator2.generator as Gop1)(literal(literals[generator.argNum + generator2.argNum - 1]))
-                                    else (generator2.generator as Gop2)(generator1Result, literal(literals[generator.argNum])))
+                                    val generator2Result = base(
+                                        if (generator2.argNum == 1) {
+                                            (generator2.generator as Gop1)(literal(literals[generator.argNum + generator2.argNum - 1]))
+                                        } else {
+                                            (generator2.generator as Gop2)(generator1Result, literal(literals[generator.argNum]))
+                                        },
+                                    )
 
                                     input = generator2Result.code
                                     expectedJson = generator2Result.json

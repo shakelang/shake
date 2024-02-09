@@ -21,7 +21,6 @@ class AutoFieldTests : FreeSpec(
                             template("fields/initialized-field") to "initialized_field",
                         )
 
-
                         templates.forEach {
 
                             val template = it.first
