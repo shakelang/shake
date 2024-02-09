@@ -12,7 +12,7 @@ interface Stream<T> {
      * @return The next element
      * @since 0.5.0
      */
-    fun read() : T
+    fun read(): T
 
     /**
      * Check if the stream has a next element
@@ -20,6 +20,24 @@ interface Stream<T> {
      * @since 0.5.0
      */
     fun hasNext(): Boolean
+
+    /**
+     * Map the stream to another stream
+     * @param R The type of the new stream
+     * @param mapper The mapper function
+     * @return The new stream
+     * @since 0.5.0
+     */
+    fun <R> map(mapper: (T) -> R): Stream<R> = MapStream(this, mapper)
+
+    /**
+     * Map the stream to another stream
+     * @param R The type of the new stream
+     * @param mapper The mapper function
+     * @return The new stream
+     * @since 0.5.0
+     */
+    fun <R> mapIndexed(mapper: (Int, T) -> R): Stream<R> = IndexedMapStream(this, mapper)
 }
 
 /**
@@ -52,8 +70,11 @@ class AppendableStream<T> : Stream<T> {
     fun append(value: T) {
         val newElement = StreamElement(value)
 
-        if (head == null) head = newElement
-        else tail!!.attachNext(newElement)
+        if (head == null) {
+            head = newElement
+        } else {
+            tail!!.attachNext(newElement)
+        }
 
         tail = newElement
     }
@@ -106,7 +127,7 @@ class AppendableStream<T> : Stream<T> {
          * The value of the element
          * @since 0.5.0
          */
-        val value: T
+        val value: T,
     ) {
 
         /**
@@ -138,7 +159,7 @@ class SequenceStream<T>(
      * The sequence to create the stream from
      * @since 0.5.0
      */
-    sequence: Sequence<T>
+    sequence: Sequence<T>,
 ) : Stream<T> {
 
     /**
@@ -178,7 +199,7 @@ class ListStream<T>(
      * The list to create the stream from
      * @since 0.5.0
      */
-    private val list: List<T>
+    private val list: List<T>,
 ) : Stream<T> {
 
     /**
@@ -217,7 +238,7 @@ class ArrayStream<T>(
      * The array to create the stream from
      * @since 0.5.0
      */
-    private val array: Array<T>
+    private val array: Array<T>,
 ) : Stream<T> {
 
     /**
@@ -256,7 +277,7 @@ class IteratorStream<T>(
      * The iterator to create the stream from
      * @since 0.5.0
      */
-    private val iterator: Iterator<T>
+    private val iterator: Iterator<T>,
 
 ) : Stream<T> {
 
@@ -276,6 +297,65 @@ class IteratorStream<T>(
      * @since 0.5.0
      */
     override fun hasNext() = iterator.hasNext()
+}
+
+/**
+ * Map a stream to another stream
+ * @param R The type of the new stream
+ * @param mapper The mapper function
+ * @return The new stream
+ * @since 0.5.0
+ */
+class MapStream<T, R>(
+
+    /**
+     * The stream to map
+     * @since 0.5.0
+     */
+    private val stream: Stream<T>,
+
+    /**
+     * The mapper function
+     * @since 0.5.0
+     */
+    private val mapper: (T) -> R,
+) : Stream<R> {
+
+    /**
+     * Read the next element from the stream
+     * @return The next element
+     * @since 0.5.0
+     */
+    override fun read(): R {
+        return mapper(stream.read())
+    }
+
+    /**
+     * Check if the stream has a next element
+     * @return If the stream has a next element
+     * @since 0.5.0
+     */
+    override fun hasNext(): Boolean {
+        return stream.hasNext()
+    }
+}
+
+class IndexedMapStream<T, R>(
+
+    private val stream: Stream<T>,
+    private val mapper: (Int, T) -> R,
+
+) : Stream<R> {
+
+    private var index = 0
+
+    override fun read(): R {
+        return mapper(index++, stream.read())
+    }
+
+    override fun hasNext(): Boolean {
+        return stream.hasNext()
+    }
 }
 
 /**
