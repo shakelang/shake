@@ -49,3 +49,7 @@ Utilities for parsing stuff with kotlin
 * Introduce Characters#escapeStringForString + Characters#escapeCharacterForString
 
 * Introduce Characters#escapeStringForCharacter + Characters#escapeCharacterForCharacter
+
+### 0.4.1
+
+* Update com.shakelang.util:common-io to 0.5.0

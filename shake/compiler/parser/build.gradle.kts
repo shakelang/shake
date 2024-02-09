@@ -43,20 +43,13 @@ apply<Embed>()
 getEmbedExtension(project).configuration {
     sourceSet.set("commonTest")
     distPackage.set("com.shakelang.shake.parser.test")
-    distName.set("ShakeParserTestInput")
-    embed("**/*.shake")
+    distName.set("ShakeParserTestResources")
+    embed("**/*")
 }
 
-getEmbedExtension(project).configuration {
-    sourceSet.set("commonTest")
-    distPackage.set("com.shakelang.shake.parser.test")
-    distName.set("ShakeParserTestOutput")
-    embed("**/*.json", "**/*.error")
-}
-
-tasks.withType(FileBuilder::class).configureEach {
-    dependsOn("generateTests")
-}
+//tasks.withType(FileBuilder::class).configureEach {
+//    dependsOn("generateTests")
+//}
 
 val generateTests by tasks.registering(NodeTask::class) {
     group = "build"

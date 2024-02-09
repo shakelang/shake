@@ -93,7 +93,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
-      "version": "0.7.4",
+      "version": "0.7.5",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.util.changelog",
       "license": "",
@@ -129,7 +129,7 @@
     {
       "path": ":util:common-io",
       "name": "com.shakelang.util:common-io",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
       "author": "com.shakelang.util",
       "license": "",
@@ -161,7 +161,7 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.util:jvmlib",
-      "version": "0.2.2-SNAPSHOT",
+      "version": "0.2.3-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.util",
       "license": "",
@@ -202,7 +202,7 @@
     {
       "path": ":util:parseutils",
       "name": "com.shakelang.util:parseutils",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.util",
       "license": "",
@@ -238,7 +238,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.util:sarifmerge",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "description": "Utility package to merged sarif files for github report",
       "author": "com.shakelang.util",
       "license": "",
@@ -250,7 +250,7 @@
     {
       "path": ":util:shason",
       "name": "com.shakelang.util:shason",
-      "version": "0.4.2",
+      "version": "0.4.3",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.util",
       "license": "",
@@ -381,7 +381,7 @@
     {
       "path": ":shake:compiler:lexer",
       "name": "com.shakelang.shake.compiler:lexer",
-      "version": "0.1.5-SNAPSHOT",
+      "version": "0.1.6-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
@@ -393,7 +393,7 @@
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler:parser",
-      "version": "0.1.7-SNAPSHOT",
+      "version": "0.1.8-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
@@ -531,5 +531,5 @@
       ]
     }
   ],
-  "lastUpdate": 1707304173055
+  "lastUpdate": 1707486208389
 }
