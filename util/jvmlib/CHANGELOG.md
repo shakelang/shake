@@ -57,3 +57,11 @@ A library for jvm stuff in java
 ### 0.2.2-SNAPSHOT
 
 * Update com.shakelang.util:shason to 0.4.2
+
+### 0.2.3-SNAPSHOT
+
+* Update com.shakelang.util:common-io to 0.5.0
+
+* Update com.shakelang.util:parseutils to 0.4.1
+
+* Update com.shakelang.util:shason to 0.4.3

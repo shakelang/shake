@@ -33,3 +33,7 @@ Utility for working with colors in console applications (Kotlin Multiplatform)
 * Move `com.shakelang.shake.util` to `com.shakelang.util`
 
 * Update com.shakelang.util:primitives to 0.5.0
+
+### 0.5.0
+
+* Introduce generic Stream api

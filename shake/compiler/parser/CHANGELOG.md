@@ -65,3 +65,13 @@ Utilities for parsing stuff with kotlin
 ### 0.1.7-SNAPSHOT
 
 * Update com.shakelang.util:shason to 0.4.2
+
+### 0.1.8-SNAPSHOT
+
+* Update com.shakelang.util:common-io to 0.5.0
+
+* Update com.shakelang.util:parseutils to 0.4.1
+
+* Update com.shakelang.util:shason to 0.4.3
+
+* Update com.shakelang.shake.compiler:lexer to 0.1.6-SNAPSHOT
