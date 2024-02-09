@@ -1,4 +1,4 @@
-package com.shakelang.shake.parser.api
+package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.test.ShakeParserTestResources
 
