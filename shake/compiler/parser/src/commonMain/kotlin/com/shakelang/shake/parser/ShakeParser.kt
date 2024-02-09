@@ -260,13 +260,6 @@ class ShakeParserImpl(
 
             ShakeTokenType.KEYWORD_STATIC -> {
                 input.skip()
-                if (info.scope != DeclarationScope.CLASS &&
-                    info.scope != DeclarationScope.INTERFACE &&
-                    info.scope != DeclarationScope.OBJECT &&
-                    info.scope != DeclarationScope.ENUM
-                ) {
-                    throw ParserError("Static keyword is only for objects in classes, interfaces or enums")
-                }
                 if (info.isStatic) throw ParserError("Static keyword is only allowed once")
                 info.isStatic = true
                 expectDeclaration(info)

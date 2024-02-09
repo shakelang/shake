@@ -107,6 +107,89 @@ open class EmbedFolder(
         }
     }
 
+    private fun globToRegex(glob: String): Regex {
+        val regex = StringBuilder("^")
+        var escaping = false
+        for (c in glob) {
+            when (c) {
+                '.', '$', '(', ')', '|', '+', '{', '[', '\\' -> {
+                    if (!escaping) {
+                        regex.append("\\")
+                        escaping = true
+                    }
+                    regex.append(c)
+                }
+                '*' -> {
+                    if (escaping) {
+                        regex.append("\\*")
+                        escaping = false
+                    } else {
+                        regex.append(".*")
+                    }
+                }
+                '?' -> {
+                    if (escaping) {
+                        regex.append("\\?")
+                        escaping = false
+                    } else {
+                        regex.append('.')
+                    }
+                }
+                '}' -> {
+                    if (escaping) {
+                        regex.append('}')
+                        escaping = false
+                    } else {
+                        regex.append("\\}")
+                    }
+                }
+                ',' -> {
+                    if (escaping) {
+                        regex.append(',')
+                        escaping = false
+                    } else {
+                        regex.append('|')
+                    }
+                }
+                else -> {
+                    regex.append(c)
+                    escaping = false
+                }
+            }
+        }
+        regex.append('$')
+        return regex.toString().toRegex()
+    }
+
+    fun glob(pattern: String): List<EmbedFileEntity> {
+        val files = mutableListOf<EmbedFileEntity>()
+        for (child in children.values) {
+            if (globToRegex(pattern).matches(child.name)) files.add(child)
+            if (child.isDirectory) files.addAll((child as EmbedFolder).glob(pattern))
+        }
+        return files
+    }
+
+    fun globFiles(pattern: String): List<EmbedFile> {
+        val files = mutableListOf<EmbedFile>()
+        for (child in children.values) {
+            if (globToRegex(pattern).matches(child.name) && child.isFile) files.add(child as EmbedFile)
+            if (child.isDirectory) files.addAll((child as EmbedFolder).globFiles(pattern))
+        }
+        return files
+    }
+
+    fun globFolders(pattern: String): List<EmbedFolder> {
+        val files = mutableListOf<EmbedFolder>()
+        for (child in children.values) {
+            if (child.isDirectory) {
+                if (globToRegex(pattern).matches(child.name)) files.add(child as EmbedFolder)
+                files.addAll((child as EmbedFolder).globFolders(pattern))
+            }
+        }
+        return files
+    }
+
     /**
      * Get a file from the folder
      * @since 0.1.0

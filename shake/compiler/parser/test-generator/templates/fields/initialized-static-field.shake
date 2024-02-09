@@ -1,2 +1,0 @@
-// Field of type %type_name%
-static %attributes%%type% %name% = 10

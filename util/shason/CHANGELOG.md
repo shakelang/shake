@@ -77,3 +77,9 @@ A json parser implemented in kotlin (mpp)
 * Generate of float/double 10 should be generated to 10 instead of 10.0
 
 * Bugfix: Parsed "null" as string. Now it is parsed into a JsonNullElement
+
+### 0.4.3
+
+* Update com.shakelang.util:common-io to 0.5.0
+
+* Update com.shakelang.util:parseutils to 0.4.1

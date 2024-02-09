@@ -2,7 +2,6 @@ import com.github.gradle.node.task.NodeTask
 import com.shakelang.util.changelog.public
 import com.shakelang.util.changelog.resolveVersion
 import com.shakelang.util.embed.plugin.Embed
-import com.shakelang.util.embed.plugin.FileBuilder
 import com.shakelang.util.embed.plugin.getEmbedExtension
 import conventions.dependencies
 import conventions.projectGroup
@@ -30,6 +29,7 @@ kotlin {
         implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("stdlib"))
+        testImplementation(project(":util:common-io"))
         kotest()
     }
 }
@@ -43,20 +43,13 @@ apply<Embed>()
 getEmbedExtension(project).configuration {
     sourceSet.set("commonTest")
     distPackage.set("com.shakelang.shake.parser.test")
-    distName.set("ShakeParserTestInput")
-    embed("**/*.shake")
+    distName.set("ShakeParserTestResources")
+    embed("**/*")
 }
 
-getEmbedExtension(project).configuration {
-    sourceSet.set("commonTest")
-    distPackage.set("com.shakelang.shake.parser.test")
-    distName.set("ShakeParserTestOutput")
-    embed("**/*.json", "**/*.error")
-}
-
-tasks.withType(FileBuilder::class).configureEach {
-    dependsOn("generateTests")
-}
+// tasks.withType(FileBuilder::class).configureEach {
+//    dependsOn("generateTests")
+// }
 
 val generateTests by tasks.registering(NodeTask::class) {
     group = "build"
@@ -67,3 +60,11 @@ val generateTests by tasks.registering(NodeTask::class) {
     outputs.dir(file("src/commonTest/resources/generated-tests"))
     args.set(listOf())
 }
+
+val cleanGeneratedTests by tasks.registering(Delete::class) {
+    group = "build"
+    description = "Cleans the generated test files"
+    delete(file("src/commonTest/resources/generated-tests"))
+}
+
+tasks.getByName("clean").dependsOn(cleanGeneratedTests)

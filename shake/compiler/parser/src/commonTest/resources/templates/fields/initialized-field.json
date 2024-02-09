@@ -13,7 +13,7 @@
         "name": "ShakeIntegerNode",
         "value": 42
       },
-      "is_static": false,
+      "is_static": %static%,
       "is_final": %final%
     }
   ]
