@@ -6,43 +6,43 @@ import io.kotest.matchers.shouldBe
 
 class LiteralTests: FreeSpec ({
 
-    "test basic string" {
+    "basic string" {
         val node = ParserTestUtil.parseValue("<BasicStringTest>", "\"test\"", ShakeStringNode::class)
         node.value shouldBe "test"
     }
 
-    "test basic int" {
+    "basic int" {
         val node = ParserTestUtil.parseValue("<BasicIntTest>", "123", ShakeIntegerNode::class)
         node.number shouldBe 123
     }
 
-    "test basic double" {
+    "basic double" {
         val node = ParserTestUtil.parseValue("<BasicDoubleTest>", "123.123", ShakeDoubleNode::class)
         node.number shouldBe 123.123
     }
 
-    "test basic char" {
+    "basic char" {
         val node = ParserTestUtil.parseValue("<BasicCharTest>", "'a'", ShakeCharacterNode::class)
         node.value shouldBe 'a'
     }
 
-    "test basic true literal" {
+    "basic true literal" {
         ParserTestUtil.parseValue("<BasicTrueTest>", "true", ShakeLogicalTrueNode::class)
     }
 
-    "test basic false literal" {
+    "basic false literal" {
         ParserTestUtil.parseValue("<BasicFalseTest>", "false", ShakeLogicalFalseNode::class)
     }
 
-    "test basic null literal" {
+    "basic null literal" {
         ParserTestUtil.parseValue("<BasicNullTest>", "null", ShakeNullNode::class)
     }
 
-    "test this literal" {
+    "this literal" {
         ParserTestUtil.parseValue("<ThisTest>", "this", ShakeThisNode::class)
     }
 
-    "test super literal" {
+    "super literal" {
         ParserTestUtil.parseValue("<SuperTest>", "super", ShakeSuperNode::class)
     }
 
