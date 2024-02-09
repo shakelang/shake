@@ -7,6 +7,7 @@ import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
+import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakePackage
 
 open class CreationShakePackage(
@@ -212,6 +213,22 @@ open class CreationShakePackage(
             throw IllegalStateException("Cannot set a class in a package scope")
         }
 
+        override fun getThis(): ShakeAssignable? {
+            throw Error("Cannot get this in a package scope")
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            throw Error("Cannot get this in a package scope")
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            throw Error("Cannot get super in a package scope")
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            throw Error("Cannot get super in a package scope")
+        }
+
         override val processor: ShakeASTProcessor
             get() = parent.processor
     }
@@ -373,6 +390,22 @@ open class CreationShakePackage(
 
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set a class in a package scope")
+        }
+
+        override fun getThis(): ShakeAssignable? {
+            throw Error("Cannot get this in a package scope")
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            throw Error("Cannot get this in a package scope")
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            throw Error("Cannot get super in a package scope")
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            throw Error("Cannot get super in a package scope")
         }
     }
 

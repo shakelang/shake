@@ -98,6 +98,22 @@ class CreationShakeProject(
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set a class in the project scope")
         }
+
+        override fun getThis(): CreationShakeAssignable? {
+            throw IllegalStateException("Cannot get this in the project scope")
+        }
+
+        override fun getThis(name: String): CreationShakeAssignable? {
+            throw IllegalStateException("Cannot get this in the project scope")
+        }
+
+        override fun getSuper(): CreationShakeAssignable? {
+            throw IllegalStateException("Cannot get super in the project scope")
+        }
+
+        override fun getSuper(name: String): CreationShakeAssignable? {
+            throw IllegalStateException("Cannot get super in the project scope")
+        }
     }
 
     fun putFile(name: String, content: ShakeFileNode) {

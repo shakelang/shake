@@ -6,6 +6,7 @@ import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.*
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 
 open class CreationShakeCode(
@@ -91,6 +92,22 @@ open class CreationShakeCode(
             get() = parent.processor
         override val uniqueName: String
             get() = "local${hashCode()}"
+
+        override fun getThis(): ShakeAssignable? {
+            return parent.getThis()
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            return parent.getThis(name)
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            return parent.getSuper()
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            return parent.getSuper(name)
+        }
     }
 
     companion object {
