@@ -5,7 +5,7 @@ import com.shakelang.shake.parser.tests.api.generateTests
 import com.shakelang.shake.parser.tests.api.primitiveTypes
 import io.kotest.core.spec.style.FreeSpec
 
-class Methods : FreeSpec(
+class AutoMethodTests : FreeSpec(
     {
         generateTests {
 

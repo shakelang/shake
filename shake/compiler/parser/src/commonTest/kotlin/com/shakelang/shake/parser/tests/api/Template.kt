@@ -17,18 +17,27 @@ class Template(
     private var _error: String? = ShakeParserTestResources[errorPath]?.toFile()?.contentsAsString()
 
     val code: String
-        get() = _shake ?: error("Template $path has no shake file")
+        get() = _shake ?: ""
 
     val json: String
-        get() = _json ?: error("Template $path has no json file")
+        get() = _json ?: ""
 
     val error: String
-        get() = _error ?: error("Template $path has no error file")
+        get() = _error ?: ""
 
-    fun apply(replace: ReplaceTemplate) {
+    fun apply(replace: ReplaceTemplate): Template {
         this._shake = this._shake?.let { replace.apply(it) }
         this._json = this._json?.let { replace.apply(it) }
         this._error = this._error?.let { replace.apply(it) }
+        return this
+    }
+
+    fun applied(replace: ReplaceTemplate): Template {
+        val template = Template(name)
+        template._shake = this._shake?.let { replace.apply(it) }
+        template._json = this._json?.let { replace.apply(it) }
+        template._error = this._error?.let { replace.apply(it) }
+        return  template
     }
 }
 
