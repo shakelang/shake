@@ -1,0 +1,4 @@
+// Class declaration
+class Test {
+    %attributes%class Test1 {}
+}

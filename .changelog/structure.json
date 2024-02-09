@@ -37,12 +37,12 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:commander:commander:0.1.0",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
         ":util:logger:logger:0.5.2",
         ":util:embed:api:api:0.1.1",
-        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT",
+        ":shake:compiler:lexer:lexer:0.1.6-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.8-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0",
         ":shake:compiler:jsgenerator:jsgenerator:0.1.0",
         ":shake:compiler:shakelib:shakelib:0.1.0",
@@ -100,7 +100,7 @@
       "dependencies": [
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.3.0",
-        ":util:shason:shason:0.4.2",
+        ":util:shason:shason:0.4.3",
         ":util:markdown:markdown:0.2.1"
       ]
     },
@@ -167,9 +167,9 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
-        ":util:common-io:common-io:0.4.0",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
+        ":util:common-io:common-io:0.5.0",
         ":util:primitives:primitives:0.5.0"
       ]
     },
@@ -209,7 +209,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:colorlib:colorlib:0.3.0",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":util:environment:environment:0.3.0"
       ]
     },
@@ -244,7 +244,7 @@
       "license": "",
       "dependencies": [
         "unspecified:unspecified:unspecified",
-        ":util:shason:shason:0.4.2"
+        ":util:shason:shason:0.4.3"
       ]
     },
     {
@@ -256,7 +256,7 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0"
+        ":util:parseutils:parseutils:0.4.1"
       ]
     },
     {
@@ -295,7 +295,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.4.0"
+        ":util:common-io:common-io:0.5.0"
       ]
     },
     {
@@ -310,7 +310,7 @@
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
         ":util:logger:logger:0.5.2",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
         ":shake:bytecode:utils:utils:0.1.0-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
@@ -327,7 +327,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT"
       ]
     },
@@ -342,7 +342,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
         ":shake:bytecode:utils:utils:0.1.0-SNAPSHOT"
       ]
@@ -358,7 +358,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT"
       ]
     },
@@ -371,10 +371,10 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
-        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
+        ":shake:compiler:lexer:lexer:0.1.6-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.8-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
       ]
     },
@@ -387,7 +387,7 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0"
+        ":util:parseutils:parseutils:0.4.1"
       ]
     },
     {
@@ -399,10 +399,10 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
         ":util:logger:logger:0.5.2",
-        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT"
+        ":shake:compiler:lexer:lexer:0.1.6-SNAPSHOT"
       ]
     },
     {
@@ -415,13 +415,13 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
-        ":util:common-io:common-io:0.4.0",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
+        ":util:common-io:common-io:0.5.0",
         ":util:primitives:primitives:0.5.0",
         ":util:logger:logger:0.5.2",
-        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.7-SNAPSHOT"
+        ":shake:compiler:lexer:lexer:0.1.6-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.8-SNAPSHOT"
       ]
     },
     {
@@ -455,8 +455,8 @@
       "license": "",
       "dependencies": [
         ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.4.0",
-        ":util:parseutils:parseutils:0.4.0",
+        ":util:common-io:common-io:0.5.0",
+        ":util:parseutils:parseutils:0.4.1",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0",
         ":shake:shasambly:shasp:shasp:0.1.0"
@@ -471,8 +471,8 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:common-io:common-io:0.4.0",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:common-io:common-io:0.5.0",
         ":util:primitives:primitives:0.5.0"
       ]
     },
@@ -485,8 +485,8 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.0",
-        ":util:shason:shason:0.4.2",
+        ":util:parseutils:parseutils:0.4.1",
+        ":util:shason:shason:0.4.3",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0"
       ]
@@ -500,9 +500,9 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:common-io:common-io:0.4.0",
+        ":util:common-io:common-io:0.5.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:parseutils:parseutils:0.4.0",
+        ":util:parseutils:parseutils:0.4.1",
         ":shake:shasambly:shasambly:shasambly:0.1.0"
       ]
     },
@@ -531,5 +531,5 @@
       ]
     }
   ],
-  "lastUpdate": 1707486208389
+  "lastUpdate": 1707495525269
 }

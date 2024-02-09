@@ -1,38 +1,41 @@
 package com.shakelang.shake.parser.api
 
 import com.shakelang.shake.parser.test.ShakeParserTestResources
-import io.kotest.core.spec.Spec
 
-class Template (
+class Template(
     val name: String,
 ) {
-    val path: String
-        get() = "templates/$name"
 
-    val shakePath: String
-        get() = "$path.shake"
+    val path = "templates/$name"
 
-    val jsonPath: String
-        get() = "$path.json"
+    val shakePath = "$path.shake"
+    val jsonPath = "$path.json"
+    val errorPath = "$path.error"
 
-    val errorPath: String
-        get() = "$path.error"
+    private var _shake: String? = ShakeParserTestResources[shakePath]?.toFile()?.contentsAsString()
+    private var _json: String? = ShakeParserTestResources[jsonPath]?.toFile()?.contentsAsString()
+    private var _error: String? = ShakeParserTestResources[errorPath]?.toFile()?.contentsAsString()
 
-    val shake: String
-        get() = (ShakeParserTestResources[shakePath] ?:error("Template $path has no shake file")).toFile().contentsAsString()
+    val code: String
+        get() = _shake ?: error("Template $path has no shake file")
 
     val json: String
-        get() = (ShakeParserTestResources[jsonPath] ?:error("Template $path has no json file")).toFile().contentsAsString()
+        get() = _json ?: error("Template $path has no json file")
 
     val error: String
-        get() = (ShakeParserTestResources[errorPath] ?:error("Template $path has no error file")).toFile().contentsAsString()
+        get() = _error ?: error("Template $path has no error file")
 
+    fun apply(replace: ReplaceTemplate) {
+        this._shake = this._shake?.let { replace.apply(it) }
+        this._json = this._json?.let { replace.apply(it) }
+        this._error = this._error?.let { replace.apply(it) }
+    }
 }
 
 fun template(name: String) = Template(name)
 
 class ReplaceTemplate(
-    val entries: Map<String, String>
+    val entries: Map<String, String>,
 ) {
     fun apply(s: String): String = entries.entries.fold(s) { acc, (k, v) -> acc.replace(k, v) }
 }

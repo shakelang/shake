@@ -1,0 +1,4 @@
+// Class with a field of type %type_name%
+class Test {
+    %attributes%%type% %name% = 42
+}

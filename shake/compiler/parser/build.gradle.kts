@@ -2,7 +2,6 @@ import com.github.gradle.node.task.NodeTask
 import com.shakelang.util.changelog.public
 import com.shakelang.util.changelog.resolveVersion
 import com.shakelang.util.embed.plugin.Embed
-import com.shakelang.util.embed.plugin.FileBuilder
 import com.shakelang.util.embed.plugin.getEmbedExtension
 import conventions.dependencies
 import conventions.projectGroup
@@ -30,6 +29,7 @@ kotlin {
         implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("stdlib"))
+        testImplementation(project(":util:common-io"))
         kotest()
     }
 }
@@ -47,9 +47,9 @@ getEmbedExtension(project).configuration {
     embed("**/*")
 }
 
-//tasks.withType(FileBuilder::class).configureEach {
+// tasks.withType(FileBuilder::class).configureEach {
 //    dependsOn("generateTests")
-//}
+// }
 
 val generateTests by tasks.registering(NodeTask::class) {
     group = "build"

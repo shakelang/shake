@@ -1,7 +1,13 @@
 package com.shakelang.shake.parser.api
 
-import io.kotest.core.spec.Spec
+import com.shakelang.shake.parser.ParserTestUtil
+import com.shakelang.shake.parser.ShakeParserImpl
+import com.shakelang.util.io.streaming.AppendableStream
+import com.shakelang.util.io.streaming.Stream
+import com.shakelang.util.shason.json
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
 val attributes = listOf(
     listOf("final"),
@@ -9,9 +15,46 @@ val attributes = listOf(
     listOf("public", "protected", "private"),
 )
 
-val attributesNoStatic = listOf(
-    listOf("final"),
-    listOf("public", "protected", "private"),
+val primitiveTypes = listOf(
+    "byte" to "byte",
+    "short" to "short",
+    "int" to "integer",
+    "long" to "long",
+    "float" to "float",
+    "double" to "double",
+    "char" to "char",
+    "boolean" to "boolean",
+    "unsigned byte" to "unsigned_byte",
+    "unsigned short" to "unsigned_short",
+    "unsigned int" to "unsigned_integer",
+    "unsigned long" to "unsigned_long",
+)
+
+val primitiveTypesNoUnsigned = listOf(
+    "byte" to "byte",
+    "short" to "short",
+    "int" to "integer",
+    "long" to "long",
+    "float" to "float",
+    "double" to "double",
+    "char" to "char",
+    "boolean" to "boolean",
+)
+
+val primitiveTypesIncludingVoid = listOf(
+    "byte" to "byte",
+    "short" to "short",
+    "int" to "integer",
+    "long" to "long",
+    "float" to "float",
+    "double" to "double",
+    "char" to "char",
+    "boolean" to "boolean",
+    "void" to "void",
+    "unsigned byte" to "unsigned_byte",
+    "unsigned short" to "unsigned_short",
+    "unsigned int" to "unsigned_integer",
+    "unsigned long" to "unsigned_long",
 )
 
 class AttributeInfo(
@@ -42,6 +85,27 @@ class AttributeInfo(
             isPrivate -> "private"
             else -> "package"
         }
+}
+
+fun combineAttributes(
+    includeStatic: Boolean = true,
+    includeAccessModifiers: Boolean = true,
+    includeFinal: Boolean = true,
+): List<AttributeInfo> {
+    val attributes = mutableListOf<List<String>>()
+    if (includeStatic) attributes.add(listOf("static"))
+    if (includeAccessModifiers) {
+        attributes.add(
+            listOf(
+                "public",
+                "protected",
+                "private",
+            ),
+        )
+    }
+    if (includeFinal) attributes.add(listOf("final"))
+
+    return combineTokens(attributes).map { AttributeInfo(it) }
 }
 
 /**
@@ -83,20 +147,186 @@ fun combineTokens(words: List<List<String>>): List<String> {
 class TestProviderInit(
     val parent: TestProviderInit?,
 ) {
-
     var name: String = ""
     val path: String
-        get() = if (parent != null) "${parent.path}/$name" else name ?: error("Name is not set")
+        get() = if (parent != null) "${parent.path}/$name" else name
+
+    private val tests = AppendableStream<TestGenerator>()
 
     fun template(name: String) = Template(name)
-    fun provider(init: TestProviderInit.() -> Unit) = TestProviderInit(this).apply(init)
+    fun provider(init: TestProviderInit.() -> Unit) = TestProviderInit(this).apply(init).stream().forEach {
+        tests.append(it)
+    }
     fun replaceTemplate(vararg entries: Pair<String, String>) = ReplaceTemplate(entries.toMap())
+
+    fun stream(): Stream<TestGenerator> = tests
+
+    fun test(
+        name: String,
+        isIgnored: Boolean = false,
+        init: SuccessTestGenerator.() -> Unit,
+    ) {
+        val generator = SuccessTestGenerator(this@TestProviderInit, name, isIgnored, init)
+        tests.append(generator)
+    }
+
+    fun error(
+        name: String,
+        isIgnored: Boolean = false,
+        init: ErrorTestGenerator.() -> Unit,
+    ) {
+        val generator = ErrorTestGenerator(this@TestProviderInit, name, isIgnored, init)
+        tests.append(generator)
+    }
+}
+
+abstract class Test(
+    val name: String,
+    val path: String,
+    val input: String,
+    val isIgnored: Boolean,
+) {
+    abstract val expectedJson: String?
+    abstract val expectedError: String?
+    abstract val isFailure: Boolean
+    val isSuccessful: Boolean get() = !isFailure
+
+    fun toSuccessful(): SuccessTest = this as SuccessTest
+    fun toFailure(): ErrorTest = this as ErrorTest
+}
+
+class SuccessTest(
+    name: String,
+    path: String,
+    input: String,
+    override val expectedJson: String,
+    isIgnored: Boolean,
+) : Test(name, path, input, isIgnored) {
+    override val expectedError: Nothing? get() = null
+    override val isFailure: Boolean get() = false
+}
+
+class ErrorTest(
+    name: String,
+    path: String,
+    input: String,
+    isIgnored: Boolean,
+    override val expectedError: String,
+) : Test(name, path, input, isIgnored) {
+    override val expectedJson: Nothing? get() = null
+    override val isFailure: Boolean get() = true
+}
+
+abstract class TestGenerator(
+    val provider: TestProviderInit,
+    val name: String,
+    val isIgnored: Boolean,
+) {
+    val path: String get() = provider.path + if (name.isNotEmpty()) "/$name" else ""
+
+    var input: String = ""
+
+    abstract fun generate(): Test
+
+    abstract fun init()
+}
+
+class SuccessTestGenerator(
+    provider: TestProviderInit,
+    name: String,
+    isIgnored: Boolean,
+    private val init: SuccessTestGenerator.() -> Unit,
+) : TestGenerator(provider, name, isIgnored) {
+
+    var expectedJson: String = ""
+    private var initCalled = false
+
+    override fun generate(): Test {
+        if (!initCalled) {
+            init()
+        }
+        return SuccessTest(name, path, input, expectedJson, isIgnored)
+    }
+
+    override fun init() {
+        if (initCalled) throw IllegalStateException("init() called twice")
+        initCalled = true
+        init.invoke(this)
+    }
+}
+
+class ErrorTestGenerator(
+    provider: TestProviderInit,
+    name: String,
+    isIgnored: Boolean,
+    private val init: ErrorTestGenerator.() -> Unit,
+) : TestGenerator(provider, name, isIgnored) {
+
+    var expectedError: String = ""
+    private var initCalled = false
+
+    override fun generate(): Test {
+        if (!initCalled) {
+            init()
+        }
+        return ErrorTest(name, path, input, isIgnored, expectedError)
+    }
+
+    override fun init() {
+        if (initCalled) throw IllegalStateException("init() called twice")
+        init()
+    }
 }
 
 fun FreeSpec.generateTests(
     init: TestProviderInit.() -> Unit,
 ) {
     val provider = TestProviderInit(null)
-    val names = provider.init()
-    val path = provider.path
+    provider.init()
+    provider.stream().forEach {
+        it.path.config(enabled = !it.isIgnored) {
+            val generated = it.generate()
+            if (generated.isFailure) {
+                val test = generated.toFailure()
+
+                val error = shouldThrow<ShakeParserImpl.ParserError> {
+                    ParserTestUtil.parse("${test.path}.shake", test.input)
+                }
+
+                try {
+                    error.message shouldBe test.expectedError
+                } catch (e: Throwable) {
+                    println("Source: \n${test.input}")
+                    println()
+                    println("Error: ${error.message}")
+                    println("Expected: ${test.expectedError}")
+                    error.printStackTrace()
+                    throw e
+                }
+            }
+
+            if (generated.isSuccessful) {
+                val test = generated.toSuccessful()
+                try {
+                    val ast = json.stringify(ParserTestUtil.parse("${test.path}.shake", test.input).json)
+                    val expected = json.stringify(json.parse(test.expectedJson))
+
+                    try {
+                        ast shouldBe expected
+                    } catch (e: Throwable) {
+                        println("Source: \n${test.input}")
+                        println()
+                        println("AST: $ast")
+                        println("Expected: $expected")
+                        throw e
+                    }
+                } catch (e: Throwable) {
+                    println("Source: \n${test.input}")
+                    println()
+                    println("Error: ${e.message}")
+                    throw e
+                }
+            }
+        }
+    }
 }

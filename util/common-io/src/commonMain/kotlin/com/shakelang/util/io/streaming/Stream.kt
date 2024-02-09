@@ -38,6 +38,29 @@ interface Stream<T> {
      * @since 0.5.0
      */
     fun <R> mapIndexed(mapper: (Int, T) -> R): Stream<R> = IndexedMapStream(this, mapper)
+
+    /**
+     * For each element in the stream, call the given function
+     * @param action The action to call
+     * @since 0.5.1
+     */
+    fun forEach(action: (T) -> Unit) {
+        while (hasNext()) {
+            action(read())
+        }
+    }
+
+    /**
+     * For each element in the stream, call the given function
+     * @param action The action to call
+     * @since 0.5.1
+     */
+    fun forEachIndexed(action: (Int, T) -> Unit) {
+        var index = 0
+        while (hasNext()) {
+            action(index++, read())
+        }
+    }
 }
 
 /**
