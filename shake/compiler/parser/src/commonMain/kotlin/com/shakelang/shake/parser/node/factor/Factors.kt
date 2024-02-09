@@ -169,3 +169,43 @@ class ShakeNullNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
         return 0
     }
 }
+
+class ShakeThisNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName)
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeThisNode) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeThisNode) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 0
+    }
+}
+
+class ShakeSuperNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName)
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeSuperNode) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeSuperNode) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 0
+    }
+}

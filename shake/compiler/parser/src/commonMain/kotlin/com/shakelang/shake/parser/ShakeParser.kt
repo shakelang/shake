@@ -1603,6 +1603,16 @@ class ShakeParserImpl(
                 return ShakeNullNode(map)
             }
 
+            ShakeTokenType.KEYWORD_THIS -> {
+                input.skip()
+                return ShakeThisNode(map)
+            }
+
+            ShakeTokenType.KEYWORD_SUPER -> {
+                input.skip()
+                return ShakeSuperNode(map)
+            }
+
             else -> throw ParserError(input.toString())
         }
     }
