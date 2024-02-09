@@ -1,2 +1,0 @@
-// Method with no attributes
-%attributes%%type% %name%(%type0% p, %type1% p) {}
