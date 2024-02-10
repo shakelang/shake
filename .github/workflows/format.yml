@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   lint:
-    name: Format using ktlint
+    name: Format using ktlint 🧹
     runs-on: ubuntu-latest
 
     steps:
@@ -20,14 +20,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup KTlint
+      - name: Setup KTlint 🛠️
         run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.1.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
 
-      - name: Format using ktlint
+      - name: Format using ktlint ✨
         run: ktlint --format
         continue-on-error: true
 
-      - name: Import GPG key
+      - name: Import GPG key 🔑
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
@@ -35,7 +35,7 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Commit changes
+      - name: Commit changes 📝
         id: commit_changes
         run: |
           # Use the github token for git push
@@ -64,7 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check if PR exists
+      - name: Check if PR exists 🔄
         id: check_pr
         if: steps.commit_changes.outputs.changes == 'true'
         run: |
@@ -80,7 +80,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
 
-      - name: Create or update PR
+      - name: Create or update PR 🔄
         if: steps.commit_changes.outputs.changes == 'true'
         run: |
           if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then

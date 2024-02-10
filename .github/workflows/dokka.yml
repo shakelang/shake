@@ -1,5 +1,3 @@
-# Workflow to generate dokka documentation
-
 name: Dokka
 
 on:
@@ -8,6 +6,7 @@ on:
 
 jobs:
   generate-dokka-docs:
+    name: Generate Dokka Docs 📚
     runs-on: ubuntu-latest
 
     # We don't want to run this workflow on forks
@@ -25,13 +24,13 @@ jobs:
           persist-credentials: false
           submodules: "recursive"
 
-      - name: Setup Gradle
+      - name: Setup Gradle 🛠️
         uses: gradle/gradle-build-action@v3
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew 🔑
         run: chmod +x gradlew
 
-      - name: Cache Gradle packages
+      - name: Cache Gradle packages 📦
         uses: actions/cache@v4
         with:
           path: |
@@ -41,10 +40,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build with Gradle
+      - name: Build with Gradle 🏗️
         run: ./gradlew dokkaHtmlMultiModule
 
-      - name: Import GPG key
+      - name: Import GPG key 🗝️
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
@@ -52,11 +51,11 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Check Git Status
+      - name: Check Git Status 🔄
         working-directory: build/docs/
         run: git status
 
-      - name: Commit Changes
+      - name: Commit Changes 📝
         working-directory: build/docs/
         run: |
           # Configure git
@@ -67,7 +66,7 @@ jobs:
             git add .
             git commit -m "Update documentation"
 
-      - name: Push changes
+      - name: Push changes 🔀
         working-directory: build/docs/
         run: |
           # Push using the GITHUB_TOKEN
