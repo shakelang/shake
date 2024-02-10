@@ -11,9 +11,25 @@ interface ShakeDoubleLiteral : ShakeValue {
     val value: Double
 
     companion object {
+
+        /**
+         * The maximum value of a double
+         */
         const val MAX_VALUE = Double.MAX_VALUE
+
+        /**
+         * The minimum value of a double
+         */
         const val MIN_VALUE = Double.MIN_VALUE
+
+        /**
+         * The positive infinity value of a double
+         */
         const val POSITIVE_INFINITY = Double.POSITIVE_INFINITY
+
+        /**
+         * The negative infinity value of a double
+         */
         const val NEGATIVE_INFINITY = Double.NEGATIVE_INFINITY
     }
 }
@@ -29,9 +45,25 @@ interface ShakeFloatLiteral : ShakeValue {
     val value: Float
 
     companion object {
+
+        /**
+         * The maximum value of a float
+         */
         const val MAX_VALUE = Float.MAX_VALUE
+
+        /**
+         * The minimum value of a float
+         */
         const val MIN_VALUE = Float.MIN_VALUE
+
+        /**
+         * The positive infinity value of a float
+         */
         const val POSITIVE_INFINITY = Float.POSITIVE_INFINITY
+
+        /**
+         * The negative infinity value of a float
+         */
         const val NEGATIVE_INFINITY = Float.NEGATIVE_INFINITY
     }
 }
@@ -47,7 +79,15 @@ interface ShakeByteLiteral : ShakeValue {
     val value: Byte
 
     companion object {
+
+        /**
+         * The maximum value of a byte
+         */
         const val MAX_VALUE = Byte.MAX_VALUE
+
+        /**
+         * The minimum value of a byte
+         */
         const val MIN_VALUE = Byte.MIN_VALUE
     }
 }
@@ -60,13 +100,21 @@ interface ShakeShortLiteral : ShakeValue {
     val value: Short
 
     companion object {
+
+        /**
+         * The maximum value of a short
+         */
         const val MAX_VALUE = Short.MAX_VALUE
+
+        /**
+         * The minimum value of a short
+         */
         const val MIN_VALUE = Short.MIN_VALUE
     }
 }
 
 /**
- * This interface describes a int literal
+ * This interface describes an int literal
  */
 interface ShakeIntLiteral : ShakeValue {
 
@@ -76,7 +124,15 @@ interface ShakeIntLiteral : ShakeValue {
     val value: Int
 
     companion object {
+
+        /**
+         * The maximum value of an int
+         */
         const val MAX_VALUE = Int.MAX_VALUE
+
+        /**
+         * The minimum value of an int
+         */
         const val MIN_VALUE = Int.MIN_VALUE
     }
 }
@@ -92,13 +148,21 @@ interface ShakeLongLiteral : ShakeValue {
     val value: Long
 
     companion object {
+
+        /**
+         * The maximum value of a long
+         */
         const val MAX_VALUE = Long.MAX_VALUE
+
+        /**
+         * The minimum value of a long
+         */
         const val MIN_VALUE = Long.MIN_VALUE
     }
 }
 
 /**
- * This interface describes a ubyte literal
+ * This interface describes an ubyte literal
  */
 interface ShakeUByteLiteral : ShakeValue {
 
@@ -108,13 +172,21 @@ interface ShakeUByteLiteral : ShakeValue {
     val value: UByte
 
     companion object {
+
+        /**
+         * The maximum value of an ubyte
+         */
         const val MAX_VALUE = UByte.MAX_VALUE
+
+        /**
+         * The minimum value of an ubyte
+         */
         const val MIN_VALUE = UByte.MIN_VALUE
     }
 }
 
 /**
- * This interface describes a ushort literal
+ * This interface describes an ushort literal
  */
 interface ShakeUShortLiteral : ShakeValue {
 
@@ -124,7 +196,15 @@ interface ShakeUShortLiteral : ShakeValue {
     val value: UShort
 
     companion object {
+
+        /**
+         * The maximum value of an ushort
+         */
         const val MAX_VALUE = UShort.MAX_VALUE
+
+        /**
+         * The minimum value of an ushort
+         */
         const val MIN_VALUE = UShort.MIN_VALUE
     }
 }
@@ -140,13 +220,21 @@ interface ShakeUIntLiteral : ShakeValue {
     val value: UInt
 
     companion object {
+
+        /**
+         * The maximum value of an uint
+         */
         const val MAX_VALUE = UInt.MAX_VALUE
+
+        /**
+         * The minimum value of an uint
+         */
         const val MIN_VALUE = UInt.MIN_VALUE
     }
 }
 
 /**
- * This interface describes a ulong literal
+ * This interface describes an ulong literal
  */
 interface ShakeULongLiteral : ShakeValue {
 
@@ -156,7 +244,15 @@ interface ShakeULongLiteral : ShakeValue {
     val value: ULong
 
     companion object {
+
+        /**
+         * The maximum value of an ulong
+         */
         const val MAX_VALUE = ULong.MAX_VALUE
+
+        /**
+         * The minimum value of an ulong
+         */
         const val MIN_VALUE = ULong.MIN_VALUE
     }
 }
@@ -188,7 +284,15 @@ interface ShakeCharacterLiteral : ShakeValue {
     val value: Char
 
     companion object {
+
+        /**
+         * The maximum value of a char
+         */
         const val MAX_VALUE = Char.MAX_VALUE
+
+        /**
+         * The minimum value of a char
+         */
         const val MIN_VALUE = Char.MIN_VALUE
     }
 }
