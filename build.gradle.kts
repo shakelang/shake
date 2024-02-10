@@ -41,6 +41,8 @@ dependencies {
     kover(project(":util:shason"))
     kover(project(":util:testlib"))
 
+    kover(project(":shake:shakespeare"))
+
     kover(project(":shake:bytecode:conventions"))
     kover(project(":shake:bytecode:utils"))
     kover(project(":shake:bytecode:interpreter"))
