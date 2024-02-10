@@ -4,6 +4,7 @@ import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
+import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass
@@ -229,6 +230,22 @@ private constructor(
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
+
+        override fun getThis(): ShakeAssignable? {
+            return parent.getThis()
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            return parent.getThis(name)
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            return parent.getSuper()
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            return parent.getSuper(name)
+        }
     }
 
     inner class InstanceScope : CreationShakeScope() {
@@ -300,6 +317,22 @@ private constructor(
 
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
+        }
+
+        override fun getThis(): ShakeAssignable? {
+            TODO()
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            TODO()
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            TODO()
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            TODO()
         }
     }
 

@@ -6,6 +6,7 @@ import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeConstructor
 
 open class CreationShakeConstructor(
@@ -90,6 +91,22 @@ open class CreationShakeConstructor(
 
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set class in method scope")
+        }
+
+        override fun getThis(): ShakeAssignable? {
+            return parent.getThis()
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            return parent.getThis(name)
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            return parent.getSuper()
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            return parent.getSuper(name)
         }
 
         override val processor: ShakeASTProcessor
