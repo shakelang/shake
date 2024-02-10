@@ -6,6 +6,7 @@ import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
+import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeMethod
 import com.shakelang.shake.processor.program.types.ShakeType
 
@@ -104,6 +105,24 @@ class CreationShakeMethod(
 
         override val processor: ShakeASTProcessor
             get() = prj.projectScope.processor
+
+        override fun getThis(): ShakeAssignable? {
+            // if method is extension method, the extended type is the this type
+            TODO()
+        }
+
+        override fun getThis(name: String): ShakeAssignable? {
+            // if method is extension method, the extended type is the this type
+            TODO()
+        }
+
+        override fun getSuper(): ShakeAssignable? {
+            return parentScope.getSuper()
+        }
+
+        override fun getSuper(name: String): ShakeAssignable? {
+            return parentScope.getSuper(name)
+        }
     }
 
     companion object {

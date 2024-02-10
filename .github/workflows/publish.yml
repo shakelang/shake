@@ -1,4 +1,4 @@
-name: Release
+name: Release 🚀
 
 on:
   push:
@@ -124,7 +124,6 @@ jobs:
           token: ${{ secrets.GH_BOT_TOKEN }}
 
   publish-gpr:
-    name: Publish to GitHub Package Registry 📦
     needs: [ build, extract_info ]
     runs-on: ubuntu-latest
     permissions:
@@ -162,7 +161,6 @@ jobs:
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToGitHubRepository
 
   publish-sonartype:
-    name: Publish to Sonatype Repository 📦
     needs: [ build, extract_info ]
     runs-on: ubuntu-latest
     permissions:
@@ -181,4 +179,22 @@ jobs:
         with:
           path: |
             ~/.gradle/caches
-            ~/.gradle
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build 🔨
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Publish to Sonartype 📦
+        env:
+          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
+          GRADLE_GITHUB_TOKEN: ${{ github.token }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_PASSWORD }}
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+        run: |
+          ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
+          # ./gradlew closeAndReleaseSonatypeStagingRepository
