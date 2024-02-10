@@ -6,12 +6,13 @@ on:
     types: [ opened ]
 jobs:
   run:
+    name: Auto Assign 🔄
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
     steps:
-      - name: "Auto-assign issue"
+      - name: "Auto-assign issue 🤖"
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GH_BOT_TOKEN }}
