@@ -13,7 +13,7 @@ class VariableAssignmentSpec(
         return "$name = $value"
     }
 
-    class VariableAssignmentSpecBuilder
+    open class VariableAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -60,7 +60,7 @@ class VariableAdditionAssignmentSpec(
         return "$name += $value"
     }
 
-    class VariableAdditionAssignmentSpecBuilder
+    open class VariableAdditionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -107,7 +107,7 @@ class VariableSubtractionAssignmentSpec(
         return "$name -= $value"
     }
 
-    class VariableSubtractionAssignmentSpecBuilder
+    open class VariableSubtractionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -154,7 +154,7 @@ class VariableMultiplicationAssignmentSpec(
         return "$name *= $value"
     }
 
-    class VariableMultiplicationAssignmentSpecBuilder
+    open class VariableMultiplicationAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -201,7 +201,7 @@ class VariableDivisionAssignmentSpec(
         return "$name /= $value"
     }
 
-    class VariableDivisionAssignmentSpecBuilder
+    open class VariableDivisionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -248,7 +248,7 @@ class VariableModuloAssignmentSpec(
         return "$name %= $value"
     }
 
-    class VariableModuloAssignmentSpecBuilder
+    open class VariableModuloAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var value: ValueSpec? = null,
@@ -482,7 +482,7 @@ class VariableIncrementBeforeSpec(
         return "++$name"
     }
 
-    class VariableIncrementBeforeSpecBuilder
+    open class VariableIncrementBeforeSpecBuilder
     internal constructor(
         var name: Identifier? = null,
     ) {
@@ -516,7 +516,7 @@ class VariableIncrementAfterSpec(
         return "$name++"
     }
 
-    class VariableIncrementAfterSpecBuilder
+    open class VariableIncrementAfterSpecBuilder
     internal constructor(
         var name: Identifier? = null,
     ) {
@@ -550,7 +550,7 @@ class VariableDecrementBeforeSpec(
         return "--$name"
     }
 
-    class VariableDecrementBeforeSpecBuilder
+    open class VariableDecrementBeforeSpecBuilder
     internal constructor(
         var name: Identifier? = null,
     ) {
@@ -584,7 +584,7 @@ class VariableDecrementAfterSpec(
         return "$name--"
     }
 
-    class VariableDecrementAfterSpecBuilder
+    open class VariableDecrementAfterSpecBuilder
     internal constructor(
         var name: Identifier? = null,
     ) {
@@ -614,13 +614,13 @@ class VariableDecrementAfterSpec(
 class FunctionCallSpec(
     val name: Identifier,
     val arguments: List<ValueSpec>,
-) : ValueSpec {
+) : ValueSpec, StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         val args = arguments.joinToString(", ") { it.generate(ctx) }
         return "$name($args)"
     }
 
-    class FunctionCallSpecBuilder
+    open class FunctionCallSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var arguments: MutableList<ValueSpec> = mutableListOf(),

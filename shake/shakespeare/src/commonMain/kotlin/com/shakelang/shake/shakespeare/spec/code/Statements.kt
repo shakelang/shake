@@ -27,7 +27,7 @@ class VariableDeclarationSpec(
         return "val $name: $type = $value"
     }
 
-    class VariableDeclarationSpecBuilder
+    open class VariableDeclarationSpecBuilder
     internal constructor(
         var name: Identifier? = null,
         var type: Type? = null,
@@ -81,7 +81,7 @@ class WhileSpec(
         return "while(${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
     }
 
-    class WhileSpecBuilder
+    open class WhileSpecBuilder
     internal constructor(
         var condition: ValueSpec? = null,
         var body: CodeSpec? = null,
@@ -123,7 +123,7 @@ class DoWhileSpec(
         return "do ${body.generate(ctx.indent())} while(${condition.generate(ctx)})"
     }
 
-    class DoWhileSpecBuilder
+    open class DoWhileSpecBuilder
     internal constructor(
         var body: CodeSpec? = null,
         var condition: ValueSpec? = null,
@@ -167,7 +167,7 @@ class ForSpec(
         return "for(${init.generate(ctx)}; ${condition.generate(ctx)}; ${update.generate(ctx)}) ${body.generate(ctx.indent())}"
     }
 
-    class ForSpecBuilder
+    open class ForSpecBuilder
     internal constructor(
         var init: StatementSpec? = null,
         var condition: ValueSpec? = null,
@@ -235,7 +235,7 @@ class IfSpec(
         return "if(${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
     }
 
-    class IfSpecBuilder
+    open class IfSpecBuilder
     internal constructor(
         var condition: ValueSpec? = null,
         var body: CodeSpec? = null,
@@ -283,7 +283,7 @@ class ReturnSpec(
         return "return ${value.generate(ctx)}"
     }
 
-    class ReturnSpecBuilder
+    open class ReturnSpecBuilder
     internal constructor(
         var value: ValueSpec? = null,
     ) {

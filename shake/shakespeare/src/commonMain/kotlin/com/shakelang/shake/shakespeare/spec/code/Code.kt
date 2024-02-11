@@ -22,7 +22,7 @@ class CodeSpec(
         return builder.toString()
     }
 
-    class CodeSpecBuilder(
+    open class CodeSpecBuilder(
         val statements: MutableList<StatementSpec> = mutableListOf(),
     ) {
         fun addStatement(vararg statement: StatementSpec) = apply { statements.addAll(statement) }
