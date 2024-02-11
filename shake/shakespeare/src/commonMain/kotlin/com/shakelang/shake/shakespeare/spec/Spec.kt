@@ -1,3 +1,11 @@
+@file:Suppress(
+    "FunctionName",
+    "MemberVisibilityCanBePrivate",
+    "ktlint:standard:function-naming",
+    "ktlint:standard:property-naming",
+    "unused",
+)
+
 package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec

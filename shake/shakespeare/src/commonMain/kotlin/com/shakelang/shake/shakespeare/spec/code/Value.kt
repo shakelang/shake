@@ -1,3 +1,11 @@
+@file:Suppress(
+    "FunctionName",
+    "MemberVisibilityCanBePrivate",
+    "ktlint:standard:function-naming",
+    "ktlint:standard:property-naming",
+    "unused",
+)
+
 package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.spec.GenerationContext
@@ -18,7 +26,7 @@ interface ValueSpec {
 }
 
 class StringLiteralSpec(val value: String) : ValueSpec {
-    override fun generate(context: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         return "\"$value\""
     }
 
@@ -43,23 +51,38 @@ class StringLiteralSpec(val value: String) : ValueSpec {
     }
 }
 
-class NumberLiteralSpec(val value: Number) : ValueSpec {
-    override fun generate(context: GenerationContext): String {
+class IntLiteralSpec(val value: Long) : ValueSpec {
+    override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
 
     class NumberLiteralSpecBuilder
     internal constructor(
-        var value: Number? = null,
+        var value: Long? = null,
     ) {
 
-        fun value(value: Number): NumberLiteralSpecBuilder {
+        fun value(value: Long): NumberLiteralSpecBuilder {
             this.value = value
             return this
         }
 
-        fun build(): NumberLiteralSpec {
-            return NumberLiteralSpec(
+        fun value(value: Int): NumberLiteralSpecBuilder {
+            this.value = value.toLong()
+            return this
+        }
+
+        fun value(value: Short): NumberLiteralSpecBuilder {
+            this.value = value.toLong()
+            return this
+        }
+
+        fun value(value: Byte): NumberLiteralSpecBuilder {
+            this.value = value.toLong()
+            return this
+        }
+
+        fun build(): IntLiteralSpec {
+            return IntLiteralSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
         }
@@ -70,8 +93,40 @@ class NumberLiteralSpec(val value: Number) : ValueSpec {
     }
 }
 
+class FloatLiteralSpec(val value: Double) : ValueSpec {
+    override fun generate(ctx: GenerationContext): String {
+        return value.toString()
+    }
+
+    class FloatLiteralSpecBuilder
+    internal constructor(
+        var value: Double? = null,
+    ) {
+
+        fun value(value: Float): FloatLiteralSpecBuilder {
+            this.value = value.toDouble()
+            return this
+        }
+
+        fun value(value: Double): FloatLiteralSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun build(): FloatLiteralSpec {
+            return FloatLiteralSpec(
+                value ?: throw IllegalStateException("Value not set"),
+            )
+        }
+    }
+
+    companion object {
+        fun builder() = FloatLiteralSpecBuilder()
+    }
+}
+
 class BooleanLiteralSpec(val value: Boolean) : ValueSpec {
-    override fun generate(context: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
 
@@ -97,8 +152,17 @@ class BooleanLiteralSpec(val value: Boolean) : ValueSpec {
     }
 }
 
+enum class NullLiteralSpec : ValueSpec {
+    INSTANCE,
+    ;
+
+    override fun generate(ctx: GenerationContext): String {
+        return "null"
+    }
+}
+
 class VariableReferenceSpec(val name: Identifier) : ValueSpec {
-    override fun generate(context: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         return name.name
     }
 
