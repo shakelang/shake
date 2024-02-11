@@ -21,5 +21,5 @@ dependencies {
     implementation("com.shakelang.util.embed:plugin:0.2.2")
     implementation("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0")
     implementation("io.kotest:kotest-framework-multiplatform-plugin-gradle:5.8.0")
-    implementation("dev.icerock.moko:resources-generator:0.23.0")
+    implementation("dev.icerock.moko:resources-builder:0.23.0")
 }

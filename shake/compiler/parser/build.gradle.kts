@@ -55,8 +55,8 @@ val generateTests by tasks.registering(NodeTask::class) {
     group = "build"
     description = "Generates the test files for the parser"
     dependsOn("npmInstall")
-    script.set(file("test-generator/index.js"))
-    inputs.dir(file("test-generator"))
+    script.set(file("test-builder/index.js"))
+    inputs.dir(file("test-builder"))
     outputs.dir(file("src/commonTest/resources/generated-tests"))
     args.set(listOf())
 }

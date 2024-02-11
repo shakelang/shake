@@ -4,7 +4,7 @@ import conventions.projectGroup
 
 group = projectGroup("shake.compiler")
 version = resolveVersion()
-description = "js-generator"
+description = "js-builder"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {

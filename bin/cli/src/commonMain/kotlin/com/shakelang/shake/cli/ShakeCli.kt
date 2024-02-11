@@ -33,7 +33,7 @@ val jsGenerator = ShakeJsGenerator()
 //  Java Generator is not implemented yet
 //
 // /**
-//  * The java-generator for generating java form the input code
+//  * The java-builder for generating java form the input code
 //  */
 // val java = JavaGenerator()
 
@@ -70,16 +70,16 @@ fun main(args: Array<String>) {
         name = "shake"
         description = "The Shake programming language CLI"
         option {
-            name = "generator"
+            name = "builder"
             shortAlias("g")
-            description = "The generator to use"
+            description = "The builder to use"
             hasValue = true
-            valueDescription = "Name of the generator"
+            valueDescription = "Name of the builder"
 
             valueValidator {
                 when (it) {
                     "interpreter", "json", "beauty-json", "bjson", "java", "js", "javascript" -> Unit
-                    else -> throw ValueValidationException("Unknown generator \"$it\"")
+                    else -> throw ValueValidationException("Unknown builder \"$it\"")
                 }
             }
 
@@ -132,10 +132,10 @@ fun main(args: Array<String>) {
             // Detect debug mode (check if debug option is set ("--debug"))
             DEBUG = it.getOptionValueByName("debug") != null
 
-            // Get the generator ("--generator")
-            val gen = it.getOptionValueByName("generator")!!
+            // Get the builder ("--builder")
+            val gen = it.getOptionValueByName("builder")!!
 
-            if (gen.size != 1) throw Error("There is only one generator allowed!")
+            if (gen.size != 1) throw Error("There is only one builder allowed!")
             val generator = gen[0].toString()
 
             // Get the arguments
@@ -165,7 +165,7 @@ fun main(args: Array<String>) {
             // Parse the CharacterInputStream
             val pr = parse(chars)
 
-            // Execute the Tree using the specified generator
+            // Execute the Tree using the specified builder
             execute(pr, generator, sourceFile, target, main)
         }
     }.execute(args)
@@ -201,10 +201,10 @@ private fun parse(input: CharacterInputStream): ParseResult {
 }
 
 /**
- * This function executes a [ShakeBlockNode] using a specified generator
+ * This function executes a [ShakeBlockNode] using a specified builder
  *
  * @param pr the [ParseResult] to execute
- * @param generator the generator to use (just give the name of it)
+ * @param generator the builder to use (just give the name of it)
  * @param src the source file of the program
  */
 private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?, main: String? = null) {
@@ -248,7 +248,7 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
         }
         //     if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
         //     else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
-        else -> throw Error("Unknown generator!")
+        else -> throw Error("Unknown builder!")
     }
 }
 

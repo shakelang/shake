@@ -46,7 +46,7 @@ dependencies {
     kover(project(":shake:bytecode:conventions"))
     kover(project(":shake:bytecode:utils"))
     kover(project(":shake:bytecode:interpreter"))
-    kover(project(":shake:bytecode:generator"))
+    kover(project(":shake:bytecode:builder"))
     kover(project(":shake:bytecode:tools"))
 
     kover(project(":shake:compiler:shakelib"))

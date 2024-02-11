@@ -23,7 +23,7 @@ include(":shake:shakespeare")
 include(":shake:bytecode:conventions")
 include(":shake:bytecode:utils")
 include(":shake:bytecode:interpreter")
-include(":shake:bytecode:generator")
+include(":shake:bytecode:builder")
 include(":shake:bytecode:tools")
 
 include(":shake:compiler:shakelib")

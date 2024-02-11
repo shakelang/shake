@@ -30,7 +30,7 @@ interface ShasamblyOpcode {
 }
 
 /**
- * A generator for Shasambly. It has a list of all it's [ShasamblyOpcode]s and will
+ * A builder for Shasambly. It has a list of all it's [ShasamblyOpcode]s and will
  * convert all of them into a single byte array using #[generate]
  */
 open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableList<ShasamblyOpcode> by contents {

@@ -7,7 +7,7 @@ interface ValuedAssignmentSpec : StatementSpec, ValueSpec
 
 class VariableAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name = $value"
@@ -16,8 +16,29 @@ class VariableAssignmentSpec(
     class VariableAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableAssignmentSpec {
             return VariableAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -33,7 +54,7 @@ class VariableAssignmentSpec(
 
 class VariableAdditionAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name += $value"
@@ -42,8 +63,29 @@ class VariableAdditionAssignmentSpec(
     class VariableAdditionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableAdditionAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableAdditionAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableAdditionAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableAdditionAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableAdditionAssignmentSpec {
             return VariableAdditionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -59,7 +101,7 @@ class VariableAdditionAssignmentSpec(
 
 class VariableSubtractionAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name -= $value"
@@ -68,8 +110,29 @@ class VariableSubtractionAssignmentSpec(
     class VariableSubtractionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableSubtractionAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableSubtractionAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableSubtractionAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableSubtractionAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableSubtractionAssignmentSpec {
             return VariableSubtractionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -85,7 +148,7 @@ class VariableSubtractionAssignmentSpec(
 
 class VariableMultiplicationAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name *= $value"
@@ -94,8 +157,29 @@ class VariableMultiplicationAssignmentSpec(
     class VariableMultiplicationAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableMultiplicationAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableMultiplicationAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableMultiplicationAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableMultiplicationAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableMultiplicationAssignmentSpec {
             return VariableMultiplicationAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -111,7 +195,7 @@ class VariableMultiplicationAssignmentSpec(
 
 class VariableDivisionAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name /= $value"
@@ -120,8 +204,29 @@ class VariableDivisionAssignmentSpec(
     class VariableDivisionAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableDivisionAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableDivisionAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableDivisionAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableDivisionAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableDivisionAssignmentSpec {
             return VariableDivisionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -137,7 +242,7 @@ class VariableDivisionAssignmentSpec(
 
 class VariableModuloAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name %= $value"
@@ -146,8 +251,29 @@ class VariableModuloAssignmentSpec(
     class VariableModuloAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableModuloAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableModuloAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableModuloAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableModuloAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableModuloAssignmentSpec {
             return VariableModuloAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -163,7 +289,7 @@ class VariableModuloAssignmentSpec(
 
 class VariablePowerAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name **= $value"
@@ -172,8 +298,29 @@ class VariablePowerAssignmentSpec(
     class VariablePowerAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariablePowerAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariablePowerAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariablePowerAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariablePowerAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariablePowerAssignmentSpec {
             return VariablePowerAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -189,7 +336,7 @@ class VariablePowerAssignmentSpec(
 
 class VariableBitwiseAndAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name &= $value"
@@ -198,8 +345,29 @@ class VariableBitwiseAndAssignmentSpec(
     class VariableBitwiseAndAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableBitwiseAndAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableBitwiseAndAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableBitwiseAndAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableBitwiseAndAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableBitwiseAndAssignmentSpec {
             return VariableBitwiseAndAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -215,7 +383,7 @@ class VariableBitwiseAndAssignmentSpec(
 
 class VariableBitwiseOrAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name |= $value"
@@ -224,8 +392,29 @@ class VariableBitwiseOrAssignmentSpec(
     class VariableBitwiseOrAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableBitwiseOrAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableBitwiseOrAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableBitwiseOrAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableBitwiseOrAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableBitwiseOrAssignmentSpec {
             return VariableBitwiseOrAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -241,7 +430,7 @@ class VariableBitwiseOrAssignmentSpec(
 
 class VariableBitwiseXorAssignmentSpec(
     val name: Identifier,
-    val value: String,
+    val value: ValueSpec,
 ) : ValuedAssignmentSpec {
     override fun generate(ctx: GenerationContext): String {
         return "$name ^= $value"
@@ -250,8 +439,29 @@ class VariableBitwiseXorAssignmentSpec(
     class VariableBitwiseXorAssignmentSpecBuilder
     internal constructor(
         var name: Identifier? = null,
-        var value: String? = null,
+        var value: ValueSpec? = null,
     ) {
+
+        fun name(name: Identifier): VariableBitwiseXorAssignmentSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableBitwiseXorAssignmentSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun value(value: ValueSpec): VariableBitwiseXorAssignmentSpecBuilder {
+            this.value = value
+            return this
+        }
+
+        fun value(value: String): VariableBitwiseXorAssignmentSpecBuilder {
+            this.value = ValueSpec.of(value)
+            return this
+        }
+
         fun build(): VariableBitwiseXorAssignmentSpec {
             return VariableBitwiseXorAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -276,6 +486,17 @@ class VariableIncrementBeforeSpec(
     internal constructor(
         var name: Identifier? = null,
     ) {
+
+        fun name(name: Identifier): VariableIncrementBeforeSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableIncrementBeforeSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
         fun build(): VariableIncrementBeforeSpec {
             return VariableIncrementBeforeSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -299,6 +520,17 @@ class VariableIncrementAfterSpec(
     internal constructor(
         var name: Identifier? = null,
     ) {
+
+        fun name(name: Identifier): VariableIncrementAfterSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableIncrementAfterSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
         fun build(): VariableIncrementAfterSpec {
             return VariableIncrementAfterSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -322,6 +554,17 @@ class VariableDecrementBeforeSpec(
     internal constructor(
         var name: Identifier? = null,
     ) {
+
+        fun name(name: Identifier): VariableDecrementBeforeSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableDecrementBeforeSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
         fun build(): VariableDecrementBeforeSpec {
             return VariableDecrementBeforeSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -345,6 +588,17 @@ class VariableDecrementAfterSpec(
     internal constructor(
         var name: Identifier? = null,
     ) {
+
+        fun name(name: Identifier): VariableDecrementAfterSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): VariableDecrementAfterSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
         fun build(): VariableDecrementAfterSpec {
             return VariableDecrementAfterSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -371,6 +625,22 @@ class FunctionCallSpec(
         var name: Identifier? = null,
         var arguments: MutableList<ValueSpec> = mutableListOf(),
     ) {
+
+        fun name(name: Identifier): FunctionCallSpecBuilder {
+            this.name = name
+            return this
+        }
+
+        fun name(name: String): FunctionCallSpecBuilder {
+            this.name = Identifier(name)
+            return this
+        }
+
+        fun argument(argument: ValueSpec): FunctionCallSpecBuilder {
+            arguments.add(argument)
+            return this
+        }
+
         fun build(): FunctionCallSpec {
             return FunctionCallSpec(
                 name ?: throw IllegalStateException("Name not set"),
