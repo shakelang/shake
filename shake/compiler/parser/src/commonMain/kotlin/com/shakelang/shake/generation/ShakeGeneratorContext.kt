@@ -59,7 +59,7 @@ abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.Shak
         if (n is ShakeLogicalFalseNode) return visitLogicalFalseNode(n, context)
         if (n is ShakeImportNode) return visitImportNode(n, context)
         if (n is ShakeCastNode) return visitCastNode(n, context)
-        throw Error("It looks like that node is not implemented in the builder: $n")
+        throw Error("It looks like that node is not implemented in the generator: $n")
     }
 
     abstract fun visitTree(t: ShakeBlockNode?, context: C): T

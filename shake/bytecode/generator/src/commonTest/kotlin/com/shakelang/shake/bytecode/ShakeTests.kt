@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 class ShakeTests : FreeSpec(
     {
 
-        val debugger = debug("bytecode").child("builder", "tests", "ShakeTests")
+        val debugger = debug("bytecode").child("generator", "tests", "ShakeTests")
 
         ShakeTestInput.forEachFile {
 

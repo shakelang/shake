@@ -137,12 +137,12 @@ class ShakeBytecodeGenerator {
             is ShakeMethod -> {
                 if (invokable.isNative) {
                     // There are two types to handle native methods:
-                    // 1. Native methods that are registered in the builder and will
+                    // 1. Native methods that are registered in the generator and will
                     //    be inlined into the bytecode (e.g. int.plus(int))
-                    // 2. Native methods that are not registered in the builder and
+                    // 2. Native methods that are not registered in the generator and
                     //    will generate a call to the native method (e.g. int.toString())
 
-                    // Let's first check if the native method is registered in the builder
+                    // Let's first check if the native method is registered in the generator
                     // and we can inline it
                     val native = Natives.get(invokable.qualifiedSignature)
                     if (native != null) {
@@ -150,11 +150,11 @@ class ShakeBytecodeGenerator {
                         return
                     }
 
-                    // If the native method is not registered in the builder, we will
+                    // If the native method is not registered in the generator, we will
                     // just generate a normal call to the native method
                 }
 
-                // If the method is not handled by the native builder, we will just
+                // If the method is not handled by the native generator, we will just
                 // generate a normal call to the method
 
                 // Load all arguments

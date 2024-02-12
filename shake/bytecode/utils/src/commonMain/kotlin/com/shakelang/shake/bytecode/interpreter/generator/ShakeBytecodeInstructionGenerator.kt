@@ -12,9 +12,9 @@ import kotlin.jvm.JvmName
  * Utility class to generate bytecode instructions
  * Normally you should use the [bytecode] function to generate bytecode
  *
- * @property bytes The bytes of the builder (default: empty)
+ * @property bytes The bytes of the generator (default: empty)
  * @constructor Creates a new [ShakeBytecodeInstructionGenerator]
- * @param bytes The bytes of the builder (default: empty)
+ * @param bytes The bytes of the generator (default: empty)
  *
  * @since 0.1.0
  * @version 0.1.0
@@ -24,7 +24,7 @@ import kotlin.jvm.JvmName
 open class ShakeBytecodeInstructionGenerator(
 
     /**
-     * The bytes of the builder
+     * The bytes of the generator
      * @since 0.1.0
      * @version 0.1.0
      */
