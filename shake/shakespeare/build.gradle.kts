@@ -21,6 +21,7 @@ kotlin {
     dependencies {
         implementation(project(":util:primitives"))
         implementation(project(":util:logger"))
+        implementation(project(":util:common-io"))
         testImplementation(project(":util:testlib"))
         testImplementation(project(":shake:compiler:shakelib"))
     }

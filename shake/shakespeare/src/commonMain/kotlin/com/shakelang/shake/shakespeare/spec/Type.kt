@@ -36,6 +36,21 @@ class SimpleType(val name: String) : Type {
     override fun generate(ctx: GenerationContext): String {
         return name
     }
+
+    override fun toString(): String {
+        return name
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SimpleType) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
+    }
 }
 
 enum class PrimitiveType(val type: String) : Type {

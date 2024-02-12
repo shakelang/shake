@@ -27,7 +27,7 @@ class CodeSpec(
             builder.append((1..indented.indentLevel).joinToString("") { indented.indentType })
             builder.append(statement.generate(indented))
         }
-        return builder.toString()
+        return builder.append("}").toString()
     }
 
     open class CodeSpecBuilder(
@@ -40,5 +40,6 @@ class CodeSpec(
 
     companion object {
         fun builder() = CodeSpecBuilder()
+        fun empty() = CodeSpec(emptyList())
     }
 }
