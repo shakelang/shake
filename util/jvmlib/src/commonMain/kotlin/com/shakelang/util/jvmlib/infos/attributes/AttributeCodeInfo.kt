@@ -8,13 +8,14 @@ import com.shakelang.util.jvmlib.infos.constants.ConstantPool
 import com.shakelang.util.jvmlib.infos.constants.ConstantUtf8Info
 import com.shakelang.util.primitives.bytes.*
 
+@Suppress("MemberVisibilityCanBePrivate")
 class AttributeCodeInfo(
 
     name: ConstantUtf8Info,
-    val max_stack: UShort,
-    val max_locals: UShort,
+    val maxStack: UShort,
+    val maxLocals: UShort,
     val code: ByteArray,
-    val exception_table: Array<ExceptionTableEntry>,
+    val exceptionTable: Array<ExceptionTableEntry>,
     val attributes: Array<AttributeInfo>,
 
 ) : AttributeInfo(name) {
@@ -28,51 +29,51 @@ class AttributeCodeInfo(
     override val bytes: ByteArray
         get() {
             val attributes = this.attributes.map { it.toBytes().toList() }.flatten().toByteArray()
-            val b = ByteArray(12 + code.size + exception_table.size * 8 + attributes.size)
-            b.setUnsignedShort(0, max_stack) // 2
-            b.setUnsignedShort(2, max_locals) // 2
+            val b = ByteArray(12 + code.size + exceptionTable.size * 8 + attributes.size)
+            b.setUnsignedShort(0, maxStack) // 2
+            b.setUnsignedShort(2, maxLocals) // 2
             b.setInt(4, code.size) // 2
             b.setBytes(8, code) // code.size
-            b.setUnsignedShort(8 + code.size, exception_table.size.toUShort()) // 2
-            for (i in exception_table.indices) { // 8 * exception_table.size
-                b.setBytes(10 + code.size + i * 8, exception_table[i].toBytes())
+            b.setUnsignedShort(8 + code.size, exceptionTable.size.toUShort()) // 2
+            for (i in exceptionTable.indices) { // 8 * exception_table.size
+                b.setBytes(10 + code.size + i * 8, exceptionTable[i].toBytes())
             }
-            b.setUnsignedShort(10 + code.size + exception_table.size * 8, this.attributes.size.toUShort()) // 2
-            b.setBytes(12 + code.size + exception_table.size * 8, attributes) // attributes.size
+            b.setUnsignedShort(10 + code.size + exceptionTable.size * 8, this.attributes.size.toUShort()) // 2
+            b.setBytes(12 + code.size + exceptionTable.size * 8, attributes) // attributes.size
             return b
         }
 
     override fun toJson() = mapOf(
         "tag" to ATTRIBUTE_CODE,
-        "max_stack" to max_stack,
-        "max_locals" to max_locals,
+        "max_stack" to maxStack,
+        "max_locals" to maxLocals,
         "code" to code.toHexString(),
         "name_index" to nameIndex,
-        "exception_table" to exception_table.map { it.toJson() },
+        "exception_table" to exceptionTable.map { it.toJson() },
         "attributes" to attributes.map { it.toJson() },
     )
 
     companion object {
         const val ATTRIBUTE_CODE = "Code"
         fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeCodeInfo {
-            val max_stack = stream.readUnsignedShort()
-            val max_locals = stream.readUnsignedShort()
-            val code_length = stream.readInt()
-            val code = stream.readNBytes(code_length)
-            val exception_table_length = stream.readUnsignedShort()
-            val exception_table = Array(exception_table_length.toInt()) {
+            val maxStack = stream.readUnsignedShort()
+            val maxLocals = stream.readUnsignedShort()
+            val codeLength = stream.readInt()
+            val code = stream.readNBytes(codeLength)
+            val exceptionTableLength = stream.readUnsignedShort()
+            val exceptionTable = Array(exceptionTableLength.toInt()) {
                 ExceptionTableEntry.fromStream(stream)
             }
-            val attributes_count = stream.readUnsignedShort()
-            val attributes = Array(attributes_count.toInt()) {
+            val attributesCount = stream.readUnsignedShort()
+            val attributes = Array(attributesCount.toInt()) {
                 AttributeInfo.fromStream(pool, stream)
             }
             return AttributeCodeInfo(
                 name,
-                max_stack,
-                max_locals,
+                maxStack,
+                maxLocals,
                 code,
-                exception_table,
+                exceptionTable,
                 attributes,
             )
         }
@@ -100,27 +101,27 @@ class AttributeCodeInfo(
     }
 
     class ExceptionTableEntry(
-        val start_pc: UShort,
-        val end_pc: UShort,
-        val handler_pc: UShort,
-        val catch_type: UShort,
+        val startPc: UShort,
+        val endPc: UShort,
+        val handlerPc: UShort,
+        val catchType: UShort,
     ) {
         val bytes: ByteArray
             get() {
                 val b = ByteArray(8)
-                b.setUnsignedShort(0, start_pc)
-                b.setUnsignedShort(2, end_pc)
-                b.setUnsignedShort(4, handler_pc)
-                b.setUnsignedShort(6, catch_type)
+                b.setUnsignedShort(0, startPc)
+                b.setUnsignedShort(2, endPc)
+                b.setUnsignedShort(4, handlerPc)
+                b.setUnsignedShort(6, catchType)
                 return b
             }
 
         fun toBytes() = this.bytes
         fun toJson() = mapOf(
-            "start_pc" to start_pc,
-            "end_pc" to end_pc,
-            "handler_pc" to handler_pc,
-            "catch_type" to catch_type,
+            "start_pc" to startPc,
+            "end_pc" to endPc,
+            "handler_pc" to handlerPc,
+            "catch_type" to catchType,
         )
 
         companion object {

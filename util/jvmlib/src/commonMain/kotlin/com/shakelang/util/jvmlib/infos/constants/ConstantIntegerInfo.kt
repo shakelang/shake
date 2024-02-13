@@ -7,8 +7,8 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
 
-    override val tag: Byte get() = ConstantIntegerInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantIntegerInfo.TAG
+    override val tagName: String get() = NAME
 
     override fun toJson() = super.toJson().with("value", value)
 
@@ -26,7 +26,7 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantIntegerInfo")
             } else {
                 contentsFromStream(stream)
@@ -38,7 +38,7 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name: String = "constant_integer_info"
-        const val tag: Byte = ConstantTags.CONSTANT_INTEGER
+        const val NAME: String = "constant_integer_info"
+        const val TAG: Byte = ConstantTags.CONSTANT_INTEGER
     }
 }

@@ -9,11 +9,12 @@ expect class File
  * Constructor for [File] class
  *
  * @param path the path of the file
- */(
+ */
+constructor(
 
     path: String,
 
-    ) {
+) {
 
     /**
      * The path of the [File]

@@ -5,6 +5,7 @@ package com.shakelang.util.parseutils
 open class LoopController {
     var isBreak = false
 
+    @Suppress("FunctionName", "ktlint:standard:function-naming")
     fun Break() {
         isBreak = true
     }

@@ -15,8 +15,8 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
 
     override val uses: Array<ConstantInfo> get() = arrayOf(classRef, nameTypeRef)
 
-    override val tag: Byte get() = ConstantFieldrefInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantFieldrefInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson()
         .with("class_ref", classRefIndex.toInt())
         .with("name_type_ref", nameTypeRefIndex.toInt())
@@ -43,7 +43,7 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantFieldrefInfo")
             } else {
                 contentsFromStream(stream)
@@ -55,7 +55,7 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_fieldref_info"
-        const val tag = ConstantTags.CONSTANT_FIELD_REF
+        const val NAME = "constant_fieldref_info"
+        const val TAG = ConstantTags.CONSTANT_FIELD_REF
     }
 }

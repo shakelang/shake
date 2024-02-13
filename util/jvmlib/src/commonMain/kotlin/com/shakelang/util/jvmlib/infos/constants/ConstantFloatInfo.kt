@@ -7,8 +7,8 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 class ConstantFloatInfo(val value: Float) : ConstantInfo() {
 
-    override val tag: Byte get() = ConstantFloatInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantFloatInfo.TAG
+    override val tagName: String get() = NAME
 
     override fun toJson() = super.toJson().with("value", value.toDouble())
 
@@ -26,7 +26,7 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantFloatInfo")
             } else {
                 contentsFromStream(stream)
@@ -38,7 +38,7 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_float_info"
-        const val tag = ConstantTags.CONSTANT_FLOAT
+        const val NAME = "constant_float_info"
+        const val TAG = ConstantTags.CONSTANT_FLOAT
     }
 }

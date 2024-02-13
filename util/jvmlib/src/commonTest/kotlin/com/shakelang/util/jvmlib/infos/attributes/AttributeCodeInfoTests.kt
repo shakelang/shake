@@ -7,6 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame
 
+@Suppress("ktlint:standard:value-argument-comment")
 class AttributeCodeInfoTests {
 
     private val pool
@@ -28,10 +29,10 @@ class AttributeCodeInfoTests {
             arrayOf(),
         )
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0, attribute.code.size)
-        assertEquals(0, attribute.exception_table.size)
+        assertEquals(0, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -47,10 +48,10 @@ class AttributeCodeInfoTests {
         ).dataStream()
         val attribute = AttributeCodeInfo.contentsFromStream(pool, stream, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0, attribute.code.size)
-        assertEquals(0, attribute.exception_table.size)
+        assertEquals(0, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -69,10 +70,10 @@ class AttributeCodeInfoTests {
         ).dataStream()
         val attribute = AttributeCodeInfo.contentsFromStream(pool, stream, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0x100, attribute.code.size)
-        assertEquals(2, attribute.exception_table.size)
+        assertEquals(2, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -89,10 +90,10 @@ class AttributeCodeInfoTests {
         ).dataStream()
         val attribute = AttributeCodeInfo.fromStream(pool, stream)
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0, attribute.code.size)
-        assertEquals(0, attribute.exception_table.size)
+        assertEquals(0, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -112,10 +113,10 @@ class AttributeCodeInfoTests {
         ).dataStream()
         val attribute = AttributeCodeInfo.fromStream(pool, stream)
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0x100, attribute.code.size)
-        assertEquals(2, attribute.exception_table.size)
+        assertEquals(2, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -131,10 +132,10 @@ class AttributeCodeInfoTests {
         )
         val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0, attribute.code.size)
-        assertEquals(0, attribute.exception_table.size)
+        assertEquals(0, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -153,10 +154,10 @@ class AttributeCodeInfoTests {
         )
         val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0x100, attribute.code.size)
-        assertEquals(2, attribute.exception_table.size)
+        assertEquals(2, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -173,10 +174,10 @@ class AttributeCodeInfoTests {
         )
         val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0, attribute.code.size)
-        assertEquals(0, attribute.exception_table.size)
+        assertEquals(0, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 
@@ -196,10 +197,10 @@ class AttributeCodeInfoTests {
         )
         val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
-        assertEquals(0u, attribute.max_stack)
-        assertEquals(0u, attribute.max_locals)
+        assertEquals(0u, attribute.maxStack)
+        assertEquals(0u, attribute.maxLocals)
         assertEquals(0x100, attribute.code.size)
-        assertEquals(2, attribute.exception_table.size)
+        assertEquals(2, attribute.exceptionTable.size)
         assertEquals(0, attribute.attributes.size)
     }
 }
