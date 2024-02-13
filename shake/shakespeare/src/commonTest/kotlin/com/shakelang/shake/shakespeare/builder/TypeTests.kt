@@ -112,7 +112,7 @@ class TypeTests : FreeSpec({
     "PrimitiveType.BOOLEAN.generate should return 'boolean'" {
         PrimitiveType.BOOLEAN.generate(GenerationContext()) shouldBe "boolean"
     }
-    
+
     "ClassType.generate should return class name for 'MyClass'" {
         val classType = ClassType("MyClass")
         classType.generate(GenerationContext()) shouldBe "MyClass"
