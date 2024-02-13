@@ -12,8 +12,8 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
 
     override val uses: Array<ConstantInfo> get() = arrayOf(descriptor)
 
-    override val tag: Byte get() = ConstantMethodTypeInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantMethodTypeInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson()
         .with("index", descriptorIndex.toInt())
 
@@ -36,7 +36,7 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantMethodTypeInfo")
             } else {
                 contentsFromStream(stream)
@@ -48,7 +48,7 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_methodtype_info"
-        const val tag = ConstantTags.CONSTANT_METHODTYPE
+        const val NAME = "constant_methodtype_info"
+        const val TAG = ConstantTags.CONSTANT_METHODTYPE
     }
 }

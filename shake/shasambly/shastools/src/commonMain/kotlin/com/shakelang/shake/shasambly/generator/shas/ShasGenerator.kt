@@ -13,6 +13,7 @@ import com.shakelang.util.io.streaming.output.OutputStream
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.primitives.bytes.toHexString
 
+@Suppress("MemberVisibilityCanBePrivate", "FunctionName", "ktlint:standard:function-naming")
 class ShasGenerator(input: InputStream) {
 
     private val counter = input.asCountingInputStream()

@@ -4,7 +4,7 @@ import com.shakelang.shake.parser.node.factor.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class LiteralTests: FreeSpec ({
+class LiteralTests : FreeSpec({
 
     "basic string" {
         val node = ParserTestUtil.parseValue("<BasicStringTest>", "\"test\"", ShakeStringNode::class)
@@ -45,5 +45,4 @@ class LiteralTests: FreeSpec ({
     "super literal" {
         ParserTestUtil.parseValue("<SuperTest>", "super", ShakeSuperNode::class)
     }
-
 })

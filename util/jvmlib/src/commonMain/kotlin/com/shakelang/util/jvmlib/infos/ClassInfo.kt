@@ -97,7 +97,7 @@ class ClassInfo(
 
     fun dump(out: OutputStream) = this.dump(DataOutputStream(out))
     fun dump(out: DataOutputStream) {
-        out.writeInt(ClassInfo.Companion.magic)
+        out.writeInt(ClassInfo.Companion.MAGIC)
         out.writeUnsignedShort(minorVersion)
         out.writeUnsignedShort(majorVersion)
         constantPool.dump(out)
@@ -112,7 +112,7 @@ class ClassInfo(
 
     companion object {
 
-        const val magic: Int = 0xcafebabe.toInt()
+        const val MAGIC: Int = 0xcafebabe.toInt()
 
         fun fromStream(stream: DataInputStream): ClassInfo {
             val magic = stream.readUnsignedInt()

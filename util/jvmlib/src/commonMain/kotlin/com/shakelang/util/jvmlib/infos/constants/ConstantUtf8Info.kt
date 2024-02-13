@@ -7,8 +7,8 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 class ConstantUtf8Info(val value: String) : ConstantInfo() {
 
-    override val tag: Byte get() = ConstantUtf8Info.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = TAG
+    override val tagName: String get() = NAME
 
     override fun toJson() = super.toJson().with("value", value)
 
@@ -28,7 +28,7 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantUtf8Info")
             } else {
                 contentsFromStream(stream)
@@ -40,7 +40,7 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_utf8_info"
-        const val tag = ConstantTags.CONSTANT_UTF8
+        const val NAME = "constant_utf8_info"
+        const val TAG = ConstantTags.CONSTANT_UTF8
     }
 }

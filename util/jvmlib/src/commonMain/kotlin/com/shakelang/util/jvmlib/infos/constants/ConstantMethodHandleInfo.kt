@@ -12,8 +12,8 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
 
     override val uses get() = arrayOf(reference)
 
-    override val tag: Byte get() = ConstantMethodHandleInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantMethodHandleInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson()
         .with("type", referenceKind.toInt())
         .with("index", referenceIndex.toInt())
@@ -39,7 +39,7 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantMethodHandleInfo")
             } else {
                 contentsFromStream(stream)
@@ -51,7 +51,7 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_method_handle_info"
-        const val tag = ConstantTags.CONSTANT_METHOD_HANDLE
+        const val NAME = "constant_method_handle_info"
+        const val TAG = ConstantTags.CONSTANT_METHOD_HANDLE
     }
 }

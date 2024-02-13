@@ -19,6 +19,8 @@ include(":util:primitives")
 include(":util:shason")
 include(":util:testlib")
 
+include(":shake:shakespeare")
+include(":shake:bytecode:generator")
 include(":shake:bytecode:conventions")
 include(":shake:bytecode:utils")
 include(":shake:bytecode:interpreter")

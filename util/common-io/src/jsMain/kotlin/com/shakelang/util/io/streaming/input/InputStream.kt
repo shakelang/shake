@@ -2,12 +2,12 @@ package com.shakelang.util.io.streaming.input
 
 import kotlin.math.min
 
+@Suppress("PrivatePropertyName", "ktlint:standard:property-naming")
 actual abstract class InputStream {
 
     // MAX_SKIP_BUFFER_SIZE is used to determine the maximum buffer size to
     // use when skipping.
     private val MAX_SKIP_BUFFER_SIZE = 2048
-
     private val MAX_BUFFER_SIZE = Int.MAX_VALUE - 8
 
     /**

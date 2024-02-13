@@ -15,8 +15,8 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
 
     override val uses: Array<ConstantInfo> get() = arrayOf(value)
 
-    override val tag: Byte get() = ConstantClassInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantClassInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson().with("value", valueIndex.toInt())
 
     override fun init(pool: ConstantPool) {
@@ -38,7 +38,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantClassInfo")
             } else {
                 contentsFromStream(stream)
@@ -50,7 +50,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_class_info"
-        const val tag = ConstantTags.CONSTANT_CLASS
+        const val NAME = "constant_class_info"
+        const val TAG = ConstantTags.CONSTANT_CLASS
     }
 }
