@@ -8,6 +8,7 @@ import com.shakelang.util.primitives.bytes.toBytes
 
 typealias SimpleShasamblyGeneratorFunction = SimpleShasambly.() -> Unit
 
+@Suppress("MemberVisibilityCanBePrivate", "FunctionName", "ktlint:standard:function-naming")
 interface SimpleShasambly {
 
     val natives: NativeFunctions
