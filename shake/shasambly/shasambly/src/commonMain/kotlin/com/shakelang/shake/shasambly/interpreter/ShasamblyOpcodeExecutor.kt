@@ -7,7 +7,7 @@ import kotlin.experimental.or
 import kotlin.experimental.xor
 import kotlin.math.abs
 
-@Suppress("ktlint:standard:value-argument-comment", "ktlint:standard:property-name", "FunctionName")
+@Suppress("ktlint:standard:value-argument-comment", "ktlint:standard:property-naming", "FunctionName")
 abstract class ShasamblyOpcodeExecutor(
     memorySize: Int,
     bytes: ByteArray,
