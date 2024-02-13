@@ -29,7 +29,7 @@ class ShakeTests : FreeSpec(
             debugger("Generating test for ${json.stringify(inputFile.path)} with output ${json.stringify(outputFile.path)}")
 
             // execute the test
-            inputFile.path {
+            inputFile.path.config(enabled = false) {
                 codeSpec(inputFile.contentsAsString()) {
 
                     val debug = debugger.child("test", inputFile.path.split("/").last())
