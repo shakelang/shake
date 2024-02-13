@@ -88,13 +88,13 @@ class FieldInfo(
 
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): FieldInfo {
-            val access_flags = stream.readUnsignedShort()
+            val accessFlags = stream.readUnsignedShort()
             val nameIndex = stream.readUnsignedShort()
             val name = pool.getUtf8(nameIndex)
             val descriptorIndex = stream.readUnsignedShort()
             val descriptor = pool.getUtf8(descriptorIndex)
             val attributes = AttributeMap.fromStream(pool, stream)
-            return FieldInfo(access_flags, name, descriptor, attributes)
+            return FieldInfo(accessFlags, name, descriptor, attributes)
         }
 
         fun fromStream(pool: ConstantPool, stream: InputStream): FieldInfo {

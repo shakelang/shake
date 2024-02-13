@@ -5,6 +5,7 @@ import com.shakelang.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@Suppress("ktlint:standard:value-argument-comment")
 class ShasamblyInterpretingBaseTests {
 
     class Instance(memorySize: Int, bytes: ByteArray = byteArrayOf()) : ShasamblyInterpretingBase(memorySize, bytes, 0)

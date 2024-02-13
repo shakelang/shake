@@ -15,8 +15,8 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
 
     override val uses: Array<ConstantInfo> get() = arrayOf(classRef, nameTypeRef)
 
-    override val tag: Byte get() = ConstantMethodrefInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantMethodrefInfo.TAG
+    override val tagName: String get() = NAME
 
     override fun toJson() = super.toJson()
         .with("class_ref", classRefIndex.toInt())
@@ -44,7 +44,7 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantMethodrefInfo")
             } else {
                 contentsFromStream(stream)
@@ -56,7 +56,7 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_methodref_info"
-        const val tag = ConstantTags.CONSTANT_METHOD_REF
+        const val NAME = "constant_methodref_info"
+        const val TAG = ConstantTags.CONSTANT_METHOD_REF
     }
 }

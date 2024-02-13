@@ -15,8 +15,8 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
 
     override val uses: Array<ConstantInfo> get() = arrayOf(type, name)
 
-    override val tag: Byte get() = ConstantNameAndTypeInfo.tag
-    override val tagName: String get() = ConstantNameAndTypeInfo.name
+    override val tag: Byte get() = ConstantNameAndTypeInfo.TAG
+    override val tagName: String get() = ConstantNameAndTypeInfo.NAME
 
     override fun toJson() = super.toJson()
         .with("name", typeIndex.toInt())
@@ -44,7 +44,7 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantNameAndTypeInfo")
             } else {
                 contentsFromStream(stream)
@@ -56,7 +56,7 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_name_and_type_info"
-        const val tag = ConstantTags.CONSTANT_NAME_AND_TYPE
+        const val NAME = "constant_name_and_type_info"
+        const val TAG = ConstantTags.CONSTANT_NAME_AND_TYPE
     }
 }

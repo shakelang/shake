@@ -1,5 +1,3 @@
-@file:Suppress("nothing_to_inline")
-
 package com.shakelang.shake.shasambly.interpreter
 
 import com.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
@@ -9,6 +7,7 @@ import kotlin.experimental.or
 import kotlin.experimental.xor
 import kotlin.math.abs
 
+@Suppress("ktlint:standard:value-argument-comment", "ktlint:standard:property-naming", "FunctionName")
 abstract class ShasamblyOpcodeExecutor(
     memorySize: Int,
     bytes: ByteArray,

@@ -2,6 +2,7 @@ package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.test.ShakeParserTestResources
 
+@Suppress("ktlint:standard:property-naming")
 class Template(
     val name: String,
 ) {

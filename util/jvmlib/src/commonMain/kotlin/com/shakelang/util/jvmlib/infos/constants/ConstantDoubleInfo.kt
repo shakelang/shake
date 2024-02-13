@@ -7,8 +7,8 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
 
-    override val tag: Byte get() = ConstantDoubleInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantDoubleInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson().with("value", value)
 
     override fun dump(out: DataOutputStream) {
@@ -25,7 +25,7 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantDoubleInfo")
             } else {
                 contentsFromStream(stream)
@@ -37,7 +37,7 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_double_info"
-        const val tag = ConstantTags.CONSTANT_DOUBLE
+        const val NAME = "constant_double_info"
+        const val TAG = ConstantTags.CONSTANT_DOUBLE
     }
 }

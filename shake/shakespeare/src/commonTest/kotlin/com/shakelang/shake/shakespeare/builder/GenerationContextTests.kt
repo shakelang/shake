@@ -2,7 +2,7 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class GenerationContextSpec : FreeSpec({
+class GenerationContextTests : FreeSpec({
     "should be constructed correctly" {
         val context = GenerationContext()
         context.indentType shouldBe "    "

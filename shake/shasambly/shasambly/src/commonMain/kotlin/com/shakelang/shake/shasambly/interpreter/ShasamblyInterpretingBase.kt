@@ -13,6 +13,7 @@ import kotlin.experimental.and
  * It contains the core functions of the interpreter that store data and are used to manipulate the interprets data.
  * It does not contain any functions that are used to interpret the data or to execute opcodes.
  */
+@Suppress("ktlint:standard:function-naming")
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
     bytes: ByteArray,

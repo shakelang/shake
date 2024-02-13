@@ -13,8 +13,8 @@ class ConstantInvokeDynamicInfo(
     lateinit var nameAndType: ConstantNameAndTypeInfo
     val nameAndTypeIndex: UShort get() = nameAndType.index
 
-    override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
-    override val tagName: String get() = name
+    override val tag: Byte get() = ConstantInvokeDynamicInfo.TAG
+    override val tagName: String get() = NAME
     override fun toJson() = super.toJson()
         .with("bootstrap_method_attribute", bootstrapMethodAttributeIndex.toInt())
         .with("name_type_ref", nameAndTypeIndex.toInt())
@@ -41,7 +41,7 @@ class ConstantInvokeDynamicInfo(
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag) {
+            if (stream.readByte() != TAG) {
                 throw IllegalArgumentException("Invalid tag for ConstantInvokeDynamicInfo")
             } else {
                 contentsFromStream(stream)
@@ -53,7 +53,7 @@ class ConstantInvokeDynamicInfo(
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
-        const val name = "constant_invoke_dynamic"
-        const val tag = ConstantTags.CONSTANT_INVOKE_DYNAMIC
+        const val NAME = "constant_invoke_dynamic"
+        const val TAG = ConstantTags.CONSTANT_INVOKE_DYNAMIC
     }
 }

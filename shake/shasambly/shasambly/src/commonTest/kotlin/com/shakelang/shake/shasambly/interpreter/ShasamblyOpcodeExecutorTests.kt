@@ -4,6 +4,7 @@ import com.shakelang.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@Suppress("ktlint:standard:value-argument-comment")
 class ShasamblyOpcodeExecutorTests {
 
     class Instance(
