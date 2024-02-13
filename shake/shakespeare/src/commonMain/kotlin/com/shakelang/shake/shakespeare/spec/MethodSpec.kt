@@ -107,6 +107,16 @@ class MethodSpec(
             return this
         }
 
+        fun parameters(parameters: List<ParameterSpec>): MethodSpecBuilder {
+            this.parameters.addAll(parameters)
+            return this
+        }
+
+        fun parameters(vararg parameters: ParameterSpec): MethodSpecBuilder {
+            this.parameters.addAll(parameters)
+            return this
+        }
+
         fun body(body: CodeSpec): MethodSpecBuilder {
             this.body = body
             return this

@@ -6,9 +6,8 @@
     "unused",
 )
 
-package com.shakelang.shake.shakespeare.builder
+package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.spec.*
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -335,6 +334,85 @@ class MethodSpecTests : FreeSpec(
                 isNative,
             )
             method.generate(GenerationContext()) shouldBe "public int name() {}"
+        }
+
+        "builder should create a method" {
+            val identifier = Identifier("name")
+            val returnType = Type.of("int")
+            val parameters = listOf<ParameterSpec>()
+            val body = CodeSpec.empty()
+            val isStatic = false
+            val isAbstract = false
+            val isFinal = false
+            val isOverride = false
+            val accessModifier = AccessModifier.PUBLIC
+            val isSynchronized = false
+            val isNative = false
+            val method = MethodSpec.builder()
+                .name(identifier)
+                .returnType(returnType)
+                .parameters(parameters)
+                .body(body)
+                .static(isStatic)
+                .abstract(isAbstract)
+                .final(isFinal)
+                .override(isOverride)
+                .accessModifier(accessModifier)
+                .synchronized(isSynchronized)
+                .native(isNative)
+                .build()
+            method.name shouldBe identifier
+            method.returnType shouldBe returnType
+            method.parameters shouldBe parameters
+            method.body shouldBe body
+            method.isStatic shouldBe isStatic
+            method.isAbstract shouldBe isAbstract
+            method.isFinal shouldBe isFinal
+            method.isOverride shouldBe isOverride
+            method.accessModifier shouldBe accessModifier
+            method.isSynchronized shouldBe isSynchronized
+            method.isNative shouldBe isNative
+        }
+
+        "builder should create a method with parameters" {
+            val identifier = Identifier("name")
+            val returnType = Type.of("int")
+            val parameters = listOf(
+                ParameterSpec.builder().name(Identifier("param1")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name(Identifier("param2")).type(Type.of("int")).build(),
+            )
+            val body = CodeSpec.empty()
+            val isStatic = false
+            val isAbstract = false
+            val isFinal = false
+            val isOverride = false
+            val accessModifier = AccessModifier.PUBLIC
+            val isSynchronized = false
+            val isNative = false
+            val method = MethodSpec.builder()
+                .name(identifier)
+                .returnType(returnType)
+                .parameters(parameters)
+                .body(body)
+                .static(isStatic)
+                .abstract(isAbstract)
+                .final(isFinal)
+                .override(isOverride)
+                .accessModifier(accessModifier)
+                .synchronized(isSynchronized)
+                .native(isNative)
+                .build()
+            method.name shouldBe identifier
+            method.returnType shouldBe returnType
+            method.parameters shouldBe parameters
+            method.body shouldBe body
+            method.isStatic shouldBe isStatic
+            method.isAbstract shouldBe isAbstract
+            method.isFinal shouldBe isFinal
+            method.isOverride shouldBe isOverride
+            method.accessModifier shouldBe accessModifier
+            method.isSynchronized shouldBe isSynchronized
+            method.isNative shouldBe isNative
         }
     },
 )

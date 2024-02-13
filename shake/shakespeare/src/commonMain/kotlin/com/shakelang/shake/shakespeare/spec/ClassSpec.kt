@@ -33,7 +33,7 @@ class ConstructorSpec(
 
         builder.append("(")
         builder.append(parameters.joinToString(", ") { it.generate(ctx) })
-        builder.append(")")
+        builder.append(") ")
 
         builder.append(body.generate(ctx))
         return builder.toString()
@@ -50,6 +50,16 @@ class ConstructorSpec(
 
         fun addParameter(parameter: ParameterSpec): ConstructorSpecBuilder {
             parameters.add(parameter)
+            return this
+        }
+
+        fun parameters(parameters: List<ParameterSpec>): ConstructorSpecBuilder {
+            this.parameters.addAll(parameters)
+            return this
+        }
+
+        fun parameters(vararg parameters: ParameterSpec): ConstructorSpecBuilder {
+            this.parameters.addAll(parameters)
             return this
         }
 
@@ -80,6 +90,12 @@ class ConstructorSpec(
 
         fun build(): ConstructorSpec {
             return ConstructorSpec(parameters, body!!)
+        }
+    }
+
+    companion object {
+        fun builder(): ConstructorSpecBuilder {
+            return ConstructorSpecBuilder()
         }
     }
 }

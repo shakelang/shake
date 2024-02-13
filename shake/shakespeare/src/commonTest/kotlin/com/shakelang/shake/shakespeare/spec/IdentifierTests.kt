@@ -1,6 +1,5 @@
-package com.shakelang.shake.shakespeare.builder
+package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.spec.Identifier
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
