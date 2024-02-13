@@ -2,6 +2,7 @@ package com.shakelang.shake.shasambly.interpreter
 
 import com.shakelang.util.parseutils.bGenerateUByte
 
+@Suppress("ktlint:standard:value-argument-comment")
 object Opcodes {
 
     val INCR_STACK: Byte =
