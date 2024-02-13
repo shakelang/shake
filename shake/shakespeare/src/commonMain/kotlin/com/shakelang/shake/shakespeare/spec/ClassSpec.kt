@@ -89,7 +89,7 @@ class ConstructorSpec(
         }
 
         fun build(): ConstructorSpec {
-            return ConstructorSpec(parameters, body!!)
+            return ConstructorSpec(parameters, body!!, name, accessModifier, isSynchronized, isNative)
         }
     }
 
