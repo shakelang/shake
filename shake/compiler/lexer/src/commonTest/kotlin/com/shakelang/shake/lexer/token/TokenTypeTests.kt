@@ -65,8 +65,6 @@ class TokenTypeTests : FreeSpec(
             ShakeTokenType.KEYWORD_FUNCTION.length("") shouldBe 8
             ShakeTokenType.KEYWORD_RETURN.length("") shouldBe 6
             ShakeTokenType.KEYWORD_CONST.length("") shouldBe 5
-            ShakeTokenType.KEYWORD_DYNAMIC.length("") shouldBe 7
-            ShakeTokenType.KEYWORD_CHAR.length("") shouldBe 4
             ShakeTokenType.KEYWORD_BOOLEAN.length("") shouldBe 7
             ShakeTokenType.KEYWORD_IMPORT.length("") shouldBe 6
             ShakeTokenType.KEYWORD_VAR.length("") shouldBe 3

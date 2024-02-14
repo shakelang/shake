@@ -225,12 +225,10 @@ abstract class ShakeLexingBase(
                 "abstract" -> ShakeTokenType.KEYWORD_ABSTRACT
                 "as" -> ShakeTokenType.KEYWORD_AS
                 "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
-                "char" -> ShakeTokenType.KEYWORD_CHAR
                 "class" -> ShakeTokenType.KEYWORD_CLASS
                 "const" -> ShakeTokenType.KEYWORD_CONST
                 "constructor" -> ShakeTokenType.KEYWORD_CONSTRUCTOR
                 "do" -> ShakeTokenType.KEYWORD_DO
-                "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
                 "else" -> ShakeTokenType.KEYWORD_ELSE
                 "enum" -> ShakeTokenType.KEYWORD_ENUM
                 "false" -> ShakeTokenType.KEYWORD_FALSE
