@@ -42,6 +42,7 @@ class LexerBaseTests : FreeSpec(
             generateToken(";", ShakeTokenType.SEMICOLON)
             generateToken(",", ShakeTokenType.COMMA)
             generateToken(".", ShakeTokenType.DOT)
+            generateToken(":", ShakeTokenType.COLON)
         }
 
         "line separator" {
@@ -103,6 +104,7 @@ class LexerBaseTests : FreeSpec(
         "bit shifts" {
             generateToken("<<", ShakeTokenType.BITWISE_SHL)
             generateToken(">>", ShakeTokenType.BITWISE_SHR)
+            generateToken(">>>", ShakeTokenType.BITWISE_USHR)
         }
 
         "brackets" {
@@ -164,8 +166,6 @@ class LexerBaseTests : FreeSpec(
         TRUE("true", ShakeTokenType.KEYWORD_TRUE),
         FALSE("false", ShakeTokenType.KEYWORD_FALSE),
         CLASS("class", ShakeTokenType.KEYWORD_CLASS),
-        EXTENDS("extends", ShakeTokenType.KEYWORD_EXTENDS),
-        IMPLEMENTS("implements", ShakeTokenType.KEYWORD_IMPLEMENTS),
         STATIC("static", ShakeTokenType.KEYWORD_STATIC),
         FINAL("final", ShakeTokenType.KEYWORD_FINAL),
         PUBLIC("public", ShakeTokenType.KEYWORD_PUBLIC),

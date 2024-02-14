@@ -37,6 +37,7 @@ abstract class ShakeLexingBase(
             next == '\n' -> ShakeToken(ShakeTokenType.LINE_SEPARATOR, start, start)
             next == ';' -> ShakeToken(ShakeTokenType.SEMICOLON, start, start)
             next == ',' -> ShakeToken(ShakeTokenType.COMMA, start, start)
+            next == ':' -> ShakeToken(ShakeTokenType.COLON, start, start)
             next == '.' -> ShakeToken(ShakeTokenType.DOT, start, start)
             Characters.isNumberCharacter(next) -> makeNumber()
             Characters.isIdentifierStartCharacter(next) -> makeIdentifier()
@@ -110,7 +111,12 @@ abstract class ShakeLexingBase(
 
             next == '>' && peek == '>' -> {
                 input.skip()
-                ShakeToken(ShakeTokenType.BITWISE_SHR, input.position, input.position)
+                if (input.hasNext() && input.peek() == '>') {
+                    input.skip()
+                    ShakeToken(ShakeTokenType.BITWISE_USHR, input.position, input.position)
+                } else {
+                    ShakeToken(ShakeTokenType.BITWISE_SHR, input.position, input.position)
+                }
             }
 
             next == '|' && peek == '|' -> {
@@ -229,14 +235,12 @@ abstract class ShakeLexingBase(
                 "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
                 "else" -> ShakeTokenType.KEYWORD_ELSE
                 "enum" -> ShakeTokenType.KEYWORD_ENUM
-                "extends" -> ShakeTokenType.KEYWORD_EXTENDS
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
                 "float" -> ShakeTokenType.KEYWORD_FLOAT
                 "for" -> ShakeTokenType.KEYWORD_FOR
                 "function" -> ShakeTokenType.KEYWORD_FUNCTION
                 "if" -> ShakeTokenType.KEYWORD_IF
-                "implements" -> ShakeTokenType.KEYWORD_IMPLEMENTS
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
                 "in" -> ShakeTokenType.KEYWORD_IN
                 "inline" -> ShakeTokenType.KEYWORD_INLINE
