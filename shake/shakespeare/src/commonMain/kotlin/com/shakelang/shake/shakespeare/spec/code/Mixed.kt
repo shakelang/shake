@@ -12,7 +12,7 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.Identifier
 
 /**
- * A ValuedAssignmentSpec is a StatementSpec and a ValueSpec at the same time
+ * A [ValuedAssignmentSpec] is a StatementSpec and a ValueSpec at the same time
  * @since 0.1.0
  */
 interface ValuedAssignmentSpec : StatementSpec, ValueSpec

@@ -12,10 +12,26 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.Identifier
 import com.shakelang.shake.shakespeare.spec.Type
 
+/**
+ * A [StatementSpec] is a specification for a statement in the code
+ * @since 0.1.0
+ */
 interface StatementSpec {
+
+    /**
+     * Generate the statement
+     * @param ctx The [GenerationContext] to use
+     * @return The generated statement
+     */
     fun generate(ctx: GenerationContext): String
 
     companion object {
+
+        /**
+         * Create a [StatementSpec] from a string
+         * @param value The string to create the [StatementSpec] from
+         * @return The [StatementSpec] created from the string
+         */
         fun of(value: String): StatementSpec {
             return object : StatementSpec {
                 override fun generate(ctx: GenerationContext): String {
@@ -26,13 +42,24 @@ interface StatementSpec {
     }
 }
 
+/**
+ * A [VariableDeclarationSpec] is a specification for a variable declaration in the code
+ * @param name The name of the variable
+ * @param type The type of the variable
+ * @param value The value of the variable
+ * @since 0.1.0
+ */
 class VariableDeclarationSpec(
     val name: Identifier,
     val type: Type,
-    val value: ValueSpec,
+    val value: ValueSpec?,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "val $name: $type = $value"
+        val builder = StringBuilder()
+        builder.append(type.generate(ctx)).append(" ")
+        builder.append(name.name)
+        if (value != null) builder.append(" = ").append(value.generate(ctx))
+        return builder.toString()
     }
 
     open class VariableDeclarationSpecBuilder
