@@ -11,10 +11,10 @@ class TokenPosition : FreeSpec(
     {
 
         "get basic position" {
-            val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "int test = 10;")
+            val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "val test = 10;")
             val lexer = ShakeLexer(chars)
             val input = lexer.makeTokens()
-            input.peek().type shouldBe ShakeTokenType.KEYWORD_INT
+            input.peek().type shouldBe ShakeTokenType.KEYWORD_VAL
             input.peek().value shouldBe null
             var start = input.map.resolve(input.peek().start)
             var end = input.map.resolve(input.peek().end)
@@ -71,10 +71,10 @@ class TokenPosition : FreeSpec(
         }
 
         "get multi line position" {
-            val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "int test\n  = \n10;")
+            val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "val test\n  = \n10;")
             val lexer = ShakeLexer(chars)
             val input = lexer.makeTokens()
-            input.peek().type shouldBe ShakeTokenType.KEYWORD_INT
+            input.peek().type shouldBe ShakeTokenType.KEYWORD_VAL
             input.peek().value shouldBe null
             var start = input.map.resolve(input.peek().start)
             var end = input.map.resolve(input.peek().end)

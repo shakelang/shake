@@ -1555,7 +1555,7 @@ class ShakeParserImpl(
                 return ShakeIntegerNode(map, input.actualValue!!.toInt())
             }
 
-            ShakeTokenType.DOUBLE -> {
+            ShakeTokenType.FLOAT -> {
                 input.skip()
                 return ShakeDoubleNode(map, input.actualValue!!.toDouble())
             }

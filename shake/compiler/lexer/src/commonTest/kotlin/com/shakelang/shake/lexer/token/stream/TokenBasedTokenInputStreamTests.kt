@@ -17,19 +17,19 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testNextType()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
                     intArrayOf(),
                 ),
             )
 
-            tis.nextType() shouldBe ShakeTokenType.KEYWORD_INT
+            tis.nextType() shouldBe ShakeTokenType.KEYWORD_VAL
             tis.actualEnd shouldBe 2
             tis.nextType() shouldBe ShakeTokenType.IDENTIFIER
             tis.actualEnd shouldBe 4
@@ -45,14 +45,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testNextValue()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
                     intArrayOf(),
                 ),
             )
@@ -68,20 +68,20 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testNextToken()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
                     intArrayOf(),
                 ),
             )
 
             var token = tis.next()
-            token.type shouldBe ShakeTokenType.KEYWORD_INT
+            token.type shouldBe ShakeTokenType.KEYWORD_VAL
             token.value shouldBe null
             token.end shouldBe 2
             token.start shouldBe 0
@@ -119,19 +119,19 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testGetType()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
                     intArrayOf(),
                 ),
             )
 
-            tis.getType(0) shouldBe ShakeTokenType.KEYWORD_INT
+            tis.getType(0) shouldBe ShakeTokenType.KEYWORD_VAL
             tis.getType(1) shouldBe ShakeTokenType.IDENTIFIER
             tis.getType(2) shouldBe ShakeTokenType.ASSIGN
             tis.getType(3) shouldBe ShakeTokenType.INTEGER
@@ -142,14 +142,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testGetEnd()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
                     intArrayOf(),
                 ),
             )
@@ -165,14 +165,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testGetStart()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
                     intArrayOf(),
                 ),
             )
@@ -188,14 +188,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testGetValue()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
                     intArrayOf(),
                 ),
             )
@@ -211,14 +211,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testGetHasValue()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
                     intArrayOf(),
                 ),
             )
@@ -234,14 +234,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testSkip()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
                     intArrayOf(),
                 ),
             )
@@ -262,14 +262,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testSetPosition()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
                     intArrayOf(),
                 ),
             )
@@ -305,14 +305,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testHas()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
                     intArrayOf(),
                 ),
             )
@@ -334,14 +334,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testHasNext()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
                     intArrayOf(),
                 ),
             )
@@ -384,14 +384,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testActualEnd()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
                     intArrayOf(),
                 ),
             )
@@ -412,14 +412,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testActualStart()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
                     intArrayOf(),
                 ),
             )
@@ -440,20 +440,20 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testActualType()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
                     intArrayOf(),
                 ),
             )
 
             tis.skip()
-            tis.actualType shouldBe ShakeTokenType.KEYWORD_INT
+            tis.actualType shouldBe ShakeTokenType.KEYWORD_VAL
             tis.skip()
             tis.actualType shouldBe ShakeTokenType.IDENTIFIER
             tis.skip()
@@ -468,14 +468,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testActualValue()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
                     intArrayOf(),
                 ),
             )
@@ -496,21 +496,21 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testActual()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
                     intArrayOf(),
                 ),
             )
 
             tis.skip()
             var actual = tis.actual
-            actual.type shouldBe ShakeTokenType.KEYWORD_INT
+            actual.type shouldBe ShakeTokenType.KEYWORD_VAL
             actual.value shouldBe null
             actual.end shouldBe 2
             actual.start shouldBe 0
@@ -544,19 +544,19 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekType()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
                     intArrayOf(),
                 ),
             )
 
-            tis.peekType() shouldBe ShakeTokenType.KEYWORD_INT
+            tis.peekType() shouldBe ShakeTokenType.KEYWORD_VAL
             tis.skip()
             tis.peekType() shouldBe ShakeTokenType.IDENTIFIER
             tis.skip()
@@ -571,14 +571,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekEnd()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
                     intArrayOf(),
                 ),
             )
@@ -598,14 +598,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekStart()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
                     intArrayOf(),
                 ),
             )
@@ -625,14 +625,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekValue()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
                     intArrayOf(),
                 ),
             )
@@ -652,20 +652,20 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeek()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
                     intArrayOf(),
                 ),
             )
 
             var token = tis.peek()
-            token.type shouldBe ShakeTokenType.KEYWORD_INT
+            token.type shouldBe ShakeTokenType.KEYWORD_VAL
             token.value shouldBe null
             token.start shouldBe 0
             token.end shouldBe 2
@@ -699,19 +699,19 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekType2()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
                     intArrayOf(),
                 ),
             )
 
-            tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_INT
+            tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_VAL
             tis.peekType(2) shouldBe ShakeTokenType.IDENTIFIER
             tis.peekType(3) shouldBe ShakeTokenType.ASSIGN
             tis.peekType(4) shouldBe ShakeTokenType.INTEGER
@@ -746,14 +746,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekEnd2()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
                     intArrayOf(),
                 ),
             )
@@ -793,14 +793,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekStart2()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
                     intArrayOf(),
                 ),
             )
@@ -846,14 +846,14 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeekValue2()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
                     intArrayOf(),
                 ),
             )
@@ -899,20 +899,20 @@ class TokenBasedTokenInputStreamTests : FreeSpec(
             val tis = ShakeTokenBasedTokenInputStream(
                 "TokenBasedTokenInputStreamTests#testPeek2()",
                 arrayOf(
-                    ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
+                    ShakeToken(ShakeTokenType.KEYWORD_VAL, 0, 2),
                     ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                     ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                     ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                     ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
                 ),
                 PositionMap.PositionMapImplementation(
-                    CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
+                    CharacterSource.from("val i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
                     intArrayOf(),
                 ),
             )
 
             var token = tis.peek(1)
-            token.type shouldBe ShakeTokenType.KEYWORD_INT
+            token.type shouldBe ShakeTokenType.KEYWORD_VAL
             token.value shouldBe null
             token.start shouldBe 0
             token.end shouldBe 2

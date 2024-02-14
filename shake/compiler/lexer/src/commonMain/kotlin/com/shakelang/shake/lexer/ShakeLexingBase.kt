@@ -205,7 +205,7 @@ abstract class ShakeLexingBase(
             numStr.append(input.next())
         }
         return if (dot) {
-            ShakeToken(ShakeTokenType.DOUBLE, numStr.toString(), start, input.position)
+            ShakeToken(ShakeTokenType.FLOAT, numStr.toString(), start, input.position)
         } else {
             ShakeToken(ShakeTokenType.INTEGER, numStr.toString(), start, input.position)
         }
@@ -225,19 +225,16 @@ abstract class ShakeLexingBase(
                 "abstract" -> ShakeTokenType.KEYWORD_ABSTRACT
                 "as" -> ShakeTokenType.KEYWORD_AS
                 "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
-                "byte" -> ShakeTokenType.KEYWORD_BYTE
                 "char" -> ShakeTokenType.KEYWORD_CHAR
                 "class" -> ShakeTokenType.KEYWORD_CLASS
                 "const" -> ShakeTokenType.KEYWORD_CONST
                 "constructor" -> ShakeTokenType.KEYWORD_CONSTRUCTOR
                 "do" -> ShakeTokenType.KEYWORD_DO
-                "double" -> ShakeTokenType.KEYWORD_DOUBLE
                 "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
                 "else" -> ShakeTokenType.KEYWORD_ELSE
                 "enum" -> ShakeTokenType.KEYWORD_ENUM
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
-                "float" -> ShakeTokenType.KEYWORD_FLOAT
                 "for" -> ShakeTokenType.KEYWORD_FOR
                 "function" -> ShakeTokenType.KEYWORD_FUNCTION
                 "if" -> ShakeTokenType.KEYWORD_IF
@@ -245,9 +242,7 @@ abstract class ShakeLexingBase(
                 "in" -> ShakeTokenType.KEYWORD_IN
                 "inline" -> ShakeTokenType.KEYWORD_INLINE
                 "instanceof" -> ShakeTokenType.KEYWORD_INSTANCEOF
-                "int" -> ShakeTokenType.KEYWORD_INT
                 "interface" -> ShakeTokenType.KEYWORD_INTERFACE
-                "long" -> ShakeTokenType.KEYWORD_LONG
                 "native" -> ShakeTokenType.KEYWORD_NATIVE
                 "new" -> ShakeTokenType.KEYWORD_NEW
                 "null" -> ShakeTokenType.KEYWORD_NULL
@@ -259,15 +254,13 @@ abstract class ShakeLexingBase(
                 "protected" -> ShakeTokenType.KEYWORD_PROTECTED
                 "public" -> ShakeTokenType.KEYWORD_PUBLIC
                 "return" -> ShakeTokenType.KEYWORD_RETURN
-                "short" -> ShakeTokenType.KEYWORD_SHORT
                 "static" -> ShakeTokenType.KEYWORD_STATIC
                 "super" -> ShakeTokenType.KEYWORD_SUPER
                 "synchronized" -> ShakeTokenType.KEYWORD_SYNCHRONIZED
                 "this" -> ShakeTokenType.KEYWORD_THIS
                 "true" -> ShakeTokenType.KEYWORD_TRUE
-                "unsigned" -> ShakeTokenType.KEYWORD_UNSIGNED
+                "val" -> ShakeTokenType.KEYWORD_VAL
                 "var" -> ShakeTokenType.KEYWORD_VAR
-                "void" -> ShakeTokenType.KEYWORD_VOID
                 "while" -> ShakeTokenType.KEYWORD_WHILE
                 else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), start, end)
             },

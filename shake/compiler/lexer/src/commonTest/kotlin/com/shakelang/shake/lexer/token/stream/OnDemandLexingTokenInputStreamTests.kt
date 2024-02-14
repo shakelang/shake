@@ -14,11 +14,11 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "next type" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextType()"),
+                    CharacterSource.from("var i = 10;", "OnDemandLexingTokenInputStreamTests#testNextType()"),
                 ),
             )
 
-            tis.nextType() shouldBe ShakeTokenType.KEYWORD_INT
+            tis.nextType() shouldBe ShakeTokenType.KEYWORD_VAR
             tis.actualEnd shouldBe 2
             tis.nextType() shouldBe ShakeTokenType.IDENTIFIER
             tis.actualEnd shouldBe 4
@@ -33,7 +33,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "next value" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextValue()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testNextValue()"),
                 ),
             )
 
@@ -52,12 +52,12 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "next token" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextToken()"),
+                    CharacterSource.from("var i = 10;", "OnDemandLexingTokenInputStreamTests#testNextToken()"),
                 ),
             )
 
             var next = tis.next()
-            next.type shouldBe ShakeTokenType.KEYWORD_INT
+            next.type shouldBe ShakeTokenType.KEYWORD_VAR
             next.end shouldBe 2
             next.value shouldBe null
             next.start shouldBe 0
@@ -86,7 +86,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "skip" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testSkip()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testSkip()"),
                 ),
             )
 
@@ -105,7 +105,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "has" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHas()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testHas()"),
                 ),
             )
 
@@ -125,7 +125,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "has next" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHasNext()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testHasNext()"),
                 ),
             )
 
@@ -150,7 +150,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "actual end" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualEnd()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testActualEnd()"),
                 ),
             )
 
@@ -169,7 +169,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "actual start" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualStart()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testActualStart()"),
                 ),
             )
 
@@ -188,12 +188,12 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "actual type" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualType()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testActualType()"),
                 ),
             )
 
             tis.skip()
-            tis.actualType shouldBe ShakeTokenType.KEYWORD_INT
+            tis.actualType shouldBe ShakeTokenType.KEYWORD_VAL
             tis.skip()
             tis.actualType shouldBe ShakeTokenType.IDENTIFIER
             tis.skip()
@@ -207,7 +207,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "actual value" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualValue()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testActualValue()"),
                 ),
             )
 
@@ -226,13 +226,13 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "actual" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActual()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testActual()"),
                 ),
             )
 
             tis.skip()
             var actual = tis.actual
-            actual.type shouldBe ShakeTokenType.KEYWORD_INT
+            actual.type shouldBe ShakeTokenType.KEYWORD_VAL
             actual.value shouldBe null
             actual.end shouldBe 2
             actual.start shouldBe 0
@@ -265,11 +265,11 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek type" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType()"),
                 ),
             )
 
-            tis.peekType() shouldBe ShakeTokenType.KEYWORD_INT
+            tis.peekType() shouldBe ShakeTokenType.KEYWORD_VAL
             tis.skip()
             tis.peekType() shouldBe ShakeTokenType.IDENTIFIER
             tis.skip()
@@ -283,7 +283,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek end" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd()"),
                 ),
             )
 
@@ -301,7 +301,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek start" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart()"),
                 ),
             )
 
@@ -319,7 +319,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek value" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue()"),
                 ),
             )
 
@@ -337,12 +337,12 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek()"),
                 ),
             )
 
             var token = tis.peek()
-            token.type shouldBe ShakeTokenType.KEYWORD_INT
+            token.type shouldBe ShakeTokenType.KEYWORD_VAL
             token.value shouldBe null
             token.start shouldBe 0
             token.end shouldBe 2
@@ -375,11 +375,11 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek type 2" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType2()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType2()"),
                 ),
             )
 
-            tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_INT
+            tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_VAL
             tis.peekType(2) shouldBe ShakeTokenType.IDENTIFIER
             tis.peekType(3) shouldBe ShakeTokenType.ASSIGN
             tis.peekType(4) shouldBe ShakeTokenType.INTEGER
@@ -413,7 +413,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek end 2" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd2()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd2()"),
                 ),
             )
 
@@ -451,7 +451,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek start 2" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart2()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart2()"),
                 ),
             )
 
@@ -489,7 +489,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek value 2" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue2()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue2()"),
                 ),
             )
 
@@ -527,12 +527,12 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec(
         "peek 2" {
             val tis = ShakeOnDemandLexingTokenInputStream(
                 SourceCharacterInputStream(
-                    CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek2()"),
+                    CharacterSource.from("val i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek2()"),
                 ),
             )
 
             var token = tis.peek(1)
-            token.type shouldBe ShakeTokenType.KEYWORD_INT
+            token.type shouldBe ShakeTokenType.KEYWORD_VAL
             token.value shouldBe null
             token.start shouldBe 0
             token.end shouldBe 2

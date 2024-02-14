@@ -10,7 +10,7 @@ class TokenTypeTests : FreeSpec(
         "token length function" {
             ShakeTokenType.IDENTIFIER.length("hello") shouldBe 5
             ShakeTokenType.INTEGER.length("10") shouldBe 2
-            ShakeTokenType.DOUBLE.length("10.0") shouldBe 4
+            ShakeTokenType.FLOAT.length("10.0") shouldBe 4
             ShakeTokenType.CHARACTER.length("'a'") shouldBe 3
             ShakeTokenType.STRING.length("\"hello\"") shouldBe 7
             ShakeTokenType.COMMA.length("") shouldBe 1
@@ -64,19 +64,13 @@ class TokenTypeTests : FreeSpec(
             ShakeTokenType.KEYWORD_NEW.length("") shouldBe 3
             ShakeTokenType.KEYWORD_FUNCTION.length("") shouldBe 8
             ShakeTokenType.KEYWORD_RETURN.length("") shouldBe 6
-            ShakeTokenType.KEYWORD_INT.length("") shouldBe 3
             ShakeTokenType.KEYWORD_CONST.length("") shouldBe 5
             ShakeTokenType.KEYWORD_DYNAMIC.length("") shouldBe 7
-            ShakeTokenType.KEYWORD_BYTE.length("") shouldBe 4
-            ShakeTokenType.KEYWORD_SHORT.length("") shouldBe 5
-            ShakeTokenType.KEYWORD_INT.length("") shouldBe 3
-            ShakeTokenType.KEYWORD_LONG.length("") shouldBe 4
-            ShakeTokenType.KEYWORD_FLOAT.length("") shouldBe 5
-            ShakeTokenType.KEYWORD_DOUBLE.length("") shouldBe 6
             ShakeTokenType.KEYWORD_CHAR.length("") shouldBe 4
             ShakeTokenType.KEYWORD_BOOLEAN.length("") shouldBe 7
             ShakeTokenType.KEYWORD_IMPORT.length("") shouldBe 6
-            ShakeTokenType.KEYWORD_VOID.length("") shouldBe 4
+            ShakeTokenType.KEYWORD_VAR.length("") shouldBe 3
+            ShakeTokenType.KEYWORD_VAL.length("") shouldBe 3
             ShakeTokenType.KEYWORD_CONSTRUCTOR.length("") shouldBe 11
             ShakeTokenType.KEYWORD_AS.length("") shouldBe 2
         }

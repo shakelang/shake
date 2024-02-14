@@ -124,7 +124,7 @@ class LexerBaseTests : FreeSpec(
 
         "numbers" {
             generateToken("149", ShakeTokenType.INTEGER).value shouldBe "149"
-            generateToken("0.01", ShakeTokenType.DOUBLE).value shouldBe "0.01"
+            generateToken("0.01", ShakeTokenType.FLOAT).value shouldBe "0.01"
         }
 
         "identifiers" {
@@ -147,12 +147,6 @@ class LexerBaseTests : FreeSpec(
     @Suppress("unused")
     enum class KeywordTest(val input: String, val output: ShakeTokenType) {
         DYNAMIC("dynamic", ShakeTokenType.KEYWORD_DYNAMIC),
-        BYTE("byte", ShakeTokenType.KEYWORD_BYTE),
-        SHORT("short", ShakeTokenType.KEYWORD_SHORT),
-        INT("int", ShakeTokenType.KEYWORD_INT),
-        LONG("long", ShakeTokenType.KEYWORD_LONG),
-        FLOAT("float", ShakeTokenType.KEYWORD_FLOAT),
-        DOUBLE("double", ShakeTokenType.KEYWORD_DOUBLE),
         CHAR("char", ShakeTokenType.KEYWORD_CHAR),
         BOOLEAN("boolean", ShakeTokenType.KEYWORD_BOOLEAN),
         CONST("const", ShakeTokenType.KEYWORD_CONST),
@@ -173,7 +167,7 @@ class LexerBaseTests : FreeSpec(
         PRIVATE("private", ShakeTokenType.KEYWORD_PRIVATE),
         NEW("new", ShakeTokenType.KEYWORD_NEW),
         IMPORT("import", ShakeTokenType.KEYWORD_IMPORT),
-        VOID("void", ShakeTokenType.KEYWORD_VOID),
+        VAL("val", ShakeTokenType.KEYWORD_VAL),
         VAR("var", ShakeTokenType.KEYWORD_VAR),
         CONSTRUCTOR("constructor", ShakeTokenType.KEYWORD_CONSTRUCTOR),
         AS("as", ShakeTokenType.KEYWORD_AS),
