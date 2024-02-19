@@ -33,5 +33,6 @@ class ShakeAccessDescriber(
 
     companion object {
         fun of(token: ShakeToken?): ShakeAccessDescriber = ShakeAccessDescriber(token)
+        val PACKAGE: ShakeAccessDescriber = ShakeAccessDescriber(null)
     }
 }

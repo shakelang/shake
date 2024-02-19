@@ -7,6 +7,7 @@ import com.shakelang.util.shason.JSON
 class ShakeVariableType(
     val nameToken: ShakeToken,
     val parent: ShakeVariableType?,
+    val dotToken: ShakeToken?,
 ) : ShakeNode {
 
     val type = when (nameToken.value) {

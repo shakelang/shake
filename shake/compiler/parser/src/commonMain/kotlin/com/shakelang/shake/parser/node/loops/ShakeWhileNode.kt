@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser.node.loops
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
 import com.shakelang.shake.parser.node.ShakeValuedNode
@@ -9,9 +10,9 @@ class ShakeWhileNode(
     map: PositionMap,
     val body: ShakeBlockNode,
     val condition: ShakeValuedNode,
-    val whileToken: String,
-    val lparenToken: String,
-    val rparenToken: String,
+    val whileToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
 ) :
     ShakeStatementNodeImpl(map) {
 

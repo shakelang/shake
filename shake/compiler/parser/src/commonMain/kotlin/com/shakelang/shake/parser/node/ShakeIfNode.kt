@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeIfNode(
@@ -7,9 +8,11 @@ class ShakeIfNode(
     val body: ShakeBlockNode,
     val elseBody: ShakeBlockNode?,
     val condition: ShakeValuedNode,
+    val ifToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
+    val elseToken: ShakeToken?,
 ) : ShakeValuedStatementNodeImpl(map) {
-
-    constructor(map: PositionMap, body: ShakeBlockNode, condition: ShakeValuedNode) : this(map, body, null, condition)
 
     override fun toJson(): Map<String, *> =
         mapOf(

@@ -1,10 +1,14 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeBlockNode(map: PositionMap, val children: Array<ShakeStatementNode>) : ShakeNodeImpl(map) {
-
-    constructor(map: PositionMap, children: List<ShakeStatementNode>) : this(map, children.toTypedArray())
+class ShakeBlockNode(
+    map: PositionMap,
+    val children: Array<ShakeStatementNode>,
+    val lcurly: ShakeToken?,
+    val rcurly: ShakeToken?,
+) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =
         mapOf(
