@@ -21,27 +21,27 @@ class IntegrationTestValues : FreeSpec(
         }
 
         "integer literal" {
-            testCodeSnippetValue("42", mapOf("name" to "ShakeIntegerNode", "value" to 42))
+            testCodeSnippetValue("42", mapOf("name" to "ShakeIntegerLiteralNode", "value" to 42))
         }
 
         "double literal" {
-            testCodeSnippetValue("42.0", mapOf("name" to "ShakeDoubleNode", "value" to 42.0))
+            testCodeSnippetValue("42.0", mapOf("name" to "ShakeDoubleLiteralNode", "value" to 42.0))
         }
 
         "string literal" {
-            testCodeSnippetValue("\"Hello World\"", mapOf("name" to "ShakeStringNode", "value" to "Hello World"))
+            testCodeSnippetValue("\"Hello World\"", mapOf("name" to "ShakeStringLiteralNode", "value" to "Hello World"))
         }
 
         "true literal" {
-            testCodeSnippetValue("true", mapOf("name" to "ShakeLogicalTrueNode"))
+            testCodeSnippetValue("true", mapOf("name" to "ShakeLogicalTrueLiteralNode"))
         }
 
         "false literal" {
-            testCodeSnippetValue("false", mapOf("name" to "ShakeLogicalFalseNode"))
+            testCodeSnippetValue("false", mapOf("name" to "ShakeLogicalFalseLiteralNode"))
         }
 
         "null literal" {
-            testCodeSnippetValue("null", mapOf("name" to "ShakeNullNode"))
+            testCodeSnippetValue("null", mapOf("name" to "ShakeNullLiteralNode"))
         }
 
         "variable literal" {
@@ -111,8 +111,8 @@ class IntegrationTestValues : FreeSpec(
                         "variable" to mapOf("name" to "a", "parent" to null),
                     ),
                     "args" to listOf(
-                        mapOf("name" to "ShakeIntegerNode", "value" to 1),
-                        mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                        mapOf("name" to "ShakeIntegerLiteralNode", "value" to 1),
+                        mapOf("name" to "ShakeIntegerLiteralNode", "value" to 2),
                     ),
                 ),
             )
@@ -205,8 +205,8 @@ class IntegrationTestValues : FreeSpec(
                         "1 ${testSpec.operator} 2",
                         mapOf(
                             "name" to testSpec.expected.simpleName,
-                            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-                            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                            "left" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 1),
+                            "right" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 2),
                         ),
                     )
                 }
@@ -221,10 +221,10 @@ class IntegrationTestValues : FreeSpec(
                                     "name" to testSpec.expected.simpleName,
                                     "left" to mapOf(
                                         "name" to previousTestSpec.expected.simpleName,
-                                        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-                                        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                                        "left" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 1),
+                                        "right" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 2),
                                     ),
-                                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3),
+                                    "right" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 3),
                                 ),
                             )
                         }
@@ -259,7 +259,7 @@ class Statements : FreeSpec(
                                 "type" to "unknown",
                             ),
                             "access" to "package",
-                            "assignment" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                            "assignment" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 2),
                             "is_static" to false,
                             "is_final" to false,
                         ),

@@ -1,10 +1,11 @@
 package com.shakelang.shake.parser.node.expression
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeEqualNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+class ShakeEqualNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "=="
 
@@ -16,9 +17,9 @@ class ShakeNotEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int,
+    operatorToken: ShakeToken,
 ) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "!="
 
@@ -30,15 +31,15 @@ class ShakeGreaterThanOrEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int,
+    operatorToken: ShakeToken,
 ) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = ">="
 }
 
-class ShakeGreaterThanNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+class ShakeGreaterThanNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = ">"
 }
@@ -47,33 +48,15 @@ class ShakeLessThanOrEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int,
+    operatorToken: ShakeToken,
 ) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "<="
 }
 
-class ShakeLessThanNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
-    ShakeExpressionNode(map, left, right, operatorPosition) {
+class ShakeLessThanNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
+    ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "<"
 }
-
-fun createSyntheticEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeEqualNode(PositionMap.empty(), left, right, -1)
-
-fun createSyntheticNotEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeNotEqualNode(PositionMap.empty(), left, right, -1)
-
-fun createSyntheticGreaterThanOrEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeGreaterThanOrEqualNode(PositionMap.empty(), left, right, -1)
-
-fun createSyntheticGreaterThanNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeGreaterThanNode(PositionMap.empty(), left, right, -1)
-
-fun createSyntheticLessThanOrEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeLessThanOrEqualNode(PositionMap.empty(), left, right, -1)
-
-fun createSyntheticLessThanNode(left: ShakeValuedNode, right: ShakeValuedNode) =
-    ShakeLessThanNode(PositionMap.empty(), left, right, -1)

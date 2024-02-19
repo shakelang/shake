@@ -92,6 +92,7 @@ class ShakeParserImpl(
 
     /**
      * Parses the [input] and returns the root [ShakeNode] of the parsed tree (A [ShakeFileNode])
+     * Entry point of the parsing process
      */
     override fun parse(): ShakeFileNode {
         if (!input.hasNext()) return ShakeFileNode(map, arrayOf())
@@ -101,8 +102,8 @@ class ShakeParserImpl(
     }
 
     /**
-     * Starts the parsing process, but directly jumps into the statement parsing phase (statements can normally be found
-     * in methods, constructors, etc.).
+     * Starts the parsing process, but directly jumps into the statement parsing phase
+     * (statements can normally be found in methods, constructors, etc.).
      */
     override fun parseAsStatements(): ShakeBlockNode {
         val nodes: MutableList<ShakeStatementNode> = ArrayList()
@@ -161,7 +162,7 @@ class ShakeParserImpl(
         val token = input.peekType()
         if (token == ShakeTokenType.KEYWORD_IMPORT) return expectImport()
         if (token == ShakeTokenType.KEYWORD_PACKAGE) return expectPackage()
-        return expectDeclaration(DeclarationScope.FILE) as ShakeFileChildNode
+        return expectDeclaration() as ShakeFileChildNode
     }
 
     /**
@@ -177,16 +178,7 @@ class ShakeParserImpl(
             ShakeTokenType.KEYWORD_CONST,
             ShakeTokenType.KEYWORD_VAR,
             ShakeTokenType.KEYWORD_FINAL,
-            ShakeTokenType.KEYWORD_DYNAMIC,
             ShakeTokenType.KEYWORD_BOOLEAN,
-            ShakeTokenType.KEYWORD_CHAR,
-            ShakeTokenType.KEYWORD_BYTE,
-            ShakeTokenType.KEYWORD_SHORT,
-            ShakeTokenType.KEYWORD_INT,
-            ShakeTokenType.KEYWORD_LONG,
-            ShakeTokenType.KEYWORD_FLOAT,
-            ShakeTokenType.KEYWORD_DOUBLE,
-            ShakeTokenType.KEYWORD_UNSIGNED,
             -> expectLocalDeclaration()
 
             ShakeTokenType.IDENTIFIER -> expectIdentifierStatement()
@@ -332,17 +324,7 @@ class ShakeParserImpl(
                 expectConstructorDeclaration(info)
             }
 
-            ShakeTokenType.KEYWORD_UNSIGNED,
-            ShakeTokenType.KEYWORD_DYNAMIC,
             ShakeTokenType.KEYWORD_BOOLEAN,
-            ShakeTokenType.KEYWORD_CHAR,
-            ShakeTokenType.KEYWORD_BYTE,
-            ShakeTokenType.KEYWORD_SHORT,
-            ShakeTokenType.KEYWORD_INT,
-            ShakeTokenType.KEYWORD_LONG,
-            ShakeTokenType.KEYWORD_FLOAT,
-            ShakeTokenType.KEYWORD_DOUBLE,
-            ShakeTokenType.KEYWORD_VOID,
             ShakeTokenType.IDENTIFIER,
             -> {
                 // This parses a function declaration or a variable declaration
@@ -1542,22 +1524,22 @@ class ShakeParserImpl(
 
             ShakeTokenType.KEYWORD_TRUE -> {
                 input.skip()
-                return ShakeLogicalTrueNode(map)
+                return ShakeLogicalTrueLiteralNode(map)
             }
 
             ShakeTokenType.KEYWORD_FALSE -> {
                 input.skip()
-                return ShakeLogicalFalseNode(map)
+                return ShakeLogicalFalseLiteralNode(map)
             }
 
             ShakeTokenType.INTEGER -> {
                 input.skip()
-                return ShakeIntegerNode(map, input.actualValue!!.toInt())
+                return ShakeIntegerLiteralNode(map, input.actualValue!!.toInt())
             }
 
             ShakeTokenType.FLOAT -> {
                 input.skip()
-                return ShakeDoubleNode(map, input.actualValue!!.toDouble())
+                return ShakeDoubleLiteralNode(map, input.actualValue!!.toDouble())
             }
 
             ShakeTokenType.IDENTIFIER -> {
@@ -1590,17 +1572,17 @@ class ShakeParserImpl(
 
             ShakeTokenType.STRING -> {
                 input.skip()
-                return ShakeStringNode(map, parseString(input.actualValue!!))
+                return ShakeStringLiteralNode(map, parseString(input.actualValue!!))
             }
 
             ShakeTokenType.CHARACTER -> {
                 input.skip()
-                return ShakeCharacterNode(map, parseString(input.actualValue!!)[0])
+                return ShakeCharacterLiteralNode(map, parseString(input.actualValue!!)[0])
             }
 
             ShakeTokenType.KEYWORD_NULL -> {
                 input.skip()
-                return ShakeNullNode(map)
+                return ShakeNullLiteralNode(map)
             }
 
             ShakeTokenType.KEYWORD_THIS -> {
@@ -1648,7 +1630,7 @@ class ShakeParserImpl(
         val name = input.actualValue ?: throw ParserError("Identifier needs a value")
 
         if (!input.skipIgnorable().hasNext()) throw ParserError("Expecting '>'")
-        if (input.peekType() == ShakeTokenType.KEYWORD_EXTENDS) { // TODO Replace with COLON?
+        if (input.peekType() == ShakeTokenType.COLON) { // TODO Replace with COLON?
             input.skip()
             return ShakeTypeArgumentDeclarationNode(map, name, expectType())
         }

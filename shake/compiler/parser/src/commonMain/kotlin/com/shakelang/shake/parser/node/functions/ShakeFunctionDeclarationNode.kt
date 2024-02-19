@@ -1,15 +1,19 @@
 package com.shakelang.shake.parser.node.functions
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.*
 import com.shakelang.util.parseutils.characters.position.PositionMap
-import kotlin.jvm.JvmOverloads
 
-class ShakeFunctionParameterNode @JvmOverloads constructor(
+@Suppress("MemberVisibilityCanBePrivate")
+class ShakeFunctionParameterNode(
     map: PositionMap,
-    val name: String,
-    val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
+    val nameToken: ShakeToken,
+    val type: ShakeVariableType,
     val defaultValue: ShakeValuedNode? = null,
+    val assignmentToken: ShakeToken? = null,
 ) : ShakeNodeImpl(map) {
+
+    val name: String get() = nameToken.value ?: throw Exception("Name of parameter token is null")
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to nodeName, "argument_name" to name, "type" to type.toString())
@@ -45,23 +49,40 @@ class ShakeFunctionParameterNode @JvmOverloads constructor(
     }
 }
 
+@Suppress("MemberVisibilityCanBePrivate")
 class ShakeFunctionDeclarationNode(
     map: PositionMap,
     val expandedType: ShakeVariableType?,
-    val name: String,
+    val nameToken: ShakeToken,
     val body: ShakeBlockNode?,
     val args: Array<ShakeFunctionParameterNode>,
     val type: ShakeVariableType,
-    val access: ShakeAccessDescriber?,
-    val isStatic: Boolean,
-    val isFinal: Boolean,
-    val isAbstract: Boolean,
-    val isOverride: Boolean,
-    val isSynchronized: Boolean,
-    val isNative: Boolean,
-    val isOperator: Boolean,
-    val isInline: Boolean,
+    val access: ShakeAccessDescriber,
+    val staticToken: ShakeToken?,
+    val finalToken: ShakeToken?,
+    val abstractToken: ShakeToken?,
+    val overrideToken: ShakeToken?,
+    val synchronizedToken: ShakeToken?,
+    val nativeToken: ShakeToken?,
+    val operatorToken: ShakeToken?,
+    val inlineToken: ShakeToken?,
 ) : ShakeFileChildNodeImpl(map) {
+
+    val name: String get() = nameToken.value ?: throw Exception("Name of function token is null")
+
+    val isStatic: Boolean get() = staticToken != null
+    val isFinal: Boolean get() = finalToken != null
+    val isAbstract: Boolean get() = abstractToken != null
+    val isOverride: Boolean get() = overrideToken != null
+    val isSynchronized: Boolean get() = synchronizedToken != null
+    val isNative: Boolean get() = nativeToken != null
+    val isOperator: Boolean get() = operatorToken != null
+    val isInline: Boolean get() = inlineToken != null
+
+    val isPublic: Boolean get() = access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC
+    val isProtected: Boolean get() = access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED
+    val isPrivate: Boolean get() = access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE
+    val isPackage: Boolean get() = access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PACKAGE
 
     override fun toJson(): Map<String, *> =
         mapOf(

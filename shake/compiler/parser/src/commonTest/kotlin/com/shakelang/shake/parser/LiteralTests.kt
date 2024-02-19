@@ -7,35 +7,35 @@ import io.kotest.matchers.shouldBe
 class LiteralTests : FreeSpec({
 
     "basic string" {
-        val node = ParserTestUtil.parseValue("<BasicStringTest>", "\"test\"", ShakeStringNode::class)
+        val node = ParserTestUtil.parseValue("<BasicStringTest>", "\"test\"", ShakeStringLiteralNode::class)
         node.value shouldBe "test"
     }
 
     "basic int" {
-        val node = ParserTestUtil.parseValue("<BasicIntTest>", "123", ShakeIntegerNode::class)
+        val node = ParserTestUtil.parseValue("<BasicIntTest>", "123", ShakeIntegerLiteralNode::class)
         node.number shouldBe 123
     }
 
     "basic double" {
-        val node = ParserTestUtil.parseValue("<BasicDoubleTest>", "123.123", ShakeDoubleNode::class)
+        val node = ParserTestUtil.parseValue("<BasicDoubleTest>", "123.123", ShakeDoubleLiteralNode::class)
         node.number shouldBe 123.123
     }
 
     "basic char" {
-        val node = ParserTestUtil.parseValue("<BasicCharTest>", "'a'", ShakeCharacterNode::class)
+        val node = ParserTestUtil.parseValue("<BasicCharTest>", "'a'", ShakeCharacterLiteralNode::class)
         node.value shouldBe 'a'
     }
 
     "basic true literal" {
-        ParserTestUtil.parseValue("<BasicTrueTest>", "true", ShakeLogicalTrueNode::class)
+        ParserTestUtil.parseValue("<BasicTrueTest>", "true", ShakeLogicalTrueLiteralNode::class)
     }
 
     "basic false literal" {
-        ParserTestUtil.parseValue("<BasicFalseTest>", "false", ShakeLogicalFalseNode::class)
+        ParserTestUtil.parseValue("<BasicFalseTest>", "false", ShakeLogicalFalseLiteralNode::class)
     }
 
     "basic null literal" {
-        ParserTestUtil.parseValue("<BasicNullTest>", "null", ShakeNullNode::class)
+        ParserTestUtil.parseValue("<BasicNullTest>", "null", ShakeNullLiteralNode::class)
     }
 
     "this literal" {

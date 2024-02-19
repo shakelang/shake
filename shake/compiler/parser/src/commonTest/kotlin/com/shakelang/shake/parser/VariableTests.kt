@@ -3,7 +3,7 @@ package com.shakelang.shake.parser
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.expression.ShakeAddNode
-import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.variables.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -37,8 +37,8 @@ class VariableTests : FreeSpec(
                 (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
                 (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
                 node.value shouldNotBe null
-                node.value shouldBeOfType ShakeIntegerNode::class
-                (node.value as ShakeIntegerNode).number shouldBe 0
+                node.value shouldBeOfType ShakeIntegerLiteralNode::class
+                (node.value as ShakeIntegerLiteralNode).number shouldBe 0
             }
 
             "${it.name} with expression" {
@@ -48,10 +48,10 @@ class VariableTests : FreeSpec(
                 (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
                 node.value shouldNotBe null
                 node.value shouldBeOfType ShakeAddNode::class
-                (node.value as ShakeAddNode).left shouldBeOfType ShakeIntegerNode::class
-                (node.value as ShakeAddNode).right shouldBeOfType ShakeIntegerNode::class
-                ((node.value as ShakeAddNode).left as ShakeIntegerNode).number shouldBe 11
-                ((node.value as ShakeAddNode).right as ShakeIntegerNode).number shouldBe 2
+                (node.value as ShakeAddNode).left shouldBeOfType ShakeIntegerLiteralNode::class
+                (node.value as ShakeAddNode).right shouldBeOfType ShakeIntegerLiteralNode::class
+                ((node.value as ShakeAddNode).left as ShakeIntegerLiteralNode).number shouldBe 11
+                ((node.value as ShakeAddNode).right as ShakeIntegerLiteralNode).number shouldBe 2
             }
         }
 
@@ -123,8 +123,8 @@ class VariableTests : FreeSpec(
                     node.name shouldBe "i"
                     node.type shouldBe it.typeClass
                     node.value shouldNotBe null
-                    node.value shouldBeOfType ShakeIntegerNode::class
-                    (node.value as ShakeIntegerNode).number shouldBe 0
+                    node.value shouldBeOfType ShakeIntegerLiteralNode::class
+                    (node.value as ShakeIntegerLiteralNode).number shouldBe 0
                     node.access shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
@@ -168,8 +168,8 @@ class VariableTests : FreeSpec(
                         node.name shouldBe "i"
                         node.type shouldBe it.typeClass
                         node.value shouldNotBe null
-                        node.value shouldBeOfType ShakeIntegerNode::class
-                        (node.value as ShakeIntegerNode).number shouldBe 0
+                        node.value shouldBeOfType ShakeIntegerLiteralNode::class
+                        (node.value as ShakeIntegerLiteralNode).number shouldBe 0
                         node.access shouldBe access
                         node.isStatic shouldBe false
                         node.isFinal shouldBe true

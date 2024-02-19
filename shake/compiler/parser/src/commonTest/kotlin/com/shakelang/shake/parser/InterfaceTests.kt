@@ -2,7 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
@@ -71,8 +71,8 @@ class InterfaceTests : FreeSpec(
                     variable.type.type shouldBe ShakeVariableType.Type.INTEGER
                     variable.access shouldBe access2
                     variable.value shouldNotBe null
-                    variable.value shouldBeOfType ShakeIntegerNode::class
-                    (variable.value as ShakeIntegerNode).number shouldBe 0
+                    variable.value shouldBeOfType ShakeIntegerLiteralNode::class
+                    (variable.value as ShakeIntegerLiteralNode).number shouldBe 0
                     variable.name shouldBe "i"
                     variable.isStatic shouldBe false
                     variable.isFinal shouldBe false

@@ -2,7 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.functions.ShakeReturnNode
 import io.kotest.core.spec.style.FreeSpec
@@ -54,8 +54,8 @@ class FunctionTests : FreeSpec(
                     fn.body!!.children.size shouldBe 1
                     fn.body!!.children[0] shouldBeOfType ShakeReturnNode::class
                     val ret = fn.body!!.children[0] as ShakeReturnNode
-                    ret.value shouldBeOfType ShakeIntegerNode::class
-                    val int = ret.value as ShakeIntegerNode
+                    ret.value shouldBeOfType ShakeIntegerLiteralNode::class
+                    val int = ret.value as ShakeIntegerLiteralNode
                     int.number shouldBe 10
                 }
 
@@ -74,8 +74,8 @@ class FunctionTests : FreeSpec(
                         fn.body!!.children.size shouldBe 1
                         fn.body!!.children[0] shouldBeOfType ShakeReturnNode::class
                         val ret = fn.body!!.children[0] as ShakeReturnNode
-                        ret.value shouldBeOfType ShakeIntegerNode::class
-                        val int = ret.value as ShakeIntegerNode
+                        ret.value shouldBeOfType ShakeIntegerLiteralNode::class
+                        val int = ret.value as ShakeIntegerLiteralNode
                         int.number shouldBe 10
                     }
                 }
@@ -90,8 +90,8 @@ class FunctionTests : FreeSpec(
             tree.children.size shouldBe 1
             tree.children[0] shouldBeOfType ShakeReturnNode::class
             val node = tree.children[0] as ShakeReturnNode
-            node.value shouldBeOfType ShakeIntegerNode::class
-            val int = node.value as ShakeIntegerNode
+            node.value shouldBeOfType ShakeIntegerLiteralNode::class
+            val int = node.value as ShakeIntegerLiteralNode
             int.number shouldBe 10
         }
     },

@@ -1,19 +1,28 @@
 package com.shakelang.shake.parser.node.factor
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeLogicalTrueNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+abstract class ShakeLiteralTokenNode(
+    map: PositionMap,
+    val valueToken: ShakeToken,
+) : ShakeValuedNodeImpl(map)
+
+class ShakeLogicalTrueLiteralNode(
+    map: PositionMap,
+    valueToken: ShakeToken,
+) : ShakeLiteralTokenNode(map, valueToken) {
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeLogicalTrueNode) return false
+        if (other !is ShakeLogicalTrueLiteralNode) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeLogicalTrueNode) return false
+        if (other !is ShakeLogicalTrueLiteralNode) return false
         return true
     }
 
@@ -22,16 +31,16 @@ class ShakeLogicalTrueNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     }
 }
 
-class ShakeLogicalFalseNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+class ShakeLogicalFalseLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeLogicalFalseNode) return false
+        if (other !is ShakeLogicalFalseLiteralNode) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeLogicalFalseNode) return false
+        if (other !is ShakeLogicalFalseLiteralNode) return false
         return true
     }
 
@@ -40,19 +49,21 @@ class ShakeLogicalFalseNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     }
 }
 
-class ShakeCharacterNode(map: PositionMap, val value: Char) : ShakeValuedNodeImpl(map) {
+class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
+
+    val value: Char = (valueToken.value ?: throw Exception("Value of character token is null")).toCharArray()[0]
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to "$value")
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeCharacterNode) return false
+        if (other !is ShakeCharacterLiteralNode) return false
         if (value != other.value) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeCharacterNode) return false
+        if (other !is ShakeCharacterLiteralNode) return false
         if (value != other.value) return false
         return true
     }
@@ -62,19 +73,22 @@ class ShakeCharacterNode(map: PositionMap, val value: Char) : ShakeValuedNodeImp
     }
 }
 
-class ShakeDoubleNode(map: PositionMap, val number: Double) : ShakeValuedNodeImpl(map) {
+class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
+
+    val number: Double = valueToken.value?.toDouble() ?: throw Exception("Value of double token is null")
+
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to number)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeDoubleNode) return false
+        if (other !is ShakeDoubleLiteralNode) return false
         if (number != other.number) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeDoubleNode) return false
+        if (other !is ShakeDoubleLiteralNode) return false
         if (number != other.number) return false
         return true
     }
@@ -84,19 +98,20 @@ class ShakeDoubleNode(map: PositionMap, val number: Double) : ShakeValuedNodeImp
     }
 }
 
-class ShakeIntegerNode(map: PositionMap, val number: Int) : ShakeValuedNodeImpl(map) {
-    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to number)
+class ShakeIntegerLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
+
+    val number: Int = valueToken.value?.toInt() ?: throw Exception("Value of integer token is null")
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeIntegerNode) return false
+        if (other !is ShakeIntegerLiteralNode) return false
         if (number != other.number) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeIntegerNode) return false
+        if (other !is ShakeIntegerLiteralNode) return false
         if (number != other.number) return false
         return true
     }
@@ -106,7 +121,12 @@ class ShakeIntegerNode(map: PositionMap, val number: Int) : ShakeValuedNodeImpl(
     }
 }
 
-class ShakePriorityNode(map: PositionMap, val value: ShakeValuedNode) : ShakeValuedNodeImpl(map) {
+class ShakePriorityNode(
+    map: PositionMap,
+    val value: ShakeValuedNode,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
+) : ShakeValuedNodeImpl(map) {
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value.json)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -128,19 +148,22 @@ class ShakePriorityNode(map: PositionMap, val value: ShakeValuedNode) : ShakeVal
     }
 }
 
-class ShakeStringNode(map: PositionMap, val value: String) : ShakeValuedNodeImpl(map) {
+class ShakeStringLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
+
+    val value: String = valueToken.value ?: throw Exception("Value of string token is null")
+
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeStringNode) return false
+        if (other !is ShakeStringLiteralNode) return false
         if (value != other.value) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeStringNode) return false
+        if (other !is ShakeStringLiteralNode) return false
         if (value != other.value) return false
         return true
     }
@@ -150,18 +173,18 @@ class ShakeStringNode(map: PositionMap, val value: String) : ShakeValuedNodeImpl
     }
 }
 
-class ShakeNullNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+class ShakeNullLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeNullNode) return false
+        if (other !is ShakeNullLiteralNode) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeNullNode) return false
+        if (other !is ShakeNullLiteralNode) return false
         return true
     }
 
@@ -170,7 +193,7 @@ class ShakeNullNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     }
 }
 
-class ShakeThisNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+class ShakeThisNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -190,7 +213,7 @@ class ShakeThisNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     }
 }
 
-class ShakeSuperNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
+class ShakeSuperNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralTokenNode(map, valueToken) {
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
