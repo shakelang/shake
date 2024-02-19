@@ -4,14 +4,14 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.*
 import com.shakelang.util.parseutils.characters.position.PositionMap
-import kotlin.jvm.JvmOverloads
 
-class ShakeVariableDeclarationNode @JvmOverloads constructor(
+@Suppress("MemberVisibilityCanBePrivate")
+class ShakeVariableDeclarationNode(
     map: PositionMap,
     val expandedType: ShakeVariableType?,
     val name: String,
-    val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
-    val value: ShakeValuedNode? = null,
+    val type: ShakeVariableType,
+    val value: ShakeValuedNode?,
     val access: ShakeAccessDescriber,
     val varToken: ShakeToken,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {

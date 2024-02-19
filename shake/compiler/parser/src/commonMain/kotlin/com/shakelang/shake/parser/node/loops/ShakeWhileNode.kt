@@ -5,7 +5,14 @@ import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeWhileNode(map: PositionMap, val body: ShakeBlockNode, val condition: ShakeValuedNode) :
+class ShakeWhileNode(
+    map: PositionMap,
+    val body: ShakeBlockNode,
+    val condition: ShakeValuedNode,
+    val whileToken: String,
+    val lparenToken: String,
+    val rparenToken: String,
+) :
     ShakeStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

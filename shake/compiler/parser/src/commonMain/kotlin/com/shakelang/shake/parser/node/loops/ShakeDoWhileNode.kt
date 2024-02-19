@@ -1,11 +1,20 @@
 package com.shakelang.shake.parser.node.loops
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeDoWhileNode(map: PositionMap, val body: ShakeBlockNode, val condition: ShakeValuedNode) :
+class ShakeDoWhileNode(
+    map: PositionMap,
+    val body: ShakeBlockNode,
+    val condition: ShakeValuedNode,
+    val doToken: ShakeToken,
+    val whileToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
+) :
     ShakeStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

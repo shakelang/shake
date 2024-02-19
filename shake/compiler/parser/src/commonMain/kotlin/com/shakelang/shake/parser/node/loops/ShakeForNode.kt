@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser.node.loops
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeStatementNode
 import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
@@ -12,6 +13,11 @@ class ShakeForNode(
     val declaration: ShakeStatementNode,
     val condition: ShakeValuedNode,
     val round: ShakeStatementNode,
+    val forToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val semicolon1Token: ShakeToken,
+    val semicolon2Token: ShakeToken,
+    val rparenToken: ShakeToken,
 ) :
     ShakeStatementNodeImpl(map) {
 
