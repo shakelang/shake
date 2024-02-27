@@ -70,40 +70,115 @@ abstract class ShakeParser {
     }
 }
 
+/**
+ * A helper class for the [ShakeParser] class.
+ * This class provides some useful functions for parsing.
+ * The default implementation of this class is [ShakeParserImpl].
+ * Create a ShakeParser using [ShakeParser.from]
+ */
+@Suppress("unused", "MemberVisibilityCanBePrivate")
 abstract class ShakeParserHelper(
+
+    /**
+     * The [PositionMap] of the [input]. It is directly taken from the [input], because [ShakeTokenInputStream]
+     * already provides a [PositionMap] implementation.
+     */
     override val input: ShakeTokenInputStream,
 ) : ShakeParser() {
 
-    protected fun expectNotNull(value: String?): String = value ?: throw ParserError("Value is null")
+    /**
+     * Assert a value to not be null, if it is null a [ParserError] is thrown
+     * @param value The value to be checked
+     * @return The value if it is not null
+     * @throws ParserError if the value is null
+     */
+    protected fun <T> expectNotNull(value: T?): T = value ?: throw ParserError("Value is null")
 
-    fun expectToken(type: ShakeTokenType, message: String, skipIgnorable: Boolean = true): ShakeToken {
+    // ****************************************************************************
+
+    /**
+     * Consumes the next token and returns it if it is of the given type, throws a [ParserError] otherwise
+     * @param type The type of the token to be consumed
+     * @param message The message of the error if the token is not of the given type
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return The consumed token
+     * @throws ParserError If the next token is not of the given type
+     */
+    protected fun expectToken(type: ShakeTokenType, message: String, skipIgnorable: Boolean = true): ShakeToken {
         if (skipIgnorable) input.skipIgnorable()
         if (!input.hasNext() || input.peekType() != type) throw ParserError(message)
         return input.next()
     }
 
-    fun expectToken(type: ShakeTokenType, skipIgnorable: Boolean = true): ShakeToken {
+    /**
+     * Consumes the next token and returns it if it is of the given type, throws a [ParserError] otherwise
+     * @param type The type of the token to be consumed
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return The consumed token
+     * @throws ParserError If the next token is not of the given type
+     */
+    protected fun expectToken(type: ShakeTokenType, skipIgnorable: Boolean = true): ShakeToken {
         return expectToken(type, "Expecting ${type.simpleValue}", skipIgnorable)
     }
 
-    fun expectToken(types: List<ShakeTokenType>, message: String, skipIgnorable: Boolean = true): ShakeToken {
+    /**
+     * Consumes the next token and returns it if it is of one of the given types, throws a [ParserError] otherwise
+     * @param types The types of the token to be consumed
+     * @param message The message of the error if the token is not of the given type
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return The consumed token
+     * @throws ParserError If the next token is not of the given type
+     */
+    protected fun expectToken(types: List<ShakeTokenType>, message: String, skipIgnorable: Boolean = true): ShakeToken {
         if (skipIgnorable) input.skipIgnorable()
         if (!input.hasNext() || input.peekType() !in types) throw ParserError(message)
         return input.next()
     }
 
-    fun expectToken(types: List<ShakeTokenType>, skipIgnorable: Boolean = true): ShakeToken {
+    /**
+     * Consumes the next token and returns it if it is of one of the given types, throws a [ParserError] otherwise
+     * @param types The types of the token to be consumed
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return The consumed token
+     * @throws ParserError If the next token is not of the given type
+     */
+    protected fun expectToken(types: List<ShakeTokenType>, skipIgnorable: Boolean = true): ShakeToken {
         return expectToken(types, "Expecting one of [${types.joinToString(", "){ json.stringify(it) }}]", skipIgnorable)
     }
 
-    fun nextToken(type: ShakeTokenType, skipIgnorable: Boolean = true): Boolean {
+    /**
+     * Skips ignorable tokens and checks whether the next token is of the given type
+     * @param type The type of the token to be checked
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return Whether the next token is of the given type
+     */
+    protected fun nextToken(type: ShakeTokenType, skipIgnorable: Boolean = true): Boolean {
         if (skipIgnorable) input.skipIgnorable()
         return input.hasNext() && input.peekType() == type
+    }
+
+    /**
+     * Skips ignorable tokens and checks whether the next token is of one of the given types
+     * @param types The types of the token to be checked
+     * @param skipIgnorable If ignorable tokens should be skipped
+     * @return Whether the next token is of one of the given types
+     */
+    protected fun nextToken(types: List<ShakeTokenType>, skipIgnorable: Boolean = true): Boolean {
+        if (skipIgnorable) input.skipIgnorable()
+        return input.hasNext() && input.peekType() in types
     }
 
     // ****************************************************************************
     // Errors
 
+    /**
+     * A class representing a parser error
+     * @param message The message of the error
+     * @param name The name of the error
+     * @param details The details of the error
+     * @param start The start position of the error
+     * @param end The end position of the error
+     */
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
         CompilerError(
             message!!,
@@ -112,6 +187,14 @@ abstract class ShakeParserHelper(
             start!!,
             end!!,
         ) {
+
+        /**
+         * A class representing a parser error
+         * @param name The name of the error
+         * @param details The details of the error
+         * @param start The start position of the error
+         * @param end The end position of the error
+         */
         constructor(
             name: String,
             details: String,
@@ -125,7 +208,18 @@ abstract class ShakeParserHelper(
             end,
         )
 
+        /**
+         * A class representing a parser error
+         * @param details The details of the error
+         * @param start The start position of the error
+         * @param end The end position of the error
+         */
         constructor(details: String, start: Position, end: Position?) : this("ParserError", details, start, end)
+
+        /**
+         * A class representing a parser error
+         * @param details The details of the error
+         */
         constructor(details: String, start: Int, end: Int) : this(
             "ParserError",
             details,
@@ -144,14 +238,7 @@ abstract class ShakeParserHelper(
 /**
  * The default implementation of the abstract [ShakeParser] class.
  */
-class ShakeParserImpl(
-
-    /**
-     * The [ShakeTokenInputStream] to be parsed.
-     */
-    input: ShakeTokenInputStream,
-
-) : ShakeParserHelper(input) {
+class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     /**
      * The [PositionMap] of the [input]. It is directly taken from the [input], because [ShakeTokenInputStream]
@@ -162,8 +249,14 @@ class ShakeParserImpl(
     /**
      * Parses the [input] and returns the root [ShakeNode] of the parsed tree (A [ShakeFileNode])
      * Entry point of the parsing process
+     * @return The parsed program
      */
     override fun parse(): ShakeFileNode {
+        //
+        // Executes doParseProgram().
+        // If this does not finish the input file, a ParserError is thrown
+        //
+
         if (!input.hasNext()) return ShakeFileNode(map, arrayOf())
         val result = doParseProgram()
         if (input.hasNext()) throw ParserError("Input did not end")
@@ -173,25 +266,24 @@ class ShakeParserImpl(
     /**
      * Starts the parsing process, but directly jumps into the statement parsing phase
      * (statements can normally be found in methods, constructors, etc.).
+     * @return The parsed statements
      */
     override fun parseAsStatements(): ShakeBlockNode {
-        val nodes: MutableList<ShakeStatementNode> = ArrayList()
+        //
+        // Expects [statement] <SEPARATOR> [statement] <SEPARATOR> ... [EOF]
+        //
+
+        val nodes = mutableListOf<ShakeStatementNode>()
         var position = -2
         skipSeparators()
-        // TODO Require Separator
-        // boolean separator = true;
         while (input.hasNext()) {
-            // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
-            // separator = false;
             if (position >= input.position) break
             position = input.position
             if (input.hasNext()) {
                 val result = expectStatement()
                 nodes.add(result)
             }
-
-            // if(this.skipSeparators() > 0) separator = true;
-            skipSeparators()
+            expectSeparator()
         }
         return ShakeBlockNode(map, nodes.toTypedArray(), null, null)
     }
@@ -201,33 +293,45 @@ class ShakeParserImpl(
 
     /**
      * Parses a program.
+     * A program is a list of imports, packages, declarations and statements.
+     * @return The parsed program
      */
     private fun doParseProgram(): ShakeFileNode {
-        val nodes: MutableList<ShakeFileChildNode> = ArrayList()
+        //
+        // Expects
+        // [import | package | declaration | statement]
+        // <SEPARATOR>
+        // [import | package | declaration | statement]
+        // <SEPARATOR> ...
+        // [EOF]
+        //
+
+        val nodes = mutableListOf<ShakeFileChildNode>()
         var position = -2
+
         skipSeparators()
-        // TODO Require Separator
-        // boolean separator = true;
         while (input.hasNext()) {
-            // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
-            // separator = false;
             if (position >= input.position) break
             position = input.position
             if (input.hasNext()) {
                 val result = expectShakeFileChild()
                 nodes.add(result)
             }
-
-            // if(this.skipSeparators() > 0) separator = true;
-            skipSeparators()
+            expectSeparator()
         }
         return ShakeFileNode(map, nodes)
     }
 
     /**
-     * Parses a single file child. (package declaration, import declaration, class declaration, method declaration, etc.)
+     * Parses a single file child. (package declaration, import declaration,
+     * class declaration, method declaration, etc.)
+     * @return The parsed file child
      */
     private fun expectShakeFileChild(): ShakeFileChildNode {
+        //
+        // Expects [import | package | declaration | statement]
+        //
+
         val token = input.peekType()
         if (token == ShakeTokenType.KEYWORD_IMPORT) return expectImport()
         if (token == ShakeTokenType.KEYWORD_PACKAGE) return expectPackage()
@@ -236,8 +340,16 @@ class ShakeParserImpl(
 
     /**
      * Parses a statement.
+     * @return The parsed statement
      */
     private fun expectStatement(): ShakeStatementNode {
+        //
+        // Declaration of [statement]
+        //
+        // A statement hereby is:
+        // [while | do-while | for | if | return | local-declaration | identifier-statement]
+        //
+
         return when (val token = input.skipIgnorable().peekType()) {
             ShakeTokenType.KEYWORD_WHILE -> expectWhileLoop()
             ShakeTokenType.KEYWORD_DO -> expectDoWhileLoop()
@@ -260,45 +372,51 @@ class ShakeParserImpl(
 
     /**
      * Parses a value (a literal, a variable usage, a method call, calculation, etc.).
+     * @return The parsed value
      */
-    override fun expectValue(): ShakeValuedNode = expectValuedAssignment()
+    override fun expectValue() = expectValuedAssignment()
 
     // ****************************************************************************
     // Utils
 
     /**
-     * Skips all separators (whitespaces, comments, etc.)
+     * Expects a separator (semicolon or line separator)
+     * If there are multiple separators, they are skipped
+     * If there are no separators, a ParserError is thrown
+     * @return The consumed separator
+     * @throws ShakeParserHelper.ParserError If there are no separators
      */
-    private fun skipSeparators(): Int {
-        var number = 0
-        while (input.hasNext() && (
-                input.peekType() == ShakeTokenType.SEMICOLON ||
-                    input.peekType() == ShakeTokenType.LINE_SEPARATOR
-                )
-        ) {
-            number++
-            input.skip()
-        }
-        return number
+    private fun expectSeparator(): ShakeToken {
+        val ret = expectToken(listOf(ShakeTokenType.SEMICOLON, ShakeTokenType.LINE_SEPARATOR), skipIgnorable = false)
+        skipSeparators()
+        return ret
     }
 
     /**
-     * Expects a semicolon.
+     * Skips all separators (semicolons, line separators, etc.).
      */
-    private fun expectSemicolon(): ShakeToken {
-        if (input.skipIgnorable().peekType() != ShakeTokenType.SEMICOLON) {
-            throw ParserError("Expecting semicolon at this point")
+    private fun skipSeparators() {
+        while (nextToken(ShakeTokenType.SEMICOLON)) {
+            // We only need to skip multiple semicolons, as nextToken() automatically
+            // ignores LineSeparators and other ignorable tokens
+            input.skip()
         }
-        return input.next()
     }
 
     /**
      * Expect a declaration (function declaration, class declaration, field declaration, etc.).
+     * @return The parsed declaration
      */
     private fun expectDeclaration(
         info: DeclarationContextInformation,
     ): ShakeNode {
         return when (input.peekType()) {
+            //
+            // Access modifiers
+            // Just adds the modifier to the info (recursively calls expectDeclaration)
+            // Modifiers: public, protected, private, static, final, abstract, synchronized, const, native, override, operator, inline
+            //
+
             ShakeTokenType.KEYWORD_PUBLIC -> {
                 if (info.access != null) throw ParserError("Access modifier is only allowed once")
                 info.access = ShakeAccessDescriber.of(input.next())
@@ -371,19 +489,35 @@ class ShakeParserImpl(
                 expectDeclaration(info)
             }
 
+            //
+            // class, interface, object, enum
+            //
+
             ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
             ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
             ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
             ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(info)
+
+            //
+            // constructor
+            //
             ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
                 if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM) {
                     throw ParserError("Constructor is only allowed in classes")
                 }
                 expectConstructorDeclaration(info)
             }
-            // Field declaration
-            ShakeTokenType.KEYWORD_VAL, ShakeTokenType.KEYWORD_VAR -> expectFieldDeclaration(info)
+
+            //
+            // function
+            //
             ShakeTokenType.KEYWORD_FUN -> expectFunctionDeclaration(info)
+
+            //
+            // field
+            //
+            ShakeTokenType.KEYWORD_VAL, ShakeTokenType.KEYWORD_VAR -> expectFieldDeclaration(info)
+
             else -> {
                 input.skip()
                 throw ParserError("Unexpected token (${input.actualType})")
@@ -391,6 +525,9 @@ class ShakeParserImpl(
         }
     }
 
+    /**
+     * Expects a namespace (a list of identifiers separated by dots).
+     */
     private fun expectFieldDeclaration(info: DeclarationContextInformation): ShakeFieldDeclarationNode {
         val varToken = input.next()
         val namespace = expectNamespace()
@@ -962,9 +1099,9 @@ class ShakeParserImpl(
         val forToken = expectToken(ShakeTokenType.KEYWORD_FOR)
         val lparen = expectToken(ShakeTokenType.LPAREN)
         val declaration = expectStatement() // TODO check if it is a statement
-        val semicolon1 = expectSemicolon()
+        val semicolon1 = expectToken(ShakeTokenType.SEMICOLON)
         val condition = expectValue()
-        val semicolon2 = expectSemicolon()
+        val semicolon2 = expectToken(ShakeTokenType.SEMICOLON)
         val round = expectStatement()
         val rparen = expectToken(ShakeTokenType.RPAREN)
         val body = expectBlock()
@@ -1470,11 +1607,6 @@ class ShakeParserImpl(
         }
 
         return ShakeTypeArgumentDeclarationNode(map, name, null)
-    }
-
-    private fun <T> expectNotNull(v: T?): T {
-        if (v == null) throw ParserError("Expecting value")
-        return v
     }
 
     private fun expectNamespace(): ShakeNamespaceNode {
