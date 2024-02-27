@@ -9,7 +9,7 @@ import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -35,11 +35,11 @@ class ParserTests : FreeSpec(
         "test multi statement" {
             var node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i; println(i);")
             node.children.size shouldBe 2
-            node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+            node.children[0] shouldBeOfType ShakeLocalDeclarationNode::class
             node.children[1] shouldBeOfType ShakeInvocationNode::class
             node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i\nprintln(i)")
             node.children.size shouldBe 2
-            node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+            node.children[0] shouldBeOfType ShakeLocalDeclarationNode::class
             node.children[1] shouldBeOfType ShakeInvocationNode::class
         }
 
@@ -83,7 +83,7 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.round shouldNotBe null
             node.body shouldNotBe null
-            node.declaration shouldBeOfType ShakeVariableDeclarationNode::class
+            node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
             node.round shouldBeOfType ShakeVariableIncreaseNode::class
             node.body shouldBeOfType ShakeBlockNode::class
@@ -93,7 +93,7 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.round shouldNotBe null
             node.body shouldNotBe null
-            node.declaration shouldBeOfType ShakeVariableDeclarationNode::class
+            node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
             node.round shouldBeOfType ShakeVariableIncreaseNode::class
             node.body shouldBeOfType ShakeBlockNode::class

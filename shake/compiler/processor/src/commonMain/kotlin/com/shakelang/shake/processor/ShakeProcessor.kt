@@ -155,7 +155,7 @@ open class ShakeASTProcessor {
             is ShakeDoWhileNode -> visitDoWhileNode(scope, statement)
             is ShakeForNode -> visitForNode(scope, statement)
             is ShakeReturnNode -> visitReturnNode(scope, statement)
-            is ShakeVariableDeclarationNode -> visitVariableDeclarationNode(scope, statement)
+            is ShakeLocalDeclarationNode -> visitVariableDeclarationNode(scope, statement)
             is ShakeVariableAssignmentNode -> visitVariableAssignmentNode(scope, statement)
             is ShakeVariableAddAssignmentNode -> visitVariableAddAssignmentNode(scope, statement)
             is ShakeVariableSubAssignmentNode -> visitVariableSubAssignmentNode(scope, statement)
@@ -273,7 +273,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableDeclarationNode(
         scope: CreationShakeScope,
-        n: ShakeVariableDeclarationNode,
+        n: ShakeLocalDeclarationNode,
     ): CreationShakeVariableDeclaration {
         val value = if (n.value != null) visitValue(scope, n.value!!) else null
         val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")

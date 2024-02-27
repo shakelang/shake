@@ -104,7 +104,7 @@ class VariableTests : FreeSpec(
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name}>",
                         "$accessPrefix${it.declarationType} i",
-                        ShakeVariableDeclarationNode::class,
+                        ShakeLocalDeclarationNode::class,
                     )
                     node.name shouldBe "i"
                     node.type shouldBe it.typeClass
@@ -118,7 +118,7 @@ class VariableTests : FreeSpec(
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name} with value>",
                         "$accessPrefix${it.declarationType} i = 0",
-                        ShakeVariableDeclarationNode::class,
+                        ShakeLocalDeclarationNode::class,
                     )
                     node.name shouldBe "i"
                     node.type shouldBe it.typeClass
@@ -140,7 +140,7 @@ class VariableTests : FreeSpec(
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name}>",
                             "${creationParams.joinToString(" ")} ${it.declarationType} i",
-                            ShakeVariableDeclarationNode::class,
+                            ShakeLocalDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"
@@ -162,7 +162,7 @@ class VariableTests : FreeSpec(
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name} with value>",
                             "${creationParams.joinToString(" ")} ${it.declarationType} i = 0",
-                            ShakeVariableDeclarationNode::class,
+                            ShakeLocalDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"

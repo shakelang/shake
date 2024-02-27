@@ -26,7 +26,7 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
         if (n is ShakeDivNode) return visitDivNode(n)
         if (n is ShakeModNode) return visitModNode(n)
         if (n is ShakePowNode) return visitPowNode(n)
-        if (n is ShakeVariableDeclarationNode) return visitVariableDeclarationNode(n)
+        if (n is ShakeLocalDeclarationNode) return visitVariableDeclarationNode(n)
         if (n is ShakeVariableAddAssignmentNode) return visitVariableAddAssignmentNode(n)
         if (n is ShakeVariableSubAssignmentNode) return visitVariableSubAssignmentNode(n)
         if (n is ShakeVariableMulAssignmentNode) return visitVariableMulAssignmentNode(n)
@@ -70,7 +70,7 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
     abstract fun visitDivNode(n: ShakeDivNode): T
     abstract fun visitModNode(n: ShakeModNode): T
     abstract fun visitPowNode(n: ShakePowNode): T
-    abstract fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode): T
+    abstract fun visitVariableDeclarationNode(n: ShakeLocalDeclarationNode): T
     abstract fun visitVariableAssignmentNode(n: ShakeValuedNode): T
     abstract fun visitVariableAddAssignmentNode(n: ShakeVariableAddAssignmentNode): T
     abstract fun visitVariableSubAssignmentNode(n: ShakeVariableSubAssignmentNode): T

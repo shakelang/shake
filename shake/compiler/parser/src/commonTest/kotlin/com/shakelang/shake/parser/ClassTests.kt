@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -69,7 +69,7 @@ class ClassTests : FreeSpec(
                     node.fields.size shouldBe 1
                     node.methods.size shouldBe 0
                     node.classes.size shouldBe 0
-                    node.fields[0] shouldBeOfType ShakeVariableDeclarationNode::class
+                    node.fields[0] shouldBeOfType ShakeLocalDeclarationNode::class
                     val variable = node.fields[0]
                     variable.type.type shouldBe ShakeVariableType.Type.INTEGER
                     variable.access shouldBe access2

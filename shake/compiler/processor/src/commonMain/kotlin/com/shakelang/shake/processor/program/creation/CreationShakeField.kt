@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
@@ -100,7 +100,7 @@ open class CreationShakeField(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode,
+            node: ShakeLocalDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 baseProject,
@@ -124,7 +124,7 @@ open class CreationShakeField(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode,
+            node: ShakeLocalDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 clazz.prj,

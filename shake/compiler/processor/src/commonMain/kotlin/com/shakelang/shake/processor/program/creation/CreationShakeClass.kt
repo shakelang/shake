@@ -93,7 +93,7 @@ private constructor(
         this.superClass = parentScope.getClass(extends)
             ?: throw IllegalStateException("Superclass $extends not found in classpath")
 
-        this.clz.implements.forEach {
+        this.clz.superClasses.forEach {
             this._interfaces.add(parentScope.getClass(it.toString()))
         }
     }

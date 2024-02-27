@@ -4,7 +4,7 @@ import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.parser.node.ShakeImportNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeAssignable
@@ -142,7 +142,7 @@ open class CreationShakePackage(
         val scope = FileScope(name, imports)
         val classes: List<ShakeClassDeclarationNode> = contents.children.filterIsInstance<ShakeClassDeclarationNode>()
         val functions: List<ShakeFunctionDeclarationNode> = contents.children.filterIsInstance<ShakeFunctionDeclarationNode>()
-        val fields: List<ShakeVariableDeclarationNode> = contents.children.filterIsInstance<ShakeVariableDeclarationNode>()
+        val fields: List<ShakeLocalDeclarationNode> = contents.children.filterIsInstance<ShakeLocalDeclarationNode>()
     }
 
     private inner class Scope : CreationShakeScope() {

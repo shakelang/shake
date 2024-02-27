@@ -252,7 +252,7 @@ class Statements : FreeSpec(
                     "name" to "ShakeBlockNode",
                     "children" to listOf(
                         mapOf(
-                            "name" to "ShakeVariableDeclarationNode",
+                            "name" to "ShakeLocalDeclarationNode",
                             "variable_name" to "a",
                             "type" to mapOf(
                                 "name" to "ShakeVariableType",
