@@ -234,7 +234,7 @@ abstract class ShakeLexingBase(
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
                 "for" -> ShakeTokenType.KEYWORD_FOR
-                "function" -> ShakeTokenType.KEYWORD_FUNCTION
+                "function" -> ShakeTokenType.KEYWORD_FUN
                 "if" -> ShakeTokenType.KEYWORD_IF
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
                 "in" -> ShakeTokenType.KEYWORD_IN

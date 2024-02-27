@@ -10,23 +10,27 @@ class ShakeVariableType(
     val dotToken: ShakeToken?,
 ) : ShakeNode {
 
-    val type = when (nameToken.value) {
-        "dynamic" -> Type.DYNAMIC
-        "byte" -> Type.BYTE
-        "short" -> Type.SHORT
-        "int" -> Type.INTEGER
-        "long" -> Type.LONG
-        "float" -> Type.FLOAT
-        "double" -> Type.DOUBLE
-        "ubyte" -> Type.UNSIGNED_BYTE
-        "ushort" -> Type.UNSIGNED_SHORT
-        "uint" -> Type.UNSIGNED_INTEGER
-        "ulong" -> Type.UNSIGNED_LONG
-        "bool" -> Type.BOOLEAN
-        "char" -> Type.CHAR
-        "object" -> Type.OBJECT
-        "void" -> Type.VOID
-        else -> Type.OBJECT
+    val type = if (parent == null) {
+        when (nameToken.value) {
+            "dynamic" -> Type.DYNAMIC
+            "byte" -> Type.BYTE
+            "short" -> Type.SHORT
+            "int" -> Type.INTEGER
+            "long" -> Type.LONG
+            "float" -> Type.FLOAT
+            "double" -> Type.DOUBLE
+            "ubyte" -> Type.UNSIGNED_BYTE
+            "ushort" -> Type.UNSIGNED_SHORT
+            "uint" -> Type.UNSIGNED_INTEGER
+            "ulong" -> Type.UNSIGNED_LONG
+            "bool" -> Type.BOOLEAN
+            "char" -> Type.CHAR
+            "object" -> Type.OBJECT
+            "void" -> Type.VOID
+            else -> Type.OBJECT
+        }
+    } else {
+        Type.OBJECT
     }
 
     val name get() = nameToken.value

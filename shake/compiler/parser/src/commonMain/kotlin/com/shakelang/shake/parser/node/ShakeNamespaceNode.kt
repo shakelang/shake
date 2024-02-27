@@ -9,6 +9,11 @@ class ShakeNamespaceNode(
     val parent: ShakeNamespaceNode?,
     val dotToken: ShakeToken?,
 ) : ShakeNodeImpl(map) {
+
+    fun toType(): ShakeVariableType {
+        return ShakeVariableType(nameToken, parent?.toType(), dotToken)
+    }
+
     override fun toJson(): Map<String, *> {
         return mapOf(
             "type" to nodeName,

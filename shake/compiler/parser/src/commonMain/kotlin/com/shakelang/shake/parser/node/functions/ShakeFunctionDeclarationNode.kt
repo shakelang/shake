@@ -8,6 +8,7 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 class ShakeFunctionParameterNode(
     map: PositionMap,
     val nameToken: ShakeToken,
+    val colonToken: ShakeToken,
     val type: ShakeVariableType,
     val defaultValue: ShakeValuedNode? = null,
     val assignmentToken: ShakeToken? = null,

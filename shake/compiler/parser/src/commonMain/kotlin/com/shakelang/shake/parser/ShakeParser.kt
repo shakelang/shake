@@ -373,106 +373,135 @@ class ShakeParserImpl(
                 expectConstructorDeclaration(info)
             }
 
-            ShakeTokenType.IDENTIFIER,
-            -> {
-                // This parses a function declaration or a variable declaration
-
-                val type = expectType()
-                if (!input.skipIgnorable()
-                        .hasNext()
-                ) {
-                    throw ParserError("Expecting identifier, but got ${input.actualType}")
-                }
-
-                val next = input.peekType()
-                var expandedType: ShakeVariableType? = null
-                lateinit var identifier: String
-
-                if (
-                    next == ShakeTokenType.KEYWORD_VAR ||
-                    next == ShakeTokenType.KEYWORD_VAL
-                ) {
-                    expandedType = expectType()
-                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.DOT) {
-                        throw ParserError("Expecting '.' after type, but got ${input.actualType}")
-                    }
-
-                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) {
-                        throw ParserError("Expecting identifier, but got ${input.actualType}")
-                    }
-
-                    identifier = input.actualValue ?: error("identifier needs value")
-                } else if (next == ShakeTokenType.IDENTIFIER) {
-                    val namespace = expectNamespace()
-                    identifier = namespace.parts.last()
-                    if (namespace.parts.size > 1) {
-                        expandedType = ShakeVariableType.objectType(
-                            ShakeNamespaceNode(
-                                map,
-                                namespace.parts.dropLast(1).toTypedArray(),
-                            ),
-                        )
-                    }
-                } else {
-                    throw ParserError("Expecting type, but got ${input.actualType}")
-                }
-
-                val hasNext = input.skipIgnorable().hasNext()
-                val peekType = if (hasNext) input.peekType() else null
-                return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
+            // Field declaration
+            ShakeTokenType.KEYWORD_VAL, ShakeTokenType.KEYWORD_VAR -> {
+                val varToken = input.next()
+                val namespace = expectNamespace()
+                val expanding = namespace.parent?.toType()
+                val expandingDot = namespace.dotToken
+                val name = namespace.nameToken
+                val type = if (nextToken(ShakeTokenType.COLON)) {
                     input.skip()
-                    if (info.isSynchronized) throw ParserError("Synchronized variables are not supported")
-                    if (info.isOperator) throw ParserError("Operator variables are not supported")
-                    ShakeVariableDeclarationNode(
+                    expectType()
+                } else {
+                    null
+                }
+
+                if (nextToken(ShakeTokenType.ASSIGN)) {
+                    input.skip()
+                    val value = expectValue()
+                    return ShakeFieldDeclarationNode(
                         map,
-                        expandedType,
-                        identifier,
+                        expanding,
+                        expandingDot,
+                        name,
                         type,
-                        expectValue(),
+                        value,
                         info.access ?: ShakeAccessDescriber.PACKAGE,
-                    )
-                } else if (hasNext && peekType == ShakeTokenType.LPAREN) {
-                    if (info.isConst) throw ParserError("Const functions are not supported")
-                    val args = expectFunctionArguments()
-                    val body = if (!info.isAbstract && !info.isNative) expectParseBodyStatement() else null
-                    return ShakeFunctionDeclarationNode(
-                        map,
-                        expandedType,
-                        identifier,
-                        body,
-                        args,
-                        type,
-                        info.access,
-                        isStatic = info.isStatic,
-                        isFinal = info.isFinal,
-                        isAbstract = info.isAbstract,
-                        isSynchronized = info.isSynchronized,
-                        isNative = info.isNative,
-                        isOverride = info.isOverride,
-                        isOperator = info.isOperator,
-                        isInline = info.isInline,
+                        varToken,
+                        info.staticToken,
+                        info.finalToken,
+                        info.nativeToken,
+                        info.constToken,
+                        info.overrideToken,
+                        info.inlineToken,
                     )
                 } else {
-                    ShakeVariableDeclarationNode(
+                    return ShakeFieldDeclarationNode(
                         map,
-                        expandedType,
-                        identifier,
+                        expanding,
+                        expandingDot,
+                        name,
                         type,
                         null,
-                        info.access,
-                        isStatic = info.isStatic,
-                        isFinal = info.isFinal,
-                        isConst = info.isConst,
-                        isNative = info.isNative,
-                        isOverride = info.isOverride,
-                        isInline = info.isInline,
+                        info.access ?: ShakeAccessDescriber.PACKAGE,
+                        varToken,
+                        info.staticToken,
+                        info.finalToken,
+                        info.nativeToken,
+                        info.constToken,
+                        info.overrideToken,
+                        info.inlineToken,
                     )
                 }
             }
 
+            ShakeTokenType.KEYWORD_FUN -> {
+                val funToken = input.next()
+
+                val namespace = expectNamespace()
+                val expanding = namespace.parent?.toType()
+                val expandingDot = namespace.dotToken
+                val name = namespace.nameToken
+
+                val lparen = expectToken(ShakeTokenType.LPAREN)
+
+                // Collect arguments
+                val argList = mutableListOf<ShakeFunctionParameterNode>()
+                val commaList = mutableListOf<ShakeToken>()
+
+                while (!nextToken(ShakeTokenType.RPAREN)) {
+                    val paramName = expectToken(ShakeTokenType.IDENTIFIER)
+                    val colon = expectToken(ShakeTokenType.COLON)
+                    val type = expectType()
+
+                    if (nextToken(ShakeTokenType.ASSIGN)) {
+                        val assign = input.next()
+                        val value = expectValue()
+
+                        argList.add(
+                            ShakeFunctionParameterNode(
+                                map,
+                                paramName,
+                                colon,
+                                type,
+                                value,
+                                assign,
+                            ),
+                        )
+                    }
+
+                    if (!nextToken(ShakeTokenType.COMMA)) break
+                    commaList.add(input.next())
+                }
+
+                val rparen = expectToken(ShakeTokenType.RPAREN)
+
+                var returnType: ShakeVariableType? = null
+                var colon: ShakeToken? = null
+                if (nextToken(ShakeTokenType.COLON)) {
+                    colon = input.next()
+                    returnType = expectType()
+                }
+
+                val body = if (nextToken(ShakeTokenType.LCURL)) {
+                    expectBlock()
+                } else {
+                    null
+                }
+
+                return ShakeFunctionDeclarationNode(
+                    map,
+                    expanding,
+                    name,
+                    body,
+                    argList.toTypedArray(),
+                    returnType!!,
+                    info.access ?: ShakeAccessDescriber.PACKAGE,
+                    info.staticToken,
+                    info.finalToken,
+                    info.abstractToken,
+                    info.overrideToken,
+                    info.synchronizedToken,
+                    info.nativeToken,
+                    info.operatorToken,
+                    info.inlineToken,
+                )
+            }
+
             else -> {
                 input.skip()
-                throw ParserError("Unexpected token (" + input.actualType + ')')
+                throw ParserError("Unexpected token (${input.actualType})")
             }
         }
     }
@@ -976,7 +1005,7 @@ class ShakeParserImpl(
 
         val name = if (input.skipIgnorable().peekType() == ShakeTokenType.IDENTIFIER) input.next() else null
         val (args, lparen, rparen, commas) = expectFunctionArguments()
-        val body = expectParseBodyStatement()
+        val body = expectBlock()
         return ShakeConstructorDeclarationNode(
             map,
             name,
@@ -1057,7 +1086,7 @@ class ShakeParserImpl(
         val semicolon2 = expectSemicolon()
         val round = expectStatement()
         val rparen = expectToken(ShakeTokenType.RPAREN)
-        val body = expectParseBodyStatement()
+        val body = expectBlock()
         return ShakeForNode(
             map,
             body,
@@ -1074,7 +1103,7 @@ class ShakeParserImpl(
 
     private fun expectDoWhileLoop(): ShakeDoWhileNode {
         val doToken = expectToken(ShakeTokenType.KEYWORD_DO)
-        val body = expectParseBodyStatement()
+        val body = expectBlock()
         skipSeparators()
         val whileToken = expectToken(ShakeTokenType.KEYWORD_WHILE)
         val (condition, lparen, rparen) = expectParseConditionStatement()
@@ -1084,18 +1113,18 @@ class ShakeParserImpl(
     private fun expectWhileLoop(): ShakeWhileNode {
         val whileToken = expectToken(ShakeTokenType.KEYWORD_WHILE)
         val (condition, lparen, rparen) = expectParseConditionStatement()
-        val body = expectParseBodyStatement()
+        val body = expectBlock()
         return ShakeWhileNode(map, body, condition, whileToken, lparen, rparen)
     }
 
     private fun expectIfStatement(): ShakeIfNode {
         val ifToken = expectToken(ShakeTokenType.KEYWORD_IF)
         val (condition, lparen, rparen) = expectParseConditionStatement()
-        val body = expectParseBodyStatement()
+        val body = expectBlock()
         skipSeparators()
         if (input.hasNext() && input.peekType() == ShakeTokenType.KEYWORD_ELSE) {
             val elseToken = input.next()
-            val elseBody = expectParseBodyStatement()
+            val elseBody = expectBlock()
             return ShakeIfNode(
                 map,
                 body,
@@ -1140,7 +1169,7 @@ class ShakeParserImpl(
         return ConditionResult(condition, lparen, rparen)
     }
 
-    private fun expectParseBodyStatement(): ShakeBlockNode {
+    private fun expectBlock(): ShakeBlockNode {
         skipSeparators()
         return if (input.peekType() == ShakeTokenType.LCURL) {
             val lcurly = input.next()

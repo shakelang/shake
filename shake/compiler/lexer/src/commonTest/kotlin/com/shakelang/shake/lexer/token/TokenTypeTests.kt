@@ -62,7 +62,7 @@ class TokenTypeTests : FreeSpec(
             ShakeTokenType.KEYWORD_PROTECTED.length("") shouldBe 9
             ShakeTokenType.KEYWORD_PRIVATE.length("") shouldBe 7
             ShakeTokenType.KEYWORD_NEW.length("") shouldBe 3
-            ShakeTokenType.KEYWORD_FUNCTION.length("") shouldBe 8
+            ShakeTokenType.KEYWORD_FUN.length("") shouldBe 8
             ShakeTokenType.KEYWORD_RETURN.length("") shouldBe 6
             ShakeTokenType.KEYWORD_CONST.length("") shouldBe 5
             ShakeTokenType.KEYWORD_BOOLEAN.length("") shouldBe 7

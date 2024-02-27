@@ -50,7 +50,7 @@ enum class ShakeTokenType(
     KEYWORD_FALSE(5, "false"),
     KEYWORD_FINAL(5, "final"),
     KEYWORD_FOR(3, "for"),
-    KEYWORD_FUNCTION(8, "function"),
+    KEYWORD_FUN(3, "fun"),
     KEYWORD_IF(2, "if"),
     KEYWORD_IMPORT(6, "import"),
     KEYWORD_IN(2, "in"),

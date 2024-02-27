@@ -4,15 +4,15 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.*
 import com.shakelang.util.parseutils.characters.position.PositionMap
-import kotlin.jvm.JvmOverloads
 
 @Suppress("MemberVisibilityCanBePrivate")
-class ShakeFieldDeclarationNode @JvmOverloads constructor(
+class ShakeFieldDeclarationNode(
     map: PositionMap,
     val expandedType: ShakeVariableType?,
-    val name: String,
-    val type: ShakeVariableType,
-    val value: ShakeValuedNode? = null,
+    val expandingDot: ShakeToken?,
+    val nameToken: ShakeToken,
+    val type: ShakeVariableType?,
+    val value: ShakeValuedNode?,
     val access: ShakeAccessDescriber,
     val varToken: ShakeToken,
     val staticToken: ShakeToken?,
@@ -22,6 +22,8 @@ class ShakeFieldDeclarationNode @JvmOverloads constructor(
     val overrideToken: ShakeToken?,
     val inlineToken: ShakeToken?,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
+
+    val name: String get() = nameToken.value ?: throw NullPointerException("nameToken.value is null")
 
     val isVar: Boolean get() = varToken.type == ShakeTokenType.KEYWORD_VAR
     val isVal: Boolean get() = varToken.type == ShakeTokenType.KEYWORD_VAL
@@ -41,7 +43,7 @@ class ShakeFieldDeclarationNode @JvmOverloads constructor(
         mapOf(
             "name" to nodeName,
             "variable_name" to name,
-            "type" to type.json,
+            "type" to type?.json,
             "access" to access.type.name.lowercase(),
             "assignment" to this.value?.json,
             "is_static" to isStatic,

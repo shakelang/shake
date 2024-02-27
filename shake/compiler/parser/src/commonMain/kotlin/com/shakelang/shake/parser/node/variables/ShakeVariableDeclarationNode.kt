@@ -9,12 +9,15 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 class ShakeVariableDeclarationNode(
     map: PositionMap,
     val expandedType: ShakeVariableType?,
-    val name: String,
-    val type: ShakeVariableType,
+    val expandingDot: ShakeToken?,
+    val nameToken: ShakeToken,
+    val type: ShakeVariableType?,
     val value: ShakeValuedNode?,
     val access: ShakeAccessDescriber,
     val varToken: ShakeToken,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
+
+    val name: String get() = nameToken.value!!
 
     val isVar: Boolean get() = varToken.type == ShakeTokenType.KEYWORD_VAR
     val isVal: Boolean get() = varToken.type == ShakeTokenType.KEYWORD_VAL
@@ -23,7 +26,7 @@ class ShakeVariableDeclarationNode(
         mapOf(
             "name" to nodeName,
             "variable_name" to name,
-            "type" to type.json,
+            "type" to type?.json,
             "access" to access.type.name.lowercase(),
             "assignment" to this.value?.json,
         )
