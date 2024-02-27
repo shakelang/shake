@@ -404,6 +404,15 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     /**
+     * Expects a declaration with a given declaration scope
+     * @param declarationScope The scope of the declaration
+     * @return The parsed declaration
+     */
+    private fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode {
+        return expectDeclaration(DeclarationContextInformation(declarationScope))
+    }
+
+    /**
      * Expect a declaration (function declaration, class declaration, field declaration, etc.).
      * @return The parsed declaration
      */
@@ -526,10 +535,16 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     /**
-     * Expects a namespace (a list of identifiers separated by dots).
+     * Expect a field declaration.
+     * @param info The context information of the declaration
+     * @return The parsed field declaration
      */
     private fun expectFieldDeclaration(info: DeclarationContextInformation): ShakeFieldDeclarationNode {
-        val varToken = input.next()
+        //
+        // <[attributes]> [val | var] <[namespace]> ([colon] <[type]>)? ([assign] [value])?
+        //
+
+        val varToken = expectToken(listOf(ShakeTokenType.KEYWORD_VAR, ShakeTokenType.KEYWORD_VAL))
         val namespace = expectNamespace()
         val expanding = namespace.parent?.toType()
         val expandingDot = namespace.dotToken
@@ -580,7 +595,15 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         }
     }
 
+    /**
+     * Expect a local declaration.
+     * @return The parsed local declaration
+     */
     private fun expectLocalDeclaration(): ShakeLocalDeclarationNode {
+        //
+        // [val | var] <[namespace]> ([colon] <[type]>)? ([assign] [value])?
+        //
+
         val varToken = expectToken(listOf(ShakeTokenType.KEYWORD_VAR, ShakeTokenType.KEYWORD_VAL))
         val name = expectToken(ShakeTokenType.IDENTIFIER)
 
@@ -602,22 +625,33 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         return ShakeLocalDeclarationNode(
             map,
-            null,
-            null,
             name,
+            colon,
             type,
+            assign,
             value,
             varToken,
         )
     }
 
-    fun expectFunctionDeclaration(info: DeclarationContextInformation): ShakeFunctionDeclarationNode {
+    /**
+     * Expect a function declaration.
+     * @param info The context information of the declaration
+     * @return The parsed function declaration
+     */
+    private fun expectFunctionDeclaration(info: DeclarationContextInformation): ShakeFunctionDeclarationNode {
+        //
+        // fun <[namespace]> ([args])? ([colon] <[type]>)? ([colon] <[type]>)? (<[block]>)?
+        //
+
         val funToken = input.next()
 
         val namespace = expectNamespace()
         val expanding = namespace.parent?.toType()
         val expandingDot = namespace.dotToken
         val name = namespace.nameToken
+
+        if (expanding != null) throw ParserError("Function declaration cannot have a namespace")
 
         val (argList, lparen, rparen, commas) = expectFunctionArguments()
 
@@ -650,36 +684,43 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             info.nativeToken,
             info.operatorToken,
             info.inlineToken,
+            funToken,
+            lparen,
+            rparen,
+            colon,
+            commas,
+            expandingDot,
         )
     }
 
     /**
-     * Expects a type for a variable, function parameter, type-argument, etc.
+     * Expect a namespace.
+     * @return The parsed namespace
      */
-    private fun expectType(): ShakeVariableType {
-        var identifier = ShakeVariableType(expectToken(ShakeTokenType.IDENTIFIER), null, null)
-        while (nextToken(ShakeTokenType.DOT)) {
-            val dot = expectToken(ShakeTokenType.DOT)
-            val next = expectToken(ShakeTokenType.IDENTIFIER)
-            identifier = ShakeVariableType(next, identifier, dot)
+    private fun expectNamespace(): ShakeNamespaceNode {
+        //
+        // Parses aaa.bbb.ccc... (namespace)
+        //
+        var namespaceNode = ShakeNamespaceNode(map, expectToken(ShakeTokenType.IDENTIFIER), null, null)
+        while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT) {
+            val dot = input.next()
+            namespaceNode = ShakeNamespaceNode(map, expectToken(ShakeTokenType.IDENTIFIER), namespaceNode, dot)
         }
-        return identifier
+        return namespaceNode
     }
 
     /**
-     * Expects a declaration with a given declaration scope
+     * Expect a type.
      */
-    private fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode {
-        return expectDeclaration(DeclarationContextInformation(declarationScope))
-    }
+    private fun expectType() = expectNamespace().toType()
 
     /**
      * Expects a statement starting with an identifier (at call we don't know if it is a function call,
      * variable assignment, etc.)
      */
-    private fun expectIdentifierStatement(parent: ShakeValuedNode? = null): ShakeStatementNode {
-        if (input.skipIgnorable().nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-        val identifierNode = ShakeIdentifierNode(map, parent, expectNotNull(input.actualValue), input.actualStart)
+    private fun expectIdentifierStatement(parent: ShakeValuedNode? = null, dotToken: ShakeToken? = null): ShakeStatementNode {
+        val identifier = expectToken(ShakeTokenType.IDENTIFIER)
+        val identifierNode = ShakeIdentifierNode(map, parent, identifier, dotToken)
         var ret: ShakeStatementNode? = null
 
         if (input.skipIgnorable().hasNext()) {
@@ -739,8 +780,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * variable assignment, etc.)
      */
     private fun expectValueIdentifier(parent: ShakeValuedNode? = null): ShakeValuedNode {
-        if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-        val identifierNode = ShakeIdentifierNode(map, parent, expectNotNull(input.actualValue), input.actualStart)
+        val identifier = expectToken(ShakeTokenType.IDENTIFIER)
+        val identifierNode = ShakeIdentifierNode(map, parent, identifier, null)
         return ShakeVariableUsageNode(map, identifierNode)
     }
 
@@ -1607,15 +1648,6 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         }
 
         return ShakeTypeArgumentDeclarationNode(map, name, null)
-    }
-
-    private fun expectNamespace(): ShakeNamespaceNode {
-        var namespaceNode = ShakeNamespaceNode(map, expectToken(ShakeTokenType.IDENTIFIER), null, null)
-        while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT) {
-            val dot = input.next()
-            namespaceNode = ShakeNamespaceNode(map, expectToken(ShakeTokenType.IDENTIFIER), namespaceNode, dot)
-        }
-        return namespaceNode
     }
 }
 

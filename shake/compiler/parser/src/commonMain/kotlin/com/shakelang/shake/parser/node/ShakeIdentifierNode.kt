@@ -1,23 +1,17 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeIdentifierNode : ShakeNodeImpl {
-    val parent: ShakeValuedNode?
-    val name: String
-    val position: Int
+@Suppress("unused", "MemberVisibilityCanBePrivate")
+class ShakeIdentifierNode(
+    map: PositionMap,
+    val parent: ShakeValuedNode?,
+    val nameToken: ShakeToken,
+    val dotToken: ShakeToken?,
+) : ShakeNodeImpl(map) {
 
-    constructor(map: PositionMap, parent: ShakeValuedNode?, name: String, position: Int) : super(map) {
-        this.parent = parent
-        this.name = name
-        this.position = position
-    }
-
-    constructor(map: PositionMap, name: String, position: Int) : super(map) {
-        this.position = position
-        parent = null
-        this.name = name
-    }
+    val name: String get() = nameToken.value ?: throw IllegalStateException("Name token has no value")
 
     override fun toJson(): Map<String, *> =
         mapOf(

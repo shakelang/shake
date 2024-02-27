@@ -8,10 +8,10 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 @Suppress("MemberVisibilityCanBePrivate")
 class ShakeLocalDeclarationNode(
     map: PositionMap,
-    val expandedType: ShakeVariableType?,
-    val expandingDot: ShakeToken?,
     val nameToken: ShakeToken,
+    val colonToken: ShakeToken?,
     val type: ShakeVariableType?,
+    val assignmentToken: ShakeToken?,
     val value: ShakeValuedNode?,
     val varToken: ShakeToken,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
@@ -32,7 +32,6 @@ class ShakeLocalDeclarationNode(
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ShakeLocalDeclarationNode) return false
-        if (expandedType != other.expandedType) return false
         if (name != other.name) return false
         if (type != other.type) return false
         if (value != other.value) return false
@@ -44,8 +43,7 @@ class ShakeLocalDeclarationNode(
     }
 
     override fun hashCode(): Int {
-        var result = expandedType?.hashCode() ?: 0
-        result = 31 * result + name.hashCode()
+        var result = name.hashCode()
         result = 31 * result + type.hashCode()
         result = 31 * result + (value?.hashCode() ?: 0)
         result = 31 * result + map.hashCode()

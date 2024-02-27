@@ -67,6 +67,12 @@ class ShakeFunctionDeclarationNode(
     val nativeToken: ShakeToken?,
     val operatorToken: ShakeToken?,
     val inlineToken: ShakeToken?,
+    val funToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
+    val colonToken: ShakeToken?,
+    val commaTokens: Array<ShakeToken>,
+    val expandingDotToken: ShakeToken?,
 ) : ShakeFileChildNodeImpl(map) {
 
     val name: String get() = nameToken.value ?: throw Exception("Name of function token is null")
