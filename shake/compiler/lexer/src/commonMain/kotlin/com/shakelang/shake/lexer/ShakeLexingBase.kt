@@ -186,8 +186,6 @@ abstract class ShakeLexingBase(
             next == ')' -> ShakeToken(ShakeTokenType.RPAREN, input.position, input.position)
             next == '{' -> ShakeToken(ShakeTokenType.LCURL, input.position, input.position)
             next == '}' -> ShakeToken(ShakeTokenType.RCURL, input.position, input.position)
-            next == '[' -> ShakeToken(ShakeTokenType.LSQBR, input.position, input.position)
-            next == ']' -> ShakeToken(ShakeTokenType.RSQBR, input.position, input.position)
             else -> throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
         }
     }
@@ -224,7 +222,6 @@ abstract class ShakeLexingBase(
             when (result) {
                 "abstract" -> ShakeTokenType.KEYWORD_ABSTRACT
                 "as" -> ShakeTokenType.KEYWORD_AS
-                "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
                 "class" -> ShakeTokenType.KEYWORD_CLASS
                 "const" -> ShakeTokenType.KEYWORD_CONST
                 "constructor" -> ShakeTokenType.KEYWORD_CONSTRUCTOR
@@ -234,7 +231,7 @@ abstract class ShakeLexingBase(
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
                 "for" -> ShakeTokenType.KEYWORD_FOR
-                "function" -> ShakeTokenType.KEYWORD_FUN
+                "fun" -> ShakeTokenType.KEYWORD_FUN
                 "if" -> ShakeTokenType.KEYWORD_IF
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
                 "in" -> ShakeTokenType.KEYWORD_IN

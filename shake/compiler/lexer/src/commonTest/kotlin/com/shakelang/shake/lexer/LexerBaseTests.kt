@@ -146,9 +146,7 @@ class LexerBaseTests : FreeSpec(
 
     @Suppress("unused")
     enum class KeywordTest(val input: String, val output: ShakeTokenType) {
-        BOOLEAN("boolean", ShakeTokenType.KEYWORD_BOOLEAN),
         CONST("const", ShakeTokenType.KEYWORD_CONST),
-        FUNCTION("function", ShakeTokenType.KEYWORD_FUN),
         RETURN("return", ShakeTokenType.KEYWORD_RETURN),
         DO("do", ShakeTokenType.KEYWORD_DO),
         WHILE("while", ShakeTokenType.KEYWORD_WHILE),
@@ -157,6 +155,8 @@ class LexerBaseTests : FreeSpec(
         ELSE("else", ShakeTokenType.KEYWORD_ELSE),
         TRUE("true", ShakeTokenType.KEYWORD_TRUE),
         FALSE("false", ShakeTokenType.KEYWORD_FALSE),
+        NULL("null", ShakeTokenType.KEYWORD_NULL),
+        FUN("fun", ShakeTokenType.KEYWORD_FUN),
         CLASS("class", ShakeTokenType.KEYWORD_CLASS),
         STATIC("static", ShakeTokenType.KEYWORD_STATIC),
         FINAL("final", ShakeTokenType.KEYWORD_FINAL),
