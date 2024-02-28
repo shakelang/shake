@@ -1,18 +1,20 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class
-ShakeImportNode(map: PositionMap, val import: Array<String>) : ShakeFileChildNodeImpl(map) {
+ShakeImportNode(map: PositionMap, val import: Array<ShakeToken>) : ShakeFileChildNodeImpl(map) {
 
-    companion object {
-        const val EVERYTHING = "*"
-    }
+    val importStrings: Array<String> = import.map {
+        if (it.type == ShakeTokenType.MUL) "*" else it.value!!
+    }.toTypedArray()
 
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "import" to import,
+            "import" to importStrings,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

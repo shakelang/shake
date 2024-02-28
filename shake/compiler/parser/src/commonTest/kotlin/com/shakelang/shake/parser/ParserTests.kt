@@ -18,18 +18,18 @@ import io.kotest.matchers.shouldNotBe
 class ParserTests : FreeSpec(
     {
         "test import" {
-            var node = ParserTestUtil.parse("<ImportTest>", "import com;")
+            var node = ParserTestUtil.parse("<ImportTest>", "import com")
             node.children.size shouldBe 1
             node.children[0] shouldBeOfType ShakeImportNode::class
-            (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com")
+            (node.children[0] as ShakeImportNode).importStrings shouldHaveSameContents arrayOf("com")
             node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake;")
             node.children.size shouldBe 1
             node.children[0] shouldBeOfType ShakeImportNode::class
-            (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake")
+            (node.children[0] as ShakeImportNode).importStrings shouldHaveSameContents arrayOf("com", "shakelang", "shake")
             node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake.*;")
             node.children.size shouldBe 1
             node.children[0] shouldBeOfType ShakeImportNode::class
-            (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake", "*")
+            (node.children[0] as ShakeImportNode).importStrings shouldHaveSameContents arrayOf("com", "shakelang", "shake", "*")
         }
 
         "test multi statement" {
