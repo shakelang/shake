@@ -1,6 +1,5 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.ShakeParserImpl.ParserError
 import com.shakelang.shake.parser.node.ShakeIfNode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -9,7 +8,7 @@ import io.kotest.matchers.shouldBe
 class TestErrors : FreeSpec(
     {
         "test LPAREN" {
-            val error = shouldThrow<ParserError> {
+            val error = shouldThrow<ShakeParserHelper.ParserError> {
                 ParserTestUtil.parseStatement("<TestLPAREN>", "if test", ShakeIfNode::class)
             }
 
@@ -22,7 +21,7 @@ class TestErrors : FreeSpec(
         }
 
         "test RPAREN" {
-            val error = shouldThrow<ParserError> {
+            val error = shouldThrow<ShakeParserHelper.ParserError> {
                 ParserTestUtil.parseStatement("<TestRPAREN>", "if(test{", ShakeIfNode::class)
             }
             error.start.index shouldBe 7
@@ -34,7 +33,7 @@ class TestErrors : FreeSpec(
         }
 
         "test LCURL" {
-            val error = shouldThrow<ParserError> {
+            val error = shouldThrow<ShakeParserHelper.ParserError> {
                 ParserTestUtil.parseStatement("<TestLCURL>", "if(test) {", ShakeIfNode::class)
             }
             error.start.index shouldBe 9
@@ -46,7 +45,7 @@ class TestErrors : FreeSpec(
         }
 
         "test RCURL" {
-            val error = shouldThrow<ParserError> {
+            val error = shouldThrow<ShakeParserHelper.ParserError> {
                 ParserTestUtil.parseStatement("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)
             }
 

@@ -14,15 +14,14 @@ import io.kotest.matchers.shouldNotBe
 class InterfaceTests : FreeSpec(
     {
         "final interface" {
-            shouldThrow<ShakeParserImpl.ParserError> {
+            shouldThrow<ShakeParserHelper.ParserError> {
                 ParserTestUtil.parse("<InterfaceTest>", "final interface test {}")
             }
         }
 
-        ShakeAccessDescriber.entries.forEach { access ->
+        ShakeAccessDescriber.types.forEach { access ->
 
-            val accessPrefix = access.prefix?.plus(" ") ?: ""
-            val baseList = listOfNotNull(access.prefix)
+            val accessPrefix = access.realPrefix
 
             "${accessPrefix}interface" {
 
@@ -41,14 +40,13 @@ class InterfaceTests : FreeSpec(
 
             "${accessPrefix}final interface" {
 
-                shouldThrow<ShakeParserImpl.ParserError> {
+                shouldThrow<ShakeParserHelper.ParserError> {
                     ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}final interface test {}")
                 }
             }
 
-            ShakeAccessDescriber.entries.forEach { access2 ->
-                val accessPrefix2 = access2.prefix?.plus(" ") ?: ""
-                val baseList2 = listOfNotNull(access2.prefix)
+            ShakeAccessDescriber.types.forEach { access2 ->
+                val accessPrefix2 = access2.realPrefix
                 "${accessPrefix}class with a ${accessPrefix2}field" {
 
                     val tree =
@@ -68,7 +66,7 @@ class InterfaceTests : FreeSpec(
                     node.classes.size shouldBe 0
                     node.fields[0] shouldBeOfType ShakeLocalDeclarationNode::class
                     val variable = node.fields[0]
-                    variable.type.type shouldBe ShakeVariableType.Type.INTEGER
+                    variable.type!!.type shouldBe ShakeVariableType.Type.INTEGER
                     variable.access shouldBe access2
                     variable.value shouldNotBe null
                     variable.value shouldBeOfType ShakeIntegerLiteralNode::class
@@ -97,7 +95,7 @@ class InterfaceTests : FreeSpec(
                     node.classes.size shouldBe 0
                     node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
                     val function = node.methods[0]
-                    function.type shouldBe ShakeVariableType.VOID
+                    function.type.type shouldBe ShakeVariableType.Type.VOID
                     function.access shouldBe access2
                     function.args.size shouldBe 0
                     function.name shouldBe "f"

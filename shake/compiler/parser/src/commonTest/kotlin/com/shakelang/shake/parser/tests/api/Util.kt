@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.ParserTestUtil
-import com.shakelang.shake.parser.ShakeParserImpl
+import com.shakelang.shake.parser.ShakeParserHelper
 import com.shakelang.util.io.streaming.AppendableStream
 import com.shakelang.util.io.streaming.Stream
 import com.shakelang.util.shason.json
@@ -289,7 +289,7 @@ fun FreeSpec.generateTests(
             if (generated.isFailure) {
                 val test = generated.toFailure()
 
-                val error = shouldThrow<ShakeParserImpl.ParserError> {
+                val error = shouldThrow<ShakeParserHelper.ParserError> {
                     ParserTestUtil.parse("${test.path}.shake", test.input)
                 }
 

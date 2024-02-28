@@ -29,10 +29,12 @@ class ShakeAccessDescriber(
         ;
 
         override fun toString(): String = name.lowercase()
+        val realPrefix: String get() = prefix?.plus(" ") ?: ""
     }
 
     companion object {
         fun of(token: ShakeToken?): ShakeAccessDescriber = ShakeAccessDescriber(token)
         val PACKAGE: ShakeAccessDescriber = ShakeAccessDescriber(null)
+        val types = ShakeAccessDescriberType.entries
     }
 }

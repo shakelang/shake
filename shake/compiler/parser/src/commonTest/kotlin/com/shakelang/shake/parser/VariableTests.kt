@@ -56,14 +56,14 @@ class VariableTests : FreeSpec(
         }
 
         "variable incr" {
-            val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
+            val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i++", ShakeVariableIncreaseAfterNode::class)
             node.variable shouldBeOfType ShakeVariableUsageNode::class
             (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
             (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
         }
 
         "variable decr" {
-            val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
+            val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i--", ShakeVariableDecreaseAfterNode::class)
             node.variable shouldBeOfType ShakeVariableUsageNode::class
             (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
             (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
@@ -74,37 +74,37 @@ class VariableTests : FreeSpec(
 
         class VariableDeclarationDescriptor(
             val declarationType: String,
-            val typeClass: ShakeVariableType,
+            val typeClass: ShakeVariableType.Type,
         ) {
             val name get() = "$declarationType declaration"
         }
 
         listOf(
 //        VariableDeclarationDescriptor("var", ShakeVariableType.UNKNOWN),
-            VariableDeclarationDescriptor("byte", ShakeVariableType.BYTE),
-            VariableDeclarationDescriptor("short", ShakeVariableType.SHORT),
-            VariableDeclarationDescriptor("int", ShakeVariableType.INTEGER),
-            VariableDeclarationDescriptor("long", ShakeVariableType.LONG),
-            VariableDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_BYTE),
-            VariableDeclarationDescriptor("unsigned short", ShakeVariableType.UNSIGNED_SHORT),
-            VariableDeclarationDescriptor("unsigned int", ShakeVariableType.UNSIGNED_INTEGER),
-            VariableDeclarationDescriptor("unsigned long", ShakeVariableType.UNSIGNED_LONG),
-            VariableDeclarationDescriptor("float", ShakeVariableType.FLOAT),
-            VariableDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
-            VariableDeclarationDescriptor("char", ShakeVariableType.CHAR),
-            VariableDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
+            VariableDeclarationDescriptor("byte", ShakeVariableType.Type.BYTE),
+            VariableDeclarationDescriptor("short", ShakeVariableType.Type.SHORT),
+            VariableDeclarationDescriptor("int", ShakeVariableType.Type.INTEGER),
+            VariableDeclarationDescriptor("long", ShakeVariableType.Type.LONG),
+            VariableDeclarationDescriptor("ubyte", ShakeVariableType.Type.UNSIGNED_BYTE),
+            VariableDeclarationDescriptor("ushort", ShakeVariableType.Type.UNSIGNED_SHORT),
+            VariableDeclarationDescriptor("uint", ShakeVariableType.Type.UNSIGNED_INTEGER),
+            VariableDeclarationDescriptor("ulong", ShakeVariableType.Type.UNSIGNED_LONG),
+            VariableDeclarationDescriptor("float", ShakeVariableType.Type.FLOAT),
+            VariableDeclarationDescriptor("double", ShakeVariableType.Type.DOUBLE),
+            VariableDeclarationDescriptor("char", ShakeVariableType.Type.CHAR),
+            VariableDeclarationDescriptor("boolean", ShakeVariableType.Type.BOOLEAN),
         ).forEach {
 
-            ShakeAccessDescriber.entries.forEach { access ->
+            ShakeAccessDescriber.types.forEach { access ->
 
-                val accessPrefix = access.prefix?.plus(" ") ?: ""
+                val accessPrefix = access.realPrefix
                 val baseList = listOfNotNull(access.prefix)
 
                 "$accessPrefix${it.name}" {
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name}>",
                         "$accessPrefix${it.declarationType} i",
-                        ShakeLocalDeclarationNode::class,
+                        ShakeFieldDeclarationNode::class,
                     )
                     node.name shouldBe "i"
                     node.type shouldBe it.typeClass
@@ -118,7 +118,7 @@ class VariableTests : FreeSpec(
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name} with value>",
                         "$accessPrefix${it.declarationType} i = 0",
-                        ShakeLocalDeclarationNode::class,
+                        ShakeFieldDeclarationNode::class,
                     )
                     node.name shouldBe "i"
                     node.type shouldBe it.typeClass
@@ -140,7 +140,7 @@ class VariableTests : FreeSpec(
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name}>",
                             "${creationParams.joinToString(" ")} ${it.declarationType} i",
-                            ShakeLocalDeclarationNode::class,
+                            ShakeFieldDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"
@@ -162,7 +162,7 @@ class VariableTests : FreeSpec(
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name} with value>",
                             "${creationParams.joinToString(" ")} ${it.declarationType} i = 0",
-                            ShakeLocalDeclarationNode::class,
+                            ShakeFieldDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"

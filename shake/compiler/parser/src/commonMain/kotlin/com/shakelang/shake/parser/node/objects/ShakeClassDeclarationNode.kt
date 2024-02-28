@@ -5,6 +5,7 @@ import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.ShakeNamespaceNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
@@ -14,7 +15,7 @@ class ShakeClassDeclarationNode(
     val classToken: ShakeToken,
     val nameToken: ShakeToken,
     val superClasses: Array<ShakeNamespaceNode>,
-    val fields: Array<ShakeLocalDeclarationNode>,
+    val fields: Array<ShakeFieldDeclarationNode>,
     val methods: Array<ShakeFunctionDeclarationNode>,
     val classes: Array<ShakeClassDeclarationNode>,
     val constructors: Array<ShakeConstructorDeclarationNode>,

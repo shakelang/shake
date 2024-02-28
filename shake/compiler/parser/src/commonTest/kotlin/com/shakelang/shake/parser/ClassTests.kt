@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeFieldDeclarationNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -14,9 +14,9 @@ import io.kotest.matchers.shouldNotBe
 class ClassTests : FreeSpec(
     {
 
-        ShakeAccessDescriber.entries.forEach { access ->
+        ShakeAccessDescriber.types.forEach { access ->
 
-            val accessPrefix = access.prefix?.plus(" ") ?: ""
+            val accessPrefix = access.realPrefix
             val baseList = listOfNotNull(access.prefix)
 
             "${accessPrefix}class" {
@@ -25,7 +25,7 @@ class ClassTests : FreeSpec(
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
-                node.access shouldBe access
+                node.access shouldBe access.name.lowercase()
                 node.isStatic shouldBe false
                 node.isFinal shouldBe false
                 node.name shouldBe "test"
@@ -40,7 +40,7 @@ class ClassTests : FreeSpec(
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
-                node.access shouldBe access
+                node.access.type shouldBe access
                 node.isStatic shouldBe false
                 node.isFinal shouldBe true
                 node.name shouldBe "test"
@@ -49,15 +49,15 @@ class ClassTests : FreeSpec(
                 node.classes.size shouldBe 0
             }
 
-            ShakeAccessDescriber.entries.forEach { access2 ->
-                val accessPrefix2 = access2.prefix?.plus(" ") ?: ""
+            ShakeAccessDescriber.types.forEach { access2 ->
+                val accessPrefix2 = access2.realPrefix
                 val baseList2 = listOfNotNull(access2.prefix)
                 "${accessPrefix}class with a ${accessPrefix2}field" {
 
                     val tree =
                         ParserTestUtil.parse(
                             "<${accessPrefix}class test>",
-                            "${accessPrefix}class test { ${accessPrefix2}int i = 0; }",
+                            "${accessPrefix}class test { ${accessPrefix2}val i: int = 0; }",
                         )
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -69,9 +69,9 @@ class ClassTests : FreeSpec(
                     node.fields.size shouldBe 1
                     node.methods.size shouldBe 0
                     node.classes.size shouldBe 0
-                    node.fields[0] shouldBeOfType ShakeLocalDeclarationNode::class
+                    node.fields[0] shouldBeOfType ShakeFieldDeclarationNode::class
                     val variable = node.fields[0]
-                    variable.type.type shouldBe ShakeVariableType.Type.INTEGER
+                    variable.type!!.type shouldBe ShakeVariableType.Type.INTEGER
                     variable.access shouldBe access2
                     variable.value shouldNotBe null
                     variable.value shouldBeOfType ShakeIntegerLiteralNode::class

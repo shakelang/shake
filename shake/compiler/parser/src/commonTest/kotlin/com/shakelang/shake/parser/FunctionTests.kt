@@ -14,29 +14,29 @@ class FunctionTests : FreeSpec(
 
         class FunctionDeclarationDescriptor(
             val declarationType: String,
-            val typeClass: ShakeVariableType,
+            val typeClass: ShakeVariableType.Type,
         ) {
             val name get() = "$declarationType declaration"
         }
 
         listOf(
-            FunctionDeclarationDescriptor("void", ShakeVariableType.VOID),
-            FunctionDeclarationDescriptor("byte", ShakeVariableType.BYTE),
-            FunctionDeclarationDescriptor("short", ShakeVariableType.SHORT),
-            FunctionDeclarationDescriptor("int", ShakeVariableType.INTEGER),
-            FunctionDeclarationDescriptor("long", ShakeVariableType.LONG),
-            FunctionDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_BYTE),
-            FunctionDeclarationDescriptor("unsigned short", ShakeVariableType.UNSIGNED_SHORT),
-            FunctionDeclarationDescriptor("unsigned int", ShakeVariableType.UNSIGNED_INTEGER),
-            FunctionDeclarationDescriptor("unsigned long", ShakeVariableType.UNSIGNED_LONG),
-            FunctionDeclarationDescriptor("float", ShakeVariableType.FLOAT),
-            FunctionDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
-            FunctionDeclarationDescriptor("char", ShakeVariableType.CHAR),
-            FunctionDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
+            FunctionDeclarationDescriptor("void", ShakeVariableType.Type.VOID),
+            FunctionDeclarationDescriptor("byte", ShakeVariableType.Type.BYTE),
+            FunctionDeclarationDescriptor("short", ShakeVariableType.Type.SHORT),
+            FunctionDeclarationDescriptor("int", ShakeVariableType.Type.INTEGER),
+            FunctionDeclarationDescriptor("long", ShakeVariableType.Type.LONG),
+            FunctionDeclarationDescriptor("ubyte", ShakeVariableType.Type.UNSIGNED_BYTE),
+            FunctionDeclarationDescriptor("ushort", ShakeVariableType.Type.UNSIGNED_SHORT),
+            FunctionDeclarationDescriptor("uint", ShakeVariableType.Type.UNSIGNED_INTEGER),
+            FunctionDeclarationDescriptor("ulong", ShakeVariableType.Type.UNSIGNED_LONG),
+            FunctionDeclarationDescriptor("float", ShakeVariableType.Type.FLOAT),
+            FunctionDeclarationDescriptor("double", ShakeVariableType.Type.DOUBLE),
+            FunctionDeclarationDescriptor("char", ShakeVariableType.Type.CHAR),
+            FunctionDeclarationDescriptor("boolean", ShakeVariableType.Type.BOOLEAN),
         ).forEach {
-            ShakeAccessDescriber.entries.forEach { access ->
+            ShakeAccessDescriber.types.forEach { access ->
 
-                val accessPrefix = access.prefix?.plus(" ") ?: ""
+                val accessPrefix = access.realPrefix
                 val baseList = listOfNotNull(access.prefix)
 
                 "$accessPrefix${it.name}" {

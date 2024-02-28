@@ -10,7 +10,7 @@ import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
+import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseAfterNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -85,7 +85,7 @@ class ParserTests : FreeSpec(
             node.body shouldNotBe null
             node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
-            node.round shouldBeOfType ShakeVariableIncreaseNode::class
+            node.round shouldBeOfType ShakeVariableIncreaseAfterNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node =
                 ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) println();", ShakeForNode::class)
@@ -95,7 +95,7 @@ class ParserTests : FreeSpec(
             node.body shouldNotBe null
             node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
-            node.round shouldBeOfType ShakeVariableIncreaseNode::class
+            node.round shouldBeOfType ShakeVariableIncreaseAfterNode::class
             node.body shouldBeOfType ShakeBlockNode::class
         }
 

@@ -386,10 +386,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * @return The consumed separator
      * @throws ShakeParserHelper.ParserError If there are no separators
      */
-    private fun expectSeparator(): ShakeToken {
-        val ret = expectToken(listOf(ShakeTokenType.SEMICOLON, ShakeTokenType.LINE_SEPARATOR), skipIgnorable = false)
+    private fun expectSeparator() {
+        if (!input.hasNext()) return
+        expectToken(listOf(ShakeTokenType.SEMICOLON, ShakeTokenType.LINE_SEPARATOR), skipIgnorable = false)
         skipSeparators()
-        return ret
     }
 
     /**
@@ -719,58 +719,45 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * variable assignment, etc.)
      */
     private fun expectIdentifierStatement(parent: ShakeValuedNode? = null, dotToken: ShakeToken? = null): ShakeStatementNode {
+        //
+        // This parses an identifier statement (any statement starting with an identifier)
+        // This can be a function call, any type of assignment, or a dot statement (e.g. a.b.c.d)
+        //
+
         val identifier = expectToken(ShakeTokenType.IDENTIFIER)
         val identifierNode = ShakeIdentifierNode(map, parent, identifier, dotToken)
-        var ret: ShakeStatementNode? = null
 
         if (input.skipIgnorable().hasNext()) {
             when (input.peekType()) {
-                ShakeTokenType.LPAREN -> ret = expectInvocation(ShakeVariableUsageNode(map, identifierNode))
-                ShakeTokenType.ASSIGN -> ret = expectVariableAssignment(ShakeVariableUsageNode(map, identifierNode))
+                // Function call
+                ShakeTokenType.LPAREN -> return expectInvocation(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.ADD_ASSIGN ->
-                    ret =
-                        expectVariableAddAssignment(ShakeVariableUsageNode(map, identifierNode))
+                // Assignments
+                ShakeTokenType.ASSIGN -> return expectVariableAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.SUB_ASSIGN ->
-                    ret =
-                        expectVariableSubAssignment(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.ADD_ASSIGN -> return expectVariableAddAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.MUL_ASSIGN ->
-                    ret =
-                        expectVariableMulAssignment(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.SUB_ASSIGN -> return expectVariableSubAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.DIV_ASSIGN ->
-                    ret =
-                        expectVariableDivAssignment(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.MUL_ASSIGN -> return expectVariableMulAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.MOD_ASSIGN ->
-                    ret =
-                        expectVariableModAssignment(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.DIV_ASSIGN -> return expectVariableDivAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.POW_ASSIGN ->
-                    ret =
-                        expectVariablePowAssignment(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.MOD_ASSIGN -> return expectVariableModAssignment(ShakeVariableUsageNode(map, identifierNode))
 
-                ShakeTokenType.INCR -> ret = expectVariableIncrease(ShakeVariableUsageNode(map, identifierNode))
-                ShakeTokenType.DECR -> ret = expectVariableDecrease(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.POW_ASSIGN -> return expectVariablePowAssignment(ShakeVariableUsageNode(map, identifierNode))
+
+                // Modification
+                ShakeTokenType.INCR -> return expectVariableIncrease(ShakeVariableUsageNode(map, identifierNode))
+                ShakeTokenType.DECR -> return expectVariableDecrease(ShakeVariableUsageNode(map, identifierNode))
+
+                // Dot statement (Sub-namespace)
                 ShakeTokenType.DOT -> {
-                    if (ret != null && ret !is ShakeValuedNode) throw ParserError("Expecting a valued node")
-                    input.skip()
-                    input.skipIgnorable()
-                    return expectIdentifierStatement(
-                        (
-                            ret ?: ShakeVariableUsageNode(
-                                map,
-                                identifierNode,
-                            )
-                            ) as ShakeValuedNode,
-                    )
+                    return expectIdentifierStatement(ShakeVariableUsageNode(map, identifierNode), input.next())
                 }
 
-                else -> {}
+                else -> throw ParserError("Expecting function call or assignment")
             }
-            if (ret != null) return ret
         }
         throw ParserError("Expecting declaration, assignment or function call")
     }
@@ -835,10 +822,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         if (ctx.isOperator) throw ParserError("Operator classes are not supported")
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
-        val fields: MutableList<ShakeLocalDeclarationNode> = ArrayList()
-        val methods: MutableList<ShakeFunctionDeclarationNode> = ArrayList()
-        val classes: MutableList<ShakeClassDeclarationNode> = ArrayList()
-        val constructors: MutableList<ShakeConstructorDeclarationNode> = ArrayList()
+        val fields = mutableListOf<ShakeFieldDeclarationNode>()
+        val methods = mutableListOf<ShakeFunctionDeclarationNode>()
+        val classes = mutableListOf<ShakeClassDeclarationNode>()
+        val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
         var colon: ShakeToken? = null
         val superClasses = mutableListOf<ShakeNamespaceNode>()
@@ -857,7 +844,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             when (val node = expectDeclaration(DeclarationScope.CLASS)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
                 is ShakeFunctionDeclarationNode -> methods.add(node)
-                is ShakeLocalDeclarationNode -> fields.add(node)
+                is ShakeFieldDeclarationNode -> fields.add(node)
                 is ShakeConstructorDeclarationNode -> constructors.add(node)
             }
             skipSeparators()
@@ -896,10 +883,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         if (info.isOperator) throw ParserError("Operator interfaces are not supported")
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
-        val fields: MutableList<ShakeLocalDeclarationNode> = ArrayList()
-        val methods: MutableList<ShakeFunctionDeclarationNode> = ArrayList()
-        val classes: MutableList<ShakeClassDeclarationNode> = ArrayList()
-        val constructors: MutableList<ShakeConstructorDeclarationNode> = ArrayList()
+        val fields = mutableListOf<ShakeFieldDeclarationNode>()
+        val methods = mutableListOf<ShakeFunctionDeclarationNode>()
+        val classes = mutableListOf<ShakeClassDeclarationNode>()
+        val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
         var implements: MutableList<ShakeNamespaceNode>? = null
 
@@ -917,7 +904,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             when (val node = expectDeclaration(DeclarationScope.INTERFACE)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
                 is ShakeFunctionDeclarationNode -> methods.add(node)
-                is ShakeLocalDeclarationNode -> fields.add(node)
+                is ShakeFieldDeclarationNode -> fields.add(node)
                 is ShakeConstructorDeclarationNode -> constructors.add(node)
             }
             skipSeparators()
