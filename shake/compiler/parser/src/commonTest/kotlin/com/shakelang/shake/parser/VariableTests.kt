@@ -103,13 +103,13 @@ class VariableTests : FreeSpec(
                 "$accessPrefix${it.name}" {
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name}>",
-                        "$accessPrefix${it.declarationType} i",
+                        "${accessPrefix}val i: ${it.declarationType}",
                         ShakeFieldDeclarationNode::class,
                     )
                     node.name shouldBe "i"
-                    node.type shouldBe it.typeClass
+                    node.type!!.type shouldBe it.typeClass
                     node.value shouldBe null
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                 }
@@ -117,15 +117,15 @@ class VariableTests : FreeSpec(
                 "$accessPrefix${it.name} with value" {
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name} with value>",
-                        "$accessPrefix${it.declarationType} i = 0",
+                        "${accessPrefix}val i: ${it.declarationType} = 0",
                         ShakeFieldDeclarationNode::class,
                     )
                     node.name shouldBe "i"
-                    node.type shouldBe it.typeClass
+                    node.type!!.type shouldBe it.typeClass
                     node.value shouldNotBe null
                     node.value shouldBeOfType ShakeIntegerLiteralNode::class
                     (node.value as ShakeIntegerLiteralNode).number shouldBe 0
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                 }
@@ -139,14 +139,14 @@ class VariableTests : FreeSpec(
 
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name}>",
-                            "${creationParams.joinToString(" ")} ${it.declarationType} i",
+                            "${creationParams.joinToString(" ")} val i: ${it.declarationType}",
                             ShakeFieldDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"
-                        node.type shouldBe it.typeClass
+                        node.type!!.type shouldBe it.typeClass
                         node.value shouldBe null
-                        node.access shouldBe access
+                        node.access.type shouldBe access
                         node.isStatic shouldBe false
                         node.isFinal shouldBe true
                     }
@@ -161,16 +161,16 @@ class VariableTests : FreeSpec(
 
                         val node = ParserTestUtil.parseSingle(
                             "<${it.name} with value>",
-                            "${creationParams.joinToString(" ")} ${it.declarationType} i = 0",
+                            "${creationParams.joinToString(" ")} val i: ${it.declarationType} = 0",
                             ShakeFieldDeclarationNode::class,
                         )
 
                         node.name shouldBe "i"
-                        node.type shouldBe it.typeClass
+                        node.type!!.type shouldBe it.typeClass
                         node.value shouldNotBe null
                         node.value shouldBeOfType ShakeIntegerLiteralNode::class
                         (node.value as ShakeIntegerLiteralNode).number shouldBe 0
-                        node.access shouldBe access
+                        node.access.type shouldBe access
                         node.isStatic shouldBe false
                         node.isFinal shouldBe true
                     }

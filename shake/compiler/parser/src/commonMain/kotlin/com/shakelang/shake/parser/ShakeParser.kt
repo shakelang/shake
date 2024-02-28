@@ -106,8 +106,10 @@ abstract class ShakeParserHelper(
      */
     protected fun expectToken(type: ShakeTokenType, message: String, skipIgnorable: Boolean = true): ShakeToken {
         if (skipIgnorable) input.skipIgnorable()
-        if (!input.hasNext() || input.peekType() != type) throw ParserError(message)
-        return input.next()
+        if (!input.hasNext()) throw ParserError(message)
+        val next = input.next()
+        if (next.type != type) throw ParserError(message)
+        return next
     }
 
     /**
@@ -388,7 +390,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      */
     private fun expectSeparator() {
         if (!input.hasNext()) return
-        expectToken(listOf(ShakeTokenType.SEMICOLON, ShakeTokenType.LINE_SEPARATOR), skipIgnorable = false)
+//        expectToken(listOf(ShakeTokenType.SEMICOLON, ShakeTokenType.LINE_SEPARATOR), skipIgnorable = false)
         skipSeparators()
     }
 

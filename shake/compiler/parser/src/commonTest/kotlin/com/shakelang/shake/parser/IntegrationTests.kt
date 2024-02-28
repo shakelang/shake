@@ -254,14 +254,8 @@ class Statements : FreeSpec(
                         mapOf(
                             "name" to "ShakeLocalDeclarationNode",
                             "variable_name" to "a",
-                            "type" to mapOf(
-                                "name" to "ShakeVariableType",
-                                "type" to "unknown",
-                            ),
-                            "access" to "package",
+                            "type" to null,
                             "assignment" to mapOf("name" to "ShakeIntegerLiteralNode", "value" to 2),
-                            "is_static" to false,
-                            "is_final" to false,
                         ),
                     ),
                 ),
