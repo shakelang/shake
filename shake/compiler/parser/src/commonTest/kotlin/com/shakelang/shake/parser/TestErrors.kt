@@ -51,7 +51,7 @@ class TestErrors : FreeSpec(
 
             error.start.index shouldBe 14
             error.end.index shouldBe 14
-            error.details shouldBe "Expecting semicolon at this point"
+            error.details shouldBe "Expecting ';'"
             error.marker.source shouldBe "<TestAwaitSemicolonError>:1:15"
             error.marker.preview shouldBe "1  for(var i = 0 i<10) {"
             error.marker.marker shouldBe "                 ^"
