@@ -102,6 +102,8 @@ class ShakeIntegerLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeL
 
     val number: Int = valueToken.value?.toInt() ?: throw Exception("Value of integer token is null")
 
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to number)
+
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ShakeIntegerLiteralNode) return false

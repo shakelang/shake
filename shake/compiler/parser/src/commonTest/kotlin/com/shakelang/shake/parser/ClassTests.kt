@@ -25,7 +25,7 @@ class ClassTests : FreeSpec(
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
-                node.access shouldBe access.name.lowercase()
+                node.access.type shouldBe access
                 node.isStatic shouldBe false
                 node.isFinal shouldBe false
                 node.name shouldBe "test"
@@ -62,7 +62,7 @@ class ClassTests : FreeSpec(
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
@@ -72,7 +72,7 @@ class ClassTests : FreeSpec(
                     node.fields[0] shouldBeOfType ShakeFieldDeclarationNode::class
                     val variable = node.fields[0]
                     variable.type!!.type shouldBe ShakeVariableType.Type.INTEGER
-                    variable.access shouldBe access2
+                    variable.access.type shouldBe access2
                     variable.value shouldNotBe null
                     variable.value shouldBeOfType ShakeIntegerLiteralNode::class
                     (variable.value as ShakeIntegerLiteralNode).number shouldBe 0
@@ -86,12 +86,12 @@ class ClassTests : FreeSpec(
                     val tree =
                         ParserTestUtil.parse(
                             "<${accessPrefix}class test>",
-                            "${accessPrefix}class test { ${accessPrefix2}void f() {} }",
+                            "${accessPrefix}class test { ${accessPrefix2}fun f() {} }",
                         )
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
@@ -101,7 +101,7 @@ class ClassTests : FreeSpec(
                     node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
                     val function = node.methods[0]
                     function.type.type shouldBe ShakeVariableType.Type.VOID
-                    function.access shouldBe access2
+                    function.access.type shouldBe access2
                     function.args.size shouldBe 0
                     function.name shouldBe "f"
                     function.isStatic shouldBe false
@@ -118,7 +118,7 @@ class ClassTests : FreeSpec(
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
@@ -127,7 +127,7 @@ class ClassTests : FreeSpec(
                     node.classes.size shouldBe 1
                     node.classes[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val clazz = node.classes[0]
-                    clazz.access shouldBe access2
+                    clazz.access.type shouldBe access2
                     clazz.isStatic shouldBe false
                     clazz.isFinal shouldBe false
                     clazz.name shouldBe "Test"
@@ -146,7 +146,7 @@ class ClassTests : FreeSpec(
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
@@ -156,7 +156,7 @@ class ClassTests : FreeSpec(
                     node.constructors.size shouldBe 1
                     node.constructors[0] shouldBeOfType ShakeConstructorDeclarationNode::class
                     val constructor = node.constructors[0]
-                    constructor.access shouldBe access2
+                    constructor.access.type shouldBe access2
                     constructor.args.size shouldBe 0
                     constructor.name shouldBe null
                 }

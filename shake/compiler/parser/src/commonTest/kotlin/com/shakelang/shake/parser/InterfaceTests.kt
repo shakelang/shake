@@ -29,7 +29,7 @@ class InterfaceTests : FreeSpec(
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
-                node.access shouldBe access
+                node.access.type shouldBe access
                 node.isStatic shouldBe false
                 node.isFinal shouldBe false
                 node.name shouldBe "test"

@@ -43,12 +43,12 @@ class FunctionTests : FreeSpec(
 
                     val fn = ParserTestUtil.parseSingle(
                         "<FunctionTest>",
-                        "$accessPrefix${it.declarationType} test() { return 10; }",
+                        "${accessPrefix}fun test(): ${it.declarationType} { return 10; }",
                         ShakeFunctionDeclarationNode::class,
                     )
-                    fn.access shouldBe access
+                    fn.access.type shouldBe access
                     fn.name shouldBe "test"
-                    fn.type shouldBe it.typeClass
+                    fn.type.type shouldBe it.typeClass
                     fn.args.size shouldBe 0
                     fn.body shouldNotBe null
                     fn.body!!.children.size shouldBe 1
@@ -63,12 +63,12 @@ class FunctionTests : FreeSpec(
                     (baseList + listOf("final")).allCombinations().forEach { creationParams ->
                         val fn = ParserTestUtil.parseSingle(
                             "<FunctionTest>",
-                            "${creationParams.joinToString(" ")} ${it.declarationType} test() { return 10; }",
+                            "${creationParams.joinToString(" ")} fun test(): ${it.declarationType} { return 10; }",
                             ShakeFunctionDeclarationNode::class,
                         )
-                        fn.access shouldBe access
+                        fn.access.type shouldBe access
                         fn.name shouldBe "test"
-                        fn.type shouldBe it.typeClass
+                        fn.type.type shouldBe it.typeClass
                         fn.args.size shouldBe 0
                         fn.body shouldNotBe null
                         fn.body!!.children.size shouldBe 1

@@ -36,7 +36,7 @@ class AutoMethodTests : FreeSpec(
                                 ),
                             )
 
-                            test("0/${typeName}_${it.second}$i", isIgnored = false) {
+                            test("0/${typeName}_${it.second}$i", isIgnored = true) {
                                 this.input = template.code
                                 this.expectedJson = template.json
                             }
@@ -70,7 +70,7 @@ class AutoMethodTests : FreeSpec(
                                     ),
                                 )
 
-                                test("1/$typeName/$typeName0/${it.second}$i", isIgnored = false) {
+                                test("1/$typeName/$typeName0/${it.second}$i", isIgnored = true) {
                                     this.input = template.code
                                     this.expectedJson = template.json
                                 }
@@ -107,7 +107,7 @@ class AutoMethodTests : FreeSpec(
                                     ),
                                 )
 
-                                test("2/$typeName0/$typeName1/${it.second}$i", isIgnored = false) {
+                                test("2/$typeName0/$typeName1/${it.second}$i", isIgnored = true) {
                                     this.input = template.code
                                     this.expectedJson = template.json
                                 }

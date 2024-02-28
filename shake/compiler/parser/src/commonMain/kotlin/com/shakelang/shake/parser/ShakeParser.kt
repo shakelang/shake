@@ -655,7 +655,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         val (argList, lparen, rparen, commas) = expectFunctionArguments()
 
-        var returnType: ShakeVariableType? = null
+        var returnType = ShakeVariableType.IMPLICIT_VOID
         var colon: ShakeToken? = null
         if (nextToken(ShakeTokenType.COLON)) {
             colon = input.next()
@@ -674,7 +674,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             name,
             body,
             argList,
-            returnType!!,
+            returnType,
             info.access ?: ShakeAccessDescriber.PACKAGE,
             info.staticToken,
             info.finalToken,
@@ -1313,7 +1313,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectValuedLogicalOr(): ShakeValuedNode {
         var result = expectValuedLogicalXOr()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_OR) {
-            result = ShakeLogicalOrNode(map, result, expectValuedLogicalXOr(), input.next())
+            val operator = input.next()
+            result = ShakeLogicalOrNode(map, result, expectValuedLogicalXOr(), operator)
         }
         return result
     }
@@ -1321,7 +1322,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectValuedLogicalXOr(): ShakeValuedNode {
         var result = expectValuedLogicalAnd()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_XOR) {
-            result = ShakeLogicalXOrNode(map, result, expectValuedLogicalAnd(), input.next())
+            val operator = input.next()
+            result = ShakeLogicalXOrNode(map, result, expectValuedLogicalAnd(), operator)
         }
         return result
     }
@@ -1329,7 +1331,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectValuedLogicalAnd(): ShakeValuedNode {
         var result = expectValuedBitwiseOr()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_AND) {
-            result = ShakeLogicalAndNode(map, result, expectValuedBitwiseOr(), input.next())
+            val operator = input.next()
+            result = ShakeLogicalAndNode(map, result, expectValuedBitwiseOr(), operator)
         }
         return result
     }
@@ -1341,10 +1344,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     input.peekType() == ShakeTokenType.BITWISE_NOR
                 )
         ) {
+            val operator = input.next()
             result = if (input.actualType == ShakeTokenType.BITWISE_OR) {
-                ShakeBitwiseOrNode(map, result, expectValuedBitwiseXOr(), input.next())
+                ShakeBitwiseOrNode(map, result, expectValuedBitwiseXOr(), operator)
             } else {
-                ShakeBitwiseNOrNode(map, result, expectValuedBitwiseXOr(), input.next())
+                ShakeBitwiseNOrNode(map, result, expectValuedBitwiseXOr(), operator)
             }
         }
         return result
@@ -1357,10 +1361,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     input.peekType() == ShakeTokenType.BITWISE_XNOR
                 )
         ) {
+            val operator = input.next()
             result = if (input.actualType == ShakeTokenType.BITWISE_XOR) {
-                ShakeBitwiseXOrNode(map, result, expectValuedBitwiseAnd(), input.next())
+                ShakeBitwiseXOrNode(map, result, expectValuedBitwiseAnd(), operator)
             } else {
-                ShakeBitwiseXNOrNode(map, result, expectValuedBitwiseAnd(), input.next())
+                ShakeBitwiseXNOrNode(map, result, expectValuedBitwiseAnd(), operator)
             }
         }
         return result
@@ -1373,10 +1378,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     input.peekType() == ShakeTokenType.BITWISE_NAND
                 )
         ) {
+            val operator = input.next()
             result = if (input.actualType == ShakeTokenType.BITWISE_AND) {
-                ShakeBitwiseAndNode(map, result, expectValuedEquality(), input.next())
+                ShakeBitwiseAndNode(map, result, expectValuedEquality(), operator)
             } else {
-                ShakeBitwiseNAndNode(map, result, expectValuedEquality(), input.next())
+                ShakeBitwiseNAndNode(map, result, expectValuedEquality(), operator)
             }
         }
         return result
@@ -1391,9 +1397,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     tmpType == ShakeTokenType.NOT_EQUALS
                 )
         ) {
+            val operator = input.next()
             left = when (tmpType) {
-                ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectValuedRelational(), input.next())
-                else -> ShakeNotEqualNode(map, left, expectValuedRelational(), input.next())
+                ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectValuedRelational(), operator)
+                else -> ShakeNotEqualNode(map, left, expectValuedRelational(), operator)
             }
         }
         return left
@@ -1410,11 +1417,12 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     tmpType == ShakeTokenType.SMALLER
                 )
         ) {
+            val operator = input.next()
             left = when (tmpType) {
-                ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectValuedBitShift(), input.next())
-                ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectValuedBitShift(), input.next())
-                ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectValuedBitShift(), input.next())
-                else -> ShakeLessThanNode(map, left, expectValuedBitShift(), input.next())
+                ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectValuedBitShift(), operator)
+                ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectValuedBitShift(), operator)
+                ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectValuedBitShift(), operator)
+                else -> ShakeLessThanNode(map, left, expectValuedBitShift(), operator)
             }
         }
         return left
@@ -1429,10 +1437,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     tmpType == ShakeTokenType.BITWISE_SHR
                 )
         ) {
-            val pos = input.actualStart
+            val operator = input.next()
             left = when (tmpType) {
-                ShakeTokenType.BITWISE_SHL -> ShakeBitwiseShiftLeftNode(map, left, expectValuedExpr(), input.next())
-                else -> ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), input.next())
+                ShakeTokenType.BITWISE_SHL -> ShakeBitwiseShiftLeftNode(map, left, expectValuedExpr(), operator)
+                else -> ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), operator)
             }
         }
         return left
@@ -1445,12 +1453,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         while (input.hasNext() &&
             (input.peekType().also { tmpType = it } == ShakeTokenType.ADD || tmpType == ShakeTokenType.SUB)
         ) {
-            input.skip()
-            val pos = input.actualStart
+            val operator = input.next()
             result = if (tmpType == ShakeTokenType.ADD) {
-                ShakeAddNode(map, result, expectValuedTerm(), input.next())
+                ShakeAddNode(map, result, expectValuedTerm(), operator)
             } else {
-                ShakeSubNode(map, result, expectValuedTerm(), input.next())
+                ShakeSubNode(map, result, expectValuedTerm(), operator)
             }
         }
         return result
@@ -1467,10 +1474,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                     } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD
                 )
         ) {
+            val operator = input.next()
             result = when (tmpType) {
-                ShakeTokenType.MUL -> ShakeMulNode(map, result, expectValuedPow(), input.next())
-                ShakeTokenType.DIV -> ShakeDivNode(map, result, expectValuedPow(), input.next())
-                else -> ShakeModNode(map, result, expectValuedPow(), input.next())
+                ShakeTokenType.MUL -> ShakeMulNode(map, result, expectValuedPow(), operator)
+                ShakeTokenType.DIV -> ShakeDivNode(map, result, expectValuedPow(), operator)
+                else -> ShakeModNode(map, result, expectValuedPow(), operator)
             }
         }
         return result
@@ -1479,7 +1487,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectValuedPow(): ShakeValuedNode {
         var result = expectValuedCast()
         while (input.hasNext() && input.peekType() == ShakeTokenType.POW) {
-            result = ShakePowNode(map, result, expectValuedCast(), input.next())
+            val pow = input.next()
+            result = ShakePowNode(map, result, expectValuedCast(), pow)
         }
         return result
     }
@@ -1487,7 +1496,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectValuedCast(): ShakeValuedNode {
         var result = expectValuedFunctionReturning()
         while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.KEYWORD_AS) {
-            input.skip()
+            val asToken = input.next()
             val target = expectType()
             result = ShakeCastNode(map, result, target)
         }
@@ -1526,22 +1535,18 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
 
             ShakeTokenType.KEYWORD_TRUE -> {
-                input.skip()
                 return ShakeLogicalTrueLiteralNode(map, input.next())
             }
 
             ShakeTokenType.KEYWORD_FALSE -> {
-                input.skip()
                 return ShakeLogicalFalseLiteralNode(map, input.next())
             }
 
             ShakeTokenType.INTEGER -> {
-                input.skip()
                 return ShakeIntegerLiteralNode(map, input.next())
             }
 
             ShakeTokenType.FLOAT -> {
-                input.skip()
                 return ShakeDoubleLiteralNode(map, input.next())
             }
 
@@ -1550,51 +1555,46 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
 
             ShakeTokenType.ADD -> {
-                input.skip()
-                return ShakeUnaryPlusNode(map, expectValuedFactor(), input.next())
+                val op = input.next()
+                return ShakeUnaryPlusNode(map, expectValuedFactor(), op)
             }
 
             ShakeTokenType.SUB -> {
-                input.skip()
-                return ShakeUnaryMinusNode(map, expectValuedFactor(), input.next())
+                val op = input.next()
+                return ShakeUnaryMinusNode(map, expectValuedFactor(), op)
             }
 
             ShakeTokenType.LOGICAL_NOT -> {
-                input.skip()
-                return ShakeLogicalNotNode(map, expectValuedFactor(), input.next())
+                val op = input.next()
+                return ShakeLogicalNotNode(map, expectValuedFactor(), op)
             }
 
             ShakeTokenType.BITWISE_NOT -> {
-                input.skip()
-                return ShakeBitwiseNotNode(map, expectValuedFactor(), input.next())
+                val op = input.next()
+                return ShakeBitwiseNotNode(map, expectValuedFactor(), op)
             }
 
             ShakeTokenType.STRING -> {
-                input.skip()
                 return ShakeStringLiteralNode(map, input.next())
             }
 
             ShakeTokenType.CHARACTER -> {
-                input.skip()
                 return ShakeCharacterLiteralNode(map, input.next())
             }
 
             ShakeTokenType.KEYWORD_NULL -> {
-                input.skip()
                 return ShakeNullLiteralNode(map, input.next())
             }
 
             ShakeTokenType.KEYWORD_THIS -> {
-                input.skip()
                 return ShakeThisNode(map, input.next())
             }
 
             ShakeTokenType.KEYWORD_SUPER -> {
-                input.skip()
                 return ShakeSuperNode(map, input.next())
             }
 
-            else -> throw ParserError(input.toString())
+            else -> throw ParserError("Unexpected token $token")
         }
     }
 

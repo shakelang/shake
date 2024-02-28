@@ -1,6 +1,7 @@
 package com.shakelang.shake.parser.node
 
 import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.util.shason.JSON
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -23,7 +24,7 @@ class ShakeVariableType(
             "ushort" -> Type.UNSIGNED_SHORT
             "uint" -> Type.UNSIGNED_INTEGER
             "ulong" -> Type.UNSIGNED_LONG
-            "bool" -> Type.BOOLEAN
+            "boolean" -> Type.BOOLEAN
             "char" -> Type.CHAR
             "object" -> Type.OBJECT
             "void" -> Type.VOID
@@ -86,5 +87,9 @@ class ShakeVariableType(
         override fun toString(): String {
             return name.lowercase()
         }
+    }
+
+    companion object {
+        val IMPLICIT_VOID = ShakeVariableType(ShakeToken(ShakeTokenType.IDENTIFIER, "void", -1, -1), null, null)
     }
 }
