@@ -5,7 +5,12 @@ import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class
-ShakeImportNode(map: PositionMap, val import: Array<ShakeToken>) : ShakeFileChildNodeImpl(map) {
+ShakeImportNode(
+    map: PositionMap,
+    val import: Array<ShakeToken>,
+    importToken: ShakeToken,
+    dotTokens: Array<ShakeToken>,
+) : ShakeFileChildNodeImpl(map) {
 
     val importStrings: Array<String> = import.map {
         if (it.type == ShakeTokenType.MUL) "*" else it.value!!

@@ -3,6 +3,7 @@ package com.shakelang.shake.parser.impl
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
+import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.shake.parser.ShakeParserHelper
 import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.expression.*
@@ -595,14 +596,15 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectImport(): ShakeImportNode {
         val importToken = expectToken(ShakeTokenType.KEYWORD_IMPORT)
         val list = mutableListOf<ShakeToken>()
+        val dots = mutableListOf<ShakeToken>()
 
         list.add(expectToken(ShakeTokenType.IDENTIFIER))
 
         while (nextToken(ShakeTokenType.DOT)) {
-            input.skip()
+            dots.add(input.next())
             list.add(expectToken(listOf(ShakeTokenType.IDENTIFIER, ShakeTokenType.MUL)))
         }
-        return ShakeImportNode(map, list.toTypedArray())
+        return ShakeImportNode(map, list.toTypedArray(), importToken, dots.toTypedArray())
     }
 
     /**
