@@ -1,10 +1,12 @@
-package com.shakelang.shake.parser
+package com.shakelang.shake.parser.impl
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
+import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.position.Position
+import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.shason.json
 
 /**
@@ -22,6 +24,12 @@ abstract class ShakeParserHelper(
      */
     override val input: ShakeTokenInputStream,
 ) : ShakeParser() {
+
+    /**
+     * The [PositionMap] of the [input]. It is directly taken from the [input], because [ShakeTokenInputStream]
+     * already provides a [PositionMap] implementation.
+     */
+    override val map: PositionMap get() = input.map
 
     /**
      * Assert a value to not be null, if it is null a [ParserError] is thrown

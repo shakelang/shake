@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser
 
+import com.shakelang.shake.parser.impl.ShakeParserHelper
 import com.shakelang.shake.parser.node.ShakeIfNode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec

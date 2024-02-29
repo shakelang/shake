@@ -4,7 +4,6 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import com.shakelang.shake.parser.ShakeParser
-import com.shakelang.shake.parser.ShakeParserHelper
 import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.*
@@ -18,18 +17,11 @@ import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.variables.*
-import com.shakelang.util.parseutils.characters.position.PositionMap
 
 /**
  * The default implementation of the abstract [ShakeParser] class.
  */
 class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
-
-    /**
-     * The [PositionMap] of the [input]. It is directly taken from the [input], because [ShakeTokenInputStream]
-     * already provides a [PositionMap] implementation.
-     */
-    override val map: PositionMap get() = input.map
 
     /**
      * Parses the [input] and returns the root [ShakeNode] of the parsed tree (A [ShakeFileNode])

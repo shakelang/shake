@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.ParserTestUtil
-import com.shakelang.shake.parser.ShakeParserHelper
+import com.shakelang.shake.parser.impl.ShakeParserHelper
 import com.shakelang.util.io.streaming.AppendableStream
 import com.shakelang.util.io.streaming.Stream
 import com.shakelang.util.shason.json

@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser
 
+import com.shakelang.shake.parser.impl.ShakeParserHelper
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
