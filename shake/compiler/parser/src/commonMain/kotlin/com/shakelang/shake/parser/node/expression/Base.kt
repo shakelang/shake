@@ -5,12 +5,31 @@ import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
+/**
+ * A node that represents an expression (e.g. 1 + 2)
+ */
 abstract class ShakeExpressionNode(
     map: PositionMap,
+
+    /**
+     * The left side of the expression
+     */
     val left: ShakeValuedNode,
+
+    /**
+     * The right side of the expression
+     */
     val right: ShakeValuedNode,
+
+    /**
+     * The token representing the operator
+     */
     val operatorToken: ShakeToken,
 ) : ShakeValuedNodeImpl(map) {
+
+    /**
+     * The operator of the expression
+     */
     abstract val operator: String
 
     override fun toJson(): Map<String, *> = mapOf(
@@ -55,11 +74,26 @@ abstract class ShakeExpressionNode(
     }
 }
 
+/**
+ * A node that represents an unary expression (e.g. -1)
+ */
 abstract class ShakeUnaryNode(
     map: PositionMap,
+
+    /**
+     * The value of the expression
+     */
     val value: ShakeValuedNode,
+
+    /**
+     * The token representing the operator
+     */
     val operatorToken: ShakeToken,
 ) : ShakeValuedNodeImpl(map) {
+
+    /**
+     * The operator of the expression
+     */
     abstract val operator: String
     override fun toJson(): Map<String, *> = mapOf(
         "name" to nodeName,
