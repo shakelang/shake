@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeFileNode
-import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.outer.ShakeImportNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeAssignable
@@ -141,7 +141,7 @@ open class CreationShakePackage(
         val imports: List<ShakeImportNode> = contents.children.filterIsInstance<ShakeImportNode>()
         val scope = FileScope(name, imports)
         val classes: List<ShakeClassDeclarationNode> = contents.children.filterIsInstance<ShakeClassDeclarationNode>()
-        val functions: List<ShakeFunctionDeclarationNode> = contents.children.filterIsInstance<ShakeFunctionDeclarationNode>()
+        val functions: List<ShakeMethodDeclarationNode> = contents.children.filterIsInstance<ShakeMethodDeclarationNode>()
         val fields: List<ShakeLocalDeclarationNode> = contents.children.filterIsInstance<ShakeLocalDeclarationNode>()
     }
 

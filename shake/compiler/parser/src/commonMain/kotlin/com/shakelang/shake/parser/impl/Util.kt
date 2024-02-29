@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser.impl
 
 import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 
 enum class DeclarationScope {
     FILE,

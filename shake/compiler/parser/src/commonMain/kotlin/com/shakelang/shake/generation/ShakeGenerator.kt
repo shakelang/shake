@@ -1,18 +1,19 @@
 package com.shakelang.shake.generation
 
 import com.shakelang.shake.parser.node.*
-import com.shakelang.shake.parser.node.expression.*
-import com.shakelang.shake.parser.node.factor.ShakeDoubleLiteralNode
-import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseLiteralNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueLiteralNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
-import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import com.shakelang.shake.parser.node.loops.ShakeForNode
-import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.misc.ShakeIdentifierNode
+import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.parser.node.outer.ShakeImportNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.statements.*
+import com.shakelang.shake.parser.node.values.ShakeCastNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.*
+import com.shakelang.shake.parser.node.values.factor.ShakeDoubleLiteralNode
+import com.shakelang.shake.parser.node.values.factor.ShakeFalseLiteralNode
+import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
+import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 
 abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl): T {
@@ -46,12 +47,12 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
         if (n is ShakeDoWhileNode) return visitDoWhileNode(n)
         if (n is ShakeForNode) return visitForNode(n)
         if (n is ShakeIfNode) return visitIfNode(n)
-        if (n is ShakeFunctionDeclarationNode) return visitFunctionDeclarationNode(n)
+        if (n is ShakeMethodDeclarationNode) return visitFunctionDeclarationNode(n)
         if (n is ShakeInvocationNode) return visitFunctionCallNode(n)
         if (n is ShakeIdentifierNode) return visitIdentifierNode(n)
         if (n is ShakeClassDeclarationNode) return visitClassDeclarationNode(n)
-        if (n is ShakeLogicalTrueLiteralNode) return visitLogicalTrueNode(n)
-        if (n is ShakeLogicalFalseLiteralNode) return visitLogicalFalseNode(n)
+        if (n is ShakeTrueLiteralNode) return visitLogicalTrueNode(n)
+        if (n is ShakeFalseLiteralNode) return visitLogicalFalseNode(n)
         if (n is ShakeImportNode) return visitImportNode(n)
         if (n is ShakeCastNode) return visitCastNode(n)
         throw Error("It looks like that node is not implemented in the Interpreter: $n")
@@ -87,12 +88,12 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
     abstract fun visitDoWhileNode(n: ShakeDoWhileNode): T
     abstract fun visitForNode(n: ShakeForNode): T
     abstract fun visitIfNode(n: ShakeIfNode): T
-    abstract fun visitFunctionDeclarationNode(n: ShakeFunctionDeclarationNode): T
+    abstract fun visitFunctionDeclarationNode(n: ShakeMethodDeclarationNode): T
     abstract fun visitClassDeclarationNode(n: ShakeClassDeclarationNode): T
     abstract fun visitFunctionCallNode(n: ShakeInvocationNode): T
     abstract fun visitIdentifierNode(n: ShakeIdentifierNode): T
-    abstract fun visitLogicalTrueNode(n: ShakeLogicalTrueLiteralNode): T
-    abstract fun visitLogicalFalseNode(n: ShakeLogicalFalseLiteralNode): T
+    abstract fun visitLogicalTrueNode(n: ShakeTrueLiteralNode): T
+    abstract fun visitLogicalFalseNode(n: ShakeFalseLiteralNode): T
     abstract fun visitImportNode(n: ShakeImportNode): T
     abstract fun visitCastNode(n: ShakeCastNode): T
 }

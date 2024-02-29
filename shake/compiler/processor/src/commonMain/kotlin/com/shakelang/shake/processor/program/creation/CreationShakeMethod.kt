@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
@@ -133,7 +133,7 @@ class CreationShakeMethod(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode,
+            node: ShakeMethodDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 baseProject,
@@ -167,7 +167,7 @@ class CreationShakeMethod(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode,
+            node: ShakeMethodDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 clazz.prj,

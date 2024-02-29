@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope

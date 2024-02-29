@@ -11,8 +11,8 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
-import com.shakelang.shake.parser.node.ShakeBlockNode
-import com.shakelang.shake.parser.node.ShakeFileNode
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.commander.CommanderValueValidators

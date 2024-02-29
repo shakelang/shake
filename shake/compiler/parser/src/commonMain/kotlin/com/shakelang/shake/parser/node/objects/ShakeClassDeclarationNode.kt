@@ -1,12 +1,12 @@
 package com.shakelang.shake.parser.node.objects
 
 import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
-import com.shakelang.shake.parser.node.ShakeNamespaceNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeFieldDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -16,7 +16,7 @@ class ShakeClassDeclarationNode(
     val nameToken: ShakeToken,
     val superClasses: Array<ShakeNamespaceNode>,
     val fields: Array<ShakeFieldDeclarationNode>,
-    val methods: Array<ShakeFunctionDeclarationNode>,
+    val methods: Array<ShakeMethodDeclarationNode>,
     val classes: Array<ShakeClassDeclarationNode>,
     val constructors: Array<ShakeConstructorDeclarationNode>,
     val access: ShakeAccessDescriber,
@@ -111,7 +111,7 @@ class ShakeInterfaceDeclarationNode(
     val nameToken: ShakeToken,
     val superClasses: Array<ShakeNamespaceNode>,
     val fields: Array<ShakeLocalDeclarationNode>,
-    val methods: Array<ShakeFunctionDeclarationNode>,
+    val methods: Array<ShakeMethodDeclarationNode>,
     val classes: Array<ShakeClassDeclarationNode>,
     val access: ShakeAccessDescriber,
     val staticToken: ShakeToken? = null,

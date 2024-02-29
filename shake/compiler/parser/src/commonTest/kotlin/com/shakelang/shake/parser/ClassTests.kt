@@ -1,12 +1,12 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -75,7 +75,7 @@ class ClassTests : FreeSpec(
                     variable.access.type shouldBe access2
                     variable.value shouldNotBe null
                     variable.value shouldBeOfType ShakeIntegerLiteralNode::class
-                    (variable.value as ShakeIntegerLiteralNode).number shouldBe 0
+                    (variable.value as ShakeIntegerLiteralNode).value shouldBe 0
                     variable.name shouldBe "i"
                     variable.isStatic shouldBe false
                     variable.isFinal shouldBe false
@@ -98,7 +98,7 @@ class ClassTests : FreeSpec(
                     node.fields.size shouldBe 0
                     node.methods.size shouldBe 1
                     node.classes.size shouldBe 0
-                    node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
+                    node.methods[0] shouldBeOfType ShakeMethodDeclarationNode::class
                     val function = node.methods[0]
                     function.type.type shouldBe ShakeVariableType.Type.VOID
                     function.access.type shouldBe access2

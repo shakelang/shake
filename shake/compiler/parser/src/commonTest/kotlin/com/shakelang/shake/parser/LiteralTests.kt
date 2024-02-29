@@ -1,6 +1,7 @@
 package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.factor.*
+import com.shakelang.shake.parser.node.values.factor.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -13,12 +14,12 @@ class LiteralTests : FreeSpec({
 
     "basic int" {
         val node = ParserTestUtil.parseValue("<BasicIntTest>", "123", ShakeIntegerLiteralNode::class)
-        node.number shouldBe 123
+        node.value shouldBe 123
     }
 
     "basic double" {
         val node = ParserTestUtil.parseValue("<BasicDoubleTest>", "123.123", ShakeDoubleLiteralNode::class)
-        node.number shouldBe 123.123
+        node.value shouldBe 123.123
     }
 
     "basic char" {
@@ -27,11 +28,11 @@ class LiteralTests : FreeSpec({
     }
 
     "basic true literal" {
-        ParserTestUtil.parseValue("<BasicTrueTest>", "true", ShakeLogicalTrueLiteralNode::class)
+        ParserTestUtil.parseValue("<BasicTrueTest>", "true", ShakeTrueLiteralNode::class)
     }
 
     "basic false literal" {
-        ParserTestUtil.parseValue("<BasicFalseTest>", "false", ShakeLogicalFalseLiteralNode::class)
+        ParserTestUtil.parseValue("<BasicFalseTest>", "false", ShakeFalseLiteralNode::class)
     }
 
     "basic null literal" {

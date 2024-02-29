@@ -5,18 +5,16 @@ import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.shake.parser.node.*
-import com.shakelang.shake.parser.node.expression.*
-import com.shakelang.shake.parser.node.factor.*
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
-import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
-import com.shakelang.shake.parser.node.functions.ShakeReturnNode
-import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import com.shakelang.shake.parser.node.loops.ShakeForNode
-import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.misc.*
+import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
-import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.parser.node.outer.*
+import com.shakelang.shake.parser.node.statements.*
+import com.shakelang.shake.parser.node.values.ShakeCastNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.*
+import com.shakelang.shake.parser.node.values.factor.*
 
 /**
  * The default implementation of the abstract [ShakeParser] class.
@@ -413,7 +411,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * @param info The context information of the declaration
      * @return The parsed function declaration
      */
-    private fun expectFunctionDeclaration(info: DeclarationContextInformation): ShakeFunctionDeclarationNode {
+    private fun expectFunctionDeclaration(info: DeclarationContextInformation): ShakeMethodDeclarationNode {
         //
         // fun <[namespace]> ([args])? ([colon] <[type]>)? ([colon] <[type]>)? (<[block]>)?
         //
@@ -442,7 +440,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             null
         }
 
-        return ShakeFunctionDeclarationNode(
+        return ShakeMethodDeclarationNode(
             map,
             expanding,
             name,
@@ -538,7 +536,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
-        val methods = mutableListOf<ShakeFunctionDeclarationNode>()
+        val methods = mutableListOf<ShakeMethodDeclarationNode>()
         val classes = mutableListOf<ShakeClassDeclarationNode>()
         val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
@@ -558,7 +556,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         while (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.RCURL) {
             when (val node = expectDeclaration(DeclarationScope.CLASS)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
-                is ShakeFunctionDeclarationNode -> methods.add(node)
+                is ShakeMethodDeclarationNode -> methods.add(node)
                 is ShakeFieldDeclarationNode -> fields.add(node)
                 is ShakeConstructorDeclarationNode -> constructors.add(node)
             }
@@ -599,7 +597,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
-        val methods = mutableListOf<ShakeFunctionDeclarationNode>()
+        val methods = mutableListOf<ShakeMethodDeclarationNode>()
         val classes = mutableListOf<ShakeClassDeclarationNode>()
         val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
@@ -618,7 +616,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             skipSeparators()
             when (val node = expectDeclaration(DeclarationScope.INTERFACE)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
-                is ShakeFunctionDeclarationNode -> methods.add(node)
+                is ShakeMethodDeclarationNode -> methods.add(node)
                 is ShakeFieldDeclarationNode -> fields.add(node)
                 is ShakeConstructorDeclarationNode -> constructors.add(node)
             }
@@ -669,7 +667,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * Expects function arguments. (This parses all between the "(" and ")" of a function)
      */
     private class ParametersResult(
-        val args: Array<ShakeFunctionParameterNode>,
+        val args: Array<ShakeParameterNode>,
         val lparen: ShakeToken,
         val rparen: ShakeToken,
         val commas: Array<ShakeToken>,
@@ -680,7 +678,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         operator fun component4() = commas
     }
     private fun expectFunctionArguments(): ParametersResult {
-        val args = mutableListOf<ShakeFunctionParameterNode>()
+        val args = mutableListOf<ShakeParameterNode>()
         val commas = mutableListOf<ShakeToken>()
         if (!input.skipIgnorable()
                 .hasNext() || input.peekType() != ShakeTokenType.LPAREN
@@ -712,16 +710,16 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     /**
      * Expects a function argument declaration.
      */
-    private fun expectArgument(): ShakeFunctionParameterNode {
+    private fun expectArgument(): ShakeParameterNode {
         val name = expectToken(ShakeTokenType.IDENTIFIER)
         val colon = expectToken(ShakeTokenType.COLON)
         val type = expectType()
         if (nextToken(ShakeTokenType.ASSIGN)) {
             val assign = input.next()
             val value = expectValue()
-            return ShakeFunctionParameterNode(map, name, colon, type, value, assign)
+            return ShakeParameterNode(map, name, colon, type, value, assign)
         }
-        return ShakeFunctionParameterNode(map, name, colon, type, null, null)
+        return ShakeParameterNode(map, name, colon, type, null, null)
     }
 
     /**
@@ -1242,11 +1240,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
 
             ShakeTokenType.KEYWORD_TRUE -> {
-                return ShakeLogicalTrueLiteralNode(map, input.next())
+                return ShakeTrueLiteralNode(map, input.next())
             }
 
             ShakeTokenType.KEYWORD_FALSE -> {
-                return ShakeLogicalFalseLiteralNode(map, input.next())
+                return ShakeFalseLiteralNode(map, input.next())
             }
 
             ShakeTokenType.INTEGER -> {

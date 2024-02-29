@@ -1,10 +1,10 @@
 package com.shakelang.shake.parser.node.objects
 
 import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
-import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.outer.ShakeParameterNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -13,7 +13,7 @@ class ShakeConstructorDeclarationNode(
     map: PositionMap,
     val name: ShakeToken?,
     val body: ShakeBlockNode,
-    val args: Array<ShakeFunctionParameterNode>,
+    val args: Array<ShakeParameterNode>,
     val access: ShakeAccessDescriber,
     val constructorToken: ShakeToken,
     val lparenToken: ShakeToken,

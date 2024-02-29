@@ -3,6 +3,8 @@ package com.shakelang.shake.parser
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import com.shakelang.shake.parser.impl.ShakeParserImpl
 import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.position.PositionMap
 

@@ -2,6 +2,8 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.kotest.matchers.shouldBe

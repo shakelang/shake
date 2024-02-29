@@ -4,12 +4,15 @@ import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.*
-import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
-import com.shakelang.shake.parser.node.functions.ShakeReturnNode
-import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import com.shakelang.shake.parser.node.loops.ShakeForNode
-import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
+import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.statements.*
+import com.shakelang.shake.parser.node.values.ShakeCastNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.*
+import com.shakelang.shake.parser.node.values.factor.*
 import com.shakelang.shake.parser.node.variables.*
 import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
 import com.shakelang.shake.processor.program.creation.CreationShakeProject
@@ -113,8 +116,8 @@ open class ShakeASTProcessor {
             is ShakeIntegerLiteralNode -> visitIntegerNode(scope, value)
             is ShakeDoubleLiteralNode -> visitDoubleNode(scope, value)
             is ShakeStringLiteralNode -> visitStringNode(scope, value)
-            is ShakeLogicalTrueLiteralNode -> visitLogicalTrueNode(scope, value)
-            is ShakeLogicalFalseLiteralNode -> visitLogicalFalseNode(scope, value)
+            is ShakeTrueLiteralNode -> visitLogicalTrueNode(scope, value)
+            is ShakeFalseLiteralNode -> visitLogicalFalseNode(scope, value)
             is ShakeNullLiteralNode -> visitNullNode(scope, value)
 
             is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
@@ -194,11 +197,11 @@ open class ShakeASTProcessor {
     }
 
     private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeDoubleLiteralNode): CreationShakeDoubleLiteral {
-        return CreationShakeDoubleLiteral(scope.project, n.number)
+        return CreationShakeDoubleLiteral(scope.project, n.value)
     }
 
     private fun visitIntegerNode(scope: CreationShakeScope, n: ShakeIntegerLiteralNode): CreationShakeIntegerLiteral {
-        return CreationShakeIntegerLiteral(scope.project, n.number)
+        return CreationShakeIntegerLiteral(scope.project, n.value)
     }
 
     private fun visitStringNode(scope: CreationShakeScope, n: ShakeStringLiteralNode): CreationShakeStringLiteral {
@@ -587,11 +590,11 @@ open class ShakeASTProcessor {
         TODO("Direct returned lambda functions")
     }
 
-    private fun visitLogicalTrueNode(scope: CreationShakeScope, n: ShakeLogicalTrueLiteralNode): CreationShakeValue {
+    private fun visitLogicalTrueNode(scope: CreationShakeScope, n: ShakeTrueLiteralNode): CreationShakeValue {
         return CreationShakeBooleanLiteral(scope.project, true)
     }
 
-    private fun visitLogicalFalseNode(scope: CreationShakeScope, n: ShakeLogicalFalseLiteralNode): CreationShakeValue {
+    private fun visitLogicalFalseNode(scope: CreationShakeScope, n: ShakeFalseLiteralNode): CreationShakeValue {
         return CreationShakeBooleanLiteral(scope.project, false)
     }
 

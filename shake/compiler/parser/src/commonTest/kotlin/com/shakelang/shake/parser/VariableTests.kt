@@ -1,10 +1,12 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.expression.ShakeAddNode
-import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
-import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
+import com.shakelang.shake.parser.node.mixed.*
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.ShakeAddNode
+import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -38,7 +40,7 @@ class VariableTests : FreeSpec(
                 (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
                 node.value shouldNotBe null
                 node.value shouldBeOfType ShakeIntegerLiteralNode::class
-                (node.value as ShakeIntegerLiteralNode).number shouldBe 0
+                (node.value as ShakeIntegerLiteralNode).value shouldBe 0
             }
 
             "${it.name} with expression" {
@@ -50,8 +52,8 @@ class VariableTests : FreeSpec(
                 node.value shouldBeOfType ShakeAddNode::class
                 (node.value as ShakeAddNode).left shouldBeOfType ShakeIntegerLiteralNode::class
                 (node.value as ShakeAddNode).right shouldBeOfType ShakeIntegerLiteralNode::class
-                ((node.value as ShakeAddNode).left as ShakeIntegerLiteralNode).number shouldBe 11
-                ((node.value as ShakeAddNode).right as ShakeIntegerLiteralNode).number shouldBe 2
+                ((node.value as ShakeAddNode).left as ShakeIntegerLiteralNode).value shouldBe 11
+                ((node.value as ShakeAddNode).right as ShakeIntegerLiteralNode).value shouldBe 2
             }
         }
 
@@ -124,7 +126,7 @@ class VariableTests : FreeSpec(
                     node.type!!.type shouldBe it.typeClass
                     node.value shouldNotBe null
                     node.value shouldBeOfType ShakeIntegerLiteralNode::class
-                    (node.value as ShakeIntegerLiteralNode).number shouldBe 0
+                    (node.value as ShakeIntegerLiteralNode).value shouldBe 0
                     node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
@@ -169,7 +171,7 @@ class VariableTests : FreeSpec(
                         node.type!!.type shouldBe it.typeClass
                         node.value shouldNotBe null
                         node.value shouldBeOfType ShakeIntegerLiteralNode::class
-                        (node.value as ShakeIntegerLiteralNode).number shouldBe 0
+                        (node.value as ShakeIntegerLiteralNode).value shouldBe 0
                         node.access.type shouldBe access
                         node.isStatic shouldBe false
                         node.isFinal shouldBe true

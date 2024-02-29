@@ -1,10 +1,10 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeIntegerLiteralNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.parser.node.functions.ShakeReturnNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.statements.ShakeReturnNode
+import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -44,7 +44,7 @@ class FunctionTests : FreeSpec(
                     val fn = ParserTestUtil.parseSingle(
                         "<FunctionTest>",
                         "${accessPrefix}fun test(): ${it.declarationType} { return 10; }",
-                        ShakeFunctionDeclarationNode::class,
+                        ShakeMethodDeclarationNode::class,
                     )
                     fn.access.type shouldBe access
                     fn.name shouldBe "test"
@@ -56,7 +56,7 @@ class FunctionTests : FreeSpec(
                     val ret = fn.body!!.children[0] as ShakeReturnNode
                     ret.value shouldBeOfType ShakeIntegerLiteralNode::class
                     val int = ret.value as ShakeIntegerLiteralNode
-                    int.number shouldBe 10
+                    int.value shouldBe 10
                 }
 
                 "${accessPrefix}final ${it.name}" {
@@ -64,7 +64,7 @@ class FunctionTests : FreeSpec(
                         val fn = ParserTestUtil.parseSingle(
                             "<FunctionTest>",
                             "${creationParams.joinToString(" ")} fun test(): ${it.declarationType} { return 10; }",
-                            ShakeFunctionDeclarationNode::class,
+                            ShakeMethodDeclarationNode::class,
                         )
                         fn.access.type shouldBe access
                         fn.name shouldBe "test"
@@ -76,7 +76,7 @@ class FunctionTests : FreeSpec(
                         val ret = fn.body!!.children[0] as ShakeReturnNode
                         ret.value shouldBeOfType ShakeIntegerLiteralNode::class
                         val int = ret.value as ShakeIntegerLiteralNode
-                        int.number shouldBe 10
+                        int.value shouldBe 10
                     }
                 }
             }
@@ -92,7 +92,7 @@ class FunctionTests : FreeSpec(
             val node = tree.children[0] as ShakeReturnNode
             node.value shouldBeOfType ShakeIntegerLiteralNode::class
             val int = node.value as ShakeIntegerLiteralNode
-            int.number shouldBe 10
+            int.value shouldBe 10
         }
     },
 )

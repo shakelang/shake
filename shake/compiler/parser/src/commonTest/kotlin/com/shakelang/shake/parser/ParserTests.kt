@@ -1,16 +1,16 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.ShakeBlockNode
-import com.shakelang.shake.parser.node.ShakeIfNode
-import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.expression.ShakeLessThanNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueLiteralNode
-import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
-import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import com.shakelang.shake.parser.node.loops.ShakeForNode
-import com.shakelang.shake.parser.node.loops.ShakeWhileNode
-import com.shakelang.shake.parser.node.variables.ShakeLocalDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableIncrementAfterNode
+import com.shakelang.shake.parser.node.mixed.ShakeInvocationNode
+import com.shakelang.shake.parser.node.mixed.ShakeVariableIncrementAfterNode
+import com.shakelang.shake.parser.node.outer.ShakeImportNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
+import com.shakelang.shake.parser.node.statements.ShakeDoWhileNode
+import com.shakelang.shake.parser.node.statements.ShakeForNode
+import com.shakelang.shake.parser.node.statements.ShakeIfNode
+import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
+import com.shakelang.shake.parser.node.statements.ShakeWhileNode
+import com.shakelang.shake.parser.node.values.expression.ShakeLessThanNode
+import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -47,12 +47,12 @@ class ParserTests : FreeSpec(
             var node = ParserTestUtil.parseStatement("<WhileTest>", "while (true) { println(); }", ShakeWhileNode::class)
             node.condition shouldNotBe null
             node.body shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node = ParserTestUtil.parseStatement("<WhileTest>", "while (true) println();", ShakeWhileNode::class)
             node.condition shouldNotBe null
             node.body shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             val body = node.body
             body.children.size shouldBe 1
@@ -64,12 +64,12 @@ class ParserTests : FreeSpec(
                 ParserTestUtil.parseStatement("<DoWhileTest>", "do { println(i) } while (true);", ShakeDoWhileNode::class)
             node.condition shouldNotBe null
             node.body shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node = ParserTestUtil.parseStatement("<DpWhileTest>", "do println(i); while (true);", ShakeDoWhileNode::class)
             node.condition shouldNotBe null
             node.body shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
         }
 
@@ -104,17 +104,17 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.body shouldNotBe null
             node.elseBody shouldBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i);", ShakeIfNode::class)
             node.condition shouldNotBe null
             node.body shouldNotBe null
             node.elseBody shouldBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node.body.children.size shouldBe 1
             node.body.children[0] shouldBeOfType ShakeInvocationNode::class
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node.body.children.size shouldBe 1
             node.body.children[0] shouldBeOfType ShakeInvocationNode::class
@@ -122,7 +122,7 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.body shouldNotBe null
             node.elseBody shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node.body.children.size shouldBe 1
             node.body.children[0] shouldBeOfType ShakeInvocationNode::class
@@ -138,7 +138,7 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.body shouldNotBe null
             node.elseBody shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node.body.children.size shouldBe 1
             node.body.children[0] shouldBeOfType ShakeInvocationNode::class
@@ -149,7 +149,7 @@ class ParserTests : FreeSpec(
             node.condition shouldNotBe null
             node.body shouldNotBe null
             node.elseBody shouldNotBe null
-            node.condition shouldBeOfType ShakeLogicalTrueLiteralNode::class
+            node.condition shouldBeOfType ShakeTrueLiteralNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node.body.children.size shouldBe 1
             node.body.children[0] shouldBeOfType ShakeInvocationNode::class

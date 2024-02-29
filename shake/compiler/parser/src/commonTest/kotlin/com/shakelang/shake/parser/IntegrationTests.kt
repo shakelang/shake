@@ -2,6 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.values.expression.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
@@ -33,11 +34,11 @@ class IntegrationTestValues : FreeSpec(
         }
 
         "true literal" {
-            testCodeSnippetValue("true", mapOf("name" to "ShakeLogicalTrueLiteralNode"))
+            testCodeSnippetValue("true", mapOf("name" to "ShakeTrueLiteralNode"))
         }
 
         "false literal" {
-            testCodeSnippetValue("false", mapOf("name" to "ShakeLogicalFalseLiteralNode"))
+            testCodeSnippetValue("false", mapOf("name" to "ShakeFalseLiteralNode"))
         }
 
         "null literal" {
