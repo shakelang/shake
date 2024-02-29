@@ -56,14 +56,14 @@ class VariableTests : FreeSpec(
         }
 
         "variable incr" {
-            val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i++", ShakeVariableIncreaseAfterNode::class)
+            val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i++", ShakeVariableIncrementAfterNode::class)
             node.variable shouldBeOfType ShakeVariableUsageNode::class
             (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
             (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
         }
 
         "variable decr" {
-            val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i--", ShakeVariableDecreaseAfterNode::class)
+            val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i--", ShakeVariableDecrementAfterNode::class)
             node.variable shouldBeOfType ShakeVariableUsageNode::class
             (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
             (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null

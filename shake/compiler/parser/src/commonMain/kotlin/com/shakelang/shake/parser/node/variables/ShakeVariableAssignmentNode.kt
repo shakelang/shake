@@ -118,25 +118,25 @@ abstract class ShakeCommonVariableIncreaseDecreaseNode(
     }
 }
 
-class ShakeVariableIncreaseBeforeNode(
+class ShakeVariableIncrementBeforeNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     operatorToken: ShakeToken,
 ) : ShakeCommonVariableIncreaseDecreaseNode(map, variable, operatorToken)
 
-class ShakeVariableDecreaseBeforeNode(
+class ShakeVariableDecrementBeforeNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     operatorToken: ShakeToken,
 ) : ShakeCommonVariableIncreaseDecreaseNode(map, variable, operatorToken)
 
-class ShakeVariableIncreaseAfterNode(
+class ShakeVariableIncrementAfterNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     operatorToken: ShakeToken,
 ) : ShakeCommonVariableIncreaseDecreaseNode(map, variable, operatorToken)
 
-class ShakeVariableDecreaseAfterNode(
+class ShakeVariableDecrementAfterNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     operatorToken: ShakeToken,

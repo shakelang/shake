@@ -128,30 +128,27 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         //
 
         return when (val token = input.skipIgnorable().peekType()) {
-            ShakeTokenType.KEYWORD_WHILE -> expectWhileLoop()
-            ShakeTokenType.KEYWORD_DO -> expectDoWhileLoop()
-            ShakeTokenType.KEYWORD_FOR -> expectForLoop()
-            ShakeTokenType.KEYWORD_IF -> expectIfStatement()
-            ShakeTokenType.KEYWORD_RETURN -> expectReturnStatement()
+            ShakeTokenType.KEYWORD_WHILE -> expectStatementWhileLoop()
+            ShakeTokenType.KEYWORD_DO -> expectStatementDoWhileLoop()
+            ShakeTokenType.KEYWORD_FOR -> expectStatementForLoop()
+            ShakeTokenType.KEYWORD_IF -> expectStatementIf()
+            ShakeTokenType.KEYWORD_RETURN -> expectStatementReturn()
             ShakeTokenType.KEYWORD_CONST,
             ShakeTokenType.KEYWORD_VAR,
             ShakeTokenType.KEYWORD_VAL,
             ShakeTokenType.KEYWORD_FINAL,
             -> expectLocalDeclaration()
 
-            ShakeTokenType.IDENTIFIER -> expectIdentifierStatement()
             else -> {
-                input.skip()
-                throw ParserError("Unexpected token ($token)")
+                val value = expectValue()
+                if (value is ShakeStatementNode) {
+                    value
+                } else {
+                    throw ParserError("Expecting statement, got ${value::class.simpleName}")
+                }
             }
         }
     }
-
-    /**
-     * Parses a value (a literal, a variable usage, a method call, calculation, etc.).
-     * @return The parsed value
-     */
-    override fun expectValue() = expectValuedAssignment()
 
     // ****************************************************************************
     // Utils
@@ -492,84 +489,6 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     private fun expectType() = expectNamespace().toType()
 
     /**
-     * Expects a statement starting with an identifier (at call we don't know if it is a function call,
-     * variable assignment, etc.)
-     */
-    private fun expectIdentifierStatement(parent: ShakeValuedNode? = null, dotToken: ShakeToken? = null): ShakeStatementNode {
-        //
-        // This parses an identifier statement (any statement starting with an identifier)
-        // This can be a function call, any type of assignment, or a dot statement (e.g. a.b.c.d)
-        //
-
-        val identifier = expectToken(ShakeTokenType.IDENTIFIER)
-        val identifierNode = ShakeIdentifierNode(map, parent, identifier, dotToken)
-
-        if (input.skipIgnorable().hasNext()) {
-            when (input.peekType()) {
-                // Function call
-                ShakeTokenType.LPAREN -> return expectInvocation(ShakeVariableUsageNode(map, identifierNode))
-
-                // Assignments
-                ShakeTokenType.ASSIGN -> return expectVariableAssignment(ShakeVariableUsageNode(map, identifierNode))
-
-                ShakeTokenType.ADD_ASSIGN -> return expectVariableAddAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                ShakeTokenType.SUB_ASSIGN -> return expectVariableSubAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                ShakeTokenType.MUL_ASSIGN -> return expectVariableMulAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                ShakeTokenType.DIV_ASSIGN -> return expectVariableDivAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                ShakeTokenType.MOD_ASSIGN -> return expectVariableModAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                ShakeTokenType.POW_ASSIGN -> return expectVariablePowAssignment(
-                    ShakeVariableUsageNode(
-                        map,
-                        identifierNode,
-                    ),
-                )
-
-                // Modification
-                ShakeTokenType.INCR -> return expectVariableIncreaseAfter(ShakeVariableUsageNode(map, identifierNode))
-                ShakeTokenType.DECR -> return expectVariableDecreaseAfter(ShakeVariableUsageNode(map, identifierNode))
-
-                // Dot statement (Sub-namespace)
-                ShakeTokenType.DOT -> {
-                    return expectIdentifierStatement(ShakeVariableUsageNode(map, identifierNode), input.next())
-                }
-
-                else -> throw ParserError("Expecting function call or assignment")
-            }
-        }
-        throw ParserError("Expecting declaration, assignment or function call")
-    }
-
-    /**
      * Expects a value starting with an identifier (at call we don't know if it is a function call,
      * variable assignment, etc.)
      */
@@ -837,7 +756,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     /**
      * Expects a return statement. It is activated when the next token is a 'return' keyword.
      */
-    private fun expectReturnStatement(): ShakeReturnNode {
+    private fun expectStatementReturn(): ShakeReturnNode {
         val returnToken = expectToken(ShakeTokenType.KEYWORD_RETURN)
         return ShakeReturnNode(map, expectNotNull(expectValue()), returnToken)
     }
@@ -874,74 +793,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     // ****************************************************************************
-    // Variables
-    private fun expectVariableAssignment(variable: ShakeValuedNode): ShakeVariableAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableAddAssignment(variable: ShakeValuedNode): ShakeVariableAddAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.ADD_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableAddAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableSubAssignment(variable: ShakeValuedNode): ShakeVariableSubAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.SUB_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableSubAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableMulAssignment(variable: ShakeValuedNode): ShakeVariableMulAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.MUL_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableMulAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableDivAssignment(variable: ShakeValuedNode): ShakeVariableDivAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.DIV_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableDivAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableModAssignment(variable: ShakeValuedNode): ShakeVariableModAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.MOD_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariableModAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariablePowAssignment(variable: ShakeValuedNode): ShakeVariablePowAssignmentNode {
-        val operatorToken = expectToken(ShakeTokenType.POW_ASSIGN)
-        val value = expectNotNull(expectValue())
-        return ShakeVariablePowAssignmentNode(map, variable, value, operatorToken)
-    }
-
-    private fun expectVariableIncreaseAfter(variable: ShakeValuedNode): ShakeVariableIncreaseAfterNode {
-        val operatorToken = expectToken(ShakeTokenType.INCR)
-        return ShakeVariableIncreaseAfterNode(map, variable, operatorToken)
-    }
-
-    private fun expectVariableIncreaseBefore(): ShakeVariableIncreaseBeforeNode {
-        val operatorToken = expectToken(ShakeTokenType.INCR)
-        val variable = expectValueIdentifier()
-        return ShakeVariableIncreaseBeforeNode(map, variable, operatorToken)
-    }
-
-    private fun expectVariableDecreaseAfter(variable: ShakeValuedNode): ShakeVariableDecreaseAfterNode {
-        val operatorToken = expectToken(ShakeTokenType.DECR)
-        return ShakeVariableDecreaseAfterNode(map, variable, operatorToken)
-    }
-
-    private fun expectVariableDecreaseBefore(): ShakeVariableDecreaseBeforeNode {
-        val operatorToken = expectToken(ShakeTokenType.DECR)
-        val variable = expectValueIdentifier()
-        return ShakeVariableDecreaseBeforeNode(map, variable, operatorToken)
-    }
-
-    // ****************************************************************************
     // Loops & If
-    private fun expectForLoop(): ShakeForNode {
+    private fun expectStatementForLoop(): ShakeForNode {
         val forToken = expectToken(ShakeTokenType.KEYWORD_FOR)
         val lparen = expectToken(ShakeTokenType.LPAREN)
         val declaration = expectStatement() // TODO check if it is a statement
@@ -965,7 +818,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         )
     }
 
-    private fun expectDoWhileLoop(): ShakeDoWhileNode {
+    private fun expectStatementDoWhileLoop(): ShakeDoWhileNode {
         val doToken = expectToken(ShakeTokenType.KEYWORD_DO)
         val body = expectBlock()
         skipSeparators()
@@ -974,14 +827,14 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         return ShakeDoWhileNode(map, body, condition, doToken, whileToken, lparen, rparen)
     }
 
-    private fun expectWhileLoop(): ShakeWhileNode {
+    private fun expectStatementWhileLoop(): ShakeWhileNode {
         val whileToken = expectToken(ShakeTokenType.KEYWORD_WHILE)
         val (condition, lparen, rparen) = expectParseConditionStatement()
         val body = expectBlock()
         return ShakeWhileNode(map, body, condition, whileToken, lparen, rparen)
     }
 
-    private fun expectIfStatement(): ShakeIfNode {
+    private fun expectStatementIf(): ShakeIfNode {
         val ifToken = expectToken(ShakeTokenType.KEYWORD_IF)
         val (condition, lparen, rparen) = expectParseConditionStatement()
         val body = expectBlock()
@@ -1056,7 +909,13 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     // ****************************************************************************
-    // Valued
+    // Values
+
+    /**
+     * Parses a value (a literal, a variable usage, a method call, calculation, etc.).
+     * @return The parsed value
+     */
+    override fun expectValue() = expectValuedAssignment()
 
     private fun expectValuedAssignment(): ShakeValuedNode {
         var left = expectValuedLogicalOr()
@@ -1322,7 +1181,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     private fun expectValuedFunctionReturning(): ShakeValuedNode {
-        var value = expectValuedFactor()
+        var value = expectValuedMandatory()
         while (input.hasNext() && (
                 input.peekType() == ShakeTokenType.LPAREN ||
                     input.peekType() == ShakeTokenType.DOT
@@ -1338,6 +1197,36 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                 else -> throw ParserError("Unexpected token")
             }
         }
+        return value
+    }
+
+    private fun expectValuedMandatory(): ShakeValuedNode {
+        // Incr / Decr tokens before
+        val tokens = mutableListOf<ShakeToken>()
+        while (nextToken(listOf(ShakeTokenType.INCR, ShakeTokenType.DECR))) {
+            tokens.add(input.next())
+        }
+
+        var value = expectValuedFactor()
+
+        tokens.reversed().forEach {
+            value = when (it.type) {
+                ShakeTokenType.INCR -> ShakeVariableIncrementBeforeNode(map, value, it)
+                ShakeTokenType.DECR -> ShakeVariableDecrementBeforeNode(map, value, it)
+                else -> throw ParserError("Unexpected token")
+            }
+        }
+
+        // Incr / Decr tokens after
+        while (nextToken(listOf(ShakeTokenType.INCR, ShakeTokenType.DECR))) {
+            val token = input.next()
+            value = when (token.type) {
+                ShakeTokenType.INCR -> ShakeVariableIncrementAfterNode(map, value, token)
+                ShakeTokenType.DECR -> ShakeVariableDecrementAfterNode(map, value, token)
+                else -> throw ParserError("Unexpected token")
+            }
+        }
+
         return value
     }
 
