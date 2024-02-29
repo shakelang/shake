@@ -37,7 +37,7 @@ class AutoFieldTests : FreeSpec(
                                 ),
                             )
 
-                            test("${typeName}_${it.second}$i", isIgnored = true) {
+                            test("${typeName}_${it.second}$i", isIgnored = false) {
                                 this.input = template.code
                                 this.expectedJson = template.json
                             }

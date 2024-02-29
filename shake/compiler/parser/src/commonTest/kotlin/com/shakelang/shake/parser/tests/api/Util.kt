@@ -24,10 +24,10 @@ val primitiveTypes = listOf(
     "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
-    "unsigned byte" to "unsigned_byte",
-    "unsigned short" to "unsigned_short",
-    "unsigned int" to "unsigned_integer",
-    "unsigned long" to "unsigned_long",
+    "ubyte" to "unsigned_byte",
+    "ushort" to "unsigned_short",
+    "uint" to "unsigned_integer",
+    "ulong" to "unsigned_long",
 )
 
 val primitiveTypesNoUnsigned = listOf(

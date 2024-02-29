@@ -36,7 +36,7 @@ class AutoClassTests : FreeSpec(
                                 ),
                             )
 
-                            test("${typeName}_${it.second}$i", isIgnored = true) {
+                            test("${typeName}_${it.second}$i", isIgnored = false) {
                                 this.input = template.code
                                 this.expectedJson = template.json
                             }
@@ -65,7 +65,7 @@ class AutoClassTests : FreeSpec(
                             ),
                         )
 
-                        test("${it.second}$i", isIgnored = true) {
+                        test("${it.second}$i", isIgnored = false) {
                             this.input = template.code
                             this.expectedJson = template.json
                         }
