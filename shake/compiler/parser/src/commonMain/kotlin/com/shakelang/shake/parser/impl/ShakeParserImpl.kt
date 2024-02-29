@@ -91,7 +91,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             if (position >= input.position) break
             position = input.position
             if (input.hasNext()) {
-                val result = expectShakeFileChild()
+                val result = expectFileChild()
                 nodes.add(result)
             }
             expectSeparator()
@@ -104,7 +104,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * class declaration, method declaration, etc.)
      * @return The parsed file child
      */
-    private fun expectShakeFileChild(): ShakeFileChildNode {
+    private fun expectFileChild(): ShakeFileChildNode {
         //
         // Expects [import | package | declaration | statement]
         //
@@ -487,16 +487,6 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * Expect a type.
      */
     private fun expectType() = expectNamespace().toType()
-
-    /**
-     * Expects a value starting with an identifier (at call we don't know if it is a function call,
-     * variable assignment, etc.)
-     */
-    private fun expectValueIdentifier(parent: ShakeValuedNode? = null): ShakeValuedNode {
-        val identifier = expectToken(ShakeTokenType.IDENTIFIER)
-        val identifierNode = ShakeIdentifierNode(map, parent, identifier, null)
-        return ShakeVariableUsageNode(map, identifierNode)
-    }
 
     // ****************************************************************************
     // Imports
@@ -1198,6 +1188,16 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
         }
         return value
+    }
+
+    /**
+     * Expects a value starting with an identifier (at call we don't know if it is a function call,
+     * variable assignment, etc.)
+     */
+    private fun expectValueIdentifier(parent: ShakeValuedNode? = null): ShakeValuedNode {
+        val identifier = expectToken(ShakeTokenType.IDENTIFIER)
+        val identifierNode = ShakeIdentifierNode(map, parent, identifier, null)
+        return ShakeVariableUsageNode(map, identifierNode)
     }
 
     private fun expectValuedMandatory(): ShakeValuedNode {
