@@ -1,9 +1,13 @@
 package com.shakelang.shake.parser.node.outer
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
+import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakePackageNode(map: PositionMap, val pkg: Array<String>) : ShakeFileChildNodeImpl(map) {
+class ShakePackageNode(map: PositionMap, val namespace: ShakeNamespaceNode, val packageToken: ShakeToken) : ShakeFileChildNodeImpl(map) {
+
+    val pkg: Array<String> = namespace.toArray()
 
     override fun toJson(): Map<String, *> =
         mapOf(

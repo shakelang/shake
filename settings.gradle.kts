@@ -28,6 +28,7 @@ include(":shake:bytecode:generator")
 include(":shake:bytecode:tools")
 
 include(":shake:compiler:shakelib")
+include(":shake:compiler:shakelib:generator")
 include(":shake:compiler:shaketest")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
@@ -57,3 +58,5 @@ gradleEnterprise {
         }
     }
 }
+include("shake:compiler:shakelib:generator")
+findProject(":shake:compiler:shakelib:generator")?.name = "generator"

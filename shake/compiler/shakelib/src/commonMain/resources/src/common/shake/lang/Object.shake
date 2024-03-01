@@ -1,9 +1,9 @@
-package shake.lang;
+package shake.lang
 
 native class Object {
     
-    public native String toString();
-    public native int hashCode();
-    public native boolean equals(Object obj);
+    public native fun toString(): String
+    public native fun hashCode(): int
+    public native fun equals(obj: Object): boolean
     
 }

@@ -71,6 +71,20 @@
       "dependencies": []
     },
     {
+      "path": ":shake:shakespeare",
+      "name": "com.shakelang.shake:shakespeare",
+      "version": "0.1.0",
+      "description": "Shakespeare is a tool for generating shake source files.",
+      "author": "com.shakelang.shake",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:primitives:primitives:0.5.0",
+        ":util:logger:logger:0.5.2",
+        ":util:common-io:common-io:0.5.0"
+      ]
+    },
+    {
       "path": ":shake:shasambly",
       "name": "shake.shake:shasambly",
       "version": "0.1.0-SNAPSHOT",
@@ -531,5 +545,5 @@
       ]
     }
   ],
-  "lastUpdate": 1707495525269
+  "lastUpdate": 1709314539186
 }

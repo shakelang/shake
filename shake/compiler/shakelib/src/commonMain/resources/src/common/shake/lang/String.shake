@@ -1,51 +1,56 @@
 
-package shake.lang;
+package shake.lang
     
 native class String {
     
-    native static String valueOf(byte[] bytes)
-    native static String valueOf(byte[] bytes, int offset, int length)
-    native static String valueOf(char[] chars)
-    native static String valueOf(char[] chars, int offset, int length)
-    native static String valueOf(byte b)
-    native static String valueOf(short c)
-    native static String valueOf(int i)
-    native static String valueOf(long l)
-    native static String valueOf(float f)
-    native static String valueOf(double d)
-    native static String valueOf(boolean b)
-    native static String valueOf(Object obj)
+    // native static fun valueOf(byte[] bytes): String
+    // native static fun valueOf(byte[] bytes, int offset, int length): String
+    // native static fun valueOf(char[] chars): String
+    // native static fun valueOf(char[] chars, int offset, int length): String
+
+    native static fun valueOf(byte b): String
+    native static fun valueOf(short c): String
+    native static fun valueOf(int i): String
+    native static fun valueOf(long l): String
+    native static fun valueOf(float f): String
+    native static fun valueOf(double d): String
+    native static fun valueOf(boolean b): String
+    native static fun valueOf(Object obj): String
     
     native int length
-    native char charAt(int index)
-    native int indexOf(String s)
-    native int indexOf(String s, int fromIndex)
-    native int lastIndexOf(String s)
-    native int lastIndexOf(String s, int fromIndex)
-    native String substring(int beginIndex)
-    native String substring(int beginIndex, int endIndex)
-    native String toLowerCase()
-    native String toUpperCase()
-    native String trim()
-    native String replace(char oldChar, char newChar)
-    native String replace(String oldStr, String newStr)
-    native String concat(String str)
-    native String[] split(String regex)
-    native String[] split(String regex, int limit)
-    native String toString()
-    native byte[] getBytes()
-    native char[] toCharArray()
-    native override boolean equals(Object obj)
-    native override int hashCode()
+    native fun charAt(int index): char
+    native fun indexOf(String s): int
+    native fun indexOf(String s, int fromIndex): int
+    native fun lastIndexOf(String s): int
+    native fun lastIndexOf(String s, int fromIndex): int
+    native fun substring(int beginIndex): String
+    native fun substring(int beginIndex, int endIndex): String
+    native fun toLowerCase(): String
+    native fun toUpperCase(): String
+    native fun trim(): String
+    native fun replace(char oldChar, char newChar): String
+    native fun replace(String oldStr, String newStr): String
+    native fun concat(String str): String
+
+    // native fun split(String regex): String[]
+    // native fun split(String regex, int limit): String[]
+
+    native fun toString(): String
+
+    // native fun getBytes(): byte[]
+    // native fun toCharArray(): char[]
+
+    native override fun equals(Object obj): boolean
+    native override fun hashCode(): int
     
-    native operator String plus(String str)
-    native operator String plus(char c)
-    native operator String plus(byte b)
-    native operator String plus(short s)
-    native operator String plus(int i)
-    native operator String plus(long l)
-    native operator String plus(float f)
-    native operator String plus(double d)
-    native operator String plus(boolean b)
-    native operator String plus(Object obj)
+    native operator fun plus(String str): String
+    native operator fun plus(char c): String
+    native operator fun plus(byte b): String
+    native operator fun plus(short s): String
+    native operator fun plus(int i): String
+    native operator fun plus(long l): String
+    native operator fun plus(float f): String
+    native operator fun plus(double d): String
+    native operator fun plus(boolean b): String
+    native operator fun plus(Object obj): String
 }

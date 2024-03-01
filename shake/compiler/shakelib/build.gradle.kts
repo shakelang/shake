@@ -28,3 +28,10 @@ getEmbedExtension(project).configuration {
     distName.set("ShakeLib")
     embed("**/*.shake")
 }
+
+val generateLibrary by tasks.registering {
+    group = "build"
+    description = "Generates the shake library"
+
+    dependsOn(":shake:compiler:shakelib:generator:run")
+}

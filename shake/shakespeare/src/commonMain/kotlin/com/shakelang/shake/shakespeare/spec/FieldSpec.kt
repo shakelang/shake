@@ -11,6 +11,7 @@ package com.shakelang.shake.shakespeare.spec
 class FieldSpec(
     val name: Identifier,
     val type: Type,
+    val isVal: Boolean = true,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
@@ -24,13 +25,15 @@ class FieldSpec(
         if (isFinal) builder.append("final ")
         if (isSynchronized) builder.append("synchronized ")
         if (isNative) builder.append("native ")
-        builder.append(type.generate(ctx))
-        builder.append(" ")
-        builder.append(name)
+        builder.append(if (isVal) "val" else "var")
+            .append(" ")
+            .append(name)
+            .append(": ")
+            .append(type.generate(ctx))
         return builder.toString()
     }
 
-    class FieldSpecBuilder
+    open class FieldSpecBuilder
     internal constructor() {
         var name: Identifier? = null
         var type: Type? = null

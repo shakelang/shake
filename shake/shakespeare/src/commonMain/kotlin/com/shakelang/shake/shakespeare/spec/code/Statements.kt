@@ -53,11 +53,13 @@ class VariableDeclarationSpec(
     val name: Identifier,
     val type: Type,
     val value: ValueSpec?,
+    val isVal: Boolean = true,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
+        if (isVal) builder.append("val ") else builder.append("var ")
+        builder.append(name.name).append(": ")
         builder.append(type.generate(ctx)).append(" ")
-        builder.append(name.name)
         if (value != null) builder.append(" = ").append(value.generate(ctx))
         return builder.toString()
     }
@@ -67,6 +69,7 @@ class VariableDeclarationSpec(
         var name: Identifier? = null,
         var type: Type? = null,
         var value: ValueSpec? = null,
+        var isVal: Boolean = true,
     ) {
 
         fun name(name: Identifier): VariableDeclarationSpecBuilder {
@@ -99,6 +102,7 @@ class VariableDeclarationSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 type ?: throw IllegalStateException("Type not set"),
                 value ?: throw IllegalStateException("Value not set"),
+                isVal,
             )
         }
     }

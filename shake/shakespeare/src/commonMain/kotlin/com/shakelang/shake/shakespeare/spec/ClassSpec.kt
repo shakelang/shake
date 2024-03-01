@@ -104,6 +104,7 @@ class ClassSpec(
     val name: Identifier,
     val methods: List<MethodSpec>,
     val fields: List<FieldSpec>,
+    val classes: List<ClassSpec>,
     val constructors: List<ConstructorSpec>,
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
@@ -122,21 +123,25 @@ class ClassSpec(
             builder.append(";")
         }
         for (constructor in constructors) {
-            builder.append(constructor.generate(ctx))
+            builder.append(constructor.generate(ctx.indent()))
         }
         for (method in methods) {
-            builder.append(method.generate(ctx))
+            builder.append(method.generate(ctx.indent()))
+        }
+        for (clazz in classes) {
+            builder.append(clazz.generate(ctx.indent()))
         }
         builder.append("}")
         return builder.toString()
     }
 
-    class ClassSpecBuilder
+    open class ClassSpecBuilder
     internal constructor() {
         var name: Identifier? = null
         val methods: MutableList<MethodSpec> = ArrayList()
         val fields: MutableList<FieldSpec> = ArrayList()
         val constructors: MutableList<ConstructorSpec> = ArrayList()
+        val classes: MutableList<ClassSpec> = ArrayList()
         var isAbstract = false
         var isFinal = false
         var accessModifier = AccessModifier.PUBLIC
@@ -161,6 +166,11 @@ class ClassSpec(
             return this
         }
 
+        fun addClass(clazz: ClassSpec): ClassSpecBuilder {
+            classes.add(clazz)
+            return this
+        }
+
         fun abstract(isAbstract: Boolean = true): ClassSpecBuilder {
             this.isAbstract = isAbstract
             return this
@@ -177,7 +187,7 @@ class ClassSpec(
         }
 
         fun build(): ClassSpec {
-            return ClassSpec(name!!, methods, fields, constructors)
+            return ClassSpec(name!!, methods, fields, classes, constructors, isAbstract, isFinal, accessModifier)
         }
     }
 

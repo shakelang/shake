@@ -514,13 +514,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      */
     private fun expectPackage(): ShakePackageNode {
         val packageToken = expectToken(ShakeTokenType.KEYWORD_PACKAGE)
-        val list = mutableListOf<String>()
-        do {
-            input.skip()
-            if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-            list.add(expectNotNull(input.actualValue))
-        } while (input.hasNext() && input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
-        return ShakePackageNode(map, list.toTypedArray())
+        return ShakePackageNode(map, expectNamespace(), packageToken)
     }
 
     // ****************************************************************************
