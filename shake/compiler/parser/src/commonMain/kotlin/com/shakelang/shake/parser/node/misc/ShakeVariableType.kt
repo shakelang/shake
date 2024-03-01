@@ -3,17 +3,17 @@ package com.shakelang.shake.parser.node.misc
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeNode
+import com.shakelang.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.source.CharacterSource
 import com.shakelang.util.shason.JSON
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class ShakeVariableType(
-    val nameToken: ShakeToken,
-    val parent: ShakeVariableType?,
-    val dotToken: ShakeToken?,
+    val namespace: ShakeNamespaceNode,
 ) : ShakeNode {
 
-    val type = if (parent == null) {
-        when (nameToken.value) {
+    val type = if (namespace.parent == null) {
+        when (namespace.name) {
             "dynamic" -> Type.DYNAMIC
             "byte" -> Type.BYTE
             "short" -> Type.SHORT
@@ -35,7 +35,7 @@ class ShakeVariableType(
         Type.OBJECT
     }
 
-    val name get() = nameToken.value
+    val name get() = namespace.name
 
     override fun toString(): String = JSON.stringify(this.json)
 
@@ -91,6 +91,16 @@ class ShakeVariableType(
     }
 
     companion object {
-        val IMPLICIT_VOID = ShakeVariableType(ShakeToken(ShakeTokenType.IDENTIFIER, "void", -1, -1), null, null)
+        val IMPLICIT_VOID = ShakeVariableType(
+            ShakeNamespaceNode(
+                PositionMap.PositionMapImplementation(
+                    CharacterSource.Companion.from("", ""),
+                    intArrayOf(),
+                ),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "void", -1, -1),
+                null,
+                null,
+            ),
+        )
     }
 }

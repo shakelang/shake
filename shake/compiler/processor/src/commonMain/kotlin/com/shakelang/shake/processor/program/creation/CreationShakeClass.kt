@@ -89,12 +89,24 @@ private constructor(
      */
     override fun phase2() {
         debug("phases", "Phase 2 of class $qualifiedName")
-        val extends = clz.extends?.toString() ?: "shake.lang.Object"
-        this.superClass = parentScope.getClass(extends)
-            ?: throw IllegalStateException("Superclass $extends not found in classpath")
 
-        this.clz.superClasses.forEach {
-            this._interfaces.add(parentScope.getClass(it.toString()))
+        clz.superClasses.forEach {
+            val superClass = parentScope.getClass(it.toString()) ?: throw IllegalStateException("Superclass $it not found in classpath")
+            if (superClass.isInterface) {
+                this._interfaces.add(superClass)
+                return
+            }
+
+            if (superClass.isEnum) throw IllegalStateException("Superclass $it is an enum and cannot be extended")
+            if (superClass.isObject) throw IllegalStateException("Superclass $it is an object and cannot be extended")
+            if (superClass.isFinal) throw IllegalStateException("Superclass $it is final and cannot be extended")
+
+            if (this::superClass.isInitialized) throw IllegalStateException("Superclass already set, can only extend one class")
+            this.superClass = superClass
+        }
+
+        if (!this::superClass.isInitialized) {
+            this.superClass = parentScope.getClass("shake.lang.Object") ?: throw IllegalStateException("shake.lang.Object not found in classpath")
         }
     }
 
@@ -146,9 +158,9 @@ private constructor(
         this.isAbstract = false
         this.isFinal = clz.isFinal
         this.isStatic = clz.isStatic
-        this.isPublic = clz.access == ShakeAccessDescriber.PUBLIC
-        this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
-        this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
+        this.isPublic = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC
+        this.isPrivate = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE
+        this.isProtected = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED
         this.isNative = clz.isNative
         this.isAnnotation = false // TODO implement
         this.isEnum = false // TODO implement

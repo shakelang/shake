@@ -11,8 +11,15 @@ class ShakeNamespaceNode(
     val dotToken: ShakeToken?,
 ) : ShakeNodeImpl(map) {
 
+    val name: String
+        get() = nameToken.value ?: throw NullPointerException("Name token value is null")
+
     fun toType(): ShakeVariableType {
-        return ShakeVariableType(nameToken, parent?.toType(), dotToken)
+        return ShakeVariableType(this)
+    }
+
+    fun toArray(): Array<String> {
+        return parent?.toArray()?.plus(name) ?: arrayOf(name)
     }
 
     override fun toJson(): Map<String, *> {

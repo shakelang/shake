@@ -11,7 +11,7 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 class ShakeConstructorDeclarationNode(
 
     map: PositionMap,
-    val name: ShakeToken?,
+    val nameToken: ShakeToken?,
     val body: ShakeBlockNode,
     val args: Array<ShakeParameterNode>,
     val access: ShakeAccessDescriber,
@@ -23,6 +23,9 @@ class ShakeConstructorDeclarationNode(
     val commaTokens: Array<ShakeToken>,
 
 ) : ShakeValuedNodeImpl(map) {
+
+    val name: String?
+        get() = nameToken?.value
 
     val isNative: Boolean
         get() = nativeToken != null

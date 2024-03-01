@@ -35,9 +35,15 @@ interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSta
     override val actualType: ShakeType
 
     /**
-     * Indicates whether the variable is declared as final (i.e., its value cannot be changed once initialized).
+     * Indicates whether the variable is declared as val (immutable).
      */
-    val isFinal: Boolean
+    val isVal: Boolean
+
+    /**
+     * Indicates whether the variable is declared as var (immutable).
+     * This is the opposite of [isVal].
+     */
+    val isVar: Boolean get() = !isVal
 
     /**
      * The unique name of the variable, combining the variable's name and the unique name of its scope.
