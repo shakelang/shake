@@ -1,6 +1,7 @@
 package com.shakelang.shake.generation
 
-import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.ShakeNodeImpl
+import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.misc.ShakeIdentifierNode
 import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode

@@ -3,12 +3,7 @@ package com.shakelang.shake.parser
 import com.shakelang.shake.parser.node.mixed.ShakeInvocationNode
 import com.shakelang.shake.parser.node.mixed.ShakeVariableIncrementAfterNode
 import com.shakelang.shake.parser.node.outer.ShakeImportNode
-import com.shakelang.shake.parser.node.statements.ShakeBlockNode
-import com.shakelang.shake.parser.node.statements.ShakeDoWhileNode
-import com.shakelang.shake.parser.node.statements.ShakeForNode
-import com.shakelang.shake.parser.node.statements.ShakeIfNode
-import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
-import com.shakelang.shake.parser.node.statements.ShakeWhileNode
+import com.shakelang.shake.parser.node.statements.*
 import com.shakelang.shake.parser.node.values.expression.ShakeLessThanNode
 import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 import io.kotest.core.spec.style.FreeSpec

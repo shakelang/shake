@@ -4,7 +4,10 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import com.shakelang.shake.parser.ShakeParser
-import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.ShakeFileChildNode
+import com.shakelang.shake.parser.node.ShakeNode
+import com.shakelang.shake.parser.node.ShakeStatementNode
+import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.misc.*
 import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode

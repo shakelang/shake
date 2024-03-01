@@ -1,6 +1,5 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.factor.*
 import com.shakelang.shake.parser.node.values.factor.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser.node.outer
 
 import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.statements.ShakeBlockNode
