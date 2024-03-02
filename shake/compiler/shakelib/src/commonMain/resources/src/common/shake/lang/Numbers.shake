@@ -1,3 +1,4 @@
+package shake.lang
 public operator fun ubyte.plus(b: ubyte): ubyte
 public operator fun ubyte.plus(b: byte): byte
 public operator fun ubyte.plus(s: ushort): short

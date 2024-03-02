@@ -8,6 +8,7 @@ fun main() {
 
     numbersShake.writeText(
         buildShakeFile {
+            Package("shake.lang")
             val types = listOf(
                 "ubyte" to "byte",
                 "byte" to "byte",

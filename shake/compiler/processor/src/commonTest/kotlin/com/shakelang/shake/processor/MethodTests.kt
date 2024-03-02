@@ -13,9 +13,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            void main() {}
+                package test
+                
+                fun main() {}
                 """.trimIndent(),
             )
 
@@ -48,9 +48,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            final void main() {}
+                package test
+                
+                final fun main() {}
                 """.trimIndent(),
             )
 
@@ -87,9 +87,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            native void main();
+                package test
+                
+                native fun main();
                 """.trimIndent(),
             )
 
@@ -128,7 +128,7 @@ class MethodTests : FreeSpec(
                 """
             package test
             
-            public void main() {}
+            public fun main() {}
                 """.trimIndent(),
             )
 
@@ -163,7 +163,7 @@ class MethodTests : FreeSpec(
                 """
             package test
             
-            protected void main() {}
+            protected fun main() {}
                 """.trimIndent(),
             )
 
@@ -198,7 +198,7 @@ class MethodTests : FreeSpec(
                 """
             package test
             
-            private void main() {}
+            private fun main() {}
                 """.trimIndent(),
             )
 
@@ -231,9 +231,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            int main() { return 0; }
+                package test
+                
+                fun main(): int { return 0; }
                 """.trimIndent(),
             )
 
@@ -266,9 +266,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            int main(int a) { return 0; }
+                package test
+                
+                fun main(a: int): int { return 0; }
                 """.trimIndent(),
             )
 
@@ -306,9 +306,9 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            int main(int a, int b) { return 0; }
+                package test
+                
+                fun main(a: int, b: int): int { return 0; }
                 """.trimIndent(),
             )
 
@@ -355,7 +355,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                void main() {}
+                fun main() {}
             }
                 """.trimIndent(),
             )
@@ -392,7 +392,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                final void main() {}
+                final fun main() {}
             }
                 """.trimIndent(),
             )
@@ -429,7 +429,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                static void main() {}
+                static fun main() {}
             }
                 """.trimIndent(),
             )
@@ -468,7 +468,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                native void main();
+                native fun main();
             }
                 """.trimIndent(),
             )
@@ -505,7 +505,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                operator int add(int i) {
+                operator fun add(i: int): int {
                     return i;
                 }
             }
@@ -543,7 +543,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                public void main() {}
+                public fun main() {}
             }
                 """.trimIndent(),
             )
@@ -580,7 +580,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                protected void main() {}
+                protected fun main() {}
             }
                 """.trimIndent(),
             )
@@ -617,7 +617,7 @@ class MethodTests : FreeSpec(
             package test
             
             class Test {
-                private void main() {}
+                private fun main() {}
             }
                 """.trimIndent(),
             )
@@ -651,11 +651,11 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            class Test {
-                int main() { return 0; }
-            }
+                package test
+                
+                class Test {
+                    fun main(): int { return 0; }
+                }
                 """.trimIndent(),
             )
 
@@ -688,11 +688,11 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            class Test {
-                void main(int a) {}
-            }
+                package test
+                
+                class Test {
+                    fun main(a: int) {}
+                }
                 """.trimIndent(),
             )
 
@@ -730,11 +730,11 @@ class MethodTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            class Test {
-                void main(int a, int b) {}
-            }
+                package test
+                
+                class Test {
+                    fun main(a: int, b: int) {}
+                }
                 """.trimIndent(),
             )
 

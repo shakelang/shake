@@ -1,6 +1,7 @@
 package com.shakelang.shake.parser.node.objects
 
 import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
@@ -30,6 +31,11 @@ class ShakeClassDeclarationNode(
 
     val isStatic: Boolean
         get() = staticToken != null
+
+    val isClass get() = this.classToken.type == ShakeTokenType.KEYWORD_CLASS
+    val isInterface get() = this.classToken.type == ShakeTokenType.KEYWORD_INTERFACE
+    val isEnum get() = this.classToken.type == ShakeTokenType.KEYWORD_ENUM
+    val isObject get() = this.classToken.type == ShakeTokenType.KEYWORD_OBJECT
 
     val isFinal: Boolean
         get() = finalToken != null

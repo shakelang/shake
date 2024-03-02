@@ -8,49 +8,49 @@ native class String {
     // native static fun valueOf(char[] chars): String
     // native static fun valueOf(char[] chars, int offset, int length): String
 
-    native static fun valueOf(byte b): String
-    native static fun valueOf(short c): String
-    native static fun valueOf(int i): String
-    native static fun valueOf(long l): String
-    native static fun valueOf(float f): String
-    native static fun valueOf(double d): String
-    native static fun valueOf(boolean b): String
-    native static fun valueOf(Object obj): String
+    native static fun valueOf(b: byte): String
+    native static fun valueOf(c: short): String
+    native static fun valueOf(i: int): String
+    native static fun valueOf(l: long): String
+    native static fun valueOf(f: float): String
+    native static fun valueOf(d: double): String
+    native static fun valueOf(b: boolean): String
+    native static fun valueOf(obj: Object): String
     
-    native int length
-    native fun charAt(int index): char
-    native fun indexOf(String s): int
-    native fun indexOf(String s, int fromIndex): int
-    native fun lastIndexOf(String s): int
-    native fun lastIndexOf(String s, int fromIndex): int
-    native fun substring(int beginIndex): String
-    native fun substring(int beginIndex, int endIndex): String
+    native val length: int
+    native fun charAt(index: int): char
+    native fun indexOf(s: String): int
+    native fun indexOf(s: String, fromIndex: int): int
+    native fun lastIndexOf(s: String): int
+    native fun lastIndexOf(s: String, fromIndex: int): int
+    native fun substring(beginIndex: int): String
+    native fun substring(beginIndex: int, endIndex: int): String
     native fun toLowerCase(): String
     native fun toUpperCase(): String
     native fun trim(): String
-    native fun replace(char oldChar, char newChar): String
-    native fun replace(String oldStr, String newStr): String
-    native fun concat(String str): String
+    native fun replace(oldChar: char, newChar: char): String
+    native fun replace(oldStr: String, newStr: String): String
+    native fun concat(str: String): String
 
-    // native fun split(String regex): String[]
-    // native fun split(String regex, int limit): String[]
+    // native fun split(regex: String): String[]
+    // native fun split(regex: String, limit: int): String[]
 
     native fun toString(): String
 
     // native fun getBytes(): byte[]
     // native fun toCharArray(): char[]
 
-    native override fun equals(Object obj): boolean
+    native override fun equals(obj: Object): boolean
     native override fun hashCode(): int
     
-    native operator fun plus(String str): String
-    native operator fun plus(char c): String
-    native operator fun plus(byte b): String
-    native operator fun plus(short s): String
-    native operator fun plus(int i): String
-    native operator fun plus(long l): String
-    native operator fun plus(float f): String
-    native operator fun plus(double d): String
-    native operator fun plus(boolean b): String
-    native operator fun plus(Object obj): String
+    native operator fun plus(str: String): String
+    native operator fun plus(c: char): String
+    native operator fun plus(b: byte): String
+    native operator fun plus(s: short): String
+    native operator fun plus(i: int): String
+    native operator fun plus(l: long): String
+    native operator fun plus(f: float): String
+    native operator fun plus(d: double): String
+    native operator fun plus(b: boolean): String
+    native operator fun plus(obj: Object): String
 }

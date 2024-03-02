@@ -426,8 +426,6 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         val expandingDot = namespace.dotToken
         val name = namespace.nameToken
 
-        if (expanding != null) throw ParserError("Function declaration cannot have a namespace")
-
         val (argList, lparen, rparen, commas) = expectFunctionArguments()
 
         var returnType = ShakeVariableType.IMPLICIT_VOID
@@ -549,7 +547,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             } while (nextToken(ShakeTokenType.COMMA))
         }
 
-        if (input.nextType() != ShakeTokenType.LCURL) throw ParserError("Expecting class-body")
+        val lcurl = expectToken(ShakeTokenType.LCURL)
         while (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.RCURL) {
             when (val node = expectDeclaration(DeclarationScope.CLASS)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
@@ -559,7 +557,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
             skipSeparators()
         }
-        if (input.nextType() != ShakeTokenType.RCURL) throw ParserError("Expecting class-body to end")
+        val rcurl = expectToken(ShakeTokenType.RCURL)
         return ShakeClassDeclarationNode(
             map,
             classToken,
@@ -596,7 +594,6 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
         val methods = mutableListOf<ShakeMethodDeclarationNode>()
         val classes = mutableListOf<ShakeClassDeclarationNode>()
-        val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
         var implements: MutableList<ShakeNamespaceNode>? = null
 
@@ -615,7 +612,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                 is ShakeClassDeclarationNode -> classes.add(node)
                 is ShakeMethodDeclarationNode -> methods.add(node)
                 is ShakeFieldDeclarationNode -> fields.add(node)
-                is ShakeConstructorDeclarationNode -> constructors.add(node)
+                is ShakeConstructorDeclarationNode -> throw ParserError("Constructors are not allowed in interfaces")
             }
             skipSeparators()
         }
@@ -628,7 +625,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             fields.toTypedArray(),
             methods.toTypedArray(),
             classes.toTypedArray(),
-            constructors.toTypedArray(),
+            emptyArray(),
             info.access ?: ShakeAccessDescriber.PACKAGE,
             info.staticToken,
             info.finalToken,

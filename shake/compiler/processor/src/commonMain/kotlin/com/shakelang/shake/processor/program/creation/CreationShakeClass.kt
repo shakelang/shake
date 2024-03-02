@@ -23,7 +23,7 @@ private constructor(
     override val pkg: CreationShakePackage,
     override val parentScope: CreationShakeScope,
     override val clazz: ShakeClass?,
-    val clz: ShakeClassDeclarationNode,
+    private val clz: ShakeClassDeclarationNode,
 ) : ShakeClass {
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
@@ -92,14 +92,18 @@ private constructor(
 
         clz.superClasses.forEach {
             val superClass = parentScope.getClass(it.toString()) ?: throw IllegalStateException("Superclass $it not found in classpath")
+
             if (superClass.isInterface) {
                 this._interfaces.add(superClass)
-                return
+                debug("inheritance", "Added interface $it to class $qualifiedName")
+                return@forEach
             }
 
             if (superClass.isEnum) throw IllegalStateException("Superclass $it is an enum and cannot be extended")
             if (superClass.isObject) throw IllegalStateException("Superclass $it is an object and cannot be extended")
             if (superClass.isFinal) throw IllegalStateException("Superclass $it is final and cannot be extended")
+
+            debug("inheritance", "Set superclass of class $qualifiedName to $it")
 
             if (this::superClass.isInitialized) throw IllegalStateException("Superclass already set, can only extend one class")
             this.superClass = superClass
@@ -163,9 +167,9 @@ private constructor(
         this.isProtected = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED
         this.isNative = clz.isNative
         this.isAnnotation = false // TODO implement
-        this.isEnum = false // TODO implement
-        this.isInterface = false // TODO implement
-        this.isObject = false // TODO implement
+        this.isEnum = clz.isEnum
+        this.isInterface = clz.isInterface
+        this.isObject = clz.isObject
     }
 
     fun asType(): CreationShakeType {
