@@ -3,7 +3,7 @@ package com.shakelang.util.io.streaming.input
 /**
  * A CountingInputStream counts the number of objects read from an underlying ObjectInputStream.
  */
-class CountingInputStream<T>(
+class CountingObjectInputStream<T>(
     private val inputStream: ObjectInputStream<T>,
 ) : ObjectInputStream<T>() {
 
