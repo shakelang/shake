@@ -181,7 +181,7 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 
                     static fun main() {
-                        Test test = new Test()
+                        val test : Test = Test()
                         print(test)
                     }
                 }
