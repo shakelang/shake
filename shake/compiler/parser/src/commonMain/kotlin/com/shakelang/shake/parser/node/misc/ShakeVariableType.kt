@@ -16,11 +16,11 @@ class ShakeVariableType(
         when (namespace.name) {
             "dynamic" -> Type.DYNAMIC
             "byte" -> Type.BYTE
-            "short" -> Type.SHORT
+            "shorts" -> Type.SHORT
             "int" -> Type.INTEGER
             "long" -> Type.LONG
             "float" -> Type.FLOAT
-            "double" -> Type.DOUBLE
+            "doubles" -> Type.DOUBLE
             "ubyte" -> Type.UNSIGNED_BYTE
             "ushort" -> Type.UNSIGNED_SHORT
             "uint" -> Type.UNSIGNED_INTEGER

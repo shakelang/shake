@@ -92,14 +92,14 @@ class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : Shak
 }
 
 /**
- * Node for a double literal
+ * Node for a doubles literal
  */
 class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
 
     /**
-     * The value of the double literal
+     * The value of the doubles literal
      */
-    val value: Double = valueToken.value?.toDouble() ?: throw Exception("Value of double token is null")
+    val value: Double = valueToken.value?.toDouble() ?: throw Exception("Value of doubles token is null")
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 
@@ -123,14 +123,14 @@ class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLi
 }
 
 /**
- * Node for an integer literal
+ * Node for an integers literal
  */
 class ShakeIntegerLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
 
     /**
-     * The value of the integer literal
+     * The value of the integers literal
      */
-    val value: Int = valueToken.value?.toInt() ?: throw Exception("Value of integer token is null")
+    val value: Int = valueToken.value?.toInt() ?: throw Exception("Value of integers token is null")
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 

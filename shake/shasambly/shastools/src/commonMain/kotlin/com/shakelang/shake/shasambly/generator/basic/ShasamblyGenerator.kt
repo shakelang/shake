@@ -341,13 +341,13 @@ open class ShasamblyOpcodeBGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opco
 
 /**
  * Generator for opcode [Opcodes.S_GET_LOCAL]
- * Gets a short from the local variables at a given local address and puts it on top of the stack
+ * Gets a shorts from the local variables at a given local address and puts it on top of the stack
  */
 open class ShasamblyOpcodeSGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.S_GET_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_GET_LOCAL]
- * Gets a short from the local variables at a given local address and puts it on top of the stack
+ * Gets a shorts from the local variables at a given local address and puts it on top of the stack
  */
 open class ShasamblyOpcodeIGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.I_GET_LOCAL, address)
 
@@ -360,7 +360,7 @@ open class ShasamblyOpcodeLGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opco
 /**
  * This is a typealias to [ShasamblyOpcodeIGetLocal]
  * Integers and floats both have 4 Bytes, so it is not necessary to have an own bytecode
- * for getting a float, you can just use the integer one
+ * for getting a float, you can just use the integers one
  *
  * @see ShasamblyOpcodeIGetLocal
  */
@@ -370,7 +370,7 @@ typealias ShasamblyOpcodeFGetLocal = ShasamblyOpcodeIGetLocal
 /**
  * This is a typealias to [ShasamblyOpcodeLGetLocal]
  * Doubles and longs both have 8 Bytes, so it is not necessary to have an own bytecode
- * for getting a double, you can just use the long one
+ * for getting a doubles, you can just use the long one
  *
  * @see ShasamblyOpcodeLGetLocal
  */
@@ -412,13 +412,13 @@ open class ShasamblyOpcodeBStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(
 
 /**
  * Generator for opcode [Opcodes.S_STORE_LOCAL]
- * Takes the top short from the stack and puts it into the given local address
+ * Takes the top shorts from the stack and puts it into the given local address
  */
 open class ShasamblyOpcodeSStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.S_STORE_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_STORE_LOCAL]
- * Takes the top integer from the stack and puts it into the given local address
+ * Takes the top integers from the stack and puts it into the given local address
  */
 open class ShasamblyOpcodeIStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.I_STORE_LOCAL, address)
 
@@ -431,7 +431,7 @@ open class ShasamblyOpcodeLStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(
 /**
  * This is a typealias to [ShasamblyOpcodeIStoreLocal]
  * Integers and floats both have 4 Bytes, so it is not necessary to have an own bytecode
- * for storing a float, you can just use the integer one
+ * for storing a float, you can just use the integers one
  *
  * @see ShasamblyOpcodeIStoreLocal
  */
@@ -441,7 +441,7 @@ typealias ShasamblyOpcodeFStoreLocal = ShasamblyOpcodeIStoreLocal
 /**
  * This is a typealias to [ShasamblyOpcodeLStoreLocal]
  * Longs and doubles both have 8 Bytes, so it is not necessary to have an own bytecode
- * for storing a double, you can just use the long one
+ * for storing a doubles, you can just use the long one
  *
  * @see ShasamblyOpcodeLStoreLocal
  */
@@ -466,7 +466,7 @@ open class ShasamblyOpcodeBPush(val byte: Byte) : ShasamblyOpcode {
 
 /**
  * Generator for opcode [Opcodes.S_PUSH]
- * Pushes a short on top of the stack
+ * Pushes a shorts on top of the stack
  */
 open class ShasamblyOpcodeSPush(val short: Short) : ShasamblyOpcode {
 
@@ -480,7 +480,7 @@ open class ShasamblyOpcodeSPush(val short: Short) : ShasamblyOpcode {
 
 /**
  * Generator for opcode [Opcodes.I_PUSH]
- * Pushes an integer on top of the stack
+ * Pushes an integers on top of the stack
  */
 open class ShasamblyOpcodeIPush(val int: Int) : ShasamblyOpcode {
 
@@ -513,7 +513,7 @@ open class ShasamblyOpcodeLPush(val long: Long) : ShasamblyOpcode {
 /**
  * This is a typealias to [ShasamblyOpcodeIPush]
  * Integers and floats both have 8 Bytes, so it is not necessary to have an own bytecode
- * for pushing a float, you can just use the integer one
+ * for pushing a float, you can just use the integers one
  *
  * @see ShasamblyOpcodeLPush
  */
@@ -523,7 +523,7 @@ typealias ShasamblyOpcodeFPush = ShasamblyOpcodeIPush
 /**
  * This is a typealias to [ShasamblyOpcodeLPush]
  * Longs and doubles both have 8 Bytes, so it is not necessary to have an own bytecode
- * for pushing a double, you can just use the long one
+ * for pushing a doubles, you can just use the long one
  *
  * @see ShasamblyOpcodeLPush
  */
@@ -797,14 +797,14 @@ class ShasamblyOpcodeBBigger : ShasamblyOperationOpcode(Opcodes.B_BIGGER)
 
 /**
  * Generator for opcode [Opcodes.S_BIGGER]
- * Checks if the second but top short is bigger than the top short and puts the result
+ * Checks if the second but top shorts is bigger than the top shorts and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeSBigger : ShasamblyOperationOpcode(Opcodes.S_BIGGER)
 
 /**
  * Generator for opcode [Opcodes.I_BIGGER]
- * Checks if the second but top integer is bigger than the top integer and puts the result
+ * Checks if the second but top integers is bigger than the top integers and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeIBigger : ShasamblyOperationOpcode(Opcodes.I_BIGGER)
@@ -825,7 +825,7 @@ class ShasamblyOpcodeFBigger : ShasamblyOperationOpcode(Opcodes.F_BIGGER)
 
 /**
  * Generator for opcode [Opcodes.D_BIGGER]
- * Checks if the second but top double is bigger than the top double and puts the result
+ * Checks if the second but top doubles is bigger than the top doubles and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeDBigger : ShasamblyOperationOpcode(Opcodes.D_BIGGER)
@@ -839,14 +839,14 @@ class ShasamblyOpcodeBSmaller : ShasamblyOperationOpcode(Opcodes.B_SMALLER)
 
 /**
  * Generator for opcode [Opcodes.S_SMALLER]
- * Checks if the second but top short is smaller than the top short and puts the result
+ * Checks if the second but top shorts is smaller than the top shorts and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeSSmaller : ShasamblyOperationOpcode(Opcodes.S_SMALLER)
 
 /**
  * Generator for opcode [Opcodes.I_SMALLER]
- * Checks if the second but top is smaller than the top integer and puts the result
+ * Checks if the second but top is smaller than the top integers and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeISmaller : ShasamblyOperationOpcode(Opcodes.I_SMALLER)
@@ -867,7 +867,7 @@ class ShasamblyOpcodeFSmaller : ShasamblyOperationOpcode(Opcodes.F_SMALLER)
 
 /**
  * Generator for opcode [Opcodes.D_SMALLER]
- * Checks if the second but top double is smaller than the top double and puts the result
+ * Checks if the second but top doubles is smaller than the top doubles and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeDSmaller : ShasamblyOperationOpcode(Opcodes.D_SMALLER)
@@ -881,14 +881,14 @@ class ShasamblyOpcodeBBiggerEq : ShasamblyOperationOpcode(Opcodes.B_BIGGER_EQ)
 
 /**
  * Generator for opcode [Opcodes.S_BIGGER_EQ]
- * Checks if the second but top short is bigger or equal to the top short and puts the result
+ * Checks if the second but top shorts is bigger or equal to the top shorts and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeSBiggerEq : ShasamblyOperationOpcode(Opcodes.S_BIGGER_EQ)
 
 /**
  * Generator for opcode [Opcodes.I_BIGGER_EQ]
- * Checks if the second but top integer is bigger or equal to the top integer and puts the result
+ * Checks if the second but top integers is bigger or equal to the top integers and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeIBiggerEq : ShasamblyOperationOpcode(Opcodes.I_BIGGER_EQ)
@@ -909,7 +909,7 @@ class ShasamblyOpcodeFBiggerEq : ShasamblyOperationOpcode(Opcodes.F_BIGGER_EQ)
 
 /**
  * Generator for opcode [Opcodes.D_BIGGER_EQ]
- * Checks if the second but top double is bigger or equal to the top double and puts the result
+ * Checks if the second but top doubles is bigger or equal to the top doubles and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeDBiggerEq : ShasamblyOperationOpcode(Opcodes.D_BIGGER_EQ)
@@ -923,14 +923,14 @@ class ShasamblyOpcodeBSmallerEq : ShasamblyOperationOpcode(Opcodes.B_SMALLER_EQ)
 
 /**
  * Generator for opcode [Opcodes.S_SMALLER_EQ]
- * Checks if the second but top short is smaller or equal to the top short and puts the result
+ * Checks if the second but top shorts is smaller or equal to the top shorts and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeSSmallerEq : ShasamblyOperationOpcode(Opcodes.S_SMALLER_EQ)
 
 /**
  * Generator for opcode [Opcodes.I_SMALLER_EQ]
- * Checks if the second but top integer is smaller or equal to the top integer and puts the result
+ * Checks if the second but top integers is smaller or equal to the top integers and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeISmallerEq : ShasamblyOperationOpcode(Opcodes.I_SMALLER_EQ)
@@ -951,7 +951,7 @@ class ShasamblyOpcodeFSmallerEq : ShasamblyOperationOpcode(Opcodes.F_SMALLER_EQ)
 
 /**
  * Generator for opcode [Opcodes.D_SMALLER_EQ]
- * Checks if the second but top double is smaller or equal to the top double and puts the result
+ * Checks if the second but top doubles is smaller or equal to the top doubles and puts the result
  * on top of the stack
  */
 class ShasamblyOpcodeDSmallerEq : ShasamblyOperationOpcode(Opcodes.D_SMALLER_EQ)
@@ -987,13 +987,13 @@ class ShasamblyOpcodeBGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes
 
 /**
  * Generator for opcode [Opcodes.S_GET_GLOBAL]
- * Put the short at the given address into the stack
+ * Put the shorts at the given address into the stack
  */
 class ShasamblyOpcodeSGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.S_GET_GLOBAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_GET_GLOBAL]
- * Put the integer at the given address into the stack
+ * Put the integers at the given address into the stack
  */
 class ShasamblyOpcodeIGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.I_GET_GLOBAL, address)
 
@@ -1023,28 +1023,28 @@ abstract class ShasamblyGetGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOpco
 /**
  * Generator for opcode [Opcodes.B_GET_GLOBAL_DYNAMIC]
  * Put the byte at the given position on top of the stack. The position is given by
- * the top integer on the stack.
+ * the top integers on the stack.
  */
 class ShasamblyOpcodeBGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.B_GET_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.S_GET_GLOBAL_DYNAMIC]
- * Put the short at the given position on top of the stack. The position is given by
- * the top integer on the stack.
+ * Put the shorts at the given position on top of the stack. The position is given by
+ * the top integers on the stack.
  */
 class ShasamblyOpcodeSGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.S_GET_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.I_GET_GLOBAL_DYNAMIC]
- * Put the integer at the given position on top of the stack. The position is given by
- * the top integer on the stack.
+ * Put the integers at the given position on top of the stack. The position is given by
+ * the top integers on the stack.
  */
 class ShasamblyOpcodeIGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.I_GET_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.L_GET_GLOBAL_DYNAMIC]
  * Put the long at the given position on top of the stack. The position is given by
- * the top integer on the stack.
+ * the top integers on the stack.
  */
 class ShasamblyOpcodeLGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.L_GET_GLOBAL_DYNAMIC)
 
@@ -1073,13 +1073,13 @@ class ShasamblyOpcodeBStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opc
 
 /**
  * Generator for opcode [Opcodes.S_STORE_GLOBAL]
- * Put the top short on the stack into the given address
+ * Put the top shorts on the stack into the given address
  */
 class ShasamblyOpcodeSStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.S_STORE_GLOBAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_STORE_GLOBAL]
- * Put the top integer on the stack into the given address
+ * Put the top integers on the stack into the given address
  */
 class ShasamblyOpcodeIStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.I_STORE_GLOBAL, address)
 
@@ -1108,29 +1108,29 @@ abstract class ShasamblyStoreGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOp
 
 /**
  * Generator for opcode [Opcodes.B_STORE_GLOBAL_DYNAMIC]
- * Put the top byte under the top integer (so the byte at position 5) on the stack into the given
- * address. The address is given by the top integer on the stack.
+ * Put the top byte under the top integers (so the byte at position 5) on the stack into the given
+ * address. The address is given by the top integers on the stack.
  */
 class ShasamblyOpcodeBStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.B_STORE_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.S_STORE_GLOBAL_DYNAMIC]
- * Put the top short under the top integer (so the short at position 5) on the stack into the given
- * address. The address is given by the top integer on the stack.
+ * Put the top shorts under the top integers (so the shorts at position 5) on the stack into the given
+ * address. The address is given by the top integers on the stack.
  */
 class ShasamblyOpcodeSStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.S_STORE_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.I_STORE_GLOBAL_DYNAMIC]
- * Put the top integer under the top integer (so the integer at position 5) on the stack into the given
- * address. The address is given by the top integer on the stack.
+ * Put the top integers under the top integers (so the integers at position 5) on the stack into the given
+ * address. The address is given by the top integers on the stack.
  */
 class ShasamblyOpcodeIStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.I_STORE_GLOBAL_DYNAMIC)
 
 /**
  * Generator for opcode [Opcodes.L_STORE_GLOBAL_DYNAMIC]
- * Put the top long under the top integer (so the long at position 5) on the stack into the given
- * address. The address is given by the top integer on the stack.
+ * Put the top long under the top integers (so the long at position 5) on the stack into the given
+ * address. The address is given by the top integers on the stack.
  */
 class ShasamblyOpcodeLStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.L_STORE_GLOBAL_DYNAMIC)
 
@@ -1142,13 +1142,13 @@ class ShasamblyOpcodeBNeg : ShasamblyOperationOpcode(Opcodes.B_NEG)
 
 /**
  * Generator for opcode [Opcodes.S_NEG]
- * Negate the top short of the stack
+ * Negate the top shorts of the stack
  */
 class ShasamblyOpcodeSNeg : ShasamblyOperationOpcode(Opcodes.S_NEG)
 
 /**
  * Generator for opcode [Opcodes.I_NEG]
- * Negate the top integer of the stack
+ * Negate the top integers of the stack
  */
 class ShasamblyOpcodeINeg : ShasamblyOperationOpcode(Opcodes.I_NEG)
 
@@ -1166,7 +1166,7 @@ class ShasamblyOpcodeFNeg : ShasamblyOperationOpcode(Opcodes.F_NEG)
 
 /**
  * Generator for opcode [Opcodes.D_NEG]
- * Negate the top double of the stack
+ * Negate the top doubles of the stack
  */
 class ShasamblyOpcodeDNeg : ShasamblyOperationOpcode(Opcodes.D_NEG)
 
@@ -1178,13 +1178,13 @@ class ShasamblyOpcodeBAbs : ShasamblyOperationOpcode(Opcodes.B_ABS)
 
 /**
  * Generator for opcode [Opcodes.S_ABS]
- * Put the absolute value of the top short on top of the stack
+ * Put the absolute value of the top shorts on top of the stack
  */
 class ShasamblyOpcodeSAbs : ShasamblyOperationOpcode(Opcodes.S_ABS)
 
 /**
  * Generator for opcode [Opcodes.I_ABS]
- * Put the absolute value of the top integer on top of the stack
+ * Put the absolute value of the top integers on top of the stack
  */
 class ShasamblyOpcodeIAbs : ShasamblyOperationOpcode(Opcodes.I_ABS)
 
@@ -1202,7 +1202,7 @@ class ShasamblyOpcodeFAbs : ShasamblyOperationOpcode(Opcodes.F_ABS)
 
 /**
  * Generator for opcode [Opcodes.D_ABS]
- * Put the absolute value of the top double on top of the stack
+ * Put the absolute value of the top doubles on top of the stack
  */
 class ShasamblyOpcodeDAbs : ShasamblyOperationOpcode(Opcodes.D_ABS)
 

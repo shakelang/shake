@@ -243,7 +243,7 @@ abstract class ShasamblyInterpretingBase(
         }
 
         /**
-         * Push a short on top of the stack
+         * Push a shorts on top of the stack
          */
         fun pushShort(v: Short) {
             this.push((v and 0x00ff).toByte())
@@ -280,7 +280,7 @@ abstract class ShasamblyInterpretingBase(
         fun pushFloat(v: Float) = pushInt(v.toBits())
 
         /**
-         * Push a double on top of the stack
+         * Push a doubles on top of the stack
          */
         fun pushDouble(v: Double) = pushLong(v.toBits())
 
@@ -295,7 +295,7 @@ abstract class ShasamblyInterpretingBase(
         fun popByte(): Byte = this.pop()
 
         /**
-         * Pop the top short from the stack
+         * Pop the top shorts from the stack
          */
         fun popShort(): Short {
             return shortOf(this.pop(), this.pop())
@@ -330,7 +330,7 @@ abstract class ShasamblyInterpretingBase(
         fun popFloat(): Float = Float.fromBits(this.popInt())
 
         /**
-         * Pop the top double from the stack
+         * Pop the top doubles from the stack
          */
         fun popDouble(): Double = Double.fromBits(this.popLong())
     }

@@ -38,7 +38,7 @@ enum class ShakeTokenType(
     EQ_EQUALS(2, "'=='"),
     IDENTIFIER(-1, "[identifier]"),
     INCR(2, "'++'"),
-    INTEGER(-1, "[integer]"),
+    INTEGER(-1, "[integers]"),
     KEYWORD_ABSTRACT(8, "abstract"),
     KEYWORD_AS(2, "as"),
     KEYWORD_CLASS(5, "class"),

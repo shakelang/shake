@@ -5,9 +5,9 @@ package com.shakelang.shake.shasambly.generator.shas
 import com.shakelang.shake.shasambly.interpreter.Opcodes
 import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import com.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
-import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
+import com.shakelang.util.io.streaming.output.bytes.OutputStream
 import com.shakelang.util.parseutils.characters.Characters.isHexCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierStartCharacter
@@ -63,7 +63,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
         while (input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
-        if (number.isEmpty()) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty()) throw IllegalStateException("Hex number to shorts")
         return number.toString()
     }
 
@@ -73,7 +73,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
         while (input.hasNext() && isNumberCharacter(input.peek())) {
             number.append(input.next())
         }
-        if (number.isEmpty()) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty()) throw IllegalStateException("Hex number to shorts")
         return number.toString()
     }
 
@@ -86,7 +86,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
             if (dotCount > 1) throw IllegalStateException("There must not be more then one dots in a floating point number")
             number.append(input.next())
         }
-        if (number.isEmpty() || (number.length == 1 && number[0] == '.')) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty() || (number.length == 1 && number[0] == '.')) throw IllegalStateException("Hex number to shorts")
         return number.toString()
     }
 

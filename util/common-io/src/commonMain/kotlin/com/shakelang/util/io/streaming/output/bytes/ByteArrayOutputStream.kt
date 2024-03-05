@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.output
+package com.shakelang.util.io.streaming.output.bytes
 
 /**
  * A [ByteArrayOutputStream] is a [OutputStream] that writes to a [ByteArray]

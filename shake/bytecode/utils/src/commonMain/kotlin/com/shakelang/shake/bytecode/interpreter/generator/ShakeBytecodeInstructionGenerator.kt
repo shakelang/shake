@@ -95,11 +95,11 @@ open class ShakeBytecodeInstructionGenerator(
     fun bpush(byte: Byte) = addBytes(listOf(Opcodes.BPUSH, byte))
 
     /**
-     * Push a short to the stack
+     * Push a shorts to the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spush)
      *
-     * @param short The short to push
+     * @param short The shorts to push
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.SPUSH
@@ -167,11 +167,11 @@ open class ShakeBytecodeInstructionGenerator(
     fun ipush(value: Float) = addBytes(listOf(Opcodes.IPUSH, *value.toRawBits().toBytes().toTypedArray()))
 
     /**
-     * Push a double to the stack
+     * Push a doubles to the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lpush)
      *
-     * @param value The double to push
+     * @param value The doubles to push
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.LPUSH
@@ -192,11 +192,11 @@ open class ShakeBytecodeInstructionGenerator(
     fun bpush(value: UByte) = addBytes(listOf(Opcodes.BPUSH, value.toByte()))
 
     /**
-     * Push an unsigned short to the stack
+     * Push an unsigned shorts to the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spush)
      *
-     * @param value The unsigned short to push
+     * @param value The unsigned shorts to push
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.SPUSH
@@ -243,7 +243,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bload(variable: UShort) = addBytes(listOf(Opcodes.BLOAD, *variable.toBytes().toTypedArray()))
 
     /**
-     * Load a short from the local variable table onto the stack
+     * Load a shorts from the local variable table onto the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sload)
      *
@@ -343,7 +343,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bstore(variable: UShort) = addBytes(listOf(Opcodes.BSTORE, *variable.toBytes().toTypedArray()))
 
     /**
-     * Store a short from the stack into the local variable table
+     * Store a shorts from the stack into the local variable table
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sstore)
      *
@@ -1193,7 +1193,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bneg() = addByte(Opcodes.BNEG)
 
     /**
-     * Negate the top short on the stack
+     * Negate the top shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sneg)
      *
@@ -1237,7 +1237,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fneg() = addByte(Opcodes.FNEG)
 
     /**
-     * Negate the top double on the stack
+     * Negate the top doubles on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dneg)
      *
@@ -1579,7 +1579,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bnot() = addByte(Opcodes.BNOT)
 
     /**
-     * Bitwise not the top short on the stack
+     * Bitwise not the top shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-snot)
      *
@@ -1672,7 +1672,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bshl() = addByte(Opcodes.BSHL)
 
     /**
-     * Shift the top short on the stack left by the second short on the stack
+     * Shift the top shorts on the stack left by the second shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshl)
      *
@@ -1765,7 +1765,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bshr() = addByte(Opcodes.BSHR)
 
     /**
-     * Shift the top short on the stack left by the second short on the stack
+     * Shift the top shorts on the stack left by the second shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshr)
      *
@@ -1858,7 +1858,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bshru() = addByte(Opcodes.BSHRU)
 
     /**
-     * Shift the top short on the stack left by the second short on the stack
+     * Shift the top shorts on the stack left by the second shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshr)
      *
@@ -2653,7 +2653,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun bret() = addByte(Opcodes.BRET)
 
     /**
-     * Set the top short on the stack as return value of the function
+     * Set the top shorts on the stack as return value of the function
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sret)
      *
@@ -2731,7 +2731,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun pop() = addByte(Opcodes.BPOP)
 
     /**
-     * Pop the top short on the stack
+     * Pop the top shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bpop)
      *
@@ -2822,7 +2822,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dup() = addByte(Opcodes.BDUP)
 
     /**
-     * Duplicate the top short on the stack
+     * Duplicate the top shorts on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sdup)
      *
@@ -3281,7 +3281,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun baload() = addByte(Opcodes.BALOAD)
 
     /**
-     * Load a short from an array
+     * Load a shorts from an array
      * The index (int) should be on the stack
      * The array address (int) should be on the stack
      *
@@ -3334,8 +3334,8 @@ open class ShakeBytecodeInstructionGenerator(
     fun bastore() = addByte(Opcodes.BASTORE)
 
     /**
-     * Store a short in an array
-     * The value (short) should be on the stack
+     * Store a shorts in an array
+     * The value (shorts) should be on the stack
      * The index (int) should be on the stack
      * The array address (int) should be on the stack
      *
@@ -3457,9 +3457,9 @@ open class ShakeBytecodeInstructionGenerator(
     }
 
     /**
-     * Create a short placeholder
+     * Create a shorts placeholder
      *
-     * @return A [ShortPlaceholder] for the next short
+     * @return A [ShortPlaceholder] for the next shorts
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -3558,7 +3558,7 @@ open class ShakeBytecodeInstructionGenerator(
     /**
      * Short placeholder
      *
-     * @param index The index of the short in the bytecode
+     * @param index The index of the shorts in the bytecode
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -3566,7 +3566,7 @@ open class ShakeBytecodeInstructionGenerator(
     inner class ShortPlaceholder(
 
         /**
-         * The index of the short in the bytecode
+         * The index of the shorts in the bytecode
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -3575,9 +3575,9 @@ open class ShakeBytecodeInstructionGenerator(
     ) {
 
         /**
-         * Set the short at the index
+         * Set the shorts at the index
          *
-         * @param short The short to set
+         * @param short The shorts to set
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -3587,9 +3587,9 @@ open class ShakeBytecodeInstructionGenerator(
         }
 
         /**
-         * Set the short at the index
+         * Set the shorts at the index
          *
-         * @param unsignedShort The unsigned short to set
+         * @param unsignedShort The unsigned shorts to set
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -3599,7 +3599,7 @@ open class ShakeBytecodeInstructionGenerator(
         }
 
         /**
-         * Set the short at the index
+         * Set the shorts at the index
          *
          * @param char The char to set
          *
@@ -3713,7 +3713,7 @@ open class ShakeBytecodeInstructionGenerator(
         /**
          * Set the long at the index
          *
-         * @param double The double to set
+         * @param double The doubles to set
          *
          * @since 0.1.0
          * @version 0.1.0

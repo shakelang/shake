@@ -129,7 +129,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toShort() shouldBe 1.toShort()
         }
 
-        "CommanderValue.toShort() should throw an CommanderValueException if the value is not a short" {
+        "CommanderValue.toShort() should throw an CommanderValueException if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toShort()
             }
@@ -139,7 +139,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toShortOrNull() shouldBe 1.toShort()
         }
 
-        "CommanderValue.toShortOrNull() should return null if the value is not a short" {
+        "CommanderValue.toShortOrNull() should return null if the value is not a shorts" {
             CommanderValue("test").toShortOrNull() shouldBe null
         }
 
@@ -147,7 +147,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toShortOrDefault(2.toShort()) shouldBe 1.toShort()
         }
 
-        "CommanderValue.toShortOrDefault() should return the default value if the value is not a short" {
+        "CommanderValue.toShortOrDefault() should return the default value if the value is not a shorts" {
             CommanderValue("test").toShortOrDefault(2.toShort()) shouldBe 2.toShort()
         }
 
@@ -233,7 +233,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDouble() shouldBe 1.0
         }
 
-        "CommanderValue.toDouble() should throw an CommanderValueException if the value is not a double" {
+        "CommanderValue.toDouble() should throw an CommanderValueException if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toDouble()
             }
@@ -243,7 +243,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDoubleOrNull() shouldBe 1.0
         }
 
-        "CommanderValue.toDoubleOrNull() should return null if the value is not a double" {
+        "CommanderValue.toDoubleOrNull() should return null if the value is not a doubles" {
             CommanderValue("test").toDoubleOrNull() shouldBe null
         }
 
@@ -251,7 +251,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDoubleOrDefault(2.0) shouldBe 1.0
         }
 
-        "CommanderValue.toDoubleOrDefault() should return the default value if the value is not a double" {
+        "CommanderValue.toDoubleOrDefault() should return the default value if the value is not a doubles" {
             CommanderValue("test").toDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -285,7 +285,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toUnsignedShort() shouldBe 1.toUShort()
         }
 
-        "CommanderValue.toUnsignedShort() should throw an CommanderValueException if the value is not a short" {
+        "CommanderValue.toUnsignedShort() should throw an CommanderValueException if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toUnsignedShort()
             }
@@ -295,7 +295,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toUnsignedShortOrNull() shouldBe 1.toUShort()
         }
 
-        "CommanderValue.toUnsignedShortOrNull() should return null if the value is not a short" {
+        "CommanderValue.toUnsignedShortOrNull() should return null if the value is not a shorts" {
             CommanderValue("test").toUnsignedShortOrNull() shouldBe null
         }
 
@@ -303,7 +303,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toUnsignedShortOrDefault(2.toUShort()) shouldBe 1.toUShort()
         }
 
-        "CommanderValue.toUnsignedShortOrDefault() should return the default value if the value is not a short" {
+        "CommanderValue.toUnsignedShortOrDefault() should return the default value if the value is not a shorts" {
             CommanderValue("test").toUnsignedShortOrDefault(2.toUShort()) shouldBe 2.toUShort()
         }
 
@@ -481,7 +481,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveShort() shouldBe 1.toShort()
         }
 
-        "CommanderValue.toPositiveShort() should throw an CommanderValueException if the value is not a short" {
+        "CommanderValue.toPositiveShort() should throw an CommanderValueException if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toPositiveShort()
             }
@@ -497,7 +497,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveShortOrNull() shouldBe 1.toShort()
         }
 
-        "CommanderValue.toPositiveShortOrNull() should return null if the value is not a short" {
+        "CommanderValue.toPositiveShortOrNull() should return null if the value is not a shorts" {
             CommanderValue("test").toPositiveShortOrNull() shouldBe null
         }
 
@@ -509,7 +509,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveShortOrDefault(2.toShort()) shouldBe 1.toShort()
         }
 
-        "CommanderValue.toPositiveShortOrDefault() should return the default value if the value is not a short" {
+        "CommanderValue.toPositiveShortOrDefault() should return the default value if the value is not a shorts" {
             CommanderValue("test").toPositiveShortOrDefault(2.toShort()) shouldBe 2.toShort()
         }
 
@@ -641,7 +641,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDouble() shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDouble() should throw an CommanderValueException if the value is not a double" {
+        "CommanderValue.toPositiveDouble() should throw an CommanderValueException if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toPositiveDouble()
             }
@@ -657,7 +657,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDoubleOrNull() shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDoubleOrNull() should return null if the value is not a double" {
+        "CommanderValue.toPositiveDoubleOrNull() should return null if the value is not a doubles" {
             CommanderValue("test").toPositiveDoubleOrNull() shouldBe null
         }
 
@@ -669,7 +669,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDoubleOrDefault(2.0) shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDoubleOrDefault() should return the default value if the value is not a double" {
+        "CommanderValue.toPositiveDoubleOrDefault() should return the default value if the value is not a doubles" {
             CommanderValue("test").toPositiveDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -721,7 +721,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeShort() shouldBe (-1).toShort()
         }
 
-        "CommanderValue.toNegativeShort() should throw an CommanderValueException if the value is not a short" {
+        "CommanderValue.toNegativeShort() should throw an CommanderValueException if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toNegativeShort()
             }
@@ -737,7 +737,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeShortOrNull() shouldBe (-1).toShort()
         }
 
-        "CommanderValue.toNegativeShortOrNull() should return null if the value is not a short" {
+        "CommanderValue.toNegativeShortOrNull() should return null if the value is not a shorts" {
             CommanderValue("test").toNegativeShortOrNull() shouldBe null
         }
 
@@ -749,7 +749,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeShortOrDefault(2.toShort()) shouldBe (-1).toShort()
         }
 
-        "CommanderValue.toNegativeShortOrDefault() should return the default value if the value is not a short" {
+        "CommanderValue.toNegativeShortOrDefault() should return the default value if the value is not a shorts" {
             CommanderValue("test").toNegativeShortOrDefault(2.toShort()) shouldBe 2.toShort()
         }
 
@@ -881,7 +881,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDouble() shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDouble() should throw an CommanderValueException if the value is not a double" {
+        "CommanderValue.toNegativeDouble() should throw an CommanderValueException if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toNegativeDouble()
             }
@@ -897,7 +897,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDoubleOrNull() shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDoubleOrNull() should return null if the value is not a double" {
+        "CommanderValue.toNegativeDoubleOrNull() should return null if the value is not a doubles" {
             CommanderValue("test").toNegativeDoubleOrNull() shouldBe null
         }
 
@@ -909,7 +909,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDoubleOrDefault(2.0) shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDoubleOrDefault() should return the default value if the value is not a double" {
+        "CommanderValue.toNegativeDoubleOrDefault() should return the default value if the value is not a doubles" {
             CommanderValue("test").toNegativeDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -1035,25 +1035,25 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validateShort()
         }
 
-        "CommanderValue.validateShort() should fail if the value is not a short" {
+        "CommanderValue.validateShort() should fail if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateShort()
             }
         }
 
-        "CommanderValue.isShort() should return true if the value is a short" {
+        "CommanderValue.isShort() should return true if the value is a shorts" {
             CommanderValue("1").isShort() shouldBe true
         }
 
-        "CommanderValue.isShort() should return false if the value is not a short" {
+        "CommanderValue.isShort() should return false if the value is not a shorts" {
             CommanderValue("test").isShort() shouldBe false
         }
 
-        "CommanderValue.isNotShort() should return false if the value is a short" {
+        "CommanderValue.isNotShort() should return false if the value is a shorts" {
             CommanderValue("1").isNotShort() shouldBe false
         }
 
-        "CommanderValue.isNotShort() should return true if the value is not a short" {
+        "CommanderValue.isNotShort() should return true if the value is not a shorts" {
             CommanderValue("test").isNotShort() shouldBe true
         }
 
@@ -1139,25 +1139,25 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validateDouble()
         }
 
-        "CommanderValue.validateDouble() should fail if the value is not a double" {
+        "CommanderValue.validateDouble() should fail if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateDouble()
             }
         }
 
-        "CommanderValue.isDouble() should return true if the value is a double" {
+        "CommanderValue.isDouble() should return true if the value is a doubles" {
             CommanderValue("1").isDouble() shouldBe true
         }
 
-        "CommanderValue.isDouble() should return false if the value is not a double" {
+        "CommanderValue.isDouble() should return false if the value is not a doubles" {
             CommanderValue("test").isDouble() shouldBe false
         }
 
-        "CommanderValue.isNotDouble() should return false if the value is a double" {
+        "CommanderValue.isNotDouble() should return false if the value is a doubles" {
             CommanderValue("1").isNotDouble() shouldBe false
         }
 
-        "CommanderValue.isNotDouble() should return true if the value is not a double" {
+        "CommanderValue.isNotDouble() should return true if the value is not a doubles" {
             CommanderValue("test").isNotDouble() shouldBe true
         }
 
@@ -1205,7 +1205,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validateUnsignedShort()
         }
 
-        "CommanderValue.validateUnsignedShort() should fail if the value is not a short" {
+        "CommanderValue.validateUnsignedShort() should fail if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateUnsignedShort()
             }
@@ -1217,11 +1217,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isUnsignedShort() should return true if the value is a short" {
+        "CommanderValue.isUnsignedShort() should return true if the value is a shorts" {
             CommanderValue("1").isUnsignedShort() shouldBe true
         }
 
-        "CommanderValue.isUnsignedShort() should return false if the value is not a short" {
+        "CommanderValue.isUnsignedShort() should return false if the value is not a shorts" {
             CommanderValue("test").isUnsignedShort() shouldBe false
         }
 
@@ -1229,11 +1229,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").isUnsignedShort() shouldBe false
         }
 
-        "CommanderValue.isNotUnsignedShort() should return false if the value is a short" {
+        "CommanderValue.isNotUnsignedShort() should return false if the value is a shorts" {
             CommanderValue("1").isNotUnsignedShort() shouldBe false
         }
 
-        "CommanderValue.isNotUnsignedShort() should return true if the value is not a short" {
+        "CommanderValue.isNotUnsignedShort() should return true if the value is not a shorts" {
             CommanderValue("test").isNotUnsignedShort() shouldBe true
         }
 
@@ -1443,7 +1443,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validatePositiveShort()
         }
 
-        "CommanderValue.validatePositiveShort() should fail if the value is not a short" {
+        "CommanderValue.validatePositiveShort() should fail if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validatePositiveShort()
             }
@@ -1455,11 +1455,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isPositiveShort() should return true if the value is a short" {
+        "CommanderValue.isPositiveShort() should return true if the value is a shorts" {
             CommanderValue("1").isPositiveShort() shouldBe true
         }
 
-        "CommanderValue.isPositiveShort() should return false if the value is not a short" {
+        "CommanderValue.isPositiveShort() should return false if the value is not a shorts" {
             CommanderValue("test").isPositiveShort() shouldBe false
         }
 
@@ -1467,11 +1467,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").isPositiveShort() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveShort() should return false if the value is a short" {
+        "CommanderValue.isNotPositiveShort() should return false if the value is a shorts" {
             CommanderValue("1").isNotPositiveShort() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveShort() should return true if the value is not a short" {
+        "CommanderValue.isNotPositiveShort() should return true if the value is not a shorts" {
             CommanderValue("test").isNotPositiveShort() shouldBe true
         }
 
@@ -1603,7 +1603,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validatePositiveDouble()
         }
 
-        "CommanderValue.validatePositiveDouble() should fail if the value is not a double" {
+        "CommanderValue.validatePositiveDouble() should fail if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validatePositiveDouble()
             }
@@ -1615,11 +1615,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isPositiveDouble() should return true if the value is a double" {
+        "CommanderValue.isPositiveDouble() should return true if the value is a doubles" {
             CommanderValue("1").isPositiveDouble() shouldBe true
         }
 
-        "CommanderValue.isPositiveDouble() should return false if the value is not a double" {
+        "CommanderValue.isPositiveDouble() should return false if the value is not a doubles" {
             CommanderValue("test").isPositiveDouble() shouldBe false
         }
 
@@ -1627,11 +1627,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").isPositiveDouble() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveDouble() should return false if the value is a double" {
+        "CommanderValue.isNotPositiveDouble() should return false if the value is a doubles" {
             CommanderValue("1").isNotPositiveDouble() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveDouble() should return true if the value is not a double" {
+        "CommanderValue.isNotPositiveDouble() should return true if the value is not a doubles" {
             CommanderValue("test").isNotPositiveDouble() shouldBe true
         }
 
@@ -1683,7 +1683,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").validateNegativeShort()
         }
 
-        "CommanderValue.validateNegativeShort() should fail if the value is not a short" {
+        "CommanderValue.validateNegativeShort() should fail if the value is not a shorts" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateNegativeShort()
             }
@@ -1695,11 +1695,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isNegativeShort() should return true if the value is a short" {
+        "CommanderValue.isNegativeShort() should return true if the value is a shorts" {
             CommanderValue("-1").isNegativeShort() shouldBe true
         }
 
-        "CommanderValue.isNegativeShort() should return false if the value is not a short" {
+        "CommanderValue.isNegativeShort() should return false if the value is not a shorts" {
             CommanderValue("test").isNegativeShort() shouldBe false
         }
 
@@ -1707,11 +1707,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").isNegativeShort() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeShort() should return false if the value is a short" {
+        "CommanderValue.isNotNegativeShort() should return false if the value is a shorts" {
             CommanderValue("-1").isNotNegativeShort() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeShort() should return true if the value is not a short" {
+        "CommanderValue.isNotNegativeShort() should return true if the value is not a shorts" {
             CommanderValue("test").isNotNegativeShort() shouldBe true
         }
 
@@ -1843,7 +1843,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").validateNegativeDouble()
         }
 
-        "CommanderValue.validateNegativeDouble() should fail if the value is not a double" {
+        "CommanderValue.validateNegativeDouble() should fail if the value is not a doubles" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateNegativeDouble()
             }
@@ -1855,11 +1855,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isNegativeDouble() should return true if the value is a double" {
+        "CommanderValue.isNegativeDouble() should return true if the value is a doubles" {
             CommanderValue("-1").isNegativeDouble() shouldBe true
         }
 
-        "CommanderValue.isNegativeDouble() should return false if the value is not a double" {
+        "CommanderValue.isNegativeDouble() should return false if the value is not a doubles" {
             CommanderValue("test").isNegativeDouble() shouldBe false
         }
 
@@ -1867,11 +1867,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").isNegativeDouble() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeDouble() should return false if the value is a double" {
+        "CommanderValue.isNotNegativeDouble() should return false if the value is a doubles" {
             CommanderValue("-1").isNotNegativeDouble() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeDouble() should return true if the value is not a double" {
+        "CommanderValue.isNotNegativeDouble() should return true if the value is not a doubles" {
             CommanderValue("test").isNotNegativeDouble() shouldBe true
         }
 

@@ -6,7 +6,7 @@ import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.shakelib.ShakeLib
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
 
 fun createBaseProcessor(): ShakePackageBasedProcessor {
     val processor = ShakePackageBasedProcessor()

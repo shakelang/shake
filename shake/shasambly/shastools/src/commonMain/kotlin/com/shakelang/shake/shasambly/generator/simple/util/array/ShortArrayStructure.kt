@@ -5,7 +5,7 @@ package com.shakelang.shake.shasambly.generator.simple.util.array
 import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 
 /**
- * A local short array that does not store it's size. If you are using it you have to store
+ * A local shorts array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
  * e.g. [LocalShortArrayStructure]
  *
@@ -15,7 +15,7 @@ import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int, val size: Int = -1) {
 
     /**
-     * Get an element of the array. The index is the first integer from the stack
+     * Get an element of the array. The index is the first integers from the stack
      */
     fun getElement() {
         shasambly {
@@ -41,8 +41,8 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     }
 
     /**
-     * Store an element into the array. The index is the first integer on the stack.
-     * The element value is the short below it
+     * Store an element into the array. The index is the first integers on the stack.
+     * The element value is the shorts below it
      */
     fun storeElement() {
         shasambly {
@@ -56,7 +56,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
 
     /**
      * Store an element into the array. The index is given as argument. The element value is
-     * the top short on the stack.
+     * the top shorts on the stack.
      *
      * @param index the index of the array to store the element in
      */
@@ -114,7 +114,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
 
 /**
  * Create a [StaticallySizedLocalShortArrayStructure]
- * A short array that does not store it's size. If you are using it you have to store
+ * A shorts array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
  * e.g. [LocalShortArrayStructure]
  *
@@ -133,7 +133,7 @@ fun SimpleShasambly.createStaticallySizedLocalShortArray(
 
 /**
  * Create a [StaticallySizedLocalShortArrayStructure]
- * A short array that does not store it's size. If you are using it you have to store
+ * A shorts array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
  * e.g. [LocalShortArrayStructure]
  *
@@ -147,13 +147,13 @@ fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int): StaticallyS
 }
 
 /**
- * A local short array. It stores the size at the start of it, so you can always get the size using [getSize]
- * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
+ * A local shorts array. It stores the size at the start of it, so you can always get the size using [getSize]
+ * This is the advised type of local shorts array over [StaticallySizedLocalShortArrayStructure]
  */
 class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
 
     /**
-     * Put the size of the short array on top of the stack
+     * Put the size of the shorts array on top of the stack
      */
     fun getSize() {
         shasambly {
@@ -164,7 +164,7 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
 
     /**
      * Put the element at a given position on top of the stack.
-     * Takes the top integer of the stack as position.
+     * Takes the top integers of the stack as position.
      */
     fun getElement() {
         shasambly {
@@ -192,8 +192,8 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
 
     /**
      * Store an element into the array at a given position
-     * The position is defined by the top integer of the stack
-     * The value is taken from the stack below the integer
+     * The position is defined by the top integers of the stack
+     * The value is taken from the stack below the integers
      */
     fun storeElement() {
         shasambly {
@@ -251,11 +251,11 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
 
 /**
  * Create a [LocalShortArrayStructure]
- * A local short array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
- * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
+ * A local shorts array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
+ * This is the advised type of local shorts array over [StaticallySizedLocalShortArrayStructure]
  *
- * @param addr the local address to create the short array in
- * @param size the size of the short array
+ * @param addr the local address to create the shorts array in
+ * @param size the size of the shorts array
  */
 fun SimpleShasambly.createLocalShortArray(addr: Int, size: Int): LocalShortArrayStructure {
     natives.declareGlobal(size * 2 + 4)
@@ -268,11 +268,11 @@ fun SimpleShasambly.createLocalShortArray(addr: Int, size: Int): LocalShortArray
 
 /**
  * Create a [LocalShortArrayStructure]
- * A local short array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
- * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
- * The size is the first integer on the stack
+ * A local shorts array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
+ * This is the advised type of local shorts array over [StaticallySizedLocalShortArrayStructure]
+ * The size is the first integers on the stack
  *
- * @param addr the local address to create the short array in
+ * @param addr the local address to create the shorts array in
  */
 fun SimpleShasambly.createLocalShortArray(addr: Int): LocalShortArrayStructure {
     natives.idup()

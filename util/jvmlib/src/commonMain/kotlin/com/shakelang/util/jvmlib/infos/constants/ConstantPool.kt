@@ -1,7 +1,7 @@
 package com.shakelang.util.jvmlib.infos.constants
 
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 import com.shakelang.util.shason.json
 
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo> by constants, ConstantUser {
@@ -395,7 +395,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         findString(value) ?: throw Exception("No string constant found for value: $value")
 
     fun expectInteger(value: Int): ConstantIntegerInfo =
-        findInteger(value) ?: throw Exception("No integer constant found for value: $value")
+        findInteger(value) ?: throw Exception("No integers constant found for value: $value")
 
     fun expectFloat(value: Float): ConstantFloatInfo =
         findFloat(value) ?: throw Exception("No float constant found for value: $value")
@@ -404,7 +404,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         findLong(value) ?: throw Exception("No long constant found for value: $value")
 
     fun expectDouble(value: Double): ConstantDoubleInfo =
-        findDouble(value) ?: throw Exception("No double constant found for value: $value")
+        findDouble(value) ?: throw Exception("No doubles constant found for value: $value")
 
     fun expectNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo = findNameAndType(name, descriptor)
         ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")

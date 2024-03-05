@@ -17,7 +17,7 @@ class SHLTest : FreeSpec(
             (0b01.toByte() shl 6.toByte()) shouldBe 0b1000000.toByte()
         }
 
-        "byte shl short" {
+        "byte shl shorts" {
             (0b01.toByte() shl 1.toShort()) shouldBe 0b10.toByte()
             (0b01.toByte() shl 2.toShort()) shouldBe 0b100.toByte()
             (0b01.toByte() shl 3.toShort()) shouldBe 0b1000.toByte()
@@ -53,7 +53,7 @@ class SHLTest : FreeSpec(
             (0b01.toByte() shl 6u.toUByte()) shouldBe 0b1000000.toByte()
         }
 
-        "byte shl unsigned short" {
+        "byte shl unsigned shorts" {
             (0b01.toByte() shl 1u.toUShort()) shouldBe 0b10.toByte()
             (0b01.toByte() shl 2u.toUShort()) shouldBe 0b100.toByte()
             (0b01.toByte() shl 3u.toUShort()) shouldBe 0b1000.toByte()
@@ -80,7 +80,7 @@ class SHLTest : FreeSpec(
             (0b01.toByte() shl 6uL) shouldBe 0b1000000.toByte()
         }
 
-        "short shl byte" {
+        "shorts shl byte" {
             (0b01.toShort() shl 1.toByte()) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2.toByte()) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3.toByte()) shouldBe 0b1000.toShort()
@@ -89,7 +89,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6.toByte()) shouldBe 0b1000000.toShort()
         }
 
-        "short shl short" {
+        "shorts shl shorts" {
             (0b01.toShort() shl 1.toShort()) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2.toShort()) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3.toShort()) shouldBe 0b1000.toShort()
@@ -98,7 +98,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6.toShort()) shouldBe 0b1000000.toShort()
         }
 
-        "short shl int" {
+        "shorts shl int" {
             (0b01.toShort() shl 1) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3) shouldBe 0b1000.toShort()
@@ -107,7 +107,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6) shouldBe 0b1000000.toShort()
         }
 
-        "short shl long" {
+        "shorts shl long" {
             (0b01.toShort() shl 1L) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2L) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3L) shouldBe 0b1000.toShort()
@@ -116,7 +116,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6L) shouldBe 0b1000000.toShort()
         }
 
-        "short shl unsigned byte" {
+        "shorts shl unsigned byte" {
             (0b01.toShort() shl 1u.toUByte()) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2u.toUByte()) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3u.toUByte()) shouldBe 0b1000.toShort()
@@ -125,7 +125,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6u.toUByte()) shouldBe 0b1000000.toShort()
         }
 
-        "short shl unsigned short" {
+        "shorts shl unsigned shorts" {
             (0b01.toShort() shl 1u.toUShort()) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2u.toUShort()) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3u.toUShort()) shouldBe 0b1000.toShort()
@@ -134,7 +134,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6u.toUShort()) shouldBe 0b1000000.toShort()
         }
 
-        "short shl unsigned int" {
+        "shorts shl unsigned int" {
             (0b01.toShort() shl 1u) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2u) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3u) shouldBe 0b1000.toShort()
@@ -143,7 +143,7 @@ class SHLTest : FreeSpec(
             (0b01.toShort() shl 6u) shouldBe 0b1000000.toShort()
         }
 
-        "short shl unsigned long" {
+        "shorts shl unsigned long" {
             (0b01.toShort() shl 1uL) shouldBe 0b10.toShort()
             (0b01.toShort() shl 2uL) shouldBe 0b100.toShort()
             (0b01.toShort() shl 3uL) shouldBe 0b1000.toShort()
@@ -161,7 +161,7 @@ class SHLTest : FreeSpec(
             (0b01 shl 6.toByte()) shouldBe 0b1000000
         }
 
-        "int shl short" {
+        "int shl shorts" {
             (0b01 shl 1.toShort()) shouldBe 0b10
             (0b01 shl 2.toShort()) shouldBe 0b100
             (0b01 shl 3.toShort()) shouldBe 0b1000
@@ -197,7 +197,7 @@ class SHLTest : FreeSpec(
             (0b01 shl 6u.toUByte()) shouldBe 0b1000000
         }
 
-        "int shl unsigned short" {
+        "int shl unsigned shorts" {
             (0b01 shl 1u.toUShort()) shouldBe 0b10
             (0b01 shl 2u.toUShort()) shouldBe 0b100
             (0b01 shl 3u.toUShort()) shouldBe 0b1000
@@ -233,7 +233,7 @@ class SHLTest : FreeSpec(
             (0b01L shl 6.toByte()) shouldBe 0b1000000L
         }
 
-        "long shl short" {
+        "long shl shorts" {
             (0b01L shl 1.toShort()) shouldBe 0b10L
             (0b01L shl 2.toShort()) shouldBe 0b100L
             (0b01L shl 3.toShort()) shouldBe 0b1000L
@@ -269,7 +269,7 @@ class SHLTest : FreeSpec(
             (0b01L shl 6u.toUByte()) shouldBe 0b1000000L
         }
 
-        "long shl unsigned short" {
+        "long shl unsigned shorts" {
             (0b01L shl 1u.toUShort()) shouldBe 0b10L
             (0b01L shl 2u.toUShort()) shouldBe 0b100L
             (0b01L shl 3u.toUShort()) shouldBe 0b1000L
@@ -305,7 +305,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUByte() shl 6.toByte()) shouldBe 0b1000000u.toUByte()
         }
 
-        "unsigned byte shl short" {
+        "unsigned byte shl shorts" {
             (0b01u.toUByte() shl 1.toShort()) shouldBe 0b10u.toUByte()
             (0b01u.toUByte() shl 2.toShort()) shouldBe 0b100u.toUByte()
             (0b01u.toUByte() shl 3.toShort()) shouldBe 0b1000u.toUByte()
@@ -341,7 +341,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUByte() shl 6u.toUByte()) shouldBe 0b1000000u.toUByte()
         }
 
-        "unsigned byte shl unsigned short" {
+        "unsigned byte shl unsigned shorts" {
             (0b01u.toUByte() shl 1u.toUShort()) shouldBe 0b10u.toUByte()
             (0b01u.toUByte() shl 2u.toUShort()) shouldBe 0b100u.toUByte()
             (0b01u.toUByte() shl 3u.toUShort()) shouldBe 0b1000u.toUByte()
@@ -368,7 +368,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUByte() shl 6uL) shouldBe 0b1000000u.toUByte()
         }
 
-        "unsigned short shl byte" {
+        "unsigned shorts shl byte" {
             (0b01u.toUShort() shl 1.toByte()) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2.toByte()) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3.toByte()) shouldBe 0b1000u.toUShort()
@@ -377,7 +377,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6.toByte()) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl short" {
+        "unsigned shorts shl shorts" {
             (0b01u.toUShort() shl 1.toShort()) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2.toShort()) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3.toShort()) shouldBe 0b1000u.toUShort()
@@ -386,7 +386,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6.toShort()) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl int" {
+        "unsigned shorts shl int" {
             (0b01u.toUShort() shl 1) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3) shouldBe 0b1000u.toUShort()
@@ -395,7 +395,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl long" {
+        "unsigned shorts shl long" {
             (0b01u.toUShort() shl 1L) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2L) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3L) shouldBe 0b1000u.toUShort()
@@ -404,7 +404,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6L) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl unsigned byte" {
+        "unsigned shorts shl unsigned byte" {
             (0b01u.toUShort() shl 1u.toUByte()) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2u.toUByte()) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3u.toUByte()) shouldBe 0b1000u.toUShort()
@@ -413,7 +413,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6u.toUByte()) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl unsigned short" {
+        "unsigned shorts shl unsigned shorts" {
             (0b01u.toUShort() shl 1u.toUShort()) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2u.toUShort()) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3u.toUShort()) shouldBe 0b1000u.toUShort()
@@ -422,7 +422,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6u.toUShort()) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl unsigned int" {
+        "unsigned shorts shl unsigned int" {
             (0b01u.toUShort() shl 1u) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2u) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3u) shouldBe 0b1000u.toUShort()
@@ -431,7 +431,7 @@ class SHLTest : FreeSpec(
             (0b01u.toUShort() shl 6u) shouldBe 0b1000000u.toUShort()
         }
 
-        "unsigned short shl unsigned long" {
+        "unsigned shorts shl unsigned long" {
             (0b01u.toUShort() shl 1uL) shouldBe 0b10u.toUShort()
             (0b01u.toUShort() shl 2uL) shouldBe 0b100u.toUShort()
             (0b01u.toUShort() shl 3uL) shouldBe 0b1000u.toUShort()
@@ -449,7 +449,7 @@ class SHLTest : FreeSpec(
             (0b01u shl 6.toByte()) shouldBe 0b1000000u
         }
 
-        "unsigned int shl short" {
+        "unsigned int shl shorts" {
             (0b01u shl 1.toShort()) shouldBe 0b10u
             (0b01u shl 2.toShort()) shouldBe 0b100u
             (0b01u shl 3.toShort()) shouldBe 0b1000u
@@ -485,7 +485,7 @@ class SHLTest : FreeSpec(
             (0b01u shl 6u.toUByte()) shouldBe 0b1000000u
         }
 
-        "unsigned int shl unsigned short" {
+        "unsigned int shl unsigned shorts" {
             (0b01u shl 1u.toUShort()) shouldBe 0b10u
             (0b01u shl 2u.toUShort()) shouldBe 0b100u
             (0b01u shl 3u.toUShort()) shouldBe 0b1000u
@@ -521,7 +521,7 @@ class SHLTest : FreeSpec(
             (0b01uL shl 6.toByte()) shouldBe 0b1000000uL
         }
 
-        "unsigned long shl short" {
+        "unsigned long shl shorts" {
             (0b01uL shl 1.toShort()) shouldBe 0b10uL
             (0b01uL shl 2.toShort()) shouldBe 0b100uL
             (0b01uL shl 3.toShort()) shouldBe 0b1000uL
@@ -557,7 +557,7 @@ class SHLTest : FreeSpec(
             (0b01uL shl 6u.toUByte()) shouldBe 0b1000000uL
         }
 
-        "unsigned long shl unsigned short" {
+        "unsigned long shl unsigned shorts" {
             (0b01uL shl 1u.toUShort()) shouldBe 0b10uL
             (0b01uL shl 2u.toUShort()) shouldBe 0b100uL
             (0b01uL shl 3u.toUShort()) shouldBe 0b1000uL
@@ -597,7 +597,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toByte() shr 6.toByte()) shouldBe 0b01.toByte()
         }
 
-        "byte shr short" {
+        "byte shr shorts" {
             (0b10.toByte() shr 1.toShort()) shouldBe 0b01.toByte()
             (0b100.toByte() shr 2.toShort()) shouldBe 0b01.toByte()
             (0b1000.toByte() shr 3.toShort()) shouldBe 0b01.toByte()
@@ -633,7 +633,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toByte() shr 6u.toUByte()) shouldBe 0b01.toByte()
         }
 
-        "byte shr unsigned short" {
+        "byte shr unsigned shorts" {
             (0b10.toByte() shr 1u.toUShort()) shouldBe 0b01.toByte()
             (0b100.toByte() shr 2u.toUShort()) shouldBe 0b01.toByte()
             (0b1000.toByte() shr 3u.toUShort()) shouldBe 0b01.toByte()
@@ -660,7 +660,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toByte() shr 6uL) shouldBe 0b01.toByte()
         }
 
-        "short shr byte" {
+        "shorts shr byte" {
             (0b10.toShort() shr 1.toByte()) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2.toByte()) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3.toByte()) shouldBe 0b01.toShort()
@@ -669,7 +669,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6.toByte()) shouldBe 0b01.toShort()
         }
 
-        "short shr short" {
+        "shorts shr shorts" {
             (0b10.toShort() shr 1.toShort()) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2.toShort()) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3.toShort()) shouldBe 0b01.toShort()
@@ -678,7 +678,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6.toShort()) shouldBe 0b01.toShort()
         }
 
-        "short shr int" {
+        "shorts shr int" {
             (0b10.toShort() shr 1) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3) shouldBe 0b01.toShort()
@@ -687,7 +687,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6) shouldBe 0b01.toShort()
         }
 
-        "short shr long" {
+        "shorts shr long" {
             (0b10.toShort() shr 1L) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2L) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3L) shouldBe 0b01.toShort()
@@ -696,7 +696,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6L) shouldBe 0b01.toShort()
         }
 
-        "short shr unsigned byte" {
+        "shorts shr unsigned byte" {
             (0b10.toShort() shr 1u.toUByte()) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2u.toUByte()) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3u.toUByte()) shouldBe 0b01.toShort()
@@ -705,7 +705,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6u.toUByte()) shouldBe 0b01.toShort()
         }
 
-        "short shr unsigned short" {
+        "shorts shr unsigned shorts" {
             (0b10.toShort() shr 1u.toUShort()) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2u.toUShort()) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3u.toUShort()) shouldBe 0b01.toShort()
@@ -714,7 +714,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6u.toUShort()) shouldBe 0b01.toShort()
         }
 
-        "short shr unsigned int" {
+        "shorts shr unsigned int" {
             (0b10.toShort() shr 1u) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2u) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3u) shouldBe 0b01.toShort()
@@ -723,7 +723,7 @@ class SHRTest : FreeSpec(
             (0b1000000.toShort() shr 6u) shouldBe 0b01.toShort()
         }
 
-        "short shr unsigned long" {
+        "shorts shr unsigned long" {
             (0b10.toShort() shr 1uL) shouldBe 0b01.toShort()
             (0b100.toShort() shr 2uL) shouldBe 0b01.toShort()
             (0b1000.toShort() shr 3uL) shouldBe 0b01.toShort()
@@ -741,7 +741,7 @@ class SHRTest : FreeSpec(
             (0b1000000 shr 6.toByte()) shouldBe 0b01
         }
 
-        "int shr short" {
+        "int shr shorts" {
             (0b10 shr 1.toShort()) shouldBe 0b01
             (0b100 shr 2.toShort()) shouldBe 0b01
             (0b1000 shr 3.toShort()) shouldBe 0b01
@@ -777,7 +777,7 @@ class SHRTest : FreeSpec(
             (0b1000000 shr 6u.toUByte()) shouldBe 0b01
         }
 
-        "int shr unsigned short" {
+        "int shr unsigned shorts" {
             (0b10 shr 1u.toUShort()) shouldBe 0b01
             (0b100 shr 2u.toUShort()) shouldBe 0b01
             (0b1000 shr 3u.toUShort()) shouldBe 0b01
@@ -813,7 +813,7 @@ class SHRTest : FreeSpec(
             (0b1000000L shr 6.toByte()) shouldBe 0b01L
         }
 
-        "long shr short" {
+        "long shr shorts" {
             (0b10L shr 1.toShort()) shouldBe 0b01L
             (0b100L shr 2.toShort()) shouldBe 0b01L
             (0b1000L shr 3.toShort()) shouldBe 0b01L
@@ -849,7 +849,7 @@ class SHRTest : FreeSpec(
             (0b1000000L shr 6u.toUByte()) shouldBe 0b01L
         }
 
-        "long shr unsigned short" {
+        "long shr unsigned shorts" {
             (0b10L shr 1u.toUShort()) shouldBe 0b01L
             (0b100L shr 2u.toUShort()) shouldBe 0b01L
             (0b1000L shr 3u.toUShort()) shouldBe 0b01L
@@ -885,7 +885,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUByte() shr 6.toByte()) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned byte shr short" {
+        "unsigned byte shr shorts" {
             (0b10u.toUByte() shr 1.toShort()) shouldBe 0b01u.toUByte()
             (0b100u.toUByte() shr 2.toShort()) shouldBe 0b01u.toUByte()
             (0b1000u.toUByte() shr 3.toShort()) shouldBe 0b01u.toUByte()
@@ -921,7 +921,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUByte() shr 6u.toUByte()) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned byte shr unsigned short" {
+        "unsigned byte shr unsigned shorts" {
             (0b10u.toUByte() shr 1u.toUShort()) shouldBe 0b01u.toUByte()
             (0b100u.toUByte() shr 2u.toUShort()) shouldBe 0b01u.toUByte()
             (0b1000u.toUByte() shr 3u.toUShort()) shouldBe 0b01u.toUByte()
@@ -948,7 +948,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUByte() shr 6uL) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned short shr byte" {
+        "unsigned shorts shr byte" {
             (0b10u.toUShort() shr 1.toByte()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2.toByte()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3.toByte()) shouldBe 0b01u.toUShort()
@@ -957,7 +957,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6.toByte()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr short" {
+        "unsigned shorts shr shorts" {
             (0b10u.toUShort() shr 1.toShort()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2.toShort()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3.toShort()) shouldBe 0b01u.toUShort()
@@ -966,7 +966,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6.toShort()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr int" {
+        "unsigned shorts shr int" {
             (0b10u.toUShort() shr 1) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3) shouldBe 0b01u.toUShort()
@@ -975,7 +975,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr long" {
+        "unsigned shorts shr long" {
             (0b10u.toUShort() shr 1L) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2L) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3L) shouldBe 0b01u.toUShort()
@@ -984,7 +984,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6L) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr unsigned byte" {
+        "unsigned shorts shr unsigned byte" {
             (0b10u.toUShort() shr 1u.toUByte()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2u.toUByte()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3u.toUByte()) shouldBe 0b01u.toUShort()
@@ -993,7 +993,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6u.toUByte()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr unsigned short" {
+        "unsigned shorts shr unsigned shorts" {
             (0b10u.toUShort() shr 1u.toUShort()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2u.toUShort()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3u.toUShort()) shouldBe 0b01u.toUShort()
@@ -1002,7 +1002,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6u.toUShort()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr unsigned int" {
+        "unsigned shorts shr unsigned int" {
             (0b10u.toUShort() shr 1u) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2u) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3u) shouldBe 0b01u.toUShort()
@@ -1011,7 +1011,7 @@ class SHRTest : FreeSpec(
             (0b1000000u.toUShort() shr 6u) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short shr unsigned long" {
+        "unsigned shorts shr unsigned long" {
             (0b10u.toUShort() shr 1uL) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() shr 2uL) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() shr 3uL) shouldBe 0b01u.toUShort()
@@ -1029,7 +1029,7 @@ class SHRTest : FreeSpec(
             (0b1000000u shr 6.toByte()) shouldBe 0b01u
         }
 
-        "unsigned int shr short" {
+        "unsigned int shr shorts" {
             (0b10u shr 1.toShort()) shouldBe 0b01u
             (0b100u shr 2.toShort()) shouldBe 0b01u
             (0b1000u shr 3.toShort()) shouldBe 0b01u
@@ -1065,7 +1065,7 @@ class SHRTest : FreeSpec(
             (0b1000000u shr 6u.toUByte()) shouldBe 0b01u
         }
 
-        "unsigned int shr unsigned short" {
+        "unsigned int shr unsigned shorts" {
             (0b10u shr 1u.toUShort()) shouldBe 0b01u
             (0b100u shr 2u.toUShort()) shouldBe 0b01u
             (0b1000u shr 3u.toUShort()) shouldBe 0b01u
@@ -1101,7 +1101,7 @@ class SHRTest : FreeSpec(
             (0b1000000uL shr 6.toByte()) shouldBe 0b01uL
         }
 
-        "unsigned long shr short" {
+        "unsigned long shr shorts" {
             (0b10uL shr 1.toShort()) shouldBe 0b01uL
             (0b100uL shr 2.toShort()) shouldBe 0b01uL
             (0b1000uL shr 3.toShort()) shouldBe 0b01uL
@@ -1137,7 +1137,7 @@ class SHRTest : FreeSpec(
             (0b1000000uL shr 6u.toUByte()) shouldBe 0b01uL
         }
 
-        "unsigned long shr unsigned short" {
+        "unsigned long shr unsigned shorts" {
             (0b10uL shr 1u.toUShort()) shouldBe 0b01uL
             (0b100uL shr 2u.toUShort()) shouldBe 0b01uL
             (0b1000uL shr 3u.toUShort()) shouldBe 0b01uL
@@ -1177,7 +1177,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toByte() ushr 6.toByte()) shouldBe 0b01.toByte()
         }
 
-        "byte ushr short" {
+        "byte ushr shorts" {
             (0b10.toByte() ushr 1.toShort()) shouldBe 0b01.toByte()
             (0b100.toByte() ushr 2.toShort()) shouldBe 0b01.toByte()
             (0b1000.toByte() ushr 3.toShort()) shouldBe 0b01.toByte()
@@ -1213,7 +1213,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toByte() ushr 6u.toUByte()) shouldBe 0b01.toByte()
         }
 
-        "byte ushr unsigned short" {
+        "byte ushr unsigned shorts" {
             (0b10.toByte() ushr 1u.toUShort()) shouldBe 0b01.toByte()
             (0b100.toByte() ushr 2u.toUShort()) shouldBe 0b01.toByte()
             (0b1000.toByte() ushr 3u.toUShort()) shouldBe 0b01.toByte()
@@ -1240,7 +1240,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toByte() ushr 6uL) shouldBe 0b01.toByte()
         }
 
-        "short ushr byte" {
+        "shorts ushr byte" {
             (0b10.toShort() ushr 1.toByte()) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2.toByte()) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3.toByte()) shouldBe 0b01.toShort()
@@ -1249,7 +1249,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6.toByte()) shouldBe 0b01.toShort()
         }
 
-        "short ushr short" {
+        "shorts ushr shorts" {
             (0b10.toShort() ushr 1.toShort()) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2.toShort()) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3.toShort()) shouldBe 0b01.toShort()
@@ -1258,7 +1258,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6.toShort()) shouldBe 0b01.toShort()
         }
 
-        "short ushr int" {
+        "shorts ushr int" {
             (0b10.toShort() ushr 1) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3) shouldBe 0b01.toShort()
@@ -1267,7 +1267,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6) shouldBe 0b01.toShort()
         }
 
-        "short ushr long" {
+        "shorts ushr long" {
             (0b10.toShort() ushr 1L) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2L) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3L) shouldBe 0b01.toShort()
@@ -1276,7 +1276,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6L) shouldBe 0b01.toShort()
         }
 
-        "short ushr unsigned byte" {
+        "shorts ushr unsigned byte" {
             (0b10.toShort() ushr 1u.toUByte()) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2u.toUByte()) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3u.toUByte()) shouldBe 0b01.toShort()
@@ -1285,7 +1285,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6u.toUByte()) shouldBe 0b01.toShort()
         }
 
-        "short ushr unsigned short" {
+        "shorts ushr unsigned shorts" {
             (0b10.toShort() ushr 1u.toUShort()) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2u.toUShort()) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3u.toUShort()) shouldBe 0b01.toShort()
@@ -1294,7 +1294,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6u.toUShort()) shouldBe 0b01.toShort()
         }
 
-        "short ushr unsigned int" {
+        "shorts ushr unsigned int" {
             (0b10.toShort() ushr 1u) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2u) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3u) shouldBe 0b01.toShort()
@@ -1303,7 +1303,7 @@ class USHRTest : FreeSpec(
             (0b1000000.toShort() ushr 6u) shouldBe 0b01.toShort()
         }
 
-        "short ushr unsigned long" {
+        "shorts ushr unsigned long" {
             (0b10.toShort() ushr 1uL) shouldBe 0b01.toShort()
             (0b100.toShort() ushr 2uL) shouldBe 0b01.toShort()
             (0b1000.toShort() ushr 3uL) shouldBe 0b01.toShort()
@@ -1321,7 +1321,7 @@ class USHRTest : FreeSpec(
             (0b1000000 ushr 6.toByte()) shouldBe 0b01
         }
 
-        "int ushr short" {
+        "int ushr shorts" {
             (0b10 ushr 1.toShort()) shouldBe 0b01
             (0b100 ushr 2.toShort()) shouldBe 0b01
             (0b1000 ushr 3.toShort()) shouldBe 0b01
@@ -1357,7 +1357,7 @@ class USHRTest : FreeSpec(
             (0b1000000 ushr 6u.toUByte()) shouldBe 0b01
         }
 
-        "int ushr unsigned short" {
+        "int ushr unsigned shorts" {
             (0b10 ushr 1u.toUShort()) shouldBe 0b01
             (0b100 ushr 2u.toUShort()) shouldBe 0b01
             (0b1000 ushr 3u.toUShort()) shouldBe 0b01
@@ -1393,7 +1393,7 @@ class USHRTest : FreeSpec(
             (0b1000000L ushr 6.toByte()) shouldBe 0b01L
         }
 
-        "long ushr short" {
+        "long ushr shorts" {
             (0b10L ushr 1.toShort()) shouldBe 0b01L
             (0b100L ushr 2.toShort()) shouldBe 0b01L
             (0b1000L ushr 3.toShort()) shouldBe 0b01L
@@ -1429,7 +1429,7 @@ class USHRTest : FreeSpec(
             (0b1000000L ushr 6u.toUByte()) shouldBe 0b01L
         }
 
-        "long ushr unsigned short" {
+        "long ushr unsigned shorts" {
             (0b10L ushr 1u.toUShort()) shouldBe 0b01L
             (0b100L ushr 2u.toUShort()) shouldBe 0b01L
             (0b1000L ushr 3u.toUShort()) shouldBe 0b01L
@@ -1465,7 +1465,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUByte() ushr 6.toByte()) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned byte ushr short" {
+        "unsigned byte ushr shorts" {
             (0b10u.toUByte() ushr 1.toShort()) shouldBe 0b01u.toUByte()
             (0b100u.toUByte() ushr 2.toShort()) shouldBe 0b01u.toUByte()
             (0b1000u.toUByte() ushr 3.toShort()) shouldBe 0b01u.toUByte()
@@ -1501,7 +1501,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUByte() ushr 6u.toUByte()) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned byte ushr unsigned short" {
+        "unsigned byte ushr unsigned shorts" {
             (0b10u.toUByte() ushr 1u.toUShort()) shouldBe 0b01u.toUByte()
             (0b100u.toUByte() ushr 2u.toUShort()) shouldBe 0b01u.toUByte()
             (0b1000u.toUByte() ushr 3u.toUShort()) shouldBe 0b01u.toUByte()
@@ -1528,7 +1528,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUByte() ushr 6uL) shouldBe 0b01u.toUByte()
         }
 
-        "unsigned short ushr byte" {
+        "unsigned shorts ushr byte" {
             (0b10u.toUShort() ushr 1.toByte()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2.toByte()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3.toByte()) shouldBe 0b01u.toUShort()
@@ -1537,7 +1537,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6.toByte()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr short" {
+        "unsigned shorts ushr shorts" {
             (0b10u.toUShort() ushr 1.toShort()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2.toShort()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3.toShort()) shouldBe 0b01u.toUShort()
@@ -1546,7 +1546,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6.toShort()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr int" {
+        "unsigned shorts ushr int" {
             (0b10u.toUShort() ushr 1) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3) shouldBe 0b01u.toUShort()
@@ -1555,7 +1555,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr long" {
+        "unsigned shorts ushr long" {
             (0b10u.toUShort() ushr 1L) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2L) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3L) shouldBe 0b01u.toUShort()
@@ -1564,7 +1564,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6L) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr unsigned byte" {
+        "unsigned shorts ushr unsigned byte" {
             (0b10u.toUShort() ushr 1u.toUByte()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2u.toUByte()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3u.toUByte()) shouldBe 0b01u.toUShort()
@@ -1573,7 +1573,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6u.toUByte()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr unsigned short" {
+        "unsigned shorts ushr unsigned shorts" {
             (0b10u.toUShort() ushr 1u.toUShort()) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2u.toUShort()) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3u.toUShort()) shouldBe 0b01u.toUShort()
@@ -1582,7 +1582,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6u.toUShort()) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr unsigned int" {
+        "unsigned shorts ushr unsigned int" {
             (0b10u.toUShort() ushr 1u) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2u) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3u) shouldBe 0b01u.toUShort()
@@ -1591,7 +1591,7 @@ class USHRTest : FreeSpec(
             (0b1000000u.toUShort() ushr 6u) shouldBe 0b01u.toUShort()
         }
 
-        "unsigned short ushr unsigned long" {
+        "unsigned shorts ushr unsigned long" {
             (0b10u.toUShort() ushr 1uL) shouldBe 0b01u.toUShort()
             (0b100u.toUShort() ushr 2uL) shouldBe 0b01u.toUShort()
             (0b1000u.toUShort() ushr 3uL) shouldBe 0b01u.toUShort()
@@ -1609,7 +1609,7 @@ class USHRTest : FreeSpec(
             (0b1000000u ushr 6.toByte()) shouldBe 0b01u
         }
 
-        "unsigned int ushr short" {
+        "unsigned int ushr shorts" {
             (0b10u ushr 1.toShort()) shouldBe 0b01u
             (0b100u ushr 2.toShort()) shouldBe 0b01u
             (0b1000u ushr 3.toShort()) shouldBe 0b01u
@@ -1645,7 +1645,7 @@ class USHRTest : FreeSpec(
             (0b1000000u ushr 6u.toUByte()) shouldBe 0b01u
         }
 
-        "unsigned int ushr unsigned short" {
+        "unsigned int ushr unsigned shorts" {
             (0b10u ushr 1u.toUShort()) shouldBe 0b01u
             (0b100u ushr 2u.toUShort()) shouldBe 0b01u
             (0b1000u ushr 3u.toUShort()) shouldBe 0b01u
@@ -1681,7 +1681,7 @@ class USHRTest : FreeSpec(
             (0b1000000uL ushr 6.toByte()) shouldBe 0b01uL
         }
 
-        "unsigned long ushr short" {
+        "unsigned long ushr shorts" {
             (0b10uL ushr 1.toShort()) shouldBe 0b01uL
             (0b100uL ushr 2.toShort()) shouldBe 0b01uL
             (0b1000uL ushr 3.toShort()) shouldBe 0b01uL
@@ -1717,7 +1717,7 @@ class USHRTest : FreeSpec(
             (0b1000000uL ushr 6u.toUByte()) shouldBe 0b01uL
         }
 
-        "unsigned long ushr unsigned short" {
+        "unsigned long ushr unsigned shorts" {
             (0b10uL ushr 1u.toUShort()) shouldBe 0b01uL
             (0b100uL ushr 2u.toUShort()) shouldBe 0b01uL
             (0b1000uL ushr 3u.toUShort()) shouldBe 0b01uL

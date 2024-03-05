@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 
-package com.shakelang.util.io.streaming.input
+package com.shakelang.util.io.streaming.input.bytes
 
 import com.shakelang.util.io.IOException
 
@@ -184,3 +184,5 @@ expect abstract class InputStream() {
      */
     open fun readNBytes(b: ByteArray, off: Int, len: Int): Int
 }
+
+typealias ByteInputStream = InputStream

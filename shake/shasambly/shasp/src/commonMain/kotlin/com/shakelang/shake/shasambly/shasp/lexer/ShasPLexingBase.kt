@@ -158,7 +158,7 @@ abstract class ShasPLexingBase(
                 "byte" -> ShasPTokenType.KEYWORD_BYTE
                 "char" -> ShasPTokenType.KEYWORD_CHAR
                 "do" -> ShasPTokenType.KEYWORD_DO
-                "double" -> ShasPTokenType.KEYWORD_DOUBLE
+                "doubles" -> ShasPTokenType.KEYWORD_DOUBLE
                 "else" -> ShasPTokenType.KEYWORD_ELSE
                 "false" -> ShasPTokenType.KEYWORD_FALSE
                 "float" -> ShasPTokenType.KEYWORD_FLOAT
@@ -168,7 +168,7 @@ abstract class ShasPLexingBase(
                 "long" -> ShasPTokenType.KEYWORD_LONG
                 "new" -> ShasPTokenType.KEYWORD_NEW
                 "return" -> ShasPTokenType.KEYWORD_RETURN
-                "short" -> ShasPTokenType.KEYWORD_SHORT
+                "shorts" -> ShasPTokenType.KEYWORD_SHORT
                 "true" -> ShasPTokenType.KEYWORD_TRUE
                 "unsigned" -> ShasPTokenType.KEYWORD_UNSIGNED
                 "void" -> ShasPTokenType.KEYWORD_VOID

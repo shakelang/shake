@@ -9,8 +9,8 @@ class TypeTests : FreeSpec({
         Type.of("byte") shouldBe PrimitiveType.BYTE
     }
 
-    "Type.Companion.of should return PrimitiveType.SHORT for 'short'" {
-        Type.of("short") shouldBe PrimitiveType.SHORT
+    "Type.Companion.of should return PrimitiveType.SHORT for 'shorts'" {
+        Type.of("shorts") shouldBe PrimitiveType.SHORT
     }
 
     "Type.Companion.of should return PrimitiveType.INT for 'int'" {
@@ -25,8 +25,8 @@ class TypeTests : FreeSpec({
         Type.of("unsigned byte") shouldBe PrimitiveType.UNSIGNED_BYTE
     }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'unsigned short'" {
-        Type.of("unsigned short") shouldBe PrimitiveType.UNSIGNED_SHORT
+    "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'unsigned shorts'" {
+        Type.of("unsigned shorts") shouldBe PrimitiveType.UNSIGNED_SHORT
     }
 
     "Type.Companion.of should return PrimitiveType.UNSIGNED_INT for 'unsigned int'" {
@@ -41,8 +41,8 @@ class TypeTests : FreeSpec({
         Type.of("float") shouldBe PrimitiveType.FLOAT
     }
 
-    "Type.Companion.of should return PrimitiveType.DOUBLE for 'double'" {
-        Type.of("double") shouldBe PrimitiveType.DOUBLE
+    "Type.Companion.of should return PrimitiveType.DOUBLE for 'doubles'" {
+        Type.of("doubles") shouldBe PrimitiveType.DOUBLE
     }
 
     "Type.Companion.of should return PrimitiveType.CHAR for 'char'" {
@@ -70,8 +70,8 @@ class TypeTests : FreeSpec({
         PrimitiveType.BYTE.generate(GenerationContext()) shouldBe "byte"
     }
 
-    "PrimitiveType.SHORT.generate should return 'short'" {
-        PrimitiveType.SHORT.generate(GenerationContext()) shouldBe "short"
+    "PrimitiveType.SHORT.generate should return 'shorts'" {
+        PrimitiveType.SHORT.generate(GenerationContext()) shouldBe "shorts"
     }
 
     "PrimitiveType.INT.generate should return 'int'" {
@@ -86,8 +86,8 @@ class TypeTests : FreeSpec({
         PrimitiveType.UNSIGNED_BYTE.generate(GenerationContext()) shouldBe "unsigned byte"
     }
 
-    "PrimitiveType.UNSIGNED_SHORT.generate should return 'unsigned short'" {
-        PrimitiveType.UNSIGNED_SHORT.generate(GenerationContext()) shouldBe "unsigned short"
+    "PrimitiveType.UNSIGNED_SHORT.generate should return 'unsigned shorts'" {
+        PrimitiveType.UNSIGNED_SHORT.generate(GenerationContext()) shouldBe "unsigned shorts"
     }
 
     "PrimitiveType.UNSIGNED_INT.generate should return 'unsigned int'" {
@@ -102,8 +102,8 @@ class TypeTests : FreeSpec({
         PrimitiveType.FLOAT.generate(GenerationContext()) shouldBe "float"
     }
 
-    "PrimitiveType.DOUBLE.generate should return 'double'" {
-        PrimitiveType.DOUBLE.generate(GenerationContext()) shouldBe "double"
+    "PrimitiveType.DOUBLE.generate should return 'doubles'" {
+        PrimitiveType.DOUBLE.generate(GenerationContext()) shouldBe "doubles"
     }
 
     "PrimitiveType.CHAR.generate should return 'char'" {

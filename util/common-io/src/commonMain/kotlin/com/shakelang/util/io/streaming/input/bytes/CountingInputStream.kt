@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.input
+package com.shakelang.util.io.streaming.input.bytes
 
 import com.shakelang.util.io.IOException
 
@@ -22,7 +22,7 @@ class CountingInputStream(
      */
     private val data: InputStream,
 
-) : InputStream() {
+    ) : InputStream() {
 
     /**
      * The count of read bytes from the input stream

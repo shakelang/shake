@@ -1,8 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -34,7 +34,7 @@ class ConstantPoolTests : FreeSpec(
             pool.isByte(1) shouldBe true
         }
 
-        "is short" {
+        "is shorts" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -78,7 +78,7 @@ class ConstantPoolTests : FreeSpec(
             pool.isFloat(1) shouldBe true
         }
 
-        "is double" {
+        "is doubles" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -141,7 +141,7 @@ class ConstantPoolTests : FreeSpec(
             }
         }
 
-        "get short" {
+        "get shorts" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -197,7 +197,7 @@ class ConstantPoolTests : FreeSpec(
             }
         }
 
-        "get double" {
+        "get doubles" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -263,7 +263,7 @@ class ConstantPoolTests : FreeSpec(
             pool.findByte(2) shouldBe null
         }
 
-        "find short" {
+        "find shorts" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -315,7 +315,7 @@ class ConstantPoolTests : FreeSpec(
             pool.findFloat(2f) shouldBe null
         }
 
-        "find double" {
+        "find doubles" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),

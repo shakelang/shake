@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.input
+package com.shakelang.util.io.streaming.input.bytes
 
 import com.shakelang.util.io.IOException
 

@@ -29,7 +29,7 @@ class ShasPParser(
             ShasPTokenType.KEYWORD_INT -> if (unsigned) ShasPType.UINT else ShasPType.INT
             ShasPTokenType.KEYWORD_LONG -> if (unsigned) ShasPType.ULONG else ShasPType.LONG
             ShasPTokenType.KEYWORD_FLOAT -> if (unsigned) throw ParserError("Wrong data type: Unsigned float") else ShasPType.FLOAT
-            ShasPTokenType.KEYWORD_DOUBLE -> if (unsigned) throw ParserError("Wrong data type: Unsigned double") else ShasPType.DOUBLE
+            ShasPTokenType.KEYWORD_DOUBLE -> if (unsigned) throw ParserError("Wrong data type: Unsigned doubles") else ShasPType.DOUBLE
             ShasPTokenType.KEYWORD_BOOLEAN -> if (unsigned) throw ParserError("Wrong data type: Unsigned boolean") else ShasPType.BOOLEAN
             ShasPTokenType.KEYWORD_CHAR -> if (unsigned) throw ParserError("Wrong data type: Unsigned char") else ShasPType.CHAR
             else -> {

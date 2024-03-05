@@ -4,7 +4,7 @@ import com.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import com.shakelang.shake.shasambly.generator.simple.shasambly
 import com.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
 import com.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
-import com.shakelang.util.io.streaming.input.inputStream
+import com.shakelang.util.io.streaming.input.bytes.inputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream

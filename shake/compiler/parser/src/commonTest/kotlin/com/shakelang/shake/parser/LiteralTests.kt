@@ -16,7 +16,7 @@ class LiteralTests : FreeSpec({
         node.value shouldBe 123
     }
 
-    "basic double" {
+    "basic doubles" {
         val node = ParserTestUtil.parseValue("<BasicDoubleTest>", "123.123", ShakeDoubleLiteralNode::class)
         node.value shouldBe 123.123
     }

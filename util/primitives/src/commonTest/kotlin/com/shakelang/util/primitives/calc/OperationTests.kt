@@ -14,7 +14,7 @@ class OperationTests : FreeSpec(
             1.toByte().plus(1.toULong()) shouldBe 2
         }
 
-        "short plus" {
+        "shorts plus" {
             1.toShort().plus(1.toUByte()) shouldBe 2
             1.toShort().plus(1.toUShort()) shouldBe 2
             1.toShort().plus(1.toUInt()) shouldBe 2
@@ -42,7 +42,7 @@ class OperationTests : FreeSpec(
             1.toByte().minus(1.toULong()) shouldBe 0
         }
 
-        "short minus" {
+        "shorts minus" {
             1.toShort().minus(1.toUByte()) shouldBe 0
             1.toShort().minus(1.toUShort()) shouldBe 0
             1.toShort().minus(1.toUInt()) shouldBe 0
@@ -70,7 +70,7 @@ class OperationTests : FreeSpec(
             2.toByte().times(4.toULong()) shouldBe 8
         }
 
-        "short times" {
+        "shorts times" {
             2.toShort().times(4.toUByte()) shouldBe 8
             2.toShort().times(4.toUShort()) shouldBe 8
             2.toShort().times(4.toUInt()) shouldBe 8
@@ -98,7 +98,7 @@ class OperationTests : FreeSpec(
             8.toByte().div(4.toULong()) shouldBe 2
         }
 
-        "short div" {
+        "shorts div" {
             8.toShort().div(4.toUByte()) shouldBe 2
             8.toShort().div(4.toUShort()) shouldBe 2
             8.toShort().div(4.toUInt()) shouldBe 2
@@ -126,7 +126,7 @@ class OperationTests : FreeSpec(
             8.toByte().rem(4.toULong()) shouldBe 0
         }
 
-        "short rem" {
+        "shorts rem" {
             8.toShort().rem(4.toUByte()) shouldBe 0
             8.toShort().rem(4.toUShort()) shouldBe 0
             8.toShort().rem(4.toUInt()) shouldBe 0

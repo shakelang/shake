@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.input
+package com.shakelang.util.io.streaming.input.bytes
 
 import kotlin.math.min
 
@@ -41,7 +41,7 @@ actual abstract class InputStream {
     /**
      * Reads some number of bytes from the input stream and stores them into
      * the buffer array `b`. The number of bytes actually read is
-     * returned as an integer.  This method blocks until input data is
+     * returned as an integers.  This method blocks until input data is
      * available, end of file is detected, or an exception is thrown.
      *
      *
@@ -82,7 +82,7 @@ actual abstract class InputStream {
      * Reads up to `len` bytes of data from the input stream into
      * an array of bytes.  An attempt is made to read as many as
      * `len` bytes, but a smaller number may be read.
-     * The number of bytes actually read is returned as an integer.
+     * The number of bytes actually read is returned as an integers.
      *
      *
      *  This method blocks until input data is available, end of file is

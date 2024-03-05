@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.output
+package com.shakelang.util.io.streaming.output.bytes
 
 /**
  * An [OutputStream] that counts the amount of bytes written to it
@@ -18,7 +18,7 @@ class CountingOutputStream(
      */
     val out: OutputStream,
 
-) : OutputStream() {
+    ) : OutputStream() {
 
     /**
      * The amount of bytes written to the [OutputStream]

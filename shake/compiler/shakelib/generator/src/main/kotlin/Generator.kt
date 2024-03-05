@@ -12,14 +12,14 @@ fun main() {
             val types = listOf(
                 "ubyte" to "byte",
                 "byte" to "byte",
-                "ushort" to "short",
-                "short" to "short",
+                "ushort" to "shorts",
+                "shorts" to "shorts",
                 "uint" to "int",
                 "int" to "int",
                 "ulong" to "long",
                 "long" to "long",
                 "float" to "float",
-                "double" to "double",
+                "doubles" to "doubles",
             )
 
             val operations = listOf(
@@ -28,7 +28,7 @@ fun main() {
                 "times" to null,
                 "div" to null,
                 "rem" to null,
-                "pow" to "double",
+                "pow" to "doubles",
                 "band" to null,
                 "bor" to null,
                 "bxor" to null,

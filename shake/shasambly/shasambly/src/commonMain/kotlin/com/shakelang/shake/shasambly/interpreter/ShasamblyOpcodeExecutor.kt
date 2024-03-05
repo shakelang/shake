@@ -823,14 +823,14 @@ abstract class ShasamblyOpcodeExecutor(
                 when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> throw Error("Cannot cast from boolean to byte")
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> throw Error("Cannot cast from boolean to unsigned byte")
-                    PrimitiveIds.PRIMITIVE_SHORT -> throw Error("Cannot cast from boolean to short")
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> throw Error("Cannot cast from boolean to unsigned short")
+                    PrimitiveIds.PRIMITIVE_SHORT -> throw Error("Cannot cast from boolean to shorts")
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> throw Error("Cannot cast from boolean to unsigned shorts")
                     PrimitiveIds.PRIMITIVE_INT -> throw Error("Cannot cast from boolean to int")
                     PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> throw Error("Cannot cast from boolean to unsigned int")
                     PrimitiveIds.PRIMITIVE_LONG -> throw Error("Cannot cast from boolean to long")
                     PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> throw Error("Cannot cast from boolean to unsigned long")
                     PrimitiveIds.PRIMITIVE_FLOAT -> throw Error("Cannot cast from boolean to float")
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> throw Error("Cannot cast from boolean to double")
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> throw Error("Cannot cast from boolean to doubles")
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> stack.push(v)
                     PrimitiveIds.PRIMITIVE_CHAR -> throw Error("Cannot cast from boolean to char")
                 }

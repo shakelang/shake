@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.output
+package com.shakelang.util.io.streaming.output.bytes
 
 actual abstract class OutputStream {
 

@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.input
+package com.shakelang.util.io.streaming.input.bytes
 
 import com.shakelang.util.io.IOException
 import com.shakelang.util.primitives.bytes.*
@@ -159,12 +159,12 @@ class DataInputStream(private val data: InputStream) : InputStream() {
     }
 
     /**
-     * Reads a single short from the InputStream.
+     * Reads a single shorts from the InputStream.
      *
-     * @return the short that was read
+     * @return the shorts that was read
      * @throws IOException if an I/O error occurs.
      * @throws IllegalStateException if the stream is closed
-     * @throws IllegalArgumentException if the stream is not a valid short
+     * @throws IllegalArgumentException if the stream is not a valid shorts
      * @throws UnsupportedOperationException if this method is not supported.
      *
      * @since 0.1.0
@@ -223,9 +223,9 @@ class DataInputStream(private val data: InputStream) : InputStream() {
     }
 
     /**
-     * Reads a single double from the InputStream.
+     * Reads a single doubles from the InputStream.
      *
-     * @return the double that was read
+     * @return the doubles that was read
      * @throws IOException if an I/O error occurs.
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
@@ -255,9 +255,9 @@ class DataInputStream(private val data: InputStream) : InputStream() {
     }
 
     /**
-     * Reads a single unsigned short from the InputStream.
+     * Reads a single unsigned shorts from the InputStream.
      *
-     * @return the unsigned short that was read
+     * @return the unsigned shorts that was read
      * @throws IOException if an I/O error occurs.
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long

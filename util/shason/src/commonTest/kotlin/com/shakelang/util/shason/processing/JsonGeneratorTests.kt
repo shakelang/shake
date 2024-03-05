@@ -13,7 +13,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate((-1).toByte()) shouldBe "-1"
         }
 
-        "generate short" {
+        "generate shorts" {
             JsonGenerator.generate(42.toShort()) shouldBe "42"
             JsonGenerator.generate(0.toShort()) shouldBe "0"
             JsonGenerator.generate((-1).toShort()) shouldBe "-1"
@@ -37,7 +37,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate((-1.1).toFloat()) shouldBe "-1.1"
         }
 
-        "generate double" {
+        "generate doubles" {
             JsonGenerator.generate(42.1) shouldBe "42.1"
             JsonGenerator.generate(0.1) shouldBe "0.1"
             JsonGenerator.generate(-1.1) shouldBe "-1.1"
@@ -203,7 +203,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(mapOf("hello" to 42.toByte())) shouldBe "{\"hello\":42}"
         }
 
-        "generate map with short value" {
+        "generate map with shorts value" {
             JsonGenerator.generate(mapOf("hello" to 42.toShort())) shouldBe "{\"hello\":42}"
         }
 
@@ -219,7 +219,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(mapOf("hello" to 42.1.toFloat())) shouldBe "{\"hello\":42.1}"
         }
 
-        "generate map with double value" {
+        "generate map with doubles value" {
             JsonGenerator.generate(mapOf("hello" to 42.1)) shouldBe "{\"hello\":42.1}"
         }
 
@@ -280,7 +280,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(arrayOf(42.toByte())) shouldBe "[42]"
         }
 
-        "generate array with short value" {
+        "generate array with shorts value" {
             JsonGenerator.generate(arrayOf(42.toShort())) shouldBe "[42]"
         }
 
@@ -296,7 +296,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(arrayOf(42.1.toFloat())) shouldBe "[42.1]"
         }
 
-        "generate array with double value" {
+        "generate array with doubles value" {
             JsonGenerator.generate(arrayOf(42.1)) shouldBe "[42.1]"
         }
 
@@ -371,7 +371,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(listOf(42.toByte())) shouldBe "[42]"
         }
 
-        "generate list with short value" {
+        "generate list with shorts value" {
             JsonGenerator.generate(listOf(42.toShort())) shouldBe "[42]"
         }
 
@@ -387,7 +387,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(listOf(42.1.toFloat())) shouldBe "[42.1]"
         }
 
-        "generate list with double value" {
+        "generate list with doubles value" {
             JsonGenerator.generate(listOf(42.1)) shouldBe "[42.1]"
         }
 
@@ -462,7 +462,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonArray.of(listOf(42.toByte()))) shouldBe "[42]"
         }
 
-        "generate JsonArray with short value" {
+        "generate JsonArray with shorts value" {
             JsonGenerator.generate(JsonArray.of(listOf(42.toShort()))) shouldBe "[42]"
         }
 
@@ -478,7 +478,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonArray.of(listOf(42.0.toFloat()))) shouldBe "[42]"
         }
 
-        "generate JsonArray with double value" {
+        "generate JsonArray with doubles value" {
             JsonGenerator.generate(JsonArray.of(listOf(42.1))) shouldBe "[42.1]"
         }
 
@@ -557,7 +557,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toByte()))) shouldBe "{\"hello\":42}"
         }
 
-        "generate JsonObject with short value" {
+        "generate JsonObject with shorts value" {
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toShort()))) shouldBe "{\"hello\":42}"
         }
 
@@ -573,7 +573,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toFloat()))) shouldBe "{\"hello\":42}"
         }
 
-        "generate JsonObject with double value" {
+        "generate JsonObject with doubles value" {
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.1))) shouldBe "{\"hello\":42.1}"
         }
 

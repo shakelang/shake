@@ -1,6 +1,5 @@
-package com.shakelang.util.io.streaming.output
+package com.shakelang.util.io.streaming.output.bytes
 
-import com.shakelang.util.io.IOException
 import kotlin.jvm.Synchronized
 
 /**

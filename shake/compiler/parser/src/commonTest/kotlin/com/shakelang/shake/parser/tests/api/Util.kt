@@ -17,11 +17,11 @@ val attributes = listOf(
 
 val primitiveTypes = listOf(
     "byte" to "byte",
-    "short" to "short",
-    "int" to "integer",
+    "shorts" to "shorts",
+    "int" to "integers",
     "long" to "long",
     "float" to "float",
-    "double" to "double",
+    "doubles" to "doubles",
     "char" to "char",
     "boolean" to "boolean",
     "ubyte" to "unsigned_byte",
@@ -32,27 +32,27 @@ val primitiveTypes = listOf(
 
 val primitiveTypesNoUnsigned = listOf(
     "byte" to "byte",
-    "short" to "short",
-    "int" to "integer",
+    "shorts" to "shorts",
+    "int" to "integers",
     "long" to "long",
     "float" to "float",
-    "double" to "double",
+    "doubles" to "doubles",
     "char" to "char",
     "boolean" to "boolean",
 )
 
 val primitiveTypesIncludingVoid = listOf(
     "byte" to "byte",
-    "short" to "short",
-    "int" to "integer",
+    "shorts" to "shorts",
+    "int" to "integers",
     "long" to "long",
     "float" to "float",
-    "double" to "double",
+    "doubles" to "doubles",
     "char" to "char",
     "boolean" to "boolean",
     "void" to "void",
     "unsigned byte" to "unsigned_byte",
-    "unsigned short" to "unsigned_short",
+    "unsigned shorts" to "unsigned_short",
     "unsigned int" to "unsigned_integer",
     "unsigned long" to "unsigned_long",
 )

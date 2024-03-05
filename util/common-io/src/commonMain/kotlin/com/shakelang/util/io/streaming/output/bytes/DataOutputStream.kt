@@ -1,8 +1,5 @@
-@file:Suppress("UNUSED")
+package com.shakelang.util.io.streaming.output.bytes
 
-package com.shakelang.util.io.streaming.output
-
-import com.shakelang.util.io.IOException
 import com.shakelang.util.primitives.bytes.toBytes
 
 /**
@@ -82,9 +79,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a short to the [OutputStream]
+     * Writes a shorts to the [OutputStream]
      *
-     * @param b The short to write
+     * @param b The shorts to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -130,9 +127,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a double to the [OutputStream]
+     * Writes a doubles to the [OutputStream]
      *
-     * @param b The double to write
+     * @param b The doubles to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -154,9 +151,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes an unsigned short to the [OutputStream]
+     * Writes an unsigned shorts to the [OutputStream]
      *
-     * @param b The unsigned short to write
+     * @param b The unsigned shorts to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -344,9 +341,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a short array to the [OutputStream]
+     * Writes a shorts array to the [OutputStream]
      *
-     * @param b The short array to write
+     * @param b The shorts array to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -356,9 +353,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a short array to the [OutputStream]
+     * Writes a shorts array to the [OutputStream]
      *
-     * @param b The short array to write
+     * @param b The shorts array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *
@@ -375,9 +372,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a short array to the [OutputStream]
+     * Writes a shorts array to the [OutputStream]
      *
-     * @param b The short array to write
+     * @param b The shorts array to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -387,9 +384,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a short array to the [OutputStream]
+     * Writes a shorts array to the [OutputStream]
      *
-     * @param b The short array to write
+     * @param b The shorts array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *
@@ -604,9 +601,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a double array to the [OutputStream]
+     * Writes a doubles array to the [OutputStream]
      *
-     * @param b The double array to write
+     * @param b The doubles array to write
      *
      * @throws IndexOutOfBoundsException If the offset or the length is out of bounds
      * @throws IllegalArgumentException If the length is negative
@@ -620,9 +617,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a double array to the [OutputStream]
+     * Writes a doubles array to the [OutputStream]
      *
-     * @param b The double array to write
+     * @param b The doubles array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *
@@ -640,9 +637,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a double array to the [OutputStream]
+     * Writes a doubles array to the [OutputStream]
      *
-     * @param b The double array to write
+     * @param b The doubles array to write
      *
      * @throws IndexOutOfBoundsException If the offset or the length is out of bounds
      * @throws NullPointerException If the array is null
@@ -656,9 +653,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a double array to the [OutputStream]
+     * Writes a doubles array to the [OutputStream]
      *
-     * @param b The double array to write
+     * @param b The doubles array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *

@@ -684,7 +684,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 LONG -> lpush(it.value.toLong())
                 FLOAT -> fpush(it.value.toFloat())
                 DOUBLE -> dpush(it.value.toDouble())
-                else -> throw Error("Can't generate integer literal for value type $type.")
+                else -> throw Error("Can't generate integers literal for value type $type.")
             }
         }
 

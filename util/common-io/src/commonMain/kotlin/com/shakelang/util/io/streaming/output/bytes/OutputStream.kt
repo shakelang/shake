@@ -1,6 +1,4 @@
-package com.shakelang.util.io.streaming.output
-
-import com.shakelang.util.io.IOException
+package com.shakelang.util.io.streaming.output.bytes
 
 expect abstract class OutputStream() {
 

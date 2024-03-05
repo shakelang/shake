@@ -121,14 +121,14 @@ enum class JsonTokenType(
     STRING(-1),
 
     /**
-     * A [DOUBLE] [JsonTokenType] represents a double (e.g. '0.1') in the source
+     * A [DOUBLE] [JsonTokenType] represents a doubles (e.g. '0.1') in the source
      * @since 0.1.0
      * @version 0.1.0
      */
     DOUBLE(-1),
 
     /**
-     * A [INT] [JsonTokenType] represents a integer (e.g. '42') in the source
+     * A [INT] [JsonTokenType] represents a integers (e.g. '42') in the source
      * @since 0.1.0
      * @version 0.1.0
      */

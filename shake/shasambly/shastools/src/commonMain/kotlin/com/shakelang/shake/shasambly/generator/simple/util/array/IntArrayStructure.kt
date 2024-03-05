@@ -15,7 +15,7 @@ import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 class StaticallySizedLocalIntArrayStructure(val shasambly: SimpleShasambly, val address: Int, val size: Int = -1) {
 
     /**
-     * Get an element of the array. The index is the first integer from the stack
+     * Get an element of the array. The index is the first integers from the stack
      */
     fun getElement() {
         shasambly {
@@ -41,7 +41,7 @@ class StaticallySizedLocalIntArrayStructure(val shasambly: SimpleShasambly, val 
     }
 
     /**
-     * Store an element into the array. The index is the first integer on the stack.
+     * Store an element into the array. The index is the first integers on the stack.
      * The element value is the int below it
      */
     fun storeElement() {
@@ -171,7 +171,7 @@ class LocalIntArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
 
     /**
      * Put the element at a given position on top of the stack.
-     * Takes the top integer of the stack as position.
+     * Takes the top integers of the stack as position.
      */
     fun getElement() {
         shasambly {
@@ -199,8 +199,8 @@ class LocalIntArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
 
     /**
      * Store an element into the array at a given position
-     * The position is defined by the top integer of the stack
-     * The value is taken from the stack below the integer
+     * The position is defined by the top integers of the stack
+     * The value is taken from the stack below the integers
      */
     fun storeElement() {
         shasambly {
@@ -287,7 +287,7 @@ fun SimpleShasambly.createLocalIntArray(addr: Int, size: Int): LocalIntArrayStru
  * Create a [LocalIntArrayStructure]
  * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
  * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
- * The size is the first integer on the stack
+ * The size is the first integers on the stack
  *
  * @param addr the local address to create the int array in
  */
@@ -343,7 +343,7 @@ fun SimpleShasambly.createLocalIntegerArray(addr: Int, size: Int) = this.createL
  * Create a [LocalIntArrayStructure]
  * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
  * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
- * The size is the first integer on the stack
+ * The size is the first integers on the stack
  *
  * @param addr the local address to create the int array in
  */
@@ -389,7 +389,7 @@ fun SimpleShasambly.createLocalFloatArray(addr: Int, size: Int) = this.createLoc
  * Create a [LocalIntArrayStructure]
  * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
  * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
- * The size is the first integer on the stack
+ * The size is the first integers on the stack
  *
  * @param addr the local address to create the int/float array in
  */

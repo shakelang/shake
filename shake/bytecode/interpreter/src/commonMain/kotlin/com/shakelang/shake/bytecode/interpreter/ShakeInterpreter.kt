@@ -536,7 +536,7 @@ class ShakeInterpreter {
                 Opcodes.DNEG -> stack.push(-stack.popDouble())
 
                 // Bitwise AND two values from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-band
@@ -549,7 +549,7 @@ class ShakeInterpreter {
                 Opcodes.LAND -> stack.push(stack.popLong() and stack.popLong())
 
                 // Bitwise OR two values from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bor
@@ -562,7 +562,7 @@ class ShakeInterpreter {
                 Opcodes.LOR -> stack.push(stack.popLong() or stack.popLong())
 
                 // Bitwise XOR two values from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bxor
@@ -575,7 +575,7 @@ class ShakeInterpreter {
                 Opcodes.LXOR -> stack.push(stack.popLong() xor stack.popLong())
 
                 // Bitwise NOT a value from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bnot
@@ -588,7 +588,7 @@ class ShakeInterpreter {
                 Opcodes.LNOT -> stack.push(stack.popLong().inv())
 
                 // Shift a value from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bshl
@@ -620,7 +620,7 @@ class ShakeInterpreter {
                 }
 
                 // Shift a value from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bshr
@@ -652,7 +652,7 @@ class ShakeInterpreter {
                 }
 
                 // Shift a value from the stack and push the result to the stack
-                // We refer to byte, short, int and long, but the same applies to unsigned
+                // We refer to byte, shorts, int and long, but the same applies to unsigned
                 // values, booleans, chars, floats and doubles, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bushr

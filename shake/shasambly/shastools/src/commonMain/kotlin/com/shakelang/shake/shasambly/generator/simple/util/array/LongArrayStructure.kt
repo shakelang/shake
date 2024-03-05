@@ -41,7 +41,7 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
     }
 
     /**
-     * Store an element into the array. The index is the first integer on the stack.
+     * Store an element into the array. The index is the first integers on the stack.
      * The element value is the long below it
      */
     fun storeElement() {
@@ -171,7 +171,7 @@ class LocalLongArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
 
     /**
      * Put the element at a given position on top of the stack.
-     * Takes the top integer of the stack as position.
+     * Takes the top integers of the stack as position.
      */
     fun getElement() {
         shasambly {
@@ -199,7 +199,7 @@ class LocalLongArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
 
     /**
      * Store an element into the array at a given position
-     * The position is defined by the top integer of the stack
+     * The position is defined by the top integers of the stack
      * The value is taken from the stack below the long
      */
     fun storeElement() {
@@ -287,7 +287,7 @@ fun SimpleShasambly.createLocalLongArray(addr: Int, size: Int): LocalLongArraySt
  * Create a [LocalLongArrayStructure]
  * A local long array. It stores the size at the start of it, so you can always get the size using [LocalLongArrayStructure.getSize]
  * This is the advised type of local long array over [StaticallySizedLocalLongArrayStructure]
- * The size is the first integer on the stack
+ * The size is the first integers on the stack
  *
  * @param addr the local address to create the long array in
  */
@@ -343,7 +343,7 @@ fun SimpleShasambly.createLocalDoubleArray(addr: Int, size: Int) = this.createLo
  * Create a [LocalLongArrayStructure]
  * A local long array. It stores the size at the start of it, so you can always get the size using [LocalLongArrayStructure.getSize]
  * This is the advised type of local long array over [StaticallySizedLocalLongArrayStructure]
- * The size is the first integer on the stack
+ * The size is the first integers on the stack
  *
  * @param addr the local address to create the long array in
  */

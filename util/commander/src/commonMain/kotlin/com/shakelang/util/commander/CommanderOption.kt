@@ -5,7 +5,7 @@ package com.shakelang.util.commander
  * @param command The command this option belongs to
  * @param name The name of the option
  * @param aliases The aliases of the option
- * @param shortAlias The short aliases of the option
+ * @param shortAlias The shorts aliases of the option
  * @param description The description of the option
  * @param required If the option is required
  * @param hasValue If the option has a value
@@ -41,7 +41,7 @@ class CommanderOption(
     val aliases: Array<String> = arrayOf(),
 
     /**
-     * The short aliases of the option
+     * The shorts aliases of the option
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -141,7 +141,7 @@ class CommanderOptionCreationContext {
     val aliases: MutableList<String> = mutableListOf()
 
     /**
-     * The short aliases of the option
+     * The shorts aliases of the option
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -207,8 +207,8 @@ class CommanderOptionCreationContext {
     }
 
     /**
-     * Add short aliases to the option
-     * @param aliases The short aliases to add
+     * Add shorts aliases to the option
+     * @param aliases The shorts aliases to add
      * @since 0.1.0
      * @version 0.1.0
      */

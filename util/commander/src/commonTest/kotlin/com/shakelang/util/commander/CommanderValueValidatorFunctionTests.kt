@@ -28,13 +28,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isShort() should throw an exception if the value is not a short" {
+        "isShort() should throw an exception if the value is not a shorts" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isShort("abc")
             }
         }
 
-        "isShort() should not throw an exception if the value is a short" {
+        "isShort() should not throw an exception if the value is a shorts" {
             CommanderValueValidators.isShort("1")
         }
 
@@ -92,13 +92,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isDouble() should throw an exception if the value is not a double" {
+        "isDouble() should throw an exception if the value is not a doubles" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isDouble("abc")
             }
         }
 
-        "isDouble() should not throw an exception if the value is a double" {
+        "isDouble() should not throw an exception if the value is a doubles" {
             CommanderValueValidators.isDouble("1")
         }
 
@@ -218,13 +218,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isUnsignedShort() should throw an exception if the value is not a unsigned short" {
+        "isUnsignedShort() should throw an exception if the value is not a unsigned shorts" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isUnsignedShort("abc")
             }
         }
 
-        "isUnsignedShort() should not throw an exception if the value is a unsigned short" {
+        "isUnsignedShort() should not throw an exception if the value is a unsigned shorts" {
             CommanderValueValidators.isUnsignedShort("1")
         }
 
@@ -282,13 +282,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isPositiveShort() should throw an exception if the value is not a positive short" {
+        "isPositiveShort() should throw an exception if the value is not a positive shorts" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isPositiveShort("-1")
             }
         }
 
-        "isPositiveShort() should not throw an exception if the value is a positive short" {
+        "isPositiveShort() should not throw an exception if the value is a positive shorts" {
             CommanderValueValidators.isPositiveShort("1")
         }
 
@@ -346,13 +346,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isPositiveDouble() should throw an exception if the value is not a positive double" {
+        "isPositiveDouble() should throw an exception if the value is not a positive doubles" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isPositiveDouble("-1")
             }
         }
 
-        "isPositiveDouble() should not throw an exception if the value is a positive double" {
+        "isPositiveDouble() should not throw an exception if the value is a positive doubles" {
             CommanderValueValidators.isPositiveDouble("1")
         }
 
@@ -394,13 +394,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isNegativeShort() should throw an exception if the value is not a negative short" {
+        "isNegativeShort() should throw an exception if the value is not a negative shorts" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isNegativeShort("1")
             }
         }
 
-        "isNegativeShort() should not throw an exception if the value is a negative short" {
+        "isNegativeShort() should not throw an exception if the value is a negative shorts" {
             CommanderValueValidators.isNegativeShort("-1")
         }
 
@@ -458,13 +458,13 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             }
         }
 
-        "isNegativeDouble() should throw an exception if the value is not a negative double" {
+        "isNegativeDouble() should throw an exception if the value is not a negative doubles" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isNegativeDouble("1")
             }
         }
 
-        "isNegativeDouble() should not throw an exception if the value is a negative double" {
+        "isNegativeDouble() should not throw an exception if the value is a negative doubles" {
             CommanderValueValidators.isNegativeDouble("-1")
         }
 

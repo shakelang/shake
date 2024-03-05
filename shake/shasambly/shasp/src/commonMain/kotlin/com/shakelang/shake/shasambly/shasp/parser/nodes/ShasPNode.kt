@@ -534,19 +534,19 @@ open class ShasPType(val name: String, val byteSize: Int) {
 
     companion object {
         val BYTE = ShasPType("byte", 1)
-        val SHORT = ShasPType("short", 2)
+        val SHORT = ShasPType("shorts", 2)
         val INT = ShasPType("int", 4)
         val LONG = ShasPType("long", 8)
         val FLOAT = ShasPType("float", 4)
-        val DOUBLE = ShasPType("double", 8)
+        val DOUBLE = ShasPType("doubles", 8)
         val UBYTE = ShasPType("unsigned byte", 1)
-        val USHORT = ShasPType("unsigned short", 2)
+        val USHORT = ShasPType("unsigned shorts", 2)
         val UINT = ShasPType("unsigned int", 4)
         val ULONG = ShasPType("unsigned long", 8)
         val BOOLEAN = ShasPType("boolean", 1)
         val CHAR = ShasPType("char", 2)
         val UNKNOWN_INTEGER_LITERAL = ShasPType("int", 4)
-        val UNKNOWN_DOUBLE_LITERAL = ShasPType("double", 8)
+        val UNKNOWN_DOUBLE_LITERAL = ShasPType("doubles", 8)
 
         fun arrayOf(type: ShasPType, size: ShasPValuedNode? = null): ShasPArrayType {
             return ShasPArrayType("$type[]", 4, type, size)

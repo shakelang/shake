@@ -20,11 +20,11 @@ class IntegrationTestValues : FreeSpec(
             json shouldBe expected
         }
 
-        "integer literal" {
+        "integers literal" {
             testCodeSnippetValue("42", mapOf("name" to "ShakeIntegerLiteralNode", "value" to 42))
         }
 
-        "double literal" {
+        "doubles literal" {
             testCodeSnippetValue("42.0", mapOf("name" to "ShakeDoubleLiteralNode", "value" to 42.0))
         }
 
