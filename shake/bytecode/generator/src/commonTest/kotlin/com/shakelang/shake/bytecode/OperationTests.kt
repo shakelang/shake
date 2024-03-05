@@ -7,7 +7,7 @@ class OperationTests : FreeSpec(
     {
         val types = listOf(
             "byte", "short", "int", "long", "float", "double",
-            "unsigned byte", "unsigned short", "unsigned int", "unsigned long",
+            "ubyte", "ushort", "uint", "ulong",
         )
 
         for (type1 in types) {
@@ -17,9 +17,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 1
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 1
+                            val b : $type2 = 2
                             print(a + b)
                         }
                     
@@ -35,9 +35,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 3
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 3
+                            val b : $type2 = 2
                             print(a - b)
                         }
                    
@@ -53,9 +53,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 3
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 3
+                            val b : $type2 = 2
                             print(a * b)
                         }
                     
@@ -71,9 +71,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 6
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 6
+                            val b : $type2 = 2
                             print(a / b)
                         }
                     
@@ -89,9 +89,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 7
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 7
+                            val b : $type2 = 2
                             print(a % b)
                         }
                     
@@ -107,9 +107,9 @@ class OperationTests : FreeSpec(
                         """
                         package test
                         
-                        void main() {
-                            $type1 a = 7
-                            $type2 b = 2
+                        fun main() {
+                            val a : $type1 = 7
+                            val b : $type2 = 2
                             print(a ** b)
                         }
                     

@@ -82,6 +82,7 @@ class ShakeInterpreter {
         if (method.isNative) {
             return process.natives[method.fullName]?.reset() ?: throw NullPointerException("Native ${method.qualifiedName} not found")
         }
+
         return createCodeInterpreter(method.code, method)
     }
 

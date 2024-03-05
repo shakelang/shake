@@ -1,1676 +1,1676 @@
 package shake.lang
-public operator fun ubyte.plus(b: ubyte): ubyte
-public operator fun ubyte.plus(b: byte): byte
-public operator fun ubyte.plus(s: ushort): short
-public operator fun ubyte.plus(s: short): short
-public operator fun ubyte.plus(i: uint): int
-public operator fun ubyte.plus(i: int): int
-public operator fun ubyte.plus(l: ulong): long
-public operator fun ubyte.plus(l: long): long
-public operator fun ubyte.plus(f: float): float
-public operator fun ubyte.plus(d: double): double
-
-public operator fun byte.plus(b: ubyte): byte
-public operator fun byte.plus(b: byte): byte
-public operator fun byte.plus(s: ushort): short
-public operator fun byte.plus(s: short): short
-public operator fun byte.plus(i: uint): int
-public operator fun byte.plus(i: int): int
-public operator fun byte.plus(l: ulong): long
-public operator fun byte.plus(l: long): long
-public operator fun byte.plus(f: float): float
-public operator fun byte.plus(d: double): double
-
-public operator fun ushort.plus(b: ubyte): short
-public operator fun ushort.plus(b: byte): short
-public operator fun ushort.plus(s: ushort): ushort
-public operator fun ushort.plus(s: short): short
-public operator fun ushort.plus(i: uint): int
-public operator fun ushort.plus(i: int): int
-public operator fun ushort.plus(l: ulong): long
-public operator fun ushort.plus(l: long): long
-public operator fun ushort.plus(f: float): float
-public operator fun ushort.plus(d: double): double
-
-public operator fun short.plus(b: ubyte): short
-public operator fun short.plus(b: byte): short
-public operator fun short.plus(s: ushort): short
-public operator fun short.plus(s: short): short
-public operator fun short.plus(i: uint): int
-public operator fun short.plus(i: int): int
-public operator fun short.plus(l: ulong): long
-public operator fun short.plus(l: long): long
-public operator fun short.plus(f: float): float
-public operator fun short.plus(d: double): double
-
-public operator fun uint.plus(b: ubyte): int
-public operator fun uint.plus(b: byte): int
-public operator fun uint.plus(s: ushort): int
-public operator fun uint.plus(s: short): int
-public operator fun uint.plus(i: uint): uint
-public operator fun uint.plus(i: int): int
-public operator fun uint.plus(l: ulong): long
-public operator fun uint.plus(l: long): long
-public operator fun uint.plus(f: float): float
-public operator fun uint.plus(d: double): double
-
-public operator fun int.plus(b: ubyte): int
-public operator fun int.plus(b: byte): int
-public operator fun int.plus(s: ushort): int
-public operator fun int.plus(s: short): int
-public operator fun int.plus(i: uint): int
-public operator fun int.plus(i: int): int
-public operator fun int.plus(l: ulong): long
-public operator fun int.plus(l: long): long
-public operator fun int.plus(f: float): float
-public operator fun int.plus(d: double): double
-
-public operator fun ulong.plus(b: ubyte): long
-public operator fun ulong.plus(b: byte): long
-public operator fun ulong.plus(s: ushort): long
-public operator fun ulong.plus(s: short): long
-public operator fun ulong.plus(i: uint): long
-public operator fun ulong.plus(i: int): long
-public operator fun ulong.plus(l: ulong): ulong
-public operator fun ulong.plus(l: long): long
-public operator fun ulong.plus(f: float): float
-public operator fun ulong.plus(d: double): double
-
-public operator fun long.plus(b: ubyte): long
-public operator fun long.plus(b: byte): long
-public operator fun long.plus(s: ushort): long
-public operator fun long.plus(s: short): long
-public operator fun long.plus(i: uint): long
-public operator fun long.plus(i: int): long
-public operator fun long.plus(l: ulong): long
-public operator fun long.plus(l: long): long
-public operator fun long.plus(f: float): float
-public operator fun long.plus(d: double): double
-
-public operator fun float.plus(b: ubyte): float
-public operator fun float.plus(b: byte): float
-public operator fun float.plus(s: ushort): float
-public operator fun float.plus(s: short): float
-public operator fun float.plus(i: uint): float
-public operator fun float.plus(i: int): float
-public operator fun float.plus(l: ulong): float
-public operator fun float.plus(l: long): float
-public operator fun float.plus(f: float): float
-public operator fun float.plus(d: double): double
-
-public operator fun double.plus(b: ubyte): double
-public operator fun double.plus(b: byte): double
-public operator fun double.plus(s: ushort): double
-public operator fun double.plus(s: short): double
-public operator fun double.plus(i: uint): double
-public operator fun double.plus(i: int): double
-public operator fun double.plus(l: ulong): double
-public operator fun double.plus(l: long): double
-public operator fun double.plus(f: float): double
-public operator fun double.plus(d: double): double
-
-
-public operator fun ubyte.minus(b: ubyte): ubyte
-public operator fun ubyte.minus(b: byte): byte
-public operator fun ubyte.minus(s: ushort): short
-public operator fun ubyte.minus(s: short): short
-public operator fun ubyte.minus(i: uint): int
-public operator fun ubyte.minus(i: int): int
-public operator fun ubyte.minus(l: ulong): long
-public operator fun ubyte.minus(l: long): long
-public operator fun ubyte.minus(f: float): float
-public operator fun ubyte.minus(d: double): double
-
-public operator fun byte.minus(b: ubyte): byte
-public operator fun byte.minus(b: byte): byte
-public operator fun byte.minus(s: ushort): short
-public operator fun byte.minus(s: short): short
-public operator fun byte.minus(i: uint): int
-public operator fun byte.minus(i: int): int
-public operator fun byte.minus(l: ulong): long
-public operator fun byte.minus(l: long): long
-public operator fun byte.minus(f: float): float
-public operator fun byte.minus(d: double): double
-
-public operator fun ushort.minus(b: ubyte): short
-public operator fun ushort.minus(b: byte): short
-public operator fun ushort.minus(s: ushort): ushort
-public operator fun ushort.minus(s: short): short
-public operator fun ushort.minus(i: uint): int
-public operator fun ushort.minus(i: int): int
-public operator fun ushort.minus(l: ulong): long
-public operator fun ushort.minus(l: long): long
-public operator fun ushort.minus(f: float): float
-public operator fun ushort.minus(d: double): double
-
-public operator fun short.minus(b: ubyte): short
-public operator fun short.minus(b: byte): short
-public operator fun short.minus(s: ushort): short
-public operator fun short.minus(s: short): short
-public operator fun short.minus(i: uint): int
-public operator fun short.minus(i: int): int
-public operator fun short.minus(l: ulong): long
-public operator fun short.minus(l: long): long
-public operator fun short.minus(f: float): float
-public operator fun short.minus(d: double): double
-
-public operator fun uint.minus(b: ubyte): int
-public operator fun uint.minus(b: byte): int
-public operator fun uint.minus(s: ushort): int
-public operator fun uint.minus(s: short): int
-public operator fun uint.minus(i: uint): uint
-public operator fun uint.minus(i: int): int
-public operator fun uint.minus(l: ulong): long
-public operator fun uint.minus(l: long): long
-public operator fun uint.minus(f: float): float
-public operator fun uint.minus(d: double): double
-
-public operator fun int.minus(b: ubyte): int
-public operator fun int.minus(b: byte): int
-public operator fun int.minus(s: ushort): int
-public operator fun int.minus(s: short): int
-public operator fun int.minus(i: uint): int
-public operator fun int.minus(i: int): int
-public operator fun int.minus(l: ulong): long
-public operator fun int.minus(l: long): long
-public operator fun int.minus(f: float): float
-public operator fun int.minus(d: double): double
-
-public operator fun ulong.minus(b: ubyte): long
-public operator fun ulong.minus(b: byte): long
-public operator fun ulong.minus(s: ushort): long
-public operator fun ulong.minus(s: short): long
-public operator fun ulong.minus(i: uint): long
-public operator fun ulong.minus(i: int): long
-public operator fun ulong.minus(l: ulong): ulong
-public operator fun ulong.minus(l: long): long
-public operator fun ulong.minus(f: float): float
-public operator fun ulong.minus(d: double): double
-
-public operator fun long.minus(b: ubyte): long
-public operator fun long.minus(b: byte): long
-public operator fun long.minus(s: ushort): long
-public operator fun long.minus(s: short): long
-public operator fun long.minus(i: uint): long
-public operator fun long.minus(i: int): long
-public operator fun long.minus(l: ulong): long
-public operator fun long.minus(l: long): long
-public operator fun long.minus(f: float): float
-public operator fun long.minus(d: double): double
-
-public operator fun float.minus(b: ubyte): float
-public operator fun float.minus(b: byte): float
-public operator fun float.minus(s: ushort): float
-public operator fun float.minus(s: short): float
-public operator fun float.minus(i: uint): float
-public operator fun float.minus(i: int): float
-public operator fun float.minus(l: ulong): float
-public operator fun float.minus(l: long): float
-public operator fun float.minus(f: float): float
-public operator fun float.minus(d: double): double
-
-public operator fun double.minus(b: ubyte): double
-public operator fun double.minus(b: byte): double
-public operator fun double.minus(s: ushort): double
-public operator fun double.minus(s: short): double
-public operator fun double.minus(i: uint): double
-public operator fun double.minus(i: int): double
-public operator fun double.minus(l: ulong): double
-public operator fun double.minus(l: long): double
-public operator fun double.minus(f: float): double
-public operator fun double.minus(d: double): double
-
-
-public operator fun ubyte.times(b: ubyte): ubyte
-public operator fun ubyte.times(b: byte): byte
-public operator fun ubyte.times(s: ushort): short
-public operator fun ubyte.times(s: short): short
-public operator fun ubyte.times(i: uint): int
-public operator fun ubyte.times(i: int): int
-public operator fun ubyte.times(l: ulong): long
-public operator fun ubyte.times(l: long): long
-public operator fun ubyte.times(f: float): float
-public operator fun ubyte.times(d: double): double
-
-public operator fun byte.times(b: ubyte): byte
-public operator fun byte.times(b: byte): byte
-public operator fun byte.times(s: ushort): short
-public operator fun byte.times(s: short): short
-public operator fun byte.times(i: uint): int
-public operator fun byte.times(i: int): int
-public operator fun byte.times(l: ulong): long
-public operator fun byte.times(l: long): long
-public operator fun byte.times(f: float): float
-public operator fun byte.times(d: double): double
-
-public operator fun ushort.times(b: ubyte): short
-public operator fun ushort.times(b: byte): short
-public operator fun ushort.times(s: ushort): ushort
-public operator fun ushort.times(s: short): short
-public operator fun ushort.times(i: uint): int
-public operator fun ushort.times(i: int): int
-public operator fun ushort.times(l: ulong): long
-public operator fun ushort.times(l: long): long
-public operator fun ushort.times(f: float): float
-public operator fun ushort.times(d: double): double
-
-public operator fun short.times(b: ubyte): short
-public operator fun short.times(b: byte): short
-public operator fun short.times(s: ushort): short
-public operator fun short.times(s: short): short
-public operator fun short.times(i: uint): int
-public operator fun short.times(i: int): int
-public operator fun short.times(l: ulong): long
-public operator fun short.times(l: long): long
-public operator fun short.times(f: float): float
-public operator fun short.times(d: double): double
-
-public operator fun uint.times(b: ubyte): int
-public operator fun uint.times(b: byte): int
-public operator fun uint.times(s: ushort): int
-public operator fun uint.times(s: short): int
-public operator fun uint.times(i: uint): uint
-public operator fun uint.times(i: int): int
-public operator fun uint.times(l: ulong): long
-public operator fun uint.times(l: long): long
-public operator fun uint.times(f: float): float
-public operator fun uint.times(d: double): double
-
-public operator fun int.times(b: ubyte): int
-public operator fun int.times(b: byte): int
-public operator fun int.times(s: ushort): int
-public operator fun int.times(s: short): int
-public operator fun int.times(i: uint): int
-public operator fun int.times(i: int): int
-public operator fun int.times(l: ulong): long
-public operator fun int.times(l: long): long
-public operator fun int.times(f: float): float
-public operator fun int.times(d: double): double
-
-public operator fun ulong.times(b: ubyte): long
-public operator fun ulong.times(b: byte): long
-public operator fun ulong.times(s: ushort): long
-public operator fun ulong.times(s: short): long
-public operator fun ulong.times(i: uint): long
-public operator fun ulong.times(i: int): long
-public operator fun ulong.times(l: ulong): ulong
-public operator fun ulong.times(l: long): long
-public operator fun ulong.times(f: float): float
-public operator fun ulong.times(d: double): double
-
-public operator fun long.times(b: ubyte): long
-public operator fun long.times(b: byte): long
-public operator fun long.times(s: ushort): long
-public operator fun long.times(s: short): long
-public operator fun long.times(i: uint): long
-public operator fun long.times(i: int): long
-public operator fun long.times(l: ulong): long
-public operator fun long.times(l: long): long
-public operator fun long.times(f: float): float
-public operator fun long.times(d: double): double
-
-public operator fun float.times(b: ubyte): float
-public operator fun float.times(b: byte): float
-public operator fun float.times(s: ushort): float
-public operator fun float.times(s: short): float
-public operator fun float.times(i: uint): float
-public operator fun float.times(i: int): float
-public operator fun float.times(l: ulong): float
-public operator fun float.times(l: long): float
-public operator fun float.times(f: float): float
-public operator fun float.times(d: double): double
-
-public operator fun double.times(b: ubyte): double
-public operator fun double.times(b: byte): double
-public operator fun double.times(s: ushort): double
-public operator fun double.times(s: short): double
-public operator fun double.times(i: uint): double
-public operator fun double.times(i: int): double
-public operator fun double.times(l: ulong): double
-public operator fun double.times(l: long): double
-public operator fun double.times(f: float): double
-public operator fun double.times(d: double): double
-
-
-public operator fun ubyte.div(b: ubyte): ubyte
-public operator fun ubyte.div(b: byte): byte
-public operator fun ubyte.div(s: ushort): short
-public operator fun ubyte.div(s: short): short
-public operator fun ubyte.div(i: uint): int
-public operator fun ubyte.div(i: int): int
-public operator fun ubyte.div(l: ulong): long
-public operator fun ubyte.div(l: long): long
-public operator fun ubyte.div(f: float): float
-public operator fun ubyte.div(d: double): double
-
-public operator fun byte.div(b: ubyte): byte
-public operator fun byte.div(b: byte): byte
-public operator fun byte.div(s: ushort): short
-public operator fun byte.div(s: short): short
-public operator fun byte.div(i: uint): int
-public operator fun byte.div(i: int): int
-public operator fun byte.div(l: ulong): long
-public operator fun byte.div(l: long): long
-public operator fun byte.div(f: float): float
-public operator fun byte.div(d: double): double
-
-public operator fun ushort.div(b: ubyte): short
-public operator fun ushort.div(b: byte): short
-public operator fun ushort.div(s: ushort): ushort
-public operator fun ushort.div(s: short): short
-public operator fun ushort.div(i: uint): int
-public operator fun ushort.div(i: int): int
-public operator fun ushort.div(l: ulong): long
-public operator fun ushort.div(l: long): long
-public operator fun ushort.div(f: float): float
-public operator fun ushort.div(d: double): double
-
-public operator fun short.div(b: ubyte): short
-public operator fun short.div(b: byte): short
-public operator fun short.div(s: ushort): short
-public operator fun short.div(s: short): short
-public operator fun short.div(i: uint): int
-public operator fun short.div(i: int): int
-public operator fun short.div(l: ulong): long
-public operator fun short.div(l: long): long
-public operator fun short.div(f: float): float
-public operator fun short.div(d: double): double
-
-public operator fun uint.div(b: ubyte): int
-public operator fun uint.div(b: byte): int
-public operator fun uint.div(s: ushort): int
-public operator fun uint.div(s: short): int
-public operator fun uint.div(i: uint): uint
-public operator fun uint.div(i: int): int
-public operator fun uint.div(l: ulong): long
-public operator fun uint.div(l: long): long
-public operator fun uint.div(f: float): float
-public operator fun uint.div(d: double): double
-
-public operator fun int.div(b: ubyte): int
-public operator fun int.div(b: byte): int
-public operator fun int.div(s: ushort): int
-public operator fun int.div(s: short): int
-public operator fun int.div(i: uint): int
-public operator fun int.div(i: int): int
-public operator fun int.div(l: ulong): long
-public operator fun int.div(l: long): long
-public operator fun int.div(f: float): float
-public operator fun int.div(d: double): double
-
-public operator fun ulong.div(b: ubyte): long
-public operator fun ulong.div(b: byte): long
-public operator fun ulong.div(s: ushort): long
-public operator fun ulong.div(s: short): long
-public operator fun ulong.div(i: uint): long
-public operator fun ulong.div(i: int): long
-public operator fun ulong.div(l: ulong): ulong
-public operator fun ulong.div(l: long): long
-public operator fun ulong.div(f: float): float
-public operator fun ulong.div(d: double): double
-
-public operator fun long.div(b: ubyte): long
-public operator fun long.div(b: byte): long
-public operator fun long.div(s: ushort): long
-public operator fun long.div(s: short): long
-public operator fun long.div(i: uint): long
-public operator fun long.div(i: int): long
-public operator fun long.div(l: ulong): long
-public operator fun long.div(l: long): long
-public operator fun long.div(f: float): float
-public operator fun long.div(d: double): double
-
-public operator fun float.div(b: ubyte): float
-public operator fun float.div(b: byte): float
-public operator fun float.div(s: ushort): float
-public operator fun float.div(s: short): float
-public operator fun float.div(i: uint): float
-public operator fun float.div(i: int): float
-public operator fun float.div(l: ulong): float
-public operator fun float.div(l: long): float
-public operator fun float.div(f: float): float
-public operator fun float.div(d: double): double
-
-public operator fun double.div(b: ubyte): double
-public operator fun double.div(b: byte): double
-public operator fun double.div(s: ushort): double
-public operator fun double.div(s: short): double
-public operator fun double.div(i: uint): double
-public operator fun double.div(i: int): double
-public operator fun double.div(l: ulong): double
-public operator fun double.div(l: long): double
-public operator fun double.div(f: float): double
-public operator fun double.div(d: double): double
-
-
-public operator fun ubyte.rem(b: ubyte): ubyte
-public operator fun ubyte.rem(b: byte): byte
-public operator fun ubyte.rem(s: ushort): short
-public operator fun ubyte.rem(s: short): short
-public operator fun ubyte.rem(i: uint): int
-public operator fun ubyte.rem(i: int): int
-public operator fun ubyte.rem(l: ulong): long
-public operator fun ubyte.rem(l: long): long
-public operator fun ubyte.rem(f: float): float
-public operator fun ubyte.rem(d: double): double
-
-public operator fun byte.rem(b: ubyte): byte
-public operator fun byte.rem(b: byte): byte
-public operator fun byte.rem(s: ushort): short
-public operator fun byte.rem(s: short): short
-public operator fun byte.rem(i: uint): int
-public operator fun byte.rem(i: int): int
-public operator fun byte.rem(l: ulong): long
-public operator fun byte.rem(l: long): long
-public operator fun byte.rem(f: float): float
-public operator fun byte.rem(d: double): double
-
-public operator fun ushort.rem(b: ubyte): short
-public operator fun ushort.rem(b: byte): short
-public operator fun ushort.rem(s: ushort): ushort
-public operator fun ushort.rem(s: short): short
-public operator fun ushort.rem(i: uint): int
-public operator fun ushort.rem(i: int): int
-public operator fun ushort.rem(l: ulong): long
-public operator fun ushort.rem(l: long): long
-public operator fun ushort.rem(f: float): float
-public operator fun ushort.rem(d: double): double
-
-public operator fun short.rem(b: ubyte): short
-public operator fun short.rem(b: byte): short
-public operator fun short.rem(s: ushort): short
-public operator fun short.rem(s: short): short
-public operator fun short.rem(i: uint): int
-public operator fun short.rem(i: int): int
-public operator fun short.rem(l: ulong): long
-public operator fun short.rem(l: long): long
-public operator fun short.rem(f: float): float
-public operator fun short.rem(d: double): double
-
-public operator fun uint.rem(b: ubyte): int
-public operator fun uint.rem(b: byte): int
-public operator fun uint.rem(s: ushort): int
-public operator fun uint.rem(s: short): int
-public operator fun uint.rem(i: uint): uint
-public operator fun uint.rem(i: int): int
-public operator fun uint.rem(l: ulong): long
-public operator fun uint.rem(l: long): long
-public operator fun uint.rem(f: float): float
-public operator fun uint.rem(d: double): double
-
-public operator fun int.rem(b: ubyte): int
-public operator fun int.rem(b: byte): int
-public operator fun int.rem(s: ushort): int
-public operator fun int.rem(s: short): int
-public operator fun int.rem(i: uint): int
-public operator fun int.rem(i: int): int
-public operator fun int.rem(l: ulong): long
-public operator fun int.rem(l: long): long
-public operator fun int.rem(f: float): float
-public operator fun int.rem(d: double): double
-
-public operator fun ulong.rem(b: ubyte): long
-public operator fun ulong.rem(b: byte): long
-public operator fun ulong.rem(s: ushort): long
-public operator fun ulong.rem(s: short): long
-public operator fun ulong.rem(i: uint): long
-public operator fun ulong.rem(i: int): long
-public operator fun ulong.rem(l: ulong): ulong
-public operator fun ulong.rem(l: long): long
-public operator fun ulong.rem(f: float): float
-public operator fun ulong.rem(d: double): double
-
-public operator fun long.rem(b: ubyte): long
-public operator fun long.rem(b: byte): long
-public operator fun long.rem(s: ushort): long
-public operator fun long.rem(s: short): long
-public operator fun long.rem(i: uint): long
-public operator fun long.rem(i: int): long
-public operator fun long.rem(l: ulong): long
-public operator fun long.rem(l: long): long
-public operator fun long.rem(f: float): float
-public operator fun long.rem(d: double): double
-
-public operator fun float.rem(b: ubyte): float
-public operator fun float.rem(b: byte): float
-public operator fun float.rem(s: ushort): float
-public operator fun float.rem(s: short): float
-public operator fun float.rem(i: uint): float
-public operator fun float.rem(i: int): float
-public operator fun float.rem(l: ulong): float
-public operator fun float.rem(l: long): float
-public operator fun float.rem(f: float): float
-public operator fun float.rem(d: double): double
-
-public operator fun double.rem(b: ubyte): double
-public operator fun double.rem(b: byte): double
-public operator fun double.rem(s: ushort): double
-public operator fun double.rem(s: short): double
-public operator fun double.rem(i: uint): double
-public operator fun double.rem(i: int): double
-public operator fun double.rem(l: ulong): double
-public operator fun double.rem(l: long): double
-public operator fun double.rem(f: float): double
-public operator fun double.rem(d: double): double
-
-
-public operator fun ubyte.pow(b: ubyte): double
-public operator fun ubyte.pow(b: byte): double
-public operator fun ubyte.pow(s: ushort): double
-public operator fun ubyte.pow(s: short): double
-public operator fun ubyte.pow(i: uint): double
-public operator fun ubyte.pow(i: int): double
-public operator fun ubyte.pow(l: ulong): double
-public operator fun ubyte.pow(l: long): double
-public operator fun ubyte.pow(f: float): double
-public operator fun ubyte.pow(d: double): double
-
-public operator fun byte.pow(b: ubyte): double
-public operator fun byte.pow(b: byte): double
-public operator fun byte.pow(s: ushort): double
-public operator fun byte.pow(s: short): double
-public operator fun byte.pow(i: uint): double
-public operator fun byte.pow(i: int): double
-public operator fun byte.pow(l: ulong): double
-public operator fun byte.pow(l: long): double
-public operator fun byte.pow(f: float): double
-public operator fun byte.pow(d: double): double
-
-public operator fun ushort.pow(b: ubyte): double
-public operator fun ushort.pow(b: byte): double
-public operator fun ushort.pow(s: ushort): double
-public operator fun ushort.pow(s: short): double
-public operator fun ushort.pow(i: uint): double
-public operator fun ushort.pow(i: int): double
-public operator fun ushort.pow(l: ulong): double
-public operator fun ushort.pow(l: long): double
-public operator fun ushort.pow(f: float): double
-public operator fun ushort.pow(d: double): double
-
-public operator fun short.pow(b: ubyte): double
-public operator fun short.pow(b: byte): double
-public operator fun short.pow(s: ushort): double
-public operator fun short.pow(s: short): double
-public operator fun short.pow(i: uint): double
-public operator fun short.pow(i: int): double
-public operator fun short.pow(l: ulong): double
-public operator fun short.pow(l: long): double
-public operator fun short.pow(f: float): double
-public operator fun short.pow(d: double): double
-
-public operator fun uint.pow(b: ubyte): double
-public operator fun uint.pow(b: byte): double
-public operator fun uint.pow(s: ushort): double
-public operator fun uint.pow(s: short): double
-public operator fun uint.pow(i: uint): double
-public operator fun uint.pow(i: int): double
-public operator fun uint.pow(l: ulong): double
-public operator fun uint.pow(l: long): double
-public operator fun uint.pow(f: float): double
-public operator fun uint.pow(d: double): double
-
-public operator fun int.pow(b: ubyte): double
-public operator fun int.pow(b: byte): double
-public operator fun int.pow(s: ushort): double
-public operator fun int.pow(s: short): double
-public operator fun int.pow(i: uint): double
-public operator fun int.pow(i: int): double
-public operator fun int.pow(l: ulong): double
-public operator fun int.pow(l: long): double
-public operator fun int.pow(f: float): double
-public operator fun int.pow(d: double): double
-
-public operator fun ulong.pow(b: ubyte): double
-public operator fun ulong.pow(b: byte): double
-public operator fun ulong.pow(s: ushort): double
-public operator fun ulong.pow(s: short): double
-public operator fun ulong.pow(i: uint): double
-public operator fun ulong.pow(i: int): double
-public operator fun ulong.pow(l: ulong): double
-public operator fun ulong.pow(l: long): double
-public operator fun ulong.pow(f: float): double
-public operator fun ulong.pow(d: double): double
-
-public operator fun long.pow(b: ubyte): double
-public operator fun long.pow(b: byte): double
-public operator fun long.pow(s: ushort): double
-public operator fun long.pow(s: short): double
-public operator fun long.pow(i: uint): double
-public operator fun long.pow(i: int): double
-public operator fun long.pow(l: ulong): double
-public operator fun long.pow(l: long): double
-public operator fun long.pow(f: float): double
-public operator fun long.pow(d: double): double
-
-public operator fun float.pow(b: ubyte): double
-public operator fun float.pow(b: byte): double
-public operator fun float.pow(s: ushort): double
-public operator fun float.pow(s: short): double
-public operator fun float.pow(i: uint): double
-public operator fun float.pow(i: int): double
-public operator fun float.pow(l: ulong): double
-public operator fun float.pow(l: long): double
-public operator fun float.pow(f: float): double
-public operator fun float.pow(d: double): double
-
-public operator fun double.pow(b: ubyte): double
-public operator fun double.pow(b: byte): double
-public operator fun double.pow(s: ushort): double
-public operator fun double.pow(s: short): double
-public operator fun double.pow(i: uint): double
-public operator fun double.pow(i: int): double
-public operator fun double.pow(l: ulong): double
-public operator fun double.pow(l: long): double
-public operator fun double.pow(f: float): double
-public operator fun double.pow(d: double): double
-
-
-public operator fun ubyte.band(b: ubyte): ubyte
-public operator fun ubyte.band(b: byte): byte
-public operator fun ubyte.band(s: ushort): short
-public operator fun ubyte.band(s: short): short
-public operator fun ubyte.band(i: uint): int
-public operator fun ubyte.band(i: int): int
-public operator fun ubyte.band(l: ulong): long
-public operator fun ubyte.band(l: long): long
-public operator fun ubyte.band(f: float): float
-public operator fun ubyte.band(d: double): double
-
-public operator fun byte.band(b: ubyte): byte
-public operator fun byte.band(b: byte): byte
-public operator fun byte.band(s: ushort): short
-public operator fun byte.band(s: short): short
-public operator fun byte.band(i: uint): int
-public operator fun byte.band(i: int): int
-public operator fun byte.band(l: ulong): long
-public operator fun byte.band(l: long): long
-public operator fun byte.band(f: float): float
-public operator fun byte.band(d: double): double
-
-public operator fun ushort.band(b: ubyte): short
-public operator fun ushort.band(b: byte): short
-public operator fun ushort.band(s: ushort): ushort
-public operator fun ushort.band(s: short): short
-public operator fun ushort.band(i: uint): int
-public operator fun ushort.band(i: int): int
-public operator fun ushort.band(l: ulong): long
-public operator fun ushort.band(l: long): long
-public operator fun ushort.band(f: float): float
-public operator fun ushort.band(d: double): double
-
-public operator fun short.band(b: ubyte): short
-public operator fun short.band(b: byte): short
-public operator fun short.band(s: ushort): short
-public operator fun short.band(s: short): short
-public operator fun short.band(i: uint): int
-public operator fun short.band(i: int): int
-public operator fun short.band(l: ulong): long
-public operator fun short.band(l: long): long
-public operator fun short.band(f: float): float
-public operator fun short.band(d: double): double
-
-public operator fun uint.band(b: ubyte): int
-public operator fun uint.band(b: byte): int
-public operator fun uint.band(s: ushort): int
-public operator fun uint.band(s: short): int
-public operator fun uint.band(i: uint): uint
-public operator fun uint.band(i: int): int
-public operator fun uint.band(l: ulong): long
-public operator fun uint.band(l: long): long
-public operator fun uint.band(f: float): float
-public operator fun uint.band(d: double): double
-
-public operator fun int.band(b: ubyte): int
-public operator fun int.band(b: byte): int
-public operator fun int.band(s: ushort): int
-public operator fun int.band(s: short): int
-public operator fun int.band(i: uint): int
-public operator fun int.band(i: int): int
-public operator fun int.band(l: ulong): long
-public operator fun int.band(l: long): long
-public operator fun int.band(f: float): float
-public operator fun int.band(d: double): double
-
-public operator fun ulong.band(b: ubyte): long
-public operator fun ulong.band(b: byte): long
-public operator fun ulong.band(s: ushort): long
-public operator fun ulong.band(s: short): long
-public operator fun ulong.band(i: uint): long
-public operator fun ulong.band(i: int): long
-public operator fun ulong.band(l: ulong): ulong
-public operator fun ulong.band(l: long): long
-public operator fun ulong.band(f: float): float
-public operator fun ulong.band(d: double): double
-
-public operator fun long.band(b: ubyte): long
-public operator fun long.band(b: byte): long
-public operator fun long.band(s: ushort): long
-public operator fun long.band(s: short): long
-public operator fun long.band(i: uint): long
-public operator fun long.band(i: int): long
-public operator fun long.band(l: ulong): long
-public operator fun long.band(l: long): long
-public operator fun long.band(f: float): float
-public operator fun long.band(d: double): double
-
-public operator fun float.band(b: ubyte): float
-public operator fun float.band(b: byte): float
-public operator fun float.band(s: ushort): float
-public operator fun float.band(s: short): float
-public operator fun float.band(i: uint): float
-public operator fun float.band(i: int): float
-public operator fun float.band(l: ulong): float
-public operator fun float.band(l: long): float
-public operator fun float.band(f: float): float
-public operator fun float.band(d: double): double
-
-public operator fun double.band(b: ubyte): double
-public operator fun double.band(b: byte): double
-public operator fun double.band(s: ushort): double
-public operator fun double.band(s: short): double
-public operator fun double.band(i: uint): double
-public operator fun double.band(i: int): double
-public operator fun double.band(l: ulong): double
-public operator fun double.band(l: long): double
-public operator fun double.band(f: float): double
-public operator fun double.band(d: double): double
-
-
-public operator fun ubyte.bor(b: ubyte): ubyte
-public operator fun ubyte.bor(b: byte): byte
-public operator fun ubyte.bor(s: ushort): short
-public operator fun ubyte.bor(s: short): short
-public operator fun ubyte.bor(i: uint): int
-public operator fun ubyte.bor(i: int): int
-public operator fun ubyte.bor(l: ulong): long
-public operator fun ubyte.bor(l: long): long
-public operator fun ubyte.bor(f: float): float
-public operator fun ubyte.bor(d: double): double
-
-public operator fun byte.bor(b: ubyte): byte
-public operator fun byte.bor(b: byte): byte
-public operator fun byte.bor(s: ushort): short
-public operator fun byte.bor(s: short): short
-public operator fun byte.bor(i: uint): int
-public operator fun byte.bor(i: int): int
-public operator fun byte.bor(l: ulong): long
-public operator fun byte.bor(l: long): long
-public operator fun byte.bor(f: float): float
-public operator fun byte.bor(d: double): double
-
-public operator fun ushort.bor(b: ubyte): short
-public operator fun ushort.bor(b: byte): short
-public operator fun ushort.bor(s: ushort): ushort
-public operator fun ushort.bor(s: short): short
-public operator fun ushort.bor(i: uint): int
-public operator fun ushort.bor(i: int): int
-public operator fun ushort.bor(l: ulong): long
-public operator fun ushort.bor(l: long): long
-public operator fun ushort.bor(f: float): float
-public operator fun ushort.bor(d: double): double
-
-public operator fun short.bor(b: ubyte): short
-public operator fun short.bor(b: byte): short
-public operator fun short.bor(s: ushort): short
-public operator fun short.bor(s: short): short
-public operator fun short.bor(i: uint): int
-public operator fun short.bor(i: int): int
-public operator fun short.bor(l: ulong): long
-public operator fun short.bor(l: long): long
-public operator fun short.bor(f: float): float
-public operator fun short.bor(d: double): double
-
-public operator fun uint.bor(b: ubyte): int
-public operator fun uint.bor(b: byte): int
-public operator fun uint.bor(s: ushort): int
-public operator fun uint.bor(s: short): int
-public operator fun uint.bor(i: uint): uint
-public operator fun uint.bor(i: int): int
-public operator fun uint.bor(l: ulong): long
-public operator fun uint.bor(l: long): long
-public operator fun uint.bor(f: float): float
-public operator fun uint.bor(d: double): double
-
-public operator fun int.bor(b: ubyte): int
-public operator fun int.bor(b: byte): int
-public operator fun int.bor(s: ushort): int
-public operator fun int.bor(s: short): int
-public operator fun int.bor(i: uint): int
-public operator fun int.bor(i: int): int
-public operator fun int.bor(l: ulong): long
-public operator fun int.bor(l: long): long
-public operator fun int.bor(f: float): float
-public operator fun int.bor(d: double): double
-
-public operator fun ulong.bor(b: ubyte): long
-public operator fun ulong.bor(b: byte): long
-public operator fun ulong.bor(s: ushort): long
-public operator fun ulong.bor(s: short): long
-public operator fun ulong.bor(i: uint): long
-public operator fun ulong.bor(i: int): long
-public operator fun ulong.bor(l: ulong): ulong
-public operator fun ulong.bor(l: long): long
-public operator fun ulong.bor(f: float): float
-public operator fun ulong.bor(d: double): double
-
-public operator fun long.bor(b: ubyte): long
-public operator fun long.bor(b: byte): long
-public operator fun long.bor(s: ushort): long
-public operator fun long.bor(s: short): long
-public operator fun long.bor(i: uint): long
-public operator fun long.bor(i: int): long
-public operator fun long.bor(l: ulong): long
-public operator fun long.bor(l: long): long
-public operator fun long.bor(f: float): float
-public operator fun long.bor(d: double): double
-
-public operator fun float.bor(b: ubyte): float
-public operator fun float.bor(b: byte): float
-public operator fun float.bor(s: ushort): float
-public operator fun float.bor(s: short): float
-public operator fun float.bor(i: uint): float
-public operator fun float.bor(i: int): float
-public operator fun float.bor(l: ulong): float
-public operator fun float.bor(l: long): float
-public operator fun float.bor(f: float): float
-public operator fun float.bor(d: double): double
-
-public operator fun double.bor(b: ubyte): double
-public operator fun double.bor(b: byte): double
-public operator fun double.bor(s: ushort): double
-public operator fun double.bor(s: short): double
-public operator fun double.bor(i: uint): double
-public operator fun double.bor(i: int): double
-public operator fun double.bor(l: ulong): double
-public operator fun double.bor(l: long): double
-public operator fun double.bor(f: float): double
-public operator fun double.bor(d: double): double
-
-
-public operator fun ubyte.bxor(b: ubyte): ubyte
-public operator fun ubyte.bxor(b: byte): byte
-public operator fun ubyte.bxor(s: ushort): short
-public operator fun ubyte.bxor(s: short): short
-public operator fun ubyte.bxor(i: uint): int
-public operator fun ubyte.bxor(i: int): int
-public operator fun ubyte.bxor(l: ulong): long
-public operator fun ubyte.bxor(l: long): long
-public operator fun ubyte.bxor(f: float): float
-public operator fun ubyte.bxor(d: double): double
-
-public operator fun byte.bxor(b: ubyte): byte
-public operator fun byte.bxor(b: byte): byte
-public operator fun byte.bxor(s: ushort): short
-public operator fun byte.bxor(s: short): short
-public operator fun byte.bxor(i: uint): int
-public operator fun byte.bxor(i: int): int
-public operator fun byte.bxor(l: ulong): long
-public operator fun byte.bxor(l: long): long
-public operator fun byte.bxor(f: float): float
-public operator fun byte.bxor(d: double): double
-
-public operator fun ushort.bxor(b: ubyte): short
-public operator fun ushort.bxor(b: byte): short
-public operator fun ushort.bxor(s: ushort): ushort
-public operator fun ushort.bxor(s: short): short
-public operator fun ushort.bxor(i: uint): int
-public operator fun ushort.bxor(i: int): int
-public operator fun ushort.bxor(l: ulong): long
-public operator fun ushort.bxor(l: long): long
-public operator fun ushort.bxor(f: float): float
-public operator fun ushort.bxor(d: double): double
-
-public operator fun short.bxor(b: ubyte): short
-public operator fun short.bxor(b: byte): short
-public operator fun short.bxor(s: ushort): short
-public operator fun short.bxor(s: short): short
-public operator fun short.bxor(i: uint): int
-public operator fun short.bxor(i: int): int
-public operator fun short.bxor(l: ulong): long
-public operator fun short.bxor(l: long): long
-public operator fun short.bxor(f: float): float
-public operator fun short.bxor(d: double): double
-
-public operator fun uint.bxor(b: ubyte): int
-public operator fun uint.bxor(b: byte): int
-public operator fun uint.bxor(s: ushort): int
-public operator fun uint.bxor(s: short): int
-public operator fun uint.bxor(i: uint): uint
-public operator fun uint.bxor(i: int): int
-public operator fun uint.bxor(l: ulong): long
-public operator fun uint.bxor(l: long): long
-public operator fun uint.bxor(f: float): float
-public operator fun uint.bxor(d: double): double
-
-public operator fun int.bxor(b: ubyte): int
-public operator fun int.bxor(b: byte): int
-public operator fun int.bxor(s: ushort): int
-public operator fun int.bxor(s: short): int
-public operator fun int.bxor(i: uint): int
-public operator fun int.bxor(i: int): int
-public operator fun int.bxor(l: ulong): long
-public operator fun int.bxor(l: long): long
-public operator fun int.bxor(f: float): float
-public operator fun int.bxor(d: double): double
-
-public operator fun ulong.bxor(b: ubyte): long
-public operator fun ulong.bxor(b: byte): long
-public operator fun ulong.bxor(s: ushort): long
-public operator fun ulong.bxor(s: short): long
-public operator fun ulong.bxor(i: uint): long
-public operator fun ulong.bxor(i: int): long
-public operator fun ulong.bxor(l: ulong): ulong
-public operator fun ulong.bxor(l: long): long
-public operator fun ulong.bxor(f: float): float
-public operator fun ulong.bxor(d: double): double
-
-public operator fun long.bxor(b: ubyte): long
-public operator fun long.bxor(b: byte): long
-public operator fun long.bxor(s: ushort): long
-public operator fun long.bxor(s: short): long
-public operator fun long.bxor(i: uint): long
-public operator fun long.bxor(i: int): long
-public operator fun long.bxor(l: ulong): long
-public operator fun long.bxor(l: long): long
-public operator fun long.bxor(f: float): float
-public operator fun long.bxor(d: double): double
-
-public operator fun float.bxor(b: ubyte): float
-public operator fun float.bxor(b: byte): float
-public operator fun float.bxor(s: ushort): float
-public operator fun float.bxor(s: short): float
-public operator fun float.bxor(i: uint): float
-public operator fun float.bxor(i: int): float
-public operator fun float.bxor(l: ulong): float
-public operator fun float.bxor(l: long): float
-public operator fun float.bxor(f: float): float
-public operator fun float.bxor(d: double): double
-
-public operator fun double.bxor(b: ubyte): double
-public operator fun double.bxor(b: byte): double
-public operator fun double.bxor(s: ushort): double
-public operator fun double.bxor(s: short): double
-public operator fun double.bxor(i: uint): double
-public operator fun double.bxor(i: int): double
-public operator fun double.bxor(l: ulong): double
-public operator fun double.bxor(l: long): double
-public operator fun double.bxor(f: float): double
-public operator fun double.bxor(d: double): double
-
-
-public operator fun ubyte.bnand(b: ubyte): ubyte
-public operator fun ubyte.bnand(b: byte): byte
-public operator fun ubyte.bnand(s: ushort): short
-public operator fun ubyte.bnand(s: short): short
-public operator fun ubyte.bnand(i: uint): int
-public operator fun ubyte.bnand(i: int): int
-public operator fun ubyte.bnand(l: ulong): long
-public operator fun ubyte.bnand(l: long): long
-public operator fun ubyte.bnand(f: float): float
-public operator fun ubyte.bnand(d: double): double
-
-public operator fun byte.bnand(b: ubyte): byte
-public operator fun byte.bnand(b: byte): byte
-public operator fun byte.bnand(s: ushort): short
-public operator fun byte.bnand(s: short): short
-public operator fun byte.bnand(i: uint): int
-public operator fun byte.bnand(i: int): int
-public operator fun byte.bnand(l: ulong): long
-public operator fun byte.bnand(l: long): long
-public operator fun byte.bnand(f: float): float
-public operator fun byte.bnand(d: double): double
-
-public operator fun ushort.bnand(b: ubyte): short
-public operator fun ushort.bnand(b: byte): short
-public operator fun ushort.bnand(s: ushort): ushort
-public operator fun ushort.bnand(s: short): short
-public operator fun ushort.bnand(i: uint): int
-public operator fun ushort.bnand(i: int): int
-public operator fun ushort.bnand(l: ulong): long
-public operator fun ushort.bnand(l: long): long
-public operator fun ushort.bnand(f: float): float
-public operator fun ushort.bnand(d: double): double
-
-public operator fun short.bnand(b: ubyte): short
-public operator fun short.bnand(b: byte): short
-public operator fun short.bnand(s: ushort): short
-public operator fun short.bnand(s: short): short
-public operator fun short.bnand(i: uint): int
-public operator fun short.bnand(i: int): int
-public operator fun short.bnand(l: ulong): long
-public operator fun short.bnand(l: long): long
-public operator fun short.bnand(f: float): float
-public operator fun short.bnand(d: double): double
-
-public operator fun uint.bnand(b: ubyte): int
-public operator fun uint.bnand(b: byte): int
-public operator fun uint.bnand(s: ushort): int
-public operator fun uint.bnand(s: short): int
-public operator fun uint.bnand(i: uint): uint
-public operator fun uint.bnand(i: int): int
-public operator fun uint.bnand(l: ulong): long
-public operator fun uint.bnand(l: long): long
-public operator fun uint.bnand(f: float): float
-public operator fun uint.bnand(d: double): double
-
-public operator fun int.bnand(b: ubyte): int
-public operator fun int.bnand(b: byte): int
-public operator fun int.bnand(s: ushort): int
-public operator fun int.bnand(s: short): int
-public operator fun int.bnand(i: uint): int
-public operator fun int.bnand(i: int): int
-public operator fun int.bnand(l: ulong): long
-public operator fun int.bnand(l: long): long
-public operator fun int.bnand(f: float): float
-public operator fun int.bnand(d: double): double
-
-public operator fun ulong.bnand(b: ubyte): long
-public operator fun ulong.bnand(b: byte): long
-public operator fun ulong.bnand(s: ushort): long
-public operator fun ulong.bnand(s: short): long
-public operator fun ulong.bnand(i: uint): long
-public operator fun ulong.bnand(i: int): long
-public operator fun ulong.bnand(l: ulong): ulong
-public operator fun ulong.bnand(l: long): long
-public operator fun ulong.bnand(f: float): float
-public operator fun ulong.bnand(d: double): double
-
-public operator fun long.bnand(b: ubyte): long
-public operator fun long.bnand(b: byte): long
-public operator fun long.bnand(s: ushort): long
-public operator fun long.bnand(s: short): long
-public operator fun long.bnand(i: uint): long
-public operator fun long.bnand(i: int): long
-public operator fun long.bnand(l: ulong): long
-public operator fun long.bnand(l: long): long
-public operator fun long.bnand(f: float): float
-public operator fun long.bnand(d: double): double
-
-public operator fun float.bnand(b: ubyte): float
-public operator fun float.bnand(b: byte): float
-public operator fun float.bnand(s: ushort): float
-public operator fun float.bnand(s: short): float
-public operator fun float.bnand(i: uint): float
-public operator fun float.bnand(i: int): float
-public operator fun float.bnand(l: ulong): float
-public operator fun float.bnand(l: long): float
-public operator fun float.bnand(f: float): float
-public operator fun float.bnand(d: double): double
-
-public operator fun double.bnand(b: ubyte): double
-public operator fun double.bnand(b: byte): double
-public operator fun double.bnand(s: ushort): double
-public operator fun double.bnand(s: short): double
-public operator fun double.bnand(i: uint): double
-public operator fun double.bnand(i: int): double
-public operator fun double.bnand(l: ulong): double
-public operator fun double.bnand(l: long): double
-public operator fun double.bnand(f: float): double
-public operator fun double.bnand(d: double): double
-
-
-public operator fun ubyte.bnor(b: ubyte): ubyte
-public operator fun ubyte.bnor(b: byte): byte
-public operator fun ubyte.bnor(s: ushort): short
-public operator fun ubyte.bnor(s: short): short
-public operator fun ubyte.bnor(i: uint): int
-public operator fun ubyte.bnor(i: int): int
-public operator fun ubyte.bnor(l: ulong): long
-public operator fun ubyte.bnor(l: long): long
-public operator fun ubyte.bnor(f: float): float
-public operator fun ubyte.bnor(d: double): double
-
-public operator fun byte.bnor(b: ubyte): byte
-public operator fun byte.bnor(b: byte): byte
-public operator fun byte.bnor(s: ushort): short
-public operator fun byte.bnor(s: short): short
-public operator fun byte.bnor(i: uint): int
-public operator fun byte.bnor(i: int): int
-public operator fun byte.bnor(l: ulong): long
-public operator fun byte.bnor(l: long): long
-public operator fun byte.bnor(f: float): float
-public operator fun byte.bnor(d: double): double
-
-public operator fun ushort.bnor(b: ubyte): short
-public operator fun ushort.bnor(b: byte): short
-public operator fun ushort.bnor(s: ushort): ushort
-public operator fun ushort.bnor(s: short): short
-public operator fun ushort.bnor(i: uint): int
-public operator fun ushort.bnor(i: int): int
-public operator fun ushort.bnor(l: ulong): long
-public operator fun ushort.bnor(l: long): long
-public operator fun ushort.bnor(f: float): float
-public operator fun ushort.bnor(d: double): double
-
-public operator fun short.bnor(b: ubyte): short
-public operator fun short.bnor(b: byte): short
-public operator fun short.bnor(s: ushort): short
-public operator fun short.bnor(s: short): short
-public operator fun short.bnor(i: uint): int
-public operator fun short.bnor(i: int): int
-public operator fun short.bnor(l: ulong): long
-public operator fun short.bnor(l: long): long
-public operator fun short.bnor(f: float): float
-public operator fun short.bnor(d: double): double
-
-public operator fun uint.bnor(b: ubyte): int
-public operator fun uint.bnor(b: byte): int
-public operator fun uint.bnor(s: ushort): int
-public operator fun uint.bnor(s: short): int
-public operator fun uint.bnor(i: uint): uint
-public operator fun uint.bnor(i: int): int
-public operator fun uint.bnor(l: ulong): long
-public operator fun uint.bnor(l: long): long
-public operator fun uint.bnor(f: float): float
-public operator fun uint.bnor(d: double): double
-
-public operator fun int.bnor(b: ubyte): int
-public operator fun int.bnor(b: byte): int
-public operator fun int.bnor(s: ushort): int
-public operator fun int.bnor(s: short): int
-public operator fun int.bnor(i: uint): int
-public operator fun int.bnor(i: int): int
-public operator fun int.bnor(l: ulong): long
-public operator fun int.bnor(l: long): long
-public operator fun int.bnor(f: float): float
-public operator fun int.bnor(d: double): double
-
-public operator fun ulong.bnor(b: ubyte): long
-public operator fun ulong.bnor(b: byte): long
-public operator fun ulong.bnor(s: ushort): long
-public operator fun ulong.bnor(s: short): long
-public operator fun ulong.bnor(i: uint): long
-public operator fun ulong.bnor(i: int): long
-public operator fun ulong.bnor(l: ulong): ulong
-public operator fun ulong.bnor(l: long): long
-public operator fun ulong.bnor(f: float): float
-public operator fun ulong.bnor(d: double): double
-
-public operator fun long.bnor(b: ubyte): long
-public operator fun long.bnor(b: byte): long
-public operator fun long.bnor(s: ushort): long
-public operator fun long.bnor(s: short): long
-public operator fun long.bnor(i: uint): long
-public operator fun long.bnor(i: int): long
-public operator fun long.bnor(l: ulong): long
-public operator fun long.bnor(l: long): long
-public operator fun long.bnor(f: float): float
-public operator fun long.bnor(d: double): double
-
-public operator fun float.bnor(b: ubyte): float
-public operator fun float.bnor(b: byte): float
-public operator fun float.bnor(s: ushort): float
-public operator fun float.bnor(s: short): float
-public operator fun float.bnor(i: uint): float
-public operator fun float.bnor(i: int): float
-public operator fun float.bnor(l: ulong): float
-public operator fun float.bnor(l: long): float
-public operator fun float.bnor(f: float): float
-public operator fun float.bnor(d: double): double
-
-public operator fun double.bnor(b: ubyte): double
-public operator fun double.bnor(b: byte): double
-public operator fun double.bnor(s: ushort): double
-public operator fun double.bnor(s: short): double
-public operator fun double.bnor(i: uint): double
-public operator fun double.bnor(i: int): double
-public operator fun double.bnor(l: ulong): double
-public operator fun double.bnor(l: long): double
-public operator fun double.bnor(f: float): double
-public operator fun double.bnor(d: double): double
-
-
-public operator fun ubyte.bxnor(b: ubyte): ubyte
-public operator fun ubyte.bxnor(b: byte): byte
-public operator fun ubyte.bxnor(s: ushort): short
-public operator fun ubyte.bxnor(s: short): short
-public operator fun ubyte.bxnor(i: uint): int
-public operator fun ubyte.bxnor(i: int): int
-public operator fun ubyte.bxnor(l: ulong): long
-public operator fun ubyte.bxnor(l: long): long
-public operator fun ubyte.bxnor(f: float): float
-public operator fun ubyte.bxnor(d: double): double
-
-public operator fun byte.bxnor(b: ubyte): byte
-public operator fun byte.bxnor(b: byte): byte
-public operator fun byte.bxnor(s: ushort): short
-public operator fun byte.bxnor(s: short): short
-public operator fun byte.bxnor(i: uint): int
-public operator fun byte.bxnor(i: int): int
-public operator fun byte.bxnor(l: ulong): long
-public operator fun byte.bxnor(l: long): long
-public operator fun byte.bxnor(f: float): float
-public operator fun byte.bxnor(d: double): double
-
-public operator fun ushort.bxnor(b: ubyte): short
-public operator fun ushort.bxnor(b: byte): short
-public operator fun ushort.bxnor(s: ushort): ushort
-public operator fun ushort.bxnor(s: short): short
-public operator fun ushort.bxnor(i: uint): int
-public operator fun ushort.bxnor(i: int): int
-public operator fun ushort.bxnor(l: ulong): long
-public operator fun ushort.bxnor(l: long): long
-public operator fun ushort.bxnor(f: float): float
-public operator fun ushort.bxnor(d: double): double
-
-public operator fun short.bxnor(b: ubyte): short
-public operator fun short.bxnor(b: byte): short
-public operator fun short.bxnor(s: ushort): short
-public operator fun short.bxnor(s: short): short
-public operator fun short.bxnor(i: uint): int
-public operator fun short.bxnor(i: int): int
-public operator fun short.bxnor(l: ulong): long
-public operator fun short.bxnor(l: long): long
-public operator fun short.bxnor(f: float): float
-public operator fun short.bxnor(d: double): double
-
-public operator fun uint.bxnor(b: ubyte): int
-public operator fun uint.bxnor(b: byte): int
-public operator fun uint.bxnor(s: ushort): int
-public operator fun uint.bxnor(s: short): int
-public operator fun uint.bxnor(i: uint): uint
-public operator fun uint.bxnor(i: int): int
-public operator fun uint.bxnor(l: ulong): long
-public operator fun uint.bxnor(l: long): long
-public operator fun uint.bxnor(f: float): float
-public operator fun uint.bxnor(d: double): double
-
-public operator fun int.bxnor(b: ubyte): int
-public operator fun int.bxnor(b: byte): int
-public operator fun int.bxnor(s: ushort): int
-public operator fun int.bxnor(s: short): int
-public operator fun int.bxnor(i: uint): int
-public operator fun int.bxnor(i: int): int
-public operator fun int.bxnor(l: ulong): long
-public operator fun int.bxnor(l: long): long
-public operator fun int.bxnor(f: float): float
-public operator fun int.bxnor(d: double): double
-
-public operator fun ulong.bxnor(b: ubyte): long
-public operator fun ulong.bxnor(b: byte): long
-public operator fun ulong.bxnor(s: ushort): long
-public operator fun ulong.bxnor(s: short): long
-public operator fun ulong.bxnor(i: uint): long
-public operator fun ulong.bxnor(i: int): long
-public operator fun ulong.bxnor(l: ulong): ulong
-public operator fun ulong.bxnor(l: long): long
-public operator fun ulong.bxnor(f: float): float
-public operator fun ulong.bxnor(d: double): double
-
-public operator fun long.bxnor(b: ubyte): long
-public operator fun long.bxnor(b: byte): long
-public operator fun long.bxnor(s: ushort): long
-public operator fun long.bxnor(s: short): long
-public operator fun long.bxnor(i: uint): long
-public operator fun long.bxnor(i: int): long
-public operator fun long.bxnor(l: ulong): long
-public operator fun long.bxnor(l: long): long
-public operator fun long.bxnor(f: float): float
-public operator fun long.bxnor(d: double): double
-
-public operator fun float.bxnor(b: ubyte): float
-public operator fun float.bxnor(b: byte): float
-public operator fun float.bxnor(s: ushort): float
-public operator fun float.bxnor(s: short): float
-public operator fun float.bxnor(i: uint): float
-public operator fun float.bxnor(i: int): float
-public operator fun float.bxnor(l: ulong): float
-public operator fun float.bxnor(l: long): float
-public operator fun float.bxnor(f: float): float
-public operator fun float.bxnor(d: double): double
-
-public operator fun double.bxnor(b: ubyte): double
-public operator fun double.bxnor(b: byte): double
-public operator fun double.bxnor(s: ushort): double
-public operator fun double.bxnor(s: short): double
-public operator fun double.bxnor(i: uint): double
-public operator fun double.bxnor(i: int): double
-public operator fun double.bxnor(l: ulong): double
-public operator fun double.bxnor(l: long): double
-public operator fun double.bxnor(f: float): double
-public operator fun double.bxnor(d: double): double
-
-
-public operator fun ubyte.shl(b: ubyte): ubyte
-public operator fun ubyte.shl(b: byte): byte
-public operator fun ubyte.shl(s: ushort): short
-public operator fun ubyte.shl(s: short): short
-public operator fun ubyte.shl(i: uint): int
-public operator fun ubyte.shl(i: int): int
-public operator fun ubyte.shl(l: ulong): long
-public operator fun ubyte.shl(l: long): long
-public operator fun ubyte.shl(f: float): float
-public operator fun ubyte.shl(d: double): double
-
-public operator fun byte.shl(b: ubyte): byte
-public operator fun byte.shl(b: byte): byte
-public operator fun byte.shl(s: ushort): short
-public operator fun byte.shl(s: short): short
-public operator fun byte.shl(i: uint): int
-public operator fun byte.shl(i: int): int
-public operator fun byte.shl(l: ulong): long
-public operator fun byte.shl(l: long): long
-public operator fun byte.shl(f: float): float
-public operator fun byte.shl(d: double): double
-
-public operator fun ushort.shl(b: ubyte): short
-public operator fun ushort.shl(b: byte): short
-public operator fun ushort.shl(s: ushort): ushort
-public operator fun ushort.shl(s: short): short
-public operator fun ushort.shl(i: uint): int
-public operator fun ushort.shl(i: int): int
-public operator fun ushort.shl(l: ulong): long
-public operator fun ushort.shl(l: long): long
-public operator fun ushort.shl(f: float): float
-public operator fun ushort.shl(d: double): double
-
-public operator fun short.shl(b: ubyte): short
-public operator fun short.shl(b: byte): short
-public operator fun short.shl(s: ushort): short
-public operator fun short.shl(s: short): short
-public operator fun short.shl(i: uint): int
-public operator fun short.shl(i: int): int
-public operator fun short.shl(l: ulong): long
-public operator fun short.shl(l: long): long
-public operator fun short.shl(f: float): float
-public operator fun short.shl(d: double): double
-
-public operator fun uint.shl(b: ubyte): int
-public operator fun uint.shl(b: byte): int
-public operator fun uint.shl(s: ushort): int
-public operator fun uint.shl(s: short): int
-public operator fun uint.shl(i: uint): uint
-public operator fun uint.shl(i: int): int
-public operator fun uint.shl(l: ulong): long
-public operator fun uint.shl(l: long): long
-public operator fun uint.shl(f: float): float
-public operator fun uint.shl(d: double): double
-
-public operator fun int.shl(b: ubyte): int
-public operator fun int.shl(b: byte): int
-public operator fun int.shl(s: ushort): int
-public operator fun int.shl(s: short): int
-public operator fun int.shl(i: uint): int
-public operator fun int.shl(i: int): int
-public operator fun int.shl(l: ulong): long
-public operator fun int.shl(l: long): long
-public operator fun int.shl(f: float): float
-public operator fun int.shl(d: double): double
-
-public operator fun ulong.shl(b: ubyte): long
-public operator fun ulong.shl(b: byte): long
-public operator fun ulong.shl(s: ushort): long
-public operator fun ulong.shl(s: short): long
-public operator fun ulong.shl(i: uint): long
-public operator fun ulong.shl(i: int): long
-public operator fun ulong.shl(l: ulong): ulong
-public operator fun ulong.shl(l: long): long
-public operator fun ulong.shl(f: float): float
-public operator fun ulong.shl(d: double): double
-
-public operator fun long.shl(b: ubyte): long
-public operator fun long.shl(b: byte): long
-public operator fun long.shl(s: ushort): long
-public operator fun long.shl(s: short): long
-public operator fun long.shl(i: uint): long
-public operator fun long.shl(i: int): long
-public operator fun long.shl(l: ulong): long
-public operator fun long.shl(l: long): long
-public operator fun long.shl(f: float): float
-public operator fun long.shl(d: double): double
-
-public operator fun float.shl(b: ubyte): float
-public operator fun float.shl(b: byte): float
-public operator fun float.shl(s: ushort): float
-public operator fun float.shl(s: short): float
-public operator fun float.shl(i: uint): float
-public operator fun float.shl(i: int): float
-public operator fun float.shl(l: ulong): float
-public operator fun float.shl(l: long): float
-public operator fun float.shl(f: float): float
-public operator fun float.shl(d: double): double
-
-public operator fun double.shl(b: ubyte): double
-public operator fun double.shl(b: byte): double
-public operator fun double.shl(s: ushort): double
-public operator fun double.shl(s: short): double
-public operator fun double.shl(i: uint): double
-public operator fun double.shl(i: int): double
-public operator fun double.shl(l: ulong): double
-public operator fun double.shl(l: long): double
-public operator fun double.shl(f: float): double
-public operator fun double.shl(d: double): double
-
-
-public operator fun ubyte.shr(b: ubyte): ubyte
-public operator fun ubyte.shr(b: byte): byte
-public operator fun ubyte.shr(s: ushort): short
-public operator fun ubyte.shr(s: short): short
-public operator fun ubyte.shr(i: uint): int
-public operator fun ubyte.shr(i: int): int
-public operator fun ubyte.shr(l: ulong): long
-public operator fun ubyte.shr(l: long): long
-public operator fun ubyte.shr(f: float): float
-public operator fun ubyte.shr(d: double): double
-
-public operator fun byte.shr(b: ubyte): byte
-public operator fun byte.shr(b: byte): byte
-public operator fun byte.shr(s: ushort): short
-public operator fun byte.shr(s: short): short
-public operator fun byte.shr(i: uint): int
-public operator fun byte.shr(i: int): int
-public operator fun byte.shr(l: ulong): long
-public operator fun byte.shr(l: long): long
-public operator fun byte.shr(f: float): float
-public operator fun byte.shr(d: double): double
-
-public operator fun ushort.shr(b: ubyte): short
-public operator fun ushort.shr(b: byte): short
-public operator fun ushort.shr(s: ushort): ushort
-public operator fun ushort.shr(s: short): short
-public operator fun ushort.shr(i: uint): int
-public operator fun ushort.shr(i: int): int
-public operator fun ushort.shr(l: ulong): long
-public operator fun ushort.shr(l: long): long
-public operator fun ushort.shr(f: float): float
-public operator fun ushort.shr(d: double): double
-
-public operator fun short.shr(b: ubyte): short
-public operator fun short.shr(b: byte): short
-public operator fun short.shr(s: ushort): short
-public operator fun short.shr(s: short): short
-public operator fun short.shr(i: uint): int
-public operator fun short.shr(i: int): int
-public operator fun short.shr(l: ulong): long
-public operator fun short.shr(l: long): long
-public operator fun short.shr(f: float): float
-public operator fun short.shr(d: double): double
-
-public operator fun uint.shr(b: ubyte): int
-public operator fun uint.shr(b: byte): int
-public operator fun uint.shr(s: ushort): int
-public operator fun uint.shr(s: short): int
-public operator fun uint.shr(i: uint): uint
-public operator fun uint.shr(i: int): int
-public operator fun uint.shr(l: ulong): long
-public operator fun uint.shr(l: long): long
-public operator fun uint.shr(f: float): float
-public operator fun uint.shr(d: double): double
-
-public operator fun int.shr(b: ubyte): int
-public operator fun int.shr(b: byte): int
-public operator fun int.shr(s: ushort): int
-public operator fun int.shr(s: short): int
-public operator fun int.shr(i: uint): int
-public operator fun int.shr(i: int): int
-public operator fun int.shr(l: ulong): long
-public operator fun int.shr(l: long): long
-public operator fun int.shr(f: float): float
-public operator fun int.shr(d: double): double
-
-public operator fun ulong.shr(b: ubyte): long
-public operator fun ulong.shr(b: byte): long
-public operator fun ulong.shr(s: ushort): long
-public operator fun ulong.shr(s: short): long
-public operator fun ulong.shr(i: uint): long
-public operator fun ulong.shr(i: int): long
-public operator fun ulong.shr(l: ulong): ulong
-public operator fun ulong.shr(l: long): long
-public operator fun ulong.shr(f: float): float
-public operator fun ulong.shr(d: double): double
-
-public operator fun long.shr(b: ubyte): long
-public operator fun long.shr(b: byte): long
-public operator fun long.shr(s: ushort): long
-public operator fun long.shr(s: short): long
-public operator fun long.shr(i: uint): long
-public operator fun long.shr(i: int): long
-public operator fun long.shr(l: ulong): long
-public operator fun long.shr(l: long): long
-public operator fun long.shr(f: float): float
-public operator fun long.shr(d: double): double
-
-public operator fun float.shr(b: ubyte): float
-public operator fun float.shr(b: byte): float
-public operator fun float.shr(s: ushort): float
-public operator fun float.shr(s: short): float
-public operator fun float.shr(i: uint): float
-public operator fun float.shr(i: int): float
-public operator fun float.shr(l: ulong): float
-public operator fun float.shr(l: long): float
-public operator fun float.shr(f: float): float
-public operator fun float.shr(d: double): double
-
-public operator fun double.shr(b: ubyte): double
-public operator fun double.shr(b: byte): double
-public operator fun double.shr(s: ushort): double
-public operator fun double.shr(s: short): double
-public operator fun double.shr(i: uint): double
-public operator fun double.shr(i: int): double
-public operator fun double.shr(l: ulong): double
-public operator fun double.shr(l: long): double
-public operator fun double.shr(f: float): double
-public operator fun double.shr(d: double): double
-
-
-public operator fun ubyte.ushr(b: ubyte): ubyte
-public operator fun ubyte.ushr(b: byte): byte
-public operator fun ubyte.ushr(s: ushort): short
-public operator fun ubyte.ushr(s: short): short
-public operator fun ubyte.ushr(i: uint): int
-public operator fun ubyte.ushr(i: int): int
-public operator fun ubyte.ushr(l: ulong): long
-public operator fun ubyte.ushr(l: long): long
-public operator fun ubyte.ushr(f: float): float
-public operator fun ubyte.ushr(d: double): double
-
-public operator fun byte.ushr(b: ubyte): byte
-public operator fun byte.ushr(b: byte): byte
-public operator fun byte.ushr(s: ushort): short
-public operator fun byte.ushr(s: short): short
-public operator fun byte.ushr(i: uint): int
-public operator fun byte.ushr(i: int): int
-public operator fun byte.ushr(l: ulong): long
-public operator fun byte.ushr(l: long): long
-public operator fun byte.ushr(f: float): float
-public operator fun byte.ushr(d: double): double
-
-public operator fun ushort.ushr(b: ubyte): short
-public operator fun ushort.ushr(b: byte): short
-public operator fun ushort.ushr(s: ushort): ushort
-public operator fun ushort.ushr(s: short): short
-public operator fun ushort.ushr(i: uint): int
-public operator fun ushort.ushr(i: int): int
-public operator fun ushort.ushr(l: ulong): long
-public operator fun ushort.ushr(l: long): long
-public operator fun ushort.ushr(f: float): float
-public operator fun ushort.ushr(d: double): double
-
-public operator fun short.ushr(b: ubyte): short
-public operator fun short.ushr(b: byte): short
-public operator fun short.ushr(s: ushort): short
-public operator fun short.ushr(s: short): short
-public operator fun short.ushr(i: uint): int
-public operator fun short.ushr(i: int): int
-public operator fun short.ushr(l: ulong): long
-public operator fun short.ushr(l: long): long
-public operator fun short.ushr(f: float): float
-public operator fun short.ushr(d: double): double
-
-public operator fun uint.ushr(b: ubyte): int
-public operator fun uint.ushr(b: byte): int
-public operator fun uint.ushr(s: ushort): int
-public operator fun uint.ushr(s: short): int
-public operator fun uint.ushr(i: uint): uint
-public operator fun uint.ushr(i: int): int
-public operator fun uint.ushr(l: ulong): long
-public operator fun uint.ushr(l: long): long
-public operator fun uint.ushr(f: float): float
-public operator fun uint.ushr(d: double): double
-
-public operator fun int.ushr(b: ubyte): int
-public operator fun int.ushr(b: byte): int
-public operator fun int.ushr(s: ushort): int
-public operator fun int.ushr(s: short): int
-public operator fun int.ushr(i: uint): int
-public operator fun int.ushr(i: int): int
-public operator fun int.ushr(l: ulong): long
-public operator fun int.ushr(l: long): long
-public operator fun int.ushr(f: float): float
-public operator fun int.ushr(d: double): double
-
-public operator fun ulong.ushr(b: ubyte): long
-public operator fun ulong.ushr(b: byte): long
-public operator fun ulong.ushr(s: ushort): long
-public operator fun ulong.ushr(s: short): long
-public operator fun ulong.ushr(i: uint): long
-public operator fun ulong.ushr(i: int): long
-public operator fun ulong.ushr(l: ulong): ulong
-public operator fun ulong.ushr(l: long): long
-public operator fun ulong.ushr(f: float): float
-public operator fun ulong.ushr(d: double): double
-
-public operator fun long.ushr(b: ubyte): long
-public operator fun long.ushr(b: byte): long
-public operator fun long.ushr(s: ushort): long
-public operator fun long.ushr(s: short): long
-public operator fun long.ushr(i: uint): long
-public operator fun long.ushr(i: int): long
-public operator fun long.ushr(l: ulong): long
-public operator fun long.ushr(l: long): long
-public operator fun long.ushr(f: float): float
-public operator fun long.ushr(d: double): double
-
-public operator fun float.ushr(b: ubyte): float
-public operator fun float.ushr(b: byte): float
-public operator fun float.ushr(s: ushort): float
-public operator fun float.ushr(s: short): float
-public operator fun float.ushr(i: uint): float
-public operator fun float.ushr(i: int): float
-public operator fun float.ushr(l: ulong): float
-public operator fun float.ushr(l: long): float
-public operator fun float.ushr(f: float): float
-public operator fun float.ushr(d: double): double
-
-public operator fun double.ushr(b: ubyte): double
-public operator fun double.ushr(b: byte): double
-public operator fun double.ushr(s: ushort): double
-public operator fun double.ushr(s: short): double
-public operator fun double.ushr(i: uint): double
-public operator fun double.ushr(i: int): double
-public operator fun double.ushr(l: ulong): double
-public operator fun double.ushr(l: long): double
-public operator fun double.ushr(f: float): double
-public operator fun double.ushr(d: double): double
-
-
-public fun ubyte.bnot(): ubyte
-public fun byte.bnot(): byte
-public fun ushort.bnot(): ushort
-public fun short.bnot(): short
-public fun uint.bnot(): uint
-public fun int.bnot(): int
-public fun ulong.bnot(): ulong
-public fun long.bnot(): long
-public fun float.bnot(): float
-public fun double.bnot(): double
+public native operator fun ubyte.plus(b: ubyte): ubyte
+public native operator fun ubyte.plus(b: byte): byte
+public native operator fun ubyte.plus(s: ushort): short
+public native operator fun ubyte.plus(s: short): short
+public native operator fun ubyte.plus(i: uint): int
+public native operator fun ubyte.plus(i: int): int
+public native operator fun ubyte.plus(l: ulong): long
+public native operator fun ubyte.plus(l: long): long
+public native operator fun ubyte.plus(f: float): float
+public native operator fun ubyte.plus(d: double): double
+
+public native operator fun byte.plus(b: ubyte): byte
+public native operator fun byte.plus(b: byte): byte
+public native operator fun byte.plus(s: ushort): short
+public native operator fun byte.plus(s: short): short
+public native operator fun byte.plus(i: uint): int
+public native operator fun byte.plus(i: int): int
+public native operator fun byte.plus(l: ulong): long
+public native operator fun byte.plus(l: long): long
+public native operator fun byte.plus(f: float): float
+public native operator fun byte.plus(d: double): double
+
+public native operator fun ushort.plus(b: ubyte): short
+public native operator fun ushort.plus(b: byte): short
+public native operator fun ushort.plus(s: ushort): ushort
+public native operator fun ushort.plus(s: short): short
+public native operator fun ushort.plus(i: uint): int
+public native operator fun ushort.plus(i: int): int
+public native operator fun ushort.plus(l: ulong): long
+public native operator fun ushort.plus(l: long): long
+public native operator fun ushort.plus(f: float): float
+public native operator fun ushort.plus(d: double): double
+
+public native operator fun short.plus(b: ubyte): short
+public native operator fun short.plus(b: byte): short
+public native operator fun short.plus(s: ushort): short
+public native operator fun short.plus(s: short): short
+public native operator fun short.plus(i: uint): int
+public native operator fun short.plus(i: int): int
+public native operator fun short.plus(l: ulong): long
+public native operator fun short.plus(l: long): long
+public native operator fun short.plus(f: float): float
+public native operator fun short.plus(d: double): double
+
+public native operator fun uint.plus(b: ubyte): int
+public native operator fun uint.plus(b: byte): int
+public native operator fun uint.plus(s: ushort): int
+public native operator fun uint.plus(s: short): int
+public native operator fun uint.plus(i: uint): uint
+public native operator fun uint.plus(i: int): int
+public native operator fun uint.plus(l: ulong): long
+public native operator fun uint.plus(l: long): long
+public native operator fun uint.plus(f: float): float
+public native operator fun uint.plus(d: double): double
+
+public native operator fun int.plus(b: ubyte): int
+public native operator fun int.plus(b: byte): int
+public native operator fun int.plus(s: ushort): int
+public native operator fun int.plus(s: short): int
+public native operator fun int.plus(i: uint): int
+public native operator fun int.plus(i: int): int
+public native operator fun int.plus(l: ulong): long
+public native operator fun int.plus(l: long): long
+public native operator fun int.plus(f: float): float
+public native operator fun int.plus(d: double): double
+
+public native operator fun ulong.plus(b: ubyte): long
+public native operator fun ulong.plus(b: byte): long
+public native operator fun ulong.plus(s: ushort): long
+public native operator fun ulong.plus(s: short): long
+public native operator fun ulong.plus(i: uint): long
+public native operator fun ulong.plus(i: int): long
+public native operator fun ulong.plus(l: ulong): ulong
+public native operator fun ulong.plus(l: long): long
+public native operator fun ulong.plus(f: float): float
+public native operator fun ulong.plus(d: double): double
+
+public native operator fun long.plus(b: ubyte): long
+public native operator fun long.plus(b: byte): long
+public native operator fun long.plus(s: ushort): long
+public native operator fun long.plus(s: short): long
+public native operator fun long.plus(i: uint): long
+public native operator fun long.plus(i: int): long
+public native operator fun long.plus(l: ulong): long
+public native operator fun long.plus(l: long): long
+public native operator fun long.plus(f: float): float
+public native operator fun long.plus(d: double): double
+
+public native operator fun float.plus(b: ubyte): float
+public native operator fun float.plus(b: byte): float
+public native operator fun float.plus(s: ushort): float
+public native operator fun float.plus(s: short): float
+public native operator fun float.plus(i: uint): float
+public native operator fun float.plus(i: int): float
+public native operator fun float.plus(l: ulong): float
+public native operator fun float.plus(l: long): float
+public native operator fun float.plus(f: float): float
+public native operator fun float.plus(d: double): double
+
+public native operator fun double.plus(b: ubyte): double
+public native operator fun double.plus(b: byte): double
+public native operator fun double.plus(s: ushort): double
+public native operator fun double.plus(s: short): double
+public native operator fun double.plus(i: uint): double
+public native operator fun double.plus(i: int): double
+public native operator fun double.plus(l: ulong): double
+public native operator fun double.plus(l: long): double
+public native operator fun double.plus(f: float): double
+public native operator fun double.plus(d: double): double
+
+
+public native operator fun ubyte.minus(b: ubyte): ubyte
+public native operator fun ubyte.minus(b: byte): byte
+public native operator fun ubyte.minus(s: ushort): short
+public native operator fun ubyte.minus(s: short): short
+public native operator fun ubyte.minus(i: uint): int
+public native operator fun ubyte.minus(i: int): int
+public native operator fun ubyte.minus(l: ulong): long
+public native operator fun ubyte.minus(l: long): long
+public native operator fun ubyte.minus(f: float): float
+public native operator fun ubyte.minus(d: double): double
+
+public native operator fun byte.minus(b: ubyte): byte
+public native operator fun byte.minus(b: byte): byte
+public native operator fun byte.minus(s: ushort): short
+public native operator fun byte.minus(s: short): short
+public native operator fun byte.minus(i: uint): int
+public native operator fun byte.minus(i: int): int
+public native operator fun byte.minus(l: ulong): long
+public native operator fun byte.minus(l: long): long
+public native operator fun byte.minus(f: float): float
+public native operator fun byte.minus(d: double): double
+
+public native operator fun ushort.minus(b: ubyte): short
+public native operator fun ushort.minus(b: byte): short
+public native operator fun ushort.minus(s: ushort): ushort
+public native operator fun ushort.minus(s: short): short
+public native operator fun ushort.minus(i: uint): int
+public native operator fun ushort.minus(i: int): int
+public native operator fun ushort.minus(l: ulong): long
+public native operator fun ushort.minus(l: long): long
+public native operator fun ushort.minus(f: float): float
+public native operator fun ushort.minus(d: double): double
+
+public native operator fun short.minus(b: ubyte): short
+public native operator fun short.minus(b: byte): short
+public native operator fun short.minus(s: ushort): short
+public native operator fun short.minus(s: short): short
+public native operator fun short.minus(i: uint): int
+public native operator fun short.minus(i: int): int
+public native operator fun short.minus(l: ulong): long
+public native operator fun short.minus(l: long): long
+public native operator fun short.minus(f: float): float
+public native operator fun short.minus(d: double): double
+
+public native operator fun uint.minus(b: ubyte): int
+public native operator fun uint.minus(b: byte): int
+public native operator fun uint.minus(s: ushort): int
+public native operator fun uint.minus(s: short): int
+public native operator fun uint.minus(i: uint): uint
+public native operator fun uint.minus(i: int): int
+public native operator fun uint.minus(l: ulong): long
+public native operator fun uint.minus(l: long): long
+public native operator fun uint.minus(f: float): float
+public native operator fun uint.minus(d: double): double
+
+public native operator fun int.minus(b: ubyte): int
+public native operator fun int.minus(b: byte): int
+public native operator fun int.minus(s: ushort): int
+public native operator fun int.minus(s: short): int
+public native operator fun int.minus(i: uint): int
+public native operator fun int.minus(i: int): int
+public native operator fun int.minus(l: ulong): long
+public native operator fun int.minus(l: long): long
+public native operator fun int.minus(f: float): float
+public native operator fun int.minus(d: double): double
+
+public native operator fun ulong.minus(b: ubyte): long
+public native operator fun ulong.minus(b: byte): long
+public native operator fun ulong.minus(s: ushort): long
+public native operator fun ulong.minus(s: short): long
+public native operator fun ulong.minus(i: uint): long
+public native operator fun ulong.minus(i: int): long
+public native operator fun ulong.minus(l: ulong): ulong
+public native operator fun ulong.minus(l: long): long
+public native operator fun ulong.minus(f: float): float
+public native operator fun ulong.minus(d: double): double
+
+public native operator fun long.minus(b: ubyte): long
+public native operator fun long.minus(b: byte): long
+public native operator fun long.minus(s: ushort): long
+public native operator fun long.minus(s: short): long
+public native operator fun long.minus(i: uint): long
+public native operator fun long.minus(i: int): long
+public native operator fun long.minus(l: ulong): long
+public native operator fun long.minus(l: long): long
+public native operator fun long.minus(f: float): float
+public native operator fun long.minus(d: double): double
+
+public native operator fun float.minus(b: ubyte): float
+public native operator fun float.minus(b: byte): float
+public native operator fun float.minus(s: ushort): float
+public native operator fun float.minus(s: short): float
+public native operator fun float.minus(i: uint): float
+public native operator fun float.minus(i: int): float
+public native operator fun float.minus(l: ulong): float
+public native operator fun float.minus(l: long): float
+public native operator fun float.minus(f: float): float
+public native operator fun float.minus(d: double): double
+
+public native operator fun double.minus(b: ubyte): double
+public native operator fun double.minus(b: byte): double
+public native operator fun double.minus(s: ushort): double
+public native operator fun double.minus(s: short): double
+public native operator fun double.minus(i: uint): double
+public native operator fun double.minus(i: int): double
+public native operator fun double.minus(l: ulong): double
+public native operator fun double.minus(l: long): double
+public native operator fun double.minus(f: float): double
+public native operator fun double.minus(d: double): double
+
+
+public native operator fun ubyte.times(b: ubyte): ubyte
+public native operator fun ubyte.times(b: byte): byte
+public native operator fun ubyte.times(s: ushort): short
+public native operator fun ubyte.times(s: short): short
+public native operator fun ubyte.times(i: uint): int
+public native operator fun ubyte.times(i: int): int
+public native operator fun ubyte.times(l: ulong): long
+public native operator fun ubyte.times(l: long): long
+public native operator fun ubyte.times(f: float): float
+public native operator fun ubyte.times(d: double): double
+
+public native operator fun byte.times(b: ubyte): byte
+public native operator fun byte.times(b: byte): byte
+public native operator fun byte.times(s: ushort): short
+public native operator fun byte.times(s: short): short
+public native operator fun byte.times(i: uint): int
+public native operator fun byte.times(i: int): int
+public native operator fun byte.times(l: ulong): long
+public native operator fun byte.times(l: long): long
+public native operator fun byte.times(f: float): float
+public native operator fun byte.times(d: double): double
+
+public native operator fun ushort.times(b: ubyte): short
+public native operator fun ushort.times(b: byte): short
+public native operator fun ushort.times(s: ushort): ushort
+public native operator fun ushort.times(s: short): short
+public native operator fun ushort.times(i: uint): int
+public native operator fun ushort.times(i: int): int
+public native operator fun ushort.times(l: ulong): long
+public native operator fun ushort.times(l: long): long
+public native operator fun ushort.times(f: float): float
+public native operator fun ushort.times(d: double): double
+
+public native operator fun short.times(b: ubyte): short
+public native operator fun short.times(b: byte): short
+public native operator fun short.times(s: ushort): short
+public native operator fun short.times(s: short): short
+public native operator fun short.times(i: uint): int
+public native operator fun short.times(i: int): int
+public native operator fun short.times(l: ulong): long
+public native operator fun short.times(l: long): long
+public native operator fun short.times(f: float): float
+public native operator fun short.times(d: double): double
+
+public native operator fun uint.times(b: ubyte): int
+public native operator fun uint.times(b: byte): int
+public native operator fun uint.times(s: ushort): int
+public native operator fun uint.times(s: short): int
+public native operator fun uint.times(i: uint): uint
+public native operator fun uint.times(i: int): int
+public native operator fun uint.times(l: ulong): long
+public native operator fun uint.times(l: long): long
+public native operator fun uint.times(f: float): float
+public native operator fun uint.times(d: double): double
+
+public native operator fun int.times(b: ubyte): int
+public native operator fun int.times(b: byte): int
+public native operator fun int.times(s: ushort): int
+public native operator fun int.times(s: short): int
+public native operator fun int.times(i: uint): int
+public native operator fun int.times(i: int): int
+public native operator fun int.times(l: ulong): long
+public native operator fun int.times(l: long): long
+public native operator fun int.times(f: float): float
+public native operator fun int.times(d: double): double
+
+public native operator fun ulong.times(b: ubyte): long
+public native operator fun ulong.times(b: byte): long
+public native operator fun ulong.times(s: ushort): long
+public native operator fun ulong.times(s: short): long
+public native operator fun ulong.times(i: uint): long
+public native operator fun ulong.times(i: int): long
+public native operator fun ulong.times(l: ulong): ulong
+public native operator fun ulong.times(l: long): long
+public native operator fun ulong.times(f: float): float
+public native operator fun ulong.times(d: double): double
+
+public native operator fun long.times(b: ubyte): long
+public native operator fun long.times(b: byte): long
+public native operator fun long.times(s: ushort): long
+public native operator fun long.times(s: short): long
+public native operator fun long.times(i: uint): long
+public native operator fun long.times(i: int): long
+public native operator fun long.times(l: ulong): long
+public native operator fun long.times(l: long): long
+public native operator fun long.times(f: float): float
+public native operator fun long.times(d: double): double
+
+public native operator fun float.times(b: ubyte): float
+public native operator fun float.times(b: byte): float
+public native operator fun float.times(s: ushort): float
+public native operator fun float.times(s: short): float
+public native operator fun float.times(i: uint): float
+public native operator fun float.times(i: int): float
+public native operator fun float.times(l: ulong): float
+public native operator fun float.times(l: long): float
+public native operator fun float.times(f: float): float
+public native operator fun float.times(d: double): double
+
+public native operator fun double.times(b: ubyte): double
+public native operator fun double.times(b: byte): double
+public native operator fun double.times(s: ushort): double
+public native operator fun double.times(s: short): double
+public native operator fun double.times(i: uint): double
+public native operator fun double.times(i: int): double
+public native operator fun double.times(l: ulong): double
+public native operator fun double.times(l: long): double
+public native operator fun double.times(f: float): double
+public native operator fun double.times(d: double): double
+
+
+public native operator fun ubyte.div(b: ubyte): ubyte
+public native operator fun ubyte.div(b: byte): byte
+public native operator fun ubyte.div(s: ushort): short
+public native operator fun ubyte.div(s: short): short
+public native operator fun ubyte.div(i: uint): int
+public native operator fun ubyte.div(i: int): int
+public native operator fun ubyte.div(l: ulong): long
+public native operator fun ubyte.div(l: long): long
+public native operator fun ubyte.div(f: float): float
+public native operator fun ubyte.div(d: double): double
+
+public native operator fun byte.div(b: ubyte): byte
+public native operator fun byte.div(b: byte): byte
+public native operator fun byte.div(s: ushort): short
+public native operator fun byte.div(s: short): short
+public native operator fun byte.div(i: uint): int
+public native operator fun byte.div(i: int): int
+public native operator fun byte.div(l: ulong): long
+public native operator fun byte.div(l: long): long
+public native operator fun byte.div(f: float): float
+public native operator fun byte.div(d: double): double
+
+public native operator fun ushort.div(b: ubyte): short
+public native operator fun ushort.div(b: byte): short
+public native operator fun ushort.div(s: ushort): ushort
+public native operator fun ushort.div(s: short): short
+public native operator fun ushort.div(i: uint): int
+public native operator fun ushort.div(i: int): int
+public native operator fun ushort.div(l: ulong): long
+public native operator fun ushort.div(l: long): long
+public native operator fun ushort.div(f: float): float
+public native operator fun ushort.div(d: double): double
+
+public native operator fun short.div(b: ubyte): short
+public native operator fun short.div(b: byte): short
+public native operator fun short.div(s: ushort): short
+public native operator fun short.div(s: short): short
+public native operator fun short.div(i: uint): int
+public native operator fun short.div(i: int): int
+public native operator fun short.div(l: ulong): long
+public native operator fun short.div(l: long): long
+public native operator fun short.div(f: float): float
+public native operator fun short.div(d: double): double
+
+public native operator fun uint.div(b: ubyte): int
+public native operator fun uint.div(b: byte): int
+public native operator fun uint.div(s: ushort): int
+public native operator fun uint.div(s: short): int
+public native operator fun uint.div(i: uint): uint
+public native operator fun uint.div(i: int): int
+public native operator fun uint.div(l: ulong): long
+public native operator fun uint.div(l: long): long
+public native operator fun uint.div(f: float): float
+public native operator fun uint.div(d: double): double
+
+public native operator fun int.div(b: ubyte): int
+public native operator fun int.div(b: byte): int
+public native operator fun int.div(s: ushort): int
+public native operator fun int.div(s: short): int
+public native operator fun int.div(i: uint): int
+public native operator fun int.div(i: int): int
+public native operator fun int.div(l: ulong): long
+public native operator fun int.div(l: long): long
+public native operator fun int.div(f: float): float
+public native operator fun int.div(d: double): double
+
+public native operator fun ulong.div(b: ubyte): long
+public native operator fun ulong.div(b: byte): long
+public native operator fun ulong.div(s: ushort): long
+public native operator fun ulong.div(s: short): long
+public native operator fun ulong.div(i: uint): long
+public native operator fun ulong.div(i: int): long
+public native operator fun ulong.div(l: ulong): ulong
+public native operator fun ulong.div(l: long): long
+public native operator fun ulong.div(f: float): float
+public native operator fun ulong.div(d: double): double
+
+public native operator fun long.div(b: ubyte): long
+public native operator fun long.div(b: byte): long
+public native operator fun long.div(s: ushort): long
+public native operator fun long.div(s: short): long
+public native operator fun long.div(i: uint): long
+public native operator fun long.div(i: int): long
+public native operator fun long.div(l: ulong): long
+public native operator fun long.div(l: long): long
+public native operator fun long.div(f: float): float
+public native operator fun long.div(d: double): double
+
+public native operator fun float.div(b: ubyte): float
+public native operator fun float.div(b: byte): float
+public native operator fun float.div(s: ushort): float
+public native operator fun float.div(s: short): float
+public native operator fun float.div(i: uint): float
+public native operator fun float.div(i: int): float
+public native operator fun float.div(l: ulong): float
+public native operator fun float.div(l: long): float
+public native operator fun float.div(f: float): float
+public native operator fun float.div(d: double): double
+
+public native operator fun double.div(b: ubyte): double
+public native operator fun double.div(b: byte): double
+public native operator fun double.div(s: ushort): double
+public native operator fun double.div(s: short): double
+public native operator fun double.div(i: uint): double
+public native operator fun double.div(i: int): double
+public native operator fun double.div(l: ulong): double
+public native operator fun double.div(l: long): double
+public native operator fun double.div(f: float): double
+public native operator fun double.div(d: double): double
+
+
+public native operator fun ubyte.rem(b: ubyte): ubyte
+public native operator fun ubyte.rem(b: byte): byte
+public native operator fun ubyte.rem(s: ushort): short
+public native operator fun ubyte.rem(s: short): short
+public native operator fun ubyte.rem(i: uint): int
+public native operator fun ubyte.rem(i: int): int
+public native operator fun ubyte.rem(l: ulong): long
+public native operator fun ubyte.rem(l: long): long
+public native operator fun ubyte.rem(f: float): float
+public native operator fun ubyte.rem(d: double): double
+
+public native operator fun byte.rem(b: ubyte): byte
+public native operator fun byte.rem(b: byte): byte
+public native operator fun byte.rem(s: ushort): short
+public native operator fun byte.rem(s: short): short
+public native operator fun byte.rem(i: uint): int
+public native operator fun byte.rem(i: int): int
+public native operator fun byte.rem(l: ulong): long
+public native operator fun byte.rem(l: long): long
+public native operator fun byte.rem(f: float): float
+public native operator fun byte.rem(d: double): double
+
+public native operator fun ushort.rem(b: ubyte): short
+public native operator fun ushort.rem(b: byte): short
+public native operator fun ushort.rem(s: ushort): ushort
+public native operator fun ushort.rem(s: short): short
+public native operator fun ushort.rem(i: uint): int
+public native operator fun ushort.rem(i: int): int
+public native operator fun ushort.rem(l: ulong): long
+public native operator fun ushort.rem(l: long): long
+public native operator fun ushort.rem(f: float): float
+public native operator fun ushort.rem(d: double): double
+
+public native operator fun short.rem(b: ubyte): short
+public native operator fun short.rem(b: byte): short
+public native operator fun short.rem(s: ushort): short
+public native operator fun short.rem(s: short): short
+public native operator fun short.rem(i: uint): int
+public native operator fun short.rem(i: int): int
+public native operator fun short.rem(l: ulong): long
+public native operator fun short.rem(l: long): long
+public native operator fun short.rem(f: float): float
+public native operator fun short.rem(d: double): double
+
+public native operator fun uint.rem(b: ubyte): int
+public native operator fun uint.rem(b: byte): int
+public native operator fun uint.rem(s: ushort): int
+public native operator fun uint.rem(s: short): int
+public native operator fun uint.rem(i: uint): uint
+public native operator fun uint.rem(i: int): int
+public native operator fun uint.rem(l: ulong): long
+public native operator fun uint.rem(l: long): long
+public native operator fun uint.rem(f: float): float
+public native operator fun uint.rem(d: double): double
+
+public native operator fun int.rem(b: ubyte): int
+public native operator fun int.rem(b: byte): int
+public native operator fun int.rem(s: ushort): int
+public native operator fun int.rem(s: short): int
+public native operator fun int.rem(i: uint): int
+public native operator fun int.rem(i: int): int
+public native operator fun int.rem(l: ulong): long
+public native operator fun int.rem(l: long): long
+public native operator fun int.rem(f: float): float
+public native operator fun int.rem(d: double): double
+
+public native operator fun ulong.rem(b: ubyte): long
+public native operator fun ulong.rem(b: byte): long
+public native operator fun ulong.rem(s: ushort): long
+public native operator fun ulong.rem(s: short): long
+public native operator fun ulong.rem(i: uint): long
+public native operator fun ulong.rem(i: int): long
+public native operator fun ulong.rem(l: ulong): ulong
+public native operator fun ulong.rem(l: long): long
+public native operator fun ulong.rem(f: float): float
+public native operator fun ulong.rem(d: double): double
+
+public native operator fun long.rem(b: ubyte): long
+public native operator fun long.rem(b: byte): long
+public native operator fun long.rem(s: ushort): long
+public native operator fun long.rem(s: short): long
+public native operator fun long.rem(i: uint): long
+public native operator fun long.rem(i: int): long
+public native operator fun long.rem(l: ulong): long
+public native operator fun long.rem(l: long): long
+public native operator fun long.rem(f: float): float
+public native operator fun long.rem(d: double): double
+
+public native operator fun float.rem(b: ubyte): float
+public native operator fun float.rem(b: byte): float
+public native operator fun float.rem(s: ushort): float
+public native operator fun float.rem(s: short): float
+public native operator fun float.rem(i: uint): float
+public native operator fun float.rem(i: int): float
+public native operator fun float.rem(l: ulong): float
+public native operator fun float.rem(l: long): float
+public native operator fun float.rem(f: float): float
+public native operator fun float.rem(d: double): double
+
+public native operator fun double.rem(b: ubyte): double
+public native operator fun double.rem(b: byte): double
+public native operator fun double.rem(s: ushort): double
+public native operator fun double.rem(s: short): double
+public native operator fun double.rem(i: uint): double
+public native operator fun double.rem(i: int): double
+public native operator fun double.rem(l: ulong): double
+public native operator fun double.rem(l: long): double
+public native operator fun double.rem(f: float): double
+public native operator fun double.rem(d: double): double
+
+
+public native operator fun ubyte.pow(b: ubyte): double
+public native operator fun ubyte.pow(b: byte): double
+public native operator fun ubyte.pow(s: ushort): double
+public native operator fun ubyte.pow(s: short): double
+public native operator fun ubyte.pow(i: uint): double
+public native operator fun ubyte.pow(i: int): double
+public native operator fun ubyte.pow(l: ulong): double
+public native operator fun ubyte.pow(l: long): double
+public native operator fun ubyte.pow(f: float): double
+public native operator fun ubyte.pow(d: double): double
+
+public native operator fun byte.pow(b: ubyte): double
+public native operator fun byte.pow(b: byte): double
+public native operator fun byte.pow(s: ushort): double
+public native operator fun byte.pow(s: short): double
+public native operator fun byte.pow(i: uint): double
+public native operator fun byte.pow(i: int): double
+public native operator fun byte.pow(l: ulong): double
+public native operator fun byte.pow(l: long): double
+public native operator fun byte.pow(f: float): double
+public native operator fun byte.pow(d: double): double
+
+public native operator fun ushort.pow(b: ubyte): double
+public native operator fun ushort.pow(b: byte): double
+public native operator fun ushort.pow(s: ushort): double
+public native operator fun ushort.pow(s: short): double
+public native operator fun ushort.pow(i: uint): double
+public native operator fun ushort.pow(i: int): double
+public native operator fun ushort.pow(l: ulong): double
+public native operator fun ushort.pow(l: long): double
+public native operator fun ushort.pow(f: float): double
+public native operator fun ushort.pow(d: double): double
+
+public native operator fun short.pow(b: ubyte): double
+public native operator fun short.pow(b: byte): double
+public native operator fun short.pow(s: ushort): double
+public native operator fun short.pow(s: short): double
+public native operator fun short.pow(i: uint): double
+public native operator fun short.pow(i: int): double
+public native operator fun short.pow(l: ulong): double
+public native operator fun short.pow(l: long): double
+public native operator fun short.pow(f: float): double
+public native operator fun short.pow(d: double): double
+
+public native operator fun uint.pow(b: ubyte): double
+public native operator fun uint.pow(b: byte): double
+public native operator fun uint.pow(s: ushort): double
+public native operator fun uint.pow(s: short): double
+public native operator fun uint.pow(i: uint): double
+public native operator fun uint.pow(i: int): double
+public native operator fun uint.pow(l: ulong): double
+public native operator fun uint.pow(l: long): double
+public native operator fun uint.pow(f: float): double
+public native operator fun uint.pow(d: double): double
+
+public native operator fun int.pow(b: ubyte): double
+public native operator fun int.pow(b: byte): double
+public native operator fun int.pow(s: ushort): double
+public native operator fun int.pow(s: short): double
+public native operator fun int.pow(i: uint): double
+public native operator fun int.pow(i: int): double
+public native operator fun int.pow(l: ulong): double
+public native operator fun int.pow(l: long): double
+public native operator fun int.pow(f: float): double
+public native operator fun int.pow(d: double): double
+
+public native operator fun ulong.pow(b: ubyte): double
+public native operator fun ulong.pow(b: byte): double
+public native operator fun ulong.pow(s: ushort): double
+public native operator fun ulong.pow(s: short): double
+public native operator fun ulong.pow(i: uint): double
+public native operator fun ulong.pow(i: int): double
+public native operator fun ulong.pow(l: ulong): double
+public native operator fun ulong.pow(l: long): double
+public native operator fun ulong.pow(f: float): double
+public native operator fun ulong.pow(d: double): double
+
+public native operator fun long.pow(b: ubyte): double
+public native operator fun long.pow(b: byte): double
+public native operator fun long.pow(s: ushort): double
+public native operator fun long.pow(s: short): double
+public native operator fun long.pow(i: uint): double
+public native operator fun long.pow(i: int): double
+public native operator fun long.pow(l: ulong): double
+public native operator fun long.pow(l: long): double
+public native operator fun long.pow(f: float): double
+public native operator fun long.pow(d: double): double
+
+public native operator fun float.pow(b: ubyte): double
+public native operator fun float.pow(b: byte): double
+public native operator fun float.pow(s: ushort): double
+public native operator fun float.pow(s: short): double
+public native operator fun float.pow(i: uint): double
+public native operator fun float.pow(i: int): double
+public native operator fun float.pow(l: ulong): double
+public native operator fun float.pow(l: long): double
+public native operator fun float.pow(f: float): double
+public native operator fun float.pow(d: double): double
+
+public native operator fun double.pow(b: ubyte): double
+public native operator fun double.pow(b: byte): double
+public native operator fun double.pow(s: ushort): double
+public native operator fun double.pow(s: short): double
+public native operator fun double.pow(i: uint): double
+public native operator fun double.pow(i: int): double
+public native operator fun double.pow(l: ulong): double
+public native operator fun double.pow(l: long): double
+public native operator fun double.pow(f: float): double
+public native operator fun double.pow(d: double): double
+
+
+public native operator fun ubyte.band(b: ubyte): ubyte
+public native operator fun ubyte.band(b: byte): byte
+public native operator fun ubyte.band(s: ushort): short
+public native operator fun ubyte.band(s: short): short
+public native operator fun ubyte.band(i: uint): int
+public native operator fun ubyte.band(i: int): int
+public native operator fun ubyte.band(l: ulong): long
+public native operator fun ubyte.band(l: long): long
+public native operator fun ubyte.band(f: float): float
+public native operator fun ubyte.band(d: double): double
+
+public native operator fun byte.band(b: ubyte): byte
+public native operator fun byte.band(b: byte): byte
+public native operator fun byte.band(s: ushort): short
+public native operator fun byte.band(s: short): short
+public native operator fun byte.band(i: uint): int
+public native operator fun byte.band(i: int): int
+public native operator fun byte.band(l: ulong): long
+public native operator fun byte.band(l: long): long
+public native operator fun byte.band(f: float): float
+public native operator fun byte.band(d: double): double
+
+public native operator fun ushort.band(b: ubyte): short
+public native operator fun ushort.band(b: byte): short
+public native operator fun ushort.band(s: ushort): ushort
+public native operator fun ushort.band(s: short): short
+public native operator fun ushort.band(i: uint): int
+public native operator fun ushort.band(i: int): int
+public native operator fun ushort.band(l: ulong): long
+public native operator fun ushort.band(l: long): long
+public native operator fun ushort.band(f: float): float
+public native operator fun ushort.band(d: double): double
+
+public native operator fun short.band(b: ubyte): short
+public native operator fun short.band(b: byte): short
+public native operator fun short.band(s: ushort): short
+public native operator fun short.band(s: short): short
+public native operator fun short.band(i: uint): int
+public native operator fun short.band(i: int): int
+public native operator fun short.band(l: ulong): long
+public native operator fun short.band(l: long): long
+public native operator fun short.band(f: float): float
+public native operator fun short.band(d: double): double
+
+public native operator fun uint.band(b: ubyte): int
+public native operator fun uint.band(b: byte): int
+public native operator fun uint.band(s: ushort): int
+public native operator fun uint.band(s: short): int
+public native operator fun uint.band(i: uint): uint
+public native operator fun uint.band(i: int): int
+public native operator fun uint.band(l: ulong): long
+public native operator fun uint.band(l: long): long
+public native operator fun uint.band(f: float): float
+public native operator fun uint.band(d: double): double
+
+public native operator fun int.band(b: ubyte): int
+public native operator fun int.band(b: byte): int
+public native operator fun int.band(s: ushort): int
+public native operator fun int.band(s: short): int
+public native operator fun int.band(i: uint): int
+public native operator fun int.band(i: int): int
+public native operator fun int.band(l: ulong): long
+public native operator fun int.band(l: long): long
+public native operator fun int.band(f: float): float
+public native operator fun int.band(d: double): double
+
+public native operator fun ulong.band(b: ubyte): long
+public native operator fun ulong.band(b: byte): long
+public native operator fun ulong.band(s: ushort): long
+public native operator fun ulong.band(s: short): long
+public native operator fun ulong.band(i: uint): long
+public native operator fun ulong.band(i: int): long
+public native operator fun ulong.band(l: ulong): ulong
+public native operator fun ulong.band(l: long): long
+public native operator fun ulong.band(f: float): float
+public native operator fun ulong.band(d: double): double
+
+public native operator fun long.band(b: ubyte): long
+public native operator fun long.band(b: byte): long
+public native operator fun long.band(s: ushort): long
+public native operator fun long.band(s: short): long
+public native operator fun long.band(i: uint): long
+public native operator fun long.band(i: int): long
+public native operator fun long.band(l: ulong): long
+public native operator fun long.band(l: long): long
+public native operator fun long.band(f: float): float
+public native operator fun long.band(d: double): double
+
+public native operator fun float.band(b: ubyte): float
+public native operator fun float.band(b: byte): float
+public native operator fun float.band(s: ushort): float
+public native operator fun float.band(s: short): float
+public native operator fun float.band(i: uint): float
+public native operator fun float.band(i: int): float
+public native operator fun float.band(l: ulong): float
+public native operator fun float.band(l: long): float
+public native operator fun float.band(f: float): float
+public native operator fun float.band(d: double): double
+
+public native operator fun double.band(b: ubyte): double
+public native operator fun double.band(b: byte): double
+public native operator fun double.band(s: ushort): double
+public native operator fun double.band(s: short): double
+public native operator fun double.band(i: uint): double
+public native operator fun double.band(i: int): double
+public native operator fun double.band(l: ulong): double
+public native operator fun double.band(l: long): double
+public native operator fun double.band(f: float): double
+public native operator fun double.band(d: double): double
+
+
+public native operator fun ubyte.bor(b: ubyte): ubyte
+public native operator fun ubyte.bor(b: byte): byte
+public native operator fun ubyte.bor(s: ushort): short
+public native operator fun ubyte.bor(s: short): short
+public native operator fun ubyte.bor(i: uint): int
+public native operator fun ubyte.bor(i: int): int
+public native operator fun ubyte.bor(l: ulong): long
+public native operator fun ubyte.bor(l: long): long
+public native operator fun ubyte.bor(f: float): float
+public native operator fun ubyte.bor(d: double): double
+
+public native operator fun byte.bor(b: ubyte): byte
+public native operator fun byte.bor(b: byte): byte
+public native operator fun byte.bor(s: ushort): short
+public native operator fun byte.bor(s: short): short
+public native operator fun byte.bor(i: uint): int
+public native operator fun byte.bor(i: int): int
+public native operator fun byte.bor(l: ulong): long
+public native operator fun byte.bor(l: long): long
+public native operator fun byte.bor(f: float): float
+public native operator fun byte.bor(d: double): double
+
+public native operator fun ushort.bor(b: ubyte): short
+public native operator fun ushort.bor(b: byte): short
+public native operator fun ushort.bor(s: ushort): ushort
+public native operator fun ushort.bor(s: short): short
+public native operator fun ushort.bor(i: uint): int
+public native operator fun ushort.bor(i: int): int
+public native operator fun ushort.bor(l: ulong): long
+public native operator fun ushort.bor(l: long): long
+public native operator fun ushort.bor(f: float): float
+public native operator fun ushort.bor(d: double): double
+
+public native operator fun short.bor(b: ubyte): short
+public native operator fun short.bor(b: byte): short
+public native operator fun short.bor(s: ushort): short
+public native operator fun short.bor(s: short): short
+public native operator fun short.bor(i: uint): int
+public native operator fun short.bor(i: int): int
+public native operator fun short.bor(l: ulong): long
+public native operator fun short.bor(l: long): long
+public native operator fun short.bor(f: float): float
+public native operator fun short.bor(d: double): double
+
+public native operator fun uint.bor(b: ubyte): int
+public native operator fun uint.bor(b: byte): int
+public native operator fun uint.bor(s: ushort): int
+public native operator fun uint.bor(s: short): int
+public native operator fun uint.bor(i: uint): uint
+public native operator fun uint.bor(i: int): int
+public native operator fun uint.bor(l: ulong): long
+public native operator fun uint.bor(l: long): long
+public native operator fun uint.bor(f: float): float
+public native operator fun uint.bor(d: double): double
+
+public native operator fun int.bor(b: ubyte): int
+public native operator fun int.bor(b: byte): int
+public native operator fun int.bor(s: ushort): int
+public native operator fun int.bor(s: short): int
+public native operator fun int.bor(i: uint): int
+public native operator fun int.bor(i: int): int
+public native operator fun int.bor(l: ulong): long
+public native operator fun int.bor(l: long): long
+public native operator fun int.bor(f: float): float
+public native operator fun int.bor(d: double): double
+
+public native operator fun ulong.bor(b: ubyte): long
+public native operator fun ulong.bor(b: byte): long
+public native operator fun ulong.bor(s: ushort): long
+public native operator fun ulong.bor(s: short): long
+public native operator fun ulong.bor(i: uint): long
+public native operator fun ulong.bor(i: int): long
+public native operator fun ulong.bor(l: ulong): ulong
+public native operator fun ulong.bor(l: long): long
+public native operator fun ulong.bor(f: float): float
+public native operator fun ulong.bor(d: double): double
+
+public native operator fun long.bor(b: ubyte): long
+public native operator fun long.bor(b: byte): long
+public native operator fun long.bor(s: ushort): long
+public native operator fun long.bor(s: short): long
+public native operator fun long.bor(i: uint): long
+public native operator fun long.bor(i: int): long
+public native operator fun long.bor(l: ulong): long
+public native operator fun long.bor(l: long): long
+public native operator fun long.bor(f: float): float
+public native operator fun long.bor(d: double): double
+
+public native operator fun float.bor(b: ubyte): float
+public native operator fun float.bor(b: byte): float
+public native operator fun float.bor(s: ushort): float
+public native operator fun float.bor(s: short): float
+public native operator fun float.bor(i: uint): float
+public native operator fun float.bor(i: int): float
+public native operator fun float.bor(l: ulong): float
+public native operator fun float.bor(l: long): float
+public native operator fun float.bor(f: float): float
+public native operator fun float.bor(d: double): double
+
+public native operator fun double.bor(b: ubyte): double
+public native operator fun double.bor(b: byte): double
+public native operator fun double.bor(s: ushort): double
+public native operator fun double.bor(s: short): double
+public native operator fun double.bor(i: uint): double
+public native operator fun double.bor(i: int): double
+public native operator fun double.bor(l: ulong): double
+public native operator fun double.bor(l: long): double
+public native operator fun double.bor(f: float): double
+public native operator fun double.bor(d: double): double
+
+
+public native operator fun ubyte.bxor(b: ubyte): ubyte
+public native operator fun ubyte.bxor(b: byte): byte
+public native operator fun ubyte.bxor(s: ushort): short
+public native operator fun ubyte.bxor(s: short): short
+public native operator fun ubyte.bxor(i: uint): int
+public native operator fun ubyte.bxor(i: int): int
+public native operator fun ubyte.bxor(l: ulong): long
+public native operator fun ubyte.bxor(l: long): long
+public native operator fun ubyte.bxor(f: float): float
+public native operator fun ubyte.bxor(d: double): double
+
+public native operator fun byte.bxor(b: ubyte): byte
+public native operator fun byte.bxor(b: byte): byte
+public native operator fun byte.bxor(s: ushort): short
+public native operator fun byte.bxor(s: short): short
+public native operator fun byte.bxor(i: uint): int
+public native operator fun byte.bxor(i: int): int
+public native operator fun byte.bxor(l: ulong): long
+public native operator fun byte.bxor(l: long): long
+public native operator fun byte.bxor(f: float): float
+public native operator fun byte.bxor(d: double): double
+
+public native operator fun ushort.bxor(b: ubyte): short
+public native operator fun ushort.bxor(b: byte): short
+public native operator fun ushort.bxor(s: ushort): ushort
+public native operator fun ushort.bxor(s: short): short
+public native operator fun ushort.bxor(i: uint): int
+public native operator fun ushort.bxor(i: int): int
+public native operator fun ushort.bxor(l: ulong): long
+public native operator fun ushort.bxor(l: long): long
+public native operator fun ushort.bxor(f: float): float
+public native operator fun ushort.bxor(d: double): double
+
+public native operator fun short.bxor(b: ubyte): short
+public native operator fun short.bxor(b: byte): short
+public native operator fun short.bxor(s: ushort): short
+public native operator fun short.bxor(s: short): short
+public native operator fun short.bxor(i: uint): int
+public native operator fun short.bxor(i: int): int
+public native operator fun short.bxor(l: ulong): long
+public native operator fun short.bxor(l: long): long
+public native operator fun short.bxor(f: float): float
+public native operator fun short.bxor(d: double): double
+
+public native operator fun uint.bxor(b: ubyte): int
+public native operator fun uint.bxor(b: byte): int
+public native operator fun uint.bxor(s: ushort): int
+public native operator fun uint.bxor(s: short): int
+public native operator fun uint.bxor(i: uint): uint
+public native operator fun uint.bxor(i: int): int
+public native operator fun uint.bxor(l: ulong): long
+public native operator fun uint.bxor(l: long): long
+public native operator fun uint.bxor(f: float): float
+public native operator fun uint.bxor(d: double): double
+
+public native operator fun int.bxor(b: ubyte): int
+public native operator fun int.bxor(b: byte): int
+public native operator fun int.bxor(s: ushort): int
+public native operator fun int.bxor(s: short): int
+public native operator fun int.bxor(i: uint): int
+public native operator fun int.bxor(i: int): int
+public native operator fun int.bxor(l: ulong): long
+public native operator fun int.bxor(l: long): long
+public native operator fun int.bxor(f: float): float
+public native operator fun int.bxor(d: double): double
+
+public native operator fun ulong.bxor(b: ubyte): long
+public native operator fun ulong.bxor(b: byte): long
+public native operator fun ulong.bxor(s: ushort): long
+public native operator fun ulong.bxor(s: short): long
+public native operator fun ulong.bxor(i: uint): long
+public native operator fun ulong.bxor(i: int): long
+public native operator fun ulong.bxor(l: ulong): ulong
+public native operator fun ulong.bxor(l: long): long
+public native operator fun ulong.bxor(f: float): float
+public native operator fun ulong.bxor(d: double): double
+
+public native operator fun long.bxor(b: ubyte): long
+public native operator fun long.bxor(b: byte): long
+public native operator fun long.bxor(s: ushort): long
+public native operator fun long.bxor(s: short): long
+public native operator fun long.bxor(i: uint): long
+public native operator fun long.bxor(i: int): long
+public native operator fun long.bxor(l: ulong): long
+public native operator fun long.bxor(l: long): long
+public native operator fun long.bxor(f: float): float
+public native operator fun long.bxor(d: double): double
+
+public native operator fun float.bxor(b: ubyte): float
+public native operator fun float.bxor(b: byte): float
+public native operator fun float.bxor(s: ushort): float
+public native operator fun float.bxor(s: short): float
+public native operator fun float.bxor(i: uint): float
+public native operator fun float.bxor(i: int): float
+public native operator fun float.bxor(l: ulong): float
+public native operator fun float.bxor(l: long): float
+public native operator fun float.bxor(f: float): float
+public native operator fun float.bxor(d: double): double
+
+public native operator fun double.bxor(b: ubyte): double
+public native operator fun double.bxor(b: byte): double
+public native operator fun double.bxor(s: ushort): double
+public native operator fun double.bxor(s: short): double
+public native operator fun double.bxor(i: uint): double
+public native operator fun double.bxor(i: int): double
+public native operator fun double.bxor(l: ulong): double
+public native operator fun double.bxor(l: long): double
+public native operator fun double.bxor(f: float): double
+public native operator fun double.bxor(d: double): double
+
+
+public native operator fun ubyte.bnand(b: ubyte): ubyte
+public native operator fun ubyte.bnand(b: byte): byte
+public native operator fun ubyte.bnand(s: ushort): short
+public native operator fun ubyte.bnand(s: short): short
+public native operator fun ubyte.bnand(i: uint): int
+public native operator fun ubyte.bnand(i: int): int
+public native operator fun ubyte.bnand(l: ulong): long
+public native operator fun ubyte.bnand(l: long): long
+public native operator fun ubyte.bnand(f: float): float
+public native operator fun ubyte.bnand(d: double): double
+
+public native operator fun byte.bnand(b: ubyte): byte
+public native operator fun byte.bnand(b: byte): byte
+public native operator fun byte.bnand(s: ushort): short
+public native operator fun byte.bnand(s: short): short
+public native operator fun byte.bnand(i: uint): int
+public native operator fun byte.bnand(i: int): int
+public native operator fun byte.bnand(l: ulong): long
+public native operator fun byte.bnand(l: long): long
+public native operator fun byte.bnand(f: float): float
+public native operator fun byte.bnand(d: double): double
+
+public native operator fun ushort.bnand(b: ubyte): short
+public native operator fun ushort.bnand(b: byte): short
+public native operator fun ushort.bnand(s: ushort): ushort
+public native operator fun ushort.bnand(s: short): short
+public native operator fun ushort.bnand(i: uint): int
+public native operator fun ushort.bnand(i: int): int
+public native operator fun ushort.bnand(l: ulong): long
+public native operator fun ushort.bnand(l: long): long
+public native operator fun ushort.bnand(f: float): float
+public native operator fun ushort.bnand(d: double): double
+
+public native operator fun short.bnand(b: ubyte): short
+public native operator fun short.bnand(b: byte): short
+public native operator fun short.bnand(s: ushort): short
+public native operator fun short.bnand(s: short): short
+public native operator fun short.bnand(i: uint): int
+public native operator fun short.bnand(i: int): int
+public native operator fun short.bnand(l: ulong): long
+public native operator fun short.bnand(l: long): long
+public native operator fun short.bnand(f: float): float
+public native operator fun short.bnand(d: double): double
+
+public native operator fun uint.bnand(b: ubyte): int
+public native operator fun uint.bnand(b: byte): int
+public native operator fun uint.bnand(s: ushort): int
+public native operator fun uint.bnand(s: short): int
+public native operator fun uint.bnand(i: uint): uint
+public native operator fun uint.bnand(i: int): int
+public native operator fun uint.bnand(l: ulong): long
+public native operator fun uint.bnand(l: long): long
+public native operator fun uint.bnand(f: float): float
+public native operator fun uint.bnand(d: double): double
+
+public native operator fun int.bnand(b: ubyte): int
+public native operator fun int.bnand(b: byte): int
+public native operator fun int.bnand(s: ushort): int
+public native operator fun int.bnand(s: short): int
+public native operator fun int.bnand(i: uint): int
+public native operator fun int.bnand(i: int): int
+public native operator fun int.bnand(l: ulong): long
+public native operator fun int.bnand(l: long): long
+public native operator fun int.bnand(f: float): float
+public native operator fun int.bnand(d: double): double
+
+public native operator fun ulong.bnand(b: ubyte): long
+public native operator fun ulong.bnand(b: byte): long
+public native operator fun ulong.bnand(s: ushort): long
+public native operator fun ulong.bnand(s: short): long
+public native operator fun ulong.bnand(i: uint): long
+public native operator fun ulong.bnand(i: int): long
+public native operator fun ulong.bnand(l: ulong): ulong
+public native operator fun ulong.bnand(l: long): long
+public native operator fun ulong.bnand(f: float): float
+public native operator fun ulong.bnand(d: double): double
+
+public native operator fun long.bnand(b: ubyte): long
+public native operator fun long.bnand(b: byte): long
+public native operator fun long.bnand(s: ushort): long
+public native operator fun long.bnand(s: short): long
+public native operator fun long.bnand(i: uint): long
+public native operator fun long.bnand(i: int): long
+public native operator fun long.bnand(l: ulong): long
+public native operator fun long.bnand(l: long): long
+public native operator fun long.bnand(f: float): float
+public native operator fun long.bnand(d: double): double
+
+public native operator fun float.bnand(b: ubyte): float
+public native operator fun float.bnand(b: byte): float
+public native operator fun float.bnand(s: ushort): float
+public native operator fun float.bnand(s: short): float
+public native operator fun float.bnand(i: uint): float
+public native operator fun float.bnand(i: int): float
+public native operator fun float.bnand(l: ulong): float
+public native operator fun float.bnand(l: long): float
+public native operator fun float.bnand(f: float): float
+public native operator fun float.bnand(d: double): double
+
+public native operator fun double.bnand(b: ubyte): double
+public native operator fun double.bnand(b: byte): double
+public native operator fun double.bnand(s: ushort): double
+public native operator fun double.bnand(s: short): double
+public native operator fun double.bnand(i: uint): double
+public native operator fun double.bnand(i: int): double
+public native operator fun double.bnand(l: ulong): double
+public native operator fun double.bnand(l: long): double
+public native operator fun double.bnand(f: float): double
+public native operator fun double.bnand(d: double): double
+
+
+public native operator fun ubyte.bnor(b: ubyte): ubyte
+public native operator fun ubyte.bnor(b: byte): byte
+public native operator fun ubyte.bnor(s: ushort): short
+public native operator fun ubyte.bnor(s: short): short
+public native operator fun ubyte.bnor(i: uint): int
+public native operator fun ubyte.bnor(i: int): int
+public native operator fun ubyte.bnor(l: ulong): long
+public native operator fun ubyte.bnor(l: long): long
+public native operator fun ubyte.bnor(f: float): float
+public native operator fun ubyte.bnor(d: double): double
+
+public native operator fun byte.bnor(b: ubyte): byte
+public native operator fun byte.bnor(b: byte): byte
+public native operator fun byte.bnor(s: ushort): short
+public native operator fun byte.bnor(s: short): short
+public native operator fun byte.bnor(i: uint): int
+public native operator fun byte.bnor(i: int): int
+public native operator fun byte.bnor(l: ulong): long
+public native operator fun byte.bnor(l: long): long
+public native operator fun byte.bnor(f: float): float
+public native operator fun byte.bnor(d: double): double
+
+public native operator fun ushort.bnor(b: ubyte): short
+public native operator fun ushort.bnor(b: byte): short
+public native operator fun ushort.bnor(s: ushort): ushort
+public native operator fun ushort.bnor(s: short): short
+public native operator fun ushort.bnor(i: uint): int
+public native operator fun ushort.bnor(i: int): int
+public native operator fun ushort.bnor(l: ulong): long
+public native operator fun ushort.bnor(l: long): long
+public native operator fun ushort.bnor(f: float): float
+public native operator fun ushort.bnor(d: double): double
+
+public native operator fun short.bnor(b: ubyte): short
+public native operator fun short.bnor(b: byte): short
+public native operator fun short.bnor(s: ushort): short
+public native operator fun short.bnor(s: short): short
+public native operator fun short.bnor(i: uint): int
+public native operator fun short.bnor(i: int): int
+public native operator fun short.bnor(l: ulong): long
+public native operator fun short.bnor(l: long): long
+public native operator fun short.bnor(f: float): float
+public native operator fun short.bnor(d: double): double
+
+public native operator fun uint.bnor(b: ubyte): int
+public native operator fun uint.bnor(b: byte): int
+public native operator fun uint.bnor(s: ushort): int
+public native operator fun uint.bnor(s: short): int
+public native operator fun uint.bnor(i: uint): uint
+public native operator fun uint.bnor(i: int): int
+public native operator fun uint.bnor(l: ulong): long
+public native operator fun uint.bnor(l: long): long
+public native operator fun uint.bnor(f: float): float
+public native operator fun uint.bnor(d: double): double
+
+public native operator fun int.bnor(b: ubyte): int
+public native operator fun int.bnor(b: byte): int
+public native operator fun int.bnor(s: ushort): int
+public native operator fun int.bnor(s: short): int
+public native operator fun int.bnor(i: uint): int
+public native operator fun int.bnor(i: int): int
+public native operator fun int.bnor(l: ulong): long
+public native operator fun int.bnor(l: long): long
+public native operator fun int.bnor(f: float): float
+public native operator fun int.bnor(d: double): double
+
+public native operator fun ulong.bnor(b: ubyte): long
+public native operator fun ulong.bnor(b: byte): long
+public native operator fun ulong.bnor(s: ushort): long
+public native operator fun ulong.bnor(s: short): long
+public native operator fun ulong.bnor(i: uint): long
+public native operator fun ulong.bnor(i: int): long
+public native operator fun ulong.bnor(l: ulong): ulong
+public native operator fun ulong.bnor(l: long): long
+public native operator fun ulong.bnor(f: float): float
+public native operator fun ulong.bnor(d: double): double
+
+public native operator fun long.bnor(b: ubyte): long
+public native operator fun long.bnor(b: byte): long
+public native operator fun long.bnor(s: ushort): long
+public native operator fun long.bnor(s: short): long
+public native operator fun long.bnor(i: uint): long
+public native operator fun long.bnor(i: int): long
+public native operator fun long.bnor(l: ulong): long
+public native operator fun long.bnor(l: long): long
+public native operator fun long.bnor(f: float): float
+public native operator fun long.bnor(d: double): double
+
+public native operator fun float.bnor(b: ubyte): float
+public native operator fun float.bnor(b: byte): float
+public native operator fun float.bnor(s: ushort): float
+public native operator fun float.bnor(s: short): float
+public native operator fun float.bnor(i: uint): float
+public native operator fun float.bnor(i: int): float
+public native operator fun float.bnor(l: ulong): float
+public native operator fun float.bnor(l: long): float
+public native operator fun float.bnor(f: float): float
+public native operator fun float.bnor(d: double): double
+
+public native operator fun double.bnor(b: ubyte): double
+public native operator fun double.bnor(b: byte): double
+public native operator fun double.bnor(s: ushort): double
+public native operator fun double.bnor(s: short): double
+public native operator fun double.bnor(i: uint): double
+public native operator fun double.bnor(i: int): double
+public native operator fun double.bnor(l: ulong): double
+public native operator fun double.bnor(l: long): double
+public native operator fun double.bnor(f: float): double
+public native operator fun double.bnor(d: double): double
+
+
+public native operator fun ubyte.bxnor(b: ubyte): ubyte
+public native operator fun ubyte.bxnor(b: byte): byte
+public native operator fun ubyte.bxnor(s: ushort): short
+public native operator fun ubyte.bxnor(s: short): short
+public native operator fun ubyte.bxnor(i: uint): int
+public native operator fun ubyte.bxnor(i: int): int
+public native operator fun ubyte.bxnor(l: ulong): long
+public native operator fun ubyte.bxnor(l: long): long
+public native operator fun ubyte.bxnor(f: float): float
+public native operator fun ubyte.bxnor(d: double): double
+
+public native operator fun byte.bxnor(b: ubyte): byte
+public native operator fun byte.bxnor(b: byte): byte
+public native operator fun byte.bxnor(s: ushort): short
+public native operator fun byte.bxnor(s: short): short
+public native operator fun byte.bxnor(i: uint): int
+public native operator fun byte.bxnor(i: int): int
+public native operator fun byte.bxnor(l: ulong): long
+public native operator fun byte.bxnor(l: long): long
+public native operator fun byte.bxnor(f: float): float
+public native operator fun byte.bxnor(d: double): double
+
+public native operator fun ushort.bxnor(b: ubyte): short
+public native operator fun ushort.bxnor(b: byte): short
+public native operator fun ushort.bxnor(s: ushort): ushort
+public native operator fun ushort.bxnor(s: short): short
+public native operator fun ushort.bxnor(i: uint): int
+public native operator fun ushort.bxnor(i: int): int
+public native operator fun ushort.bxnor(l: ulong): long
+public native operator fun ushort.bxnor(l: long): long
+public native operator fun ushort.bxnor(f: float): float
+public native operator fun ushort.bxnor(d: double): double
+
+public native operator fun short.bxnor(b: ubyte): short
+public native operator fun short.bxnor(b: byte): short
+public native operator fun short.bxnor(s: ushort): short
+public native operator fun short.bxnor(s: short): short
+public native operator fun short.bxnor(i: uint): int
+public native operator fun short.bxnor(i: int): int
+public native operator fun short.bxnor(l: ulong): long
+public native operator fun short.bxnor(l: long): long
+public native operator fun short.bxnor(f: float): float
+public native operator fun short.bxnor(d: double): double
+
+public native operator fun uint.bxnor(b: ubyte): int
+public native operator fun uint.bxnor(b: byte): int
+public native operator fun uint.bxnor(s: ushort): int
+public native operator fun uint.bxnor(s: short): int
+public native operator fun uint.bxnor(i: uint): uint
+public native operator fun uint.bxnor(i: int): int
+public native operator fun uint.bxnor(l: ulong): long
+public native operator fun uint.bxnor(l: long): long
+public native operator fun uint.bxnor(f: float): float
+public native operator fun uint.bxnor(d: double): double
+
+public native operator fun int.bxnor(b: ubyte): int
+public native operator fun int.bxnor(b: byte): int
+public native operator fun int.bxnor(s: ushort): int
+public native operator fun int.bxnor(s: short): int
+public native operator fun int.bxnor(i: uint): int
+public native operator fun int.bxnor(i: int): int
+public native operator fun int.bxnor(l: ulong): long
+public native operator fun int.bxnor(l: long): long
+public native operator fun int.bxnor(f: float): float
+public native operator fun int.bxnor(d: double): double
+
+public native operator fun ulong.bxnor(b: ubyte): long
+public native operator fun ulong.bxnor(b: byte): long
+public native operator fun ulong.bxnor(s: ushort): long
+public native operator fun ulong.bxnor(s: short): long
+public native operator fun ulong.bxnor(i: uint): long
+public native operator fun ulong.bxnor(i: int): long
+public native operator fun ulong.bxnor(l: ulong): ulong
+public native operator fun ulong.bxnor(l: long): long
+public native operator fun ulong.bxnor(f: float): float
+public native operator fun ulong.bxnor(d: double): double
+
+public native operator fun long.bxnor(b: ubyte): long
+public native operator fun long.bxnor(b: byte): long
+public native operator fun long.bxnor(s: ushort): long
+public native operator fun long.bxnor(s: short): long
+public native operator fun long.bxnor(i: uint): long
+public native operator fun long.bxnor(i: int): long
+public native operator fun long.bxnor(l: ulong): long
+public native operator fun long.bxnor(l: long): long
+public native operator fun long.bxnor(f: float): float
+public native operator fun long.bxnor(d: double): double
+
+public native operator fun float.bxnor(b: ubyte): float
+public native operator fun float.bxnor(b: byte): float
+public native operator fun float.bxnor(s: ushort): float
+public native operator fun float.bxnor(s: short): float
+public native operator fun float.bxnor(i: uint): float
+public native operator fun float.bxnor(i: int): float
+public native operator fun float.bxnor(l: ulong): float
+public native operator fun float.bxnor(l: long): float
+public native operator fun float.bxnor(f: float): float
+public native operator fun float.bxnor(d: double): double
+
+public native operator fun double.bxnor(b: ubyte): double
+public native operator fun double.bxnor(b: byte): double
+public native operator fun double.bxnor(s: ushort): double
+public native operator fun double.bxnor(s: short): double
+public native operator fun double.bxnor(i: uint): double
+public native operator fun double.bxnor(i: int): double
+public native operator fun double.bxnor(l: ulong): double
+public native operator fun double.bxnor(l: long): double
+public native operator fun double.bxnor(f: float): double
+public native operator fun double.bxnor(d: double): double
+
+
+public native operator fun ubyte.shl(b: ubyte): ubyte
+public native operator fun ubyte.shl(b: byte): byte
+public native operator fun ubyte.shl(s: ushort): short
+public native operator fun ubyte.shl(s: short): short
+public native operator fun ubyte.shl(i: uint): int
+public native operator fun ubyte.shl(i: int): int
+public native operator fun ubyte.shl(l: ulong): long
+public native operator fun ubyte.shl(l: long): long
+public native operator fun ubyte.shl(f: float): float
+public native operator fun ubyte.shl(d: double): double
+
+public native operator fun byte.shl(b: ubyte): byte
+public native operator fun byte.shl(b: byte): byte
+public native operator fun byte.shl(s: ushort): short
+public native operator fun byte.shl(s: short): short
+public native operator fun byte.shl(i: uint): int
+public native operator fun byte.shl(i: int): int
+public native operator fun byte.shl(l: ulong): long
+public native operator fun byte.shl(l: long): long
+public native operator fun byte.shl(f: float): float
+public native operator fun byte.shl(d: double): double
+
+public native operator fun ushort.shl(b: ubyte): short
+public native operator fun ushort.shl(b: byte): short
+public native operator fun ushort.shl(s: ushort): ushort
+public native operator fun ushort.shl(s: short): short
+public native operator fun ushort.shl(i: uint): int
+public native operator fun ushort.shl(i: int): int
+public native operator fun ushort.shl(l: ulong): long
+public native operator fun ushort.shl(l: long): long
+public native operator fun ushort.shl(f: float): float
+public native operator fun ushort.shl(d: double): double
+
+public native operator fun short.shl(b: ubyte): short
+public native operator fun short.shl(b: byte): short
+public native operator fun short.shl(s: ushort): short
+public native operator fun short.shl(s: short): short
+public native operator fun short.shl(i: uint): int
+public native operator fun short.shl(i: int): int
+public native operator fun short.shl(l: ulong): long
+public native operator fun short.shl(l: long): long
+public native operator fun short.shl(f: float): float
+public native operator fun short.shl(d: double): double
+
+public native operator fun uint.shl(b: ubyte): int
+public native operator fun uint.shl(b: byte): int
+public native operator fun uint.shl(s: ushort): int
+public native operator fun uint.shl(s: short): int
+public native operator fun uint.shl(i: uint): uint
+public native operator fun uint.shl(i: int): int
+public native operator fun uint.shl(l: ulong): long
+public native operator fun uint.shl(l: long): long
+public native operator fun uint.shl(f: float): float
+public native operator fun uint.shl(d: double): double
+
+public native operator fun int.shl(b: ubyte): int
+public native operator fun int.shl(b: byte): int
+public native operator fun int.shl(s: ushort): int
+public native operator fun int.shl(s: short): int
+public native operator fun int.shl(i: uint): int
+public native operator fun int.shl(i: int): int
+public native operator fun int.shl(l: ulong): long
+public native operator fun int.shl(l: long): long
+public native operator fun int.shl(f: float): float
+public native operator fun int.shl(d: double): double
+
+public native operator fun ulong.shl(b: ubyte): long
+public native operator fun ulong.shl(b: byte): long
+public native operator fun ulong.shl(s: ushort): long
+public native operator fun ulong.shl(s: short): long
+public native operator fun ulong.shl(i: uint): long
+public native operator fun ulong.shl(i: int): long
+public native operator fun ulong.shl(l: ulong): ulong
+public native operator fun ulong.shl(l: long): long
+public native operator fun ulong.shl(f: float): float
+public native operator fun ulong.shl(d: double): double
+
+public native operator fun long.shl(b: ubyte): long
+public native operator fun long.shl(b: byte): long
+public native operator fun long.shl(s: ushort): long
+public native operator fun long.shl(s: short): long
+public native operator fun long.shl(i: uint): long
+public native operator fun long.shl(i: int): long
+public native operator fun long.shl(l: ulong): long
+public native operator fun long.shl(l: long): long
+public native operator fun long.shl(f: float): float
+public native operator fun long.shl(d: double): double
+
+public native operator fun float.shl(b: ubyte): float
+public native operator fun float.shl(b: byte): float
+public native operator fun float.shl(s: ushort): float
+public native operator fun float.shl(s: short): float
+public native operator fun float.shl(i: uint): float
+public native operator fun float.shl(i: int): float
+public native operator fun float.shl(l: ulong): float
+public native operator fun float.shl(l: long): float
+public native operator fun float.shl(f: float): float
+public native operator fun float.shl(d: double): double
+
+public native operator fun double.shl(b: ubyte): double
+public native operator fun double.shl(b: byte): double
+public native operator fun double.shl(s: ushort): double
+public native operator fun double.shl(s: short): double
+public native operator fun double.shl(i: uint): double
+public native operator fun double.shl(i: int): double
+public native operator fun double.shl(l: ulong): double
+public native operator fun double.shl(l: long): double
+public native operator fun double.shl(f: float): double
+public native operator fun double.shl(d: double): double
+
+
+public native operator fun ubyte.shr(b: ubyte): ubyte
+public native operator fun ubyte.shr(b: byte): byte
+public native operator fun ubyte.shr(s: ushort): short
+public native operator fun ubyte.shr(s: short): short
+public native operator fun ubyte.shr(i: uint): int
+public native operator fun ubyte.shr(i: int): int
+public native operator fun ubyte.shr(l: ulong): long
+public native operator fun ubyte.shr(l: long): long
+public native operator fun ubyte.shr(f: float): float
+public native operator fun ubyte.shr(d: double): double
+
+public native operator fun byte.shr(b: ubyte): byte
+public native operator fun byte.shr(b: byte): byte
+public native operator fun byte.shr(s: ushort): short
+public native operator fun byte.shr(s: short): short
+public native operator fun byte.shr(i: uint): int
+public native operator fun byte.shr(i: int): int
+public native operator fun byte.shr(l: ulong): long
+public native operator fun byte.shr(l: long): long
+public native operator fun byte.shr(f: float): float
+public native operator fun byte.shr(d: double): double
+
+public native operator fun ushort.shr(b: ubyte): short
+public native operator fun ushort.shr(b: byte): short
+public native operator fun ushort.shr(s: ushort): ushort
+public native operator fun ushort.shr(s: short): short
+public native operator fun ushort.shr(i: uint): int
+public native operator fun ushort.shr(i: int): int
+public native operator fun ushort.shr(l: ulong): long
+public native operator fun ushort.shr(l: long): long
+public native operator fun ushort.shr(f: float): float
+public native operator fun ushort.shr(d: double): double
+
+public native operator fun short.shr(b: ubyte): short
+public native operator fun short.shr(b: byte): short
+public native operator fun short.shr(s: ushort): short
+public native operator fun short.shr(s: short): short
+public native operator fun short.shr(i: uint): int
+public native operator fun short.shr(i: int): int
+public native operator fun short.shr(l: ulong): long
+public native operator fun short.shr(l: long): long
+public native operator fun short.shr(f: float): float
+public native operator fun short.shr(d: double): double
+
+public native operator fun uint.shr(b: ubyte): int
+public native operator fun uint.shr(b: byte): int
+public native operator fun uint.shr(s: ushort): int
+public native operator fun uint.shr(s: short): int
+public native operator fun uint.shr(i: uint): uint
+public native operator fun uint.shr(i: int): int
+public native operator fun uint.shr(l: ulong): long
+public native operator fun uint.shr(l: long): long
+public native operator fun uint.shr(f: float): float
+public native operator fun uint.shr(d: double): double
+
+public native operator fun int.shr(b: ubyte): int
+public native operator fun int.shr(b: byte): int
+public native operator fun int.shr(s: ushort): int
+public native operator fun int.shr(s: short): int
+public native operator fun int.shr(i: uint): int
+public native operator fun int.shr(i: int): int
+public native operator fun int.shr(l: ulong): long
+public native operator fun int.shr(l: long): long
+public native operator fun int.shr(f: float): float
+public native operator fun int.shr(d: double): double
+
+public native operator fun ulong.shr(b: ubyte): long
+public native operator fun ulong.shr(b: byte): long
+public native operator fun ulong.shr(s: ushort): long
+public native operator fun ulong.shr(s: short): long
+public native operator fun ulong.shr(i: uint): long
+public native operator fun ulong.shr(i: int): long
+public native operator fun ulong.shr(l: ulong): ulong
+public native operator fun ulong.shr(l: long): long
+public native operator fun ulong.shr(f: float): float
+public native operator fun ulong.shr(d: double): double
+
+public native operator fun long.shr(b: ubyte): long
+public native operator fun long.shr(b: byte): long
+public native operator fun long.shr(s: ushort): long
+public native operator fun long.shr(s: short): long
+public native operator fun long.shr(i: uint): long
+public native operator fun long.shr(i: int): long
+public native operator fun long.shr(l: ulong): long
+public native operator fun long.shr(l: long): long
+public native operator fun long.shr(f: float): float
+public native operator fun long.shr(d: double): double
+
+public native operator fun float.shr(b: ubyte): float
+public native operator fun float.shr(b: byte): float
+public native operator fun float.shr(s: ushort): float
+public native operator fun float.shr(s: short): float
+public native operator fun float.shr(i: uint): float
+public native operator fun float.shr(i: int): float
+public native operator fun float.shr(l: ulong): float
+public native operator fun float.shr(l: long): float
+public native operator fun float.shr(f: float): float
+public native operator fun float.shr(d: double): double
+
+public native operator fun double.shr(b: ubyte): double
+public native operator fun double.shr(b: byte): double
+public native operator fun double.shr(s: ushort): double
+public native operator fun double.shr(s: short): double
+public native operator fun double.shr(i: uint): double
+public native operator fun double.shr(i: int): double
+public native operator fun double.shr(l: ulong): double
+public native operator fun double.shr(l: long): double
+public native operator fun double.shr(f: float): double
+public native operator fun double.shr(d: double): double
+
+
+public native operator fun ubyte.ushr(b: ubyte): ubyte
+public native operator fun ubyte.ushr(b: byte): byte
+public native operator fun ubyte.ushr(s: ushort): short
+public native operator fun ubyte.ushr(s: short): short
+public native operator fun ubyte.ushr(i: uint): int
+public native operator fun ubyte.ushr(i: int): int
+public native operator fun ubyte.ushr(l: ulong): long
+public native operator fun ubyte.ushr(l: long): long
+public native operator fun ubyte.ushr(f: float): float
+public native operator fun ubyte.ushr(d: double): double
+
+public native operator fun byte.ushr(b: ubyte): byte
+public native operator fun byte.ushr(b: byte): byte
+public native operator fun byte.ushr(s: ushort): short
+public native operator fun byte.ushr(s: short): short
+public native operator fun byte.ushr(i: uint): int
+public native operator fun byte.ushr(i: int): int
+public native operator fun byte.ushr(l: ulong): long
+public native operator fun byte.ushr(l: long): long
+public native operator fun byte.ushr(f: float): float
+public native operator fun byte.ushr(d: double): double
+
+public native operator fun ushort.ushr(b: ubyte): short
+public native operator fun ushort.ushr(b: byte): short
+public native operator fun ushort.ushr(s: ushort): ushort
+public native operator fun ushort.ushr(s: short): short
+public native operator fun ushort.ushr(i: uint): int
+public native operator fun ushort.ushr(i: int): int
+public native operator fun ushort.ushr(l: ulong): long
+public native operator fun ushort.ushr(l: long): long
+public native operator fun ushort.ushr(f: float): float
+public native operator fun ushort.ushr(d: double): double
+
+public native operator fun short.ushr(b: ubyte): short
+public native operator fun short.ushr(b: byte): short
+public native operator fun short.ushr(s: ushort): short
+public native operator fun short.ushr(s: short): short
+public native operator fun short.ushr(i: uint): int
+public native operator fun short.ushr(i: int): int
+public native operator fun short.ushr(l: ulong): long
+public native operator fun short.ushr(l: long): long
+public native operator fun short.ushr(f: float): float
+public native operator fun short.ushr(d: double): double
+
+public native operator fun uint.ushr(b: ubyte): int
+public native operator fun uint.ushr(b: byte): int
+public native operator fun uint.ushr(s: ushort): int
+public native operator fun uint.ushr(s: short): int
+public native operator fun uint.ushr(i: uint): uint
+public native operator fun uint.ushr(i: int): int
+public native operator fun uint.ushr(l: ulong): long
+public native operator fun uint.ushr(l: long): long
+public native operator fun uint.ushr(f: float): float
+public native operator fun uint.ushr(d: double): double
+
+public native operator fun int.ushr(b: ubyte): int
+public native operator fun int.ushr(b: byte): int
+public native operator fun int.ushr(s: ushort): int
+public native operator fun int.ushr(s: short): int
+public native operator fun int.ushr(i: uint): int
+public native operator fun int.ushr(i: int): int
+public native operator fun int.ushr(l: ulong): long
+public native operator fun int.ushr(l: long): long
+public native operator fun int.ushr(f: float): float
+public native operator fun int.ushr(d: double): double
+
+public native operator fun ulong.ushr(b: ubyte): long
+public native operator fun ulong.ushr(b: byte): long
+public native operator fun ulong.ushr(s: ushort): long
+public native operator fun ulong.ushr(s: short): long
+public native operator fun ulong.ushr(i: uint): long
+public native operator fun ulong.ushr(i: int): long
+public native operator fun ulong.ushr(l: ulong): ulong
+public native operator fun ulong.ushr(l: long): long
+public native operator fun ulong.ushr(f: float): float
+public native operator fun ulong.ushr(d: double): double
+
+public native operator fun long.ushr(b: ubyte): long
+public native operator fun long.ushr(b: byte): long
+public native operator fun long.ushr(s: ushort): long
+public native operator fun long.ushr(s: short): long
+public native operator fun long.ushr(i: uint): long
+public native operator fun long.ushr(i: int): long
+public native operator fun long.ushr(l: ulong): long
+public native operator fun long.ushr(l: long): long
+public native operator fun long.ushr(f: float): float
+public native operator fun long.ushr(d: double): double
+
+public native operator fun float.ushr(b: ubyte): float
+public native operator fun float.ushr(b: byte): float
+public native operator fun float.ushr(s: ushort): float
+public native operator fun float.ushr(s: short): float
+public native operator fun float.ushr(i: uint): float
+public native operator fun float.ushr(i: int): float
+public native operator fun float.ushr(l: ulong): float
+public native operator fun float.ushr(l: long): float
+public native operator fun float.ushr(f: float): float
+public native operator fun float.ushr(d: double): double
+
+public native operator fun double.ushr(b: ubyte): double
+public native operator fun double.ushr(b: byte): double
+public native operator fun double.ushr(s: ushort): double
+public native operator fun double.ushr(s: short): double
+public native operator fun double.ushr(i: uint): double
+public native operator fun double.ushr(i: int): double
+public native operator fun double.ushr(l: ulong): double
+public native operator fun double.ushr(l: long): double
+public native operator fun double.ushr(f: float): double
+public native operator fun double.ushr(d: double): double
+
+
+public native operator fun ubyte.bnot(): ubyte
+public native operator fun byte.bnot(): byte
+public native operator fun ushort.bnot(): ushort
+public native operator fun short.bnot(): short
+public native operator fun uint.bnot(): uint
+public native operator fun int.bnot(): int
+public native operator fun ulong.bnot(): ulong
+public native operator fun long.bnot(): long
+public native operator fun float.bnot(): float
+public native operator fun double.bnot(): double

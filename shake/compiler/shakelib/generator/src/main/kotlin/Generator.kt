@@ -47,6 +47,7 @@ fun main() {
                             name(operation.first)
                             extending(type0.first)
                             operator()
+                            native()
                             parameter {
                                 var c = type1.first.toCharArray().first().lowercase()
                                 if (c == "u") c = type1.first.toCharArray()[1].lowercase()
@@ -74,6 +75,8 @@ fun main() {
                     name("bnot")
                     extending(type.first)
                     returnType(type.first)
+                    operator()
+                    native()
                 }
             }
 
