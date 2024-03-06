@@ -7,7 +7,11 @@ import com.shakelang.util.parseutils.lexer.token.Token
 import com.shakelang.util.parseutils.lexer.token.TokenFactory
 import com.shakelang.util.parseutils.lexer.token.TokenType
 
-open class FactoryTokenInputStream<TT : TokenType, T : Token<TT>>(
+open class FactoryTokenInputStream<
+    Self : TokenInputStream<Self, TT, T>,
+    TT : TokenType,
+    T : Token<*, TT, Self>,
+    >(
     val factory: TokenFactory<T>,
     override val source: String,
     override val map: PositionMap,
@@ -24,7 +28,7 @@ open class FactoryTokenInputStream<TT : TokenType, T : Token<TT>>(
             return factory.hasMoreTokens()
         }
     }),
-    TokenInputStream<TT, T> {
+    TokenInputStream<Self, TT, T> {
 
     override fun skip() {
         super.read()

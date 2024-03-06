@@ -543,7 +543,18 @@
         "unspecified:unspecified:unspecified",
         "com.squareup:kotlinpoet:1.16.0"
       ]
+    },
+    {
+      "path": ":shake:compiler:shakelib:generator",
+      "name": "shake.shake.compiler.shakelib:generator",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake.compiler.shakelib",
+      "license": "",
+      "dependencies": [
+        ":shake:shakespeare:shakespeare:0.1.0"
+      ]
     }
   ],
-  "lastUpdate": 1709314539186
+  "lastUpdate": 1709720026204
 }

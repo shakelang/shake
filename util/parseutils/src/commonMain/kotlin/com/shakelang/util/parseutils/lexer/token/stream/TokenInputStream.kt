@@ -13,7 +13,7 @@ import com.shakelang.util.parseutils.lexer.token.TokenType
  * @version 0.2.1
  */
 @Suppress("unused")
-interface TokenInputStream<TT : TokenType, T : Token<TT>> : PeekableStream<T> {
+interface TokenInputStream<Self : TokenInputStream<Self, TT, T>, TT : TokenType, T : Token<*, TT, *>> : PeekableStream<T> {
 
     /**
      * The source (mostly filename) of the [TokenInputStream]
@@ -62,32 +62,6 @@ interface TokenInputStream<TT : TokenType, T : Token<TT>> : PeekableStream<T> {
     }
 
     /**
-     * Returns the type of the next token of the [TokenInputStream] (and skips)
-     * @return the next token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    fun nextType(): TT {
-        // skip to next token and then return the actual token
-        skip()
-        return actualType
-    }
-
-    /**
-     * Returns the next token of the [TokenInputStream]
-     * @return the next token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    fun nextValue(): String? {
-        // skip to next token and then return the actual token
-        skip()
-        return actualValue
-    }
-
-    /**
      * Skips the next token
      *
      * @since 0.1.0
@@ -111,49 +85,4 @@ interface TokenInputStream<TT : TokenType, T : Token<TT>> : PeekableStream<T> {
      * @version 0.2.1
      */
     val actual: T
-
-    /**
-     * Returns the type of the actual token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actualType
-        get() = actual.type
-
-    /**
-     * Returns the start of the actual token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actualStart
-        get() = actual.start
-
-    /**
-     * Returns the end of the actual token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actualEnd
-        get() = actual.end
-
-    /**
-     * Returns the value of the actual
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actualValue
-        get() = actual.value
-
-    /**
-     * Checks if the actual token without changing the actual token
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actualHasValue
-        get() = actualValue != null
 }
