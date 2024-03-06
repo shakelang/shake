@@ -24,12 +24,12 @@ repositories {
 
 kotlin {
     dependencies {
+        implementation(project(":util:common-io"))
         implementation(project(":util:parseutils"))
         implementation(project(":util:shason"))
         implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("stdlib"))
-        testImplementation(project(":util:common-io"))
         kotest()
     }
 }

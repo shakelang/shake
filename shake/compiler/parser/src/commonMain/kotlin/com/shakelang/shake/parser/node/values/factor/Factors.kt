@@ -69,7 +69,7 @@ class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : Shak
     /**
      * The value of the character literal
      */
-    val value: Char = (valueToken.value ?: throw Exception("Value of character token is null")).toCharArray()[0]
+    val value: Char = valueToken.value.substring(1, valueToken.value.length - 1).first() // TODO: Decode escape sequences
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to "$value")
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -161,7 +161,7 @@ class ShakeStringLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLi
     /**
      * The value of the string literal
      */
-    val value: String = valueToken.value ?: throw Exception("Value of string token is null")
+    val value: String = valueToken.value.substring(1, valueToken.value.length - 1) // TODO: Decode escape sequences
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 
