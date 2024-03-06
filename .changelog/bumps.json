@@ -13,6 +13,13 @@
       "paths": [
         ":util:parseutils"
       ]
+    },
+    {
+      "type": "patch",
+      "message": "Introduce EOF token",
+      "paths": [
+        ":util:shason"
+      ]
     }
   ]
 }

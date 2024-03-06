@@ -270,6 +270,7 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
+        ":util:common-io:common-io:0.5.0",
         ":util:parseutils:parseutils:0.4.1"
       ]
     },
@@ -556,5 +557,5 @@
       ]
     }
   ],
-  "lastUpdate": 1709720026204
+  "lastUpdate": 1709722408463
 }
