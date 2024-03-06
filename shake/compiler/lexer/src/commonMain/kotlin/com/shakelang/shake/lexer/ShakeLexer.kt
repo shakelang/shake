@@ -5,14 +5,11 @@ import com.shakelang.shake.lexer.token.ShakeTokenContext
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStreamImpl
-import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
-import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.AbstractLexer
 import com.shakelang.util.parseutils.lexer.token.TokenCreationContext
 import com.shakelang.util.parseutils.lexer.token.TokenFactory
-import kotlin.jvm.JvmOverloads
 
 class ShakeLexer(
     input: CharacterInputStream,
@@ -208,7 +205,7 @@ class ShakeLexer(
             next == ')' -> factory.create(ShakeTokenType.RPAREN)
             next == '{' -> factory.create(ShakeTokenType.LCURL)
             next == '}' -> factory.create(ShakeTokenType.RCURL)
-            else -> throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
+            else -> throw errorFactory.createErrorAtCurrent("Unrecognised Token: '$next'")
         }
     }
 
@@ -304,13 +301,13 @@ class ShakeLexer(
                     var i = 0
                     while (i < 4) {
                         val c = input.next()
-                        if (!Characters.isHexCharacter(c)) throw LexerError("Expecting hex char")
+                        if (!Characters.isHexCharacter(c)) throw errorFactory.createErrorAtCurrent("Expecting hex char")
                         builder.append(c)
                         i++
                     }
                 }
 
-                else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
+                else -> throw errorFactory.createErrorAtCurrent("Unknown escape sequence '\\" + input.actual() + "'")
             }
         } else {
             builder.append(input.actual())
@@ -320,7 +317,7 @@ class ShakeLexer(
     private fun parseStringLike(builder: StringBuilder, terminator: Char, onlySingleChar: Boolean = false): Int {
         var len = 0
         while (input.hasNext() && input.next() != terminator) {
-            if (onlySingleChar && len > 0) throw LexerError("Only single character allowed")
+            if (onlySingleChar && len > 0) throw errorFactory.createErrorAtCurrent("Only single character allowed")
             len++
             parseStringCharacter(builder)
         }
@@ -331,7 +328,7 @@ class ShakeLexer(
         val string = StringBuilder("`")
         val start = input.position
         parseStringLike(string, '`')
-        if (input.actual() != '`') throw LexerError("Token name must be enclosed in '`'")
+        if (input.actual() != '`') throw errorFactory.createErrorAtCurrent("Token name must be enclosed in '`'")
         string.append('`')
         return factory.create(ShakeTokenType.IDENTIFIER, start, input.position, string.toString())
     }
@@ -340,7 +337,7 @@ class ShakeLexer(
         val string = StringBuilder("\"")
         val start = input.position
         parseStringLike(string, '"')
-        if (input.actual() != '"') throw LexerError("String must end with a '\"'")
+        if (input.actual() != '"') throw errorFactory.createErrorAtCurrent("String must end with a '\"'")
         string.append('"')
         return factory.create(ShakeTokenType.STRING, start, input.position, string.toString())
     }
@@ -349,7 +346,7 @@ class ShakeLexer(
         val start = input.position
         val builder = StringBuilder("'")
         parseStringLike(builder, '\'', true)
-        if (input.actual() != '\'') throw LexerError("Char must end with a \"'\"")
+        if (input.actual() != '\'') throw errorFactory.createErrorAtCurrent("Char must end with a \"'\"")
         builder.append('\'')
         val token = factory.create(ShakeTokenType.CHARACTER, start, input.position, builder.toString())
         return token
@@ -365,37 +362,7 @@ class ShakeLexer(
         while (input.has(2) && !(input.peek() == '*' && input.peek(2) == '/')) {
             input.skip()
         }
-        if (!input.has(2)) throw LexerError("Multi-Line-Comment did not end")
+        if (!input.has(2)) throw errorFactory.createErrorAtCurrent("Multi-Line-Comment did not end")
         input.skip(2)
-    }
-
-    inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
-        CompilerError(message, name, details, start, end) {
-        @JvmOverloads
-        constructor(
-            name: String,
-            details: String,
-            start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            name,
-            details,
-            start,
-            end,
-        )
-
-        @JvmOverloads
-        constructor(
-            details: String,
-            start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            "LexerError",
-            details,
-            start,
-            end,
-        )
     }
 }

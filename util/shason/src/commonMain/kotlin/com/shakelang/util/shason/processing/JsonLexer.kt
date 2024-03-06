@@ -1,12 +1,9 @@
 package com.shakelang.util.shason.processing
 
-import com.shakelang.util.parseutils.CompilerError
-import com.shakelang.util.parseutils.LexerErrorFactory
 import com.shakelang.util.parseutils.characters.Characters.isHexCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierStartCharacter
 import com.shakelang.util.parseutils.characters.Characters.isNumberOrDotCharacter
-import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.AbstractLexer
 import com.shakelang.util.parseutils.lexer.token.TokenCreationContext
@@ -217,21 +214,4 @@ class JsonLexer(
             number.toString(),
         )
     }
-
-    private inner class JsonParserErrorFactory : LexerErrorFactory<JsonTokenLexerError>(
-        { message, start, end -> JsonTokenLexerError(message, start, end) },
-        input,
-    )
-    private val errorFactory = JsonParserErrorFactory()
-
-    /**
-     * A [CompilerError] thrown by the [JsonLexer]
-     * @since 0.1.0
-     * @version 0.3.0
-     */
-    private class JsonTokenLexerError(
-        message: String,
-        start: Position,
-        end: Position,
-    ) : CompilerError(message, start, end)
 }

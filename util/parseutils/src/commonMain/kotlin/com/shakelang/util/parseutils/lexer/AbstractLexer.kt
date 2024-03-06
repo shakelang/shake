@@ -1,6 +1,7 @@
 package com.shakelang.util.parseutils.lexer
 
 import com.shakelang.util.parseutils.CompilerError
+import com.shakelang.util.parseutils.LexerErrorFactory
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.token.*
@@ -36,86 +37,19 @@ abstract class AbstractLexer<
 
     abstract fun tokenFactory(ctx: TokenCreationContext<TT, T, ST, CTX>): T
 
-    open fun createError(
+    val errorFactory = LexerErrorFactory({
+            message, start, end ->
+        LexerError(message, start, end)
+    }, input)
+
+    /**
+     * A [CompilerError] thrown by the [JsonLexer]
+     * @since 0.1.0
+     * @version 0.3.0
+     */
+    class LexerError(
         message: String,
-        name: String,
-        details: String,
         start: Position,
         end: Position,
-    ) = LexerError(message, name, details, start, end)
-
-    open fun createError(
-        name: String,
-        details: String,
-        start: Position = input.positionMaker.createPositionAtLocation(),
-        end: Position = start,
-    ) = LexerError(name, details, start, end)
-
-    open fun createError(
-        details: String,
-        start: Position = input.positionMaker.createPositionAtLocation(),
-        end: Position = start,
-    ) = LexerError(details, start, end)
-
-    open class LexerError(
-        message: String,
-        name: String,
-        details: String,
-        start: Position,
-        end: Position,
-    ) :
-        CompilerError(message, name, details, start, end) {
-
-        constructor(
-            base: AbstractLexer<*, *, *, *>,
-            name: String,
-            details: String,
-            start: Position = base.input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            name,
-            details,
-            start,
-            end,
-        )
-
-        constructor(
-            base: AbstractLexer<*, *, *, *>,
-            details: String,
-            start: Position = base.input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            "LexerError",
-            details,
-            start,
-            end,
-        )
-
-        constructor(
-            name: String,
-            details: String,
-            start: Position,
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            name,
-            details,
-            start,
-            end,
-        )
-
-        constructor(
-            details: String,
-            start: Position,
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
-            "LexerError",
-            details,
-            start,
-            end,
-        )
-    }
+    ) : CompilerError(message, start, end)
 }
