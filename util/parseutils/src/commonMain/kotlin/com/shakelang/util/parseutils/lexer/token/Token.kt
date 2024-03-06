@@ -14,9 +14,10 @@ import com.shakelang.util.parseutils.lexer.token.stream.TokenInputStream
  * @version 0.2.1
  */
 open class Token<
-    Self : Token<Self, TT, ST>,
+    Self : Token<Self, TT, ST, CTX>,
     TT : TokenType,
-    ST : TokenInputStream<*, TT, Self>,
+    ST : TokenInputStream<ST, TT, Self, CTX>,
+    CTX : TokenContext<CTX, TT, Self, ST>,
     >(
     /**
      * The type of the [Token]
@@ -34,7 +35,7 @@ open class Token<
      * @since 0.1.0
      * @version 0.2.1
      */
-    open val value: String?,
+    open val value: String,
 
     /**
      * The starting Position of the [Token]
@@ -53,28 +54,16 @@ open class Token<
      * @version 0.2.1
      */
     open val end: Int,
-) {
 
     /**
-     * Constructor for [Token]
-     * @param type the [Token.type] of the [Token]
-     * @param start the [Token.start] of the [Token]
-     * @param end the [Token.end] of the [Token]
-     *
+     * The context of the [Token]
      * @see Token
-     * @see Token.type
-     * @see Token.start
-     * @see Token.end
      *
-     * @since 0.1.0
-     * @version 0.2.1
+     * @since 0.5.0
+     * @version 0.5.0
      */
-    constructor(
-        type: TT,
-        start: Int,
-        end: Int,
-    ) : this(type, null, start, end)
-
+    open val context: CTX,
+) {
     /**
      * String representation of the [Token]
      * @return the string representation of the [Token]
@@ -96,7 +85,7 @@ open class Token<
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null || other !is Token<*, *, *>) return false
+        if (other == null || other !is Token<*, *, *, *>) return false
         return type == other.type &&
             value == other.value
     }

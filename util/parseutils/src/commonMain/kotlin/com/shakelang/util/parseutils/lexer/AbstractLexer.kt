@@ -3,16 +3,38 @@ package com.shakelang.util.parseutils.lexer
 import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.util.parseutils.lexer.token.Token
-import com.shakelang.util.parseutils.lexer.token.TokenType
-import kotlin.jvm.JvmOverloads
+import com.shakelang.util.parseutils.lexer.token.*
+import com.shakelang.util.parseutils.lexer.token.stream.TokenInputStream
 
 @Suppress("unused")
-abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
+abstract class AbstractLexer<
+    TT : TokenType,
+    T : Token<T, TT, ST, CTX>,
+    ST : TokenInputStream<ST, TT, T, CTX>,
+    CTX : TokenContext<CTX, TT, T, ST>,
+    >(
     val input: CharacterInputStream,
+    val ctx: CTX,
 ) {
 
+    val factory = TokenCreationFactory(input.positionMaker, this::tokenFactory, ctx)
+
+    private fun toFactory() = TokenFactory.of(this::makeToken)
+    private var streamCreated = false
+
+    fun stream(): ST {
+        if (streamCreated) throw IllegalStateException("Stream already created for this lexer")
+        streamCreated = true
+        val stream = createStream(toFactory())
+        TokenContext.Tools.initStream(ctx, stream)
+        return stream
+    }
+
+    protected abstract fun createStream(factory: TokenFactory<T>): ST
+
     abstract fun makeToken(): T
+
+    abstract fun tokenFactory(ctx: TokenCreationContext<TT, T, ST, CTX>): T
 
     open fun createError(
         message: String,
@@ -44,9 +66,8 @@ abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
     ) :
         CompilerError(message, name, details, start, end) {
 
-        @JvmOverloads
         constructor(
-            base: LexingBase<*, *>,
+            base: AbstractLexer<*, *, *, *>,
             name: String,
             details: String,
             start: Position = base.input.positionMaker.createPositionAtLocation(),
@@ -59,9 +80,8 @@ abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
             end,
         )
 
-        @JvmOverloads
         constructor(
-            base: LexingBase<*, *>,
+            base: AbstractLexer<*, *, *, *>,
             details: String,
             start: Position = base.input.positionMaker.createPositionAtLocation(),
             end: Position = start,
@@ -73,7 +93,6 @@ abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
             end,
         )
 
-        @JvmOverloads
         constructor(
             name: String,
             details: String,
@@ -87,7 +106,6 @@ abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
             end,
         )
 
-        @JvmOverloads
         constructor(
             details: String,
             start: Position,

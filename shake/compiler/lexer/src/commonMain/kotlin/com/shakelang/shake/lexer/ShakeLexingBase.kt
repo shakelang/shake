@@ -6,12 +6,12 @@ import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.util.parseutils.lexer.LexingBase
+import com.shakelang.util.parseutils.lexer.AbstractLexer
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(
     input: CharacterInputStream,
-) : LexingBase<ShakeTokenType, ShakeToken>(input) {
+) : AbstractLexer<ShakeTokenType, ShakeToken>(input) {
 
     override fun makeToken(): ShakeToken {
         if (!input.hasNext()) {

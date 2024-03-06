@@ -15,18 +15,18 @@ interface TokenType {
     fun length(value: String?): Int
 
     /**
-     * Check if the token has a value
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val hasValue: Boolean
-
-    /**
      * Get the name of the token
      *
      * @since 0.1.0
      * @version 0.2.1
      */
     val name: String
+
+    /**
+     * Get the value of the token (or null if allowed)
+     *
+     * @since 0.5.0
+     * @version 0.5.0
+     */
+    val value: String?
 }

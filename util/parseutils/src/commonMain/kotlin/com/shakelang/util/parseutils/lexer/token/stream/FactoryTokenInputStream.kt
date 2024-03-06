@@ -4,13 +4,15 @@ import com.shakelang.util.io.streaming.general.PeekableStreamImpl
 import com.shakelang.util.io.streaming.general.Stream
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.lexer.token.Token
+import com.shakelang.util.parseutils.lexer.token.TokenContext
 import com.shakelang.util.parseutils.lexer.token.TokenFactory
 import com.shakelang.util.parseutils.lexer.token.TokenType
 
 open class FactoryTokenInputStream<
-    Self : TokenInputStream<Self, TT, T>,
+    Self : TokenInputStream<Self, TT, T, CTX>,
     TT : TokenType,
-    T : Token<*, TT, Self>,
+    T : Token<T, TT, Self, CTX>,
+    CTX : TokenContext<CTX, TT, T, Self>,
     >(
     val factory: TokenFactory<T>,
     override val map: PositionMap,
@@ -25,7 +27,7 @@ open class FactoryTokenInputStream<
             return true
         }
     }),
-    TokenInputStream<Self, TT, T> {
+    TokenInputStream<Self, TT, T, CTX> {
 
     override val source: String
         get() = map.location

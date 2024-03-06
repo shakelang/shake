@@ -3,6 +3,7 @@ package com.shakelang.util.parseutils.lexer.token.stream
 import com.shakelang.util.io.streaming.general.PeekableStream
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.lexer.token.Token
+import com.shakelang.util.parseutils.lexer.token.TokenContext
 import com.shakelang.util.parseutils.lexer.token.TokenType
 
 /**
@@ -13,7 +14,12 @@ import com.shakelang.util.parseutils.lexer.token.TokenType
  * @version 0.2.1
  */
 @Suppress("unused")
-interface TokenInputStream<Self : TokenInputStream<Self, TT, T>, TT : TokenType, T : Token<*, TT, *>> : PeekableStream<T> {
+interface TokenInputStream<
+    Self : TokenInputStream<Self, TT, T, CTX>,
+    TT : TokenType,
+    T : Token<T, TT, Self, CTX>,
+    CTX : TokenContext<CTX, TT, T, Self>,
+    > : PeekableStream<T> {
 
     /**
      * The source (mostly filename) of the [TokenInputStream]
