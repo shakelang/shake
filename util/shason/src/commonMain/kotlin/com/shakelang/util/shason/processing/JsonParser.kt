@@ -35,12 +35,13 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseValue(): JsonElement {
-        return when (val next = tokens.next().type) {
+        val next = tokens.next()
+        return when (next.type) {
             LCURL -> parseMap()
             LSQUARE -> parseArray()
-            STRING -> JsonElement.from(Characters.parseString(tokens.actual.value!!))
-            INT -> JsonElement.from(tokens.actual.value!!.toLong())
-            DOUBLE -> JsonElement.from(tokens.actual.value!!.toDouble())
+            STRING -> JsonElement.from(Characters.parseString(next.value!!))
+            INT -> JsonElement.from(next.value!!.toLong())
+            DOUBLE -> JsonElement.from(next.value!!.toDouble())
             TRUE -> JsonBooleanElement.TRUE
             FALSE -> JsonBooleanElement.FALSE
             NULL -> JsonNullElement.INSTANCE
@@ -55,14 +56,12 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseMap(): JsonObject {
-        if (tokens.actual.type != LCURL) throw ParserError("Expecting '{'")
-
         val map = mutableJsonObjectOf()
         var next = true
 
         while (tokens.hasNext() && next) {
             val key = if (tokens.peek().type == STRING) Characters.parseString(tokens.next().value!!) else break
-            if (tokens.nextType() != COLON) throw ParserError("Expecting ':'")
+            if (tokens.next().type != COLON) throw ParserError("Expecting ':'")
             map[key] = parseValue()
 
             next = tokens.peek().type == COMMA
@@ -80,8 +79,6 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseArray(): JsonArray {
-        if (tokens.actual.type != LSQUARE) throw ParserError("Expecting '['")
-
         val arr = mutableJsonArrayOf()
         var next = true
 

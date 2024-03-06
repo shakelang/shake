@@ -9,7 +9,6 @@ class JsonLexerTests : FreeSpec(
 
         fun testTokens(src: String, content: String, vararg expectedTokens: JsonToken) {
             val input = makeTokens(src, content)
-            input.size shouldBe expectedTokens.size
             for (t in expectedTokens) input.next() shouldBe t
         }
 

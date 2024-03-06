@@ -8,7 +8,7 @@ import com.shakelang.util.parseutils.lexer.token.TokenType
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
-abstract class LexingBase<TT : TokenType, T : Token<TT>>(
+abstract class LexingBase<TT : TokenType, T : Token<*, TT, *>>(
     val input: CharacterInputStream,
 ) {
 

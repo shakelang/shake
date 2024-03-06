@@ -2,8 +2,9 @@ package com.shakelang.util.shason.processing
 
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.lexer.token.Token
+import com.shakelang.util.parseutils.lexer.token.TokenFactory
 import com.shakelang.util.parseutils.lexer.token.TokenType
-import com.shakelang.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
+import com.shakelang.util.parseutils.lexer.token.stream.FactoryTokenInputStream
 import com.shakelang.util.parseutils.lexer.token.stream.TokenInputStream
 
 /**
@@ -12,7 +13,7 @@ import com.shakelang.util.parseutils.lexer.token.stream.TokenInputStream
  * @version 0.1.0
  */
 @Suppress("unused")
-class JsonToken : Token<JsonTokenType> {
+class JsonToken : Token<JsonToken, JsonTokenType, JsonTokenInputStream> {
 
     /**
      * Constructor for [JsonToken]
@@ -156,7 +157,11 @@ enum class JsonTokenType(
  * @since 0.1.0
  * @version 0.1.0
  */
-interface JsonTokenInputStream : TokenInputStream<JsonTokenType, JsonToken>
+interface JsonTokenInputStream : TokenInputStream<
+    JsonTokenInputStream,
+    JsonTokenType,
+    JsonToken,
+    >
 
 /**
  * Implementation of [JsonTokenInputStream]
@@ -164,6 +169,6 @@ interface JsonTokenInputStream : TokenInputStream<JsonTokenType, JsonToken>
  * @version 0.1.0
  */
 class JsonTokenInputStreamImpl(
-    tokens: Array<JsonToken>,
+    tokens: TokenFactory<JsonToken>,
     map: PositionMap,
-) : JsonTokenInputStream, TokenBasedTokenInputStream<JsonTokenType, JsonToken>(tokens, map)
+) : JsonTokenInputStream, FactoryTokenInputStream<JsonTokenInputStream, JsonTokenType, JsonToken>(tokens, map)

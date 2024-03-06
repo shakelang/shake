@@ -33,33 +33,13 @@ interface TokenInputStream<Self : TokenInputStream<Self, TT, T>, TT : TokenType,
     val map: PositionMap
 
     /**
-     * The position that the TokenInputStream is actually at
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val position: Int
-
-    /**
-     * The size of the TokenInputStream
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val size: Int
-
-    /**
      * Returns the next token of the [TokenInputStream] (and skips)
      * @return the next token
      *
      * @since 0.1.0
      * @version 0.2.1
      */
-    operator fun next(): T {
-        // skip to next token and then return the actual token
-        skip()
-        return actual
-    }
+    operator fun next() = read()
 
     /**
      * Skips the next token
@@ -77,12 +57,4 @@ interface TokenInputStream<Self : TokenInputStream<Self, TT, T>, TT : TokenType,
      * @version 0.2.1
      */
     fun skip(amount: Int)
-
-    /**
-     * Returns the actual [Token]
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    val actual: T
 }

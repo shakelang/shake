@@ -7,6 +7,7 @@ import com.shakelang.util.parseutils.characters.Characters.isIdentifierStartChar
 import com.shakelang.util.parseutils.characters.Characters.isNumberOrDotCharacter
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.lexer.token.TokenFactory
 import kotlin.jvm.JvmOverloads
 
 /**
@@ -33,63 +34,54 @@ class JsonLexer(
      * @version 0.1.0
      */
     fun makeTokens(): JsonTokenInputStream {
-        // Set for storing the generated tokens
-        val tokens = mutableListOf<JsonToken>()
-
-        // Loop over all the characters in the characterInputStream
-        while (this.chars.hasNext()) {
-            // Store the next character (Store it in a variable to not get it every time to save performance)
-            val next = this.chars.next()
-
-            // If the next character is a whitespace character we will just ignore it
-            if (next == ' ' || next == '\t' || next == '\r' || next == '\n') continue
-
-            // If it is one of the simple tokens we just return a new Token
-            if (next == '{') {
-                tokens.add(JsonToken(JsonTokenType.LCURL, this.chars.position))
-                continue
-            }
-            if (next == '}') {
-                tokens.add(JsonToken(JsonTokenType.RCURL, this.chars.position))
-                continue
-            }
-            if (next == '[') {
-                tokens.add(JsonToken(JsonTokenType.LSQUARE, this.chars.position))
-                continue
-            }
-            if (next == ']') {
-                tokens.add(JsonToken(JsonTokenType.RSQUARE, this.chars.position))
-                continue
-            }
-            if (next == ':') {
-                tokens.add(JsonToken(JsonTokenType.COLON, this.chars.position))
-                continue
-            }
-            if (next == ',') {
-                tokens.add(JsonToken(JsonTokenType.COMMA, this.chars.position))
-                continue
-            }
-
-            // If the next token is a '"' or ''' call makeString()
-            if (next == '"' || next == '\'') {
-                tokens.add(makeString())
-            } // If the next token is an identifierStartCharacter (a-zA-Z_) call makeIdentifier() to generate a String
-            else if (isIdentifierStartCharacter(next)) {
-                tokens.add(makeIdentifier())
-            } // If the next character is 0-9 or '.' or '-' make a number
-            else if (isNumberOrDotCharacter(next) || next == '-') {
-                tokens.add(makeNumber())
-            } // If we can't parse the character throw an error
-            else {
-                throw JsonTokenLexerError("Unknown symbol '$next'")
-            }
-        }
-
         // Create a new JsonTokenInputStream out of the tokens
         return JsonTokenInputStreamImpl(
-            tokens.toTypedArray(),
+            TokenFactory.of(this::makeToken),
             chars.positionMaker.createPositionMap(),
         )
+    }
+
+    fun makeToken(): JsonToken {
+        // Store the next character (Store it in a variable to not get it every time to save performance)
+        var next = this.chars.next()
+
+        // If the next character is a whitespace character we will just ignore it
+        while (next == ' ' || next == '\t' || next == '\r' || next == '\n')
+            next = this.chars.next()
+
+        // If it is one of the simple tokens we just return a new Token
+        if (next == '{') {
+            return JsonToken(JsonTokenType.LCURL, this.chars.position)
+        }
+        if (next == '}') {
+            return JsonToken(JsonTokenType.RCURL, this.chars.position)
+        }
+        if (next == '[') {
+            return JsonToken(JsonTokenType.LSQUARE, this.chars.position)
+        }
+        if (next == ']') {
+            return JsonToken(JsonTokenType.RSQUARE, this.chars.position)
+        }
+        if (next == ':') {
+            return JsonToken(JsonTokenType.COLON, this.chars.position)
+        }
+        if (next == ',') {
+            return JsonToken(JsonTokenType.COMMA, this.chars.position)
+        }
+
+        // If the next token is a '"' or ''' call makeString()
+        if (next == '"' || next == '\'') {
+            return makeString()
+        } // If the next token is an identifierStartCharacter (a-zA-Z_) call makeIdentifier() to generate a String
+        else if (isIdentifierStartCharacter(next)) {
+            return makeIdentifier()
+        } // If the next character is 0-9 or '.' or '-' make a number
+        else if (isNumberOrDotCharacter(next) || next == '-') {
+            return makeNumber()
+        } // If we can't parse the character throw an error
+        else {
+            throw JsonTokenLexerError("Unknown symbol '$next'")
+        }
     }
 
     /**

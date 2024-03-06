@@ -13,11 +13,7 @@ open class FactoryTokenInputStream<
     T : Token<*, TT, Self>,
     >(
     val factory: TokenFactory<T>,
-    override val source: String,
     override val map: PositionMap,
-    override val position: Int,
-    override val size: Int,
-    override val actual: T,
 ) :
     PeekableStreamImpl<T>(object : Stream<T> {
         override fun read(): T {
@@ -29,6 +25,9 @@ open class FactoryTokenInputStream<
         }
     }),
     TokenInputStream<Self, TT, T> {
+
+    override val source: String
+        get() = map.location
 
     override fun skip() {
         super.read()
