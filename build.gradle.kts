@@ -40,6 +40,7 @@ dependencies {
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
     kover(project(":util:testlib"))
+    kover(project(":util:testlib:lexer"))
 
     kover(project(":shake:bytecode:conventions"))
     kover(project(":shake:bytecode:utils"))

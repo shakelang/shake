@@ -18,6 +18,7 @@ include(":util:pointers")
 include(":util:primitives")
 include(":util:shason")
 include(":util:testlib")
+include(":util:testlib:lexer")
 
 include(":shake:shakespeare")
 include(":shake:bytecode:generator")
