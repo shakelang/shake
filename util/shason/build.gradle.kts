@@ -18,6 +18,7 @@ kotlin {
     dependencies {
         implementation(project(":util:common-io"))
         implementation(project(":util:parseutils"))
+        testImplementation(project(":util:testlib:lexer"))
     }
 }
 
