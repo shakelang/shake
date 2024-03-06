@@ -4,7 +4,6 @@ import com.shakelang.util.colorlib.functional.invert
 import com.shakelang.util.colorlib.functional.join
 import com.shakelang.util.colorlib.functional.red
 import com.shakelang.util.parseutils.characters.position.Position
-import com.shakelang.util.parseutils.characters.position.PositionMap
 import kotlin.js.JsName
 
 /**
@@ -15,144 +14,25 @@ import kotlin.js.JsName
  * @version 0.2.1
  */
 @Suppress("unused")
-open class CompilerError : Error {
-
-    /**
-     * The name of the [CompilerError]
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    @JsName("exceptionName")
-    val exceptionName: String
-
-    /**
-     * The details of the [CompilerError]
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    @JsName("details")
-    val details: String
-
+open class CompilerError
+constructor(
+    message: String,
     /**
      * The start position of the [CompilerError]
      *
      * @since 0.1.0
      * @version 0.2.1
      */
-    @JsName("start")
-    val start: Position
-
+    @JsName("start") val start: Position,
     /**
      * The end position of the [CompilerError]
      *
      * @since 0.1.0
      * @version 0.2.1
      */
-    @JsName("end")
-    val end: Position
-
-    /**
-     * The marker of the Error
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    @JsName("marker")
-    val marker: ErrorMarker
-
-    /**
-     * Constructor for [CompilerError]
-     * @param message the message of the exception _(Value for [CompilerError.message])_
-     * @param marker the marker of the exception _(Value for [CompilerError.marker])_
-     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
-     * @param details the details of the exception _(Value for [CompilerError.details])_
-     * @param start the start position of the exception _(Value for [CompilerError.start])_
-     * @param end the end position of the exception _(Value for [CompilerError.end])_
-     * @param cause the cause for the exception
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    private constructor(
-        message: String,
-        marker: ErrorMarker,
-        exceptionName: String,
-        details: String,
-        start: Position,
-        end: Position,
-        cause: Throwable? = null,
-    ) : super(message, cause) {
-        this.exceptionName = exceptionName
-        this.details = details
-        this.start = start
-        this.end = end
-        this.marker = marker
-    }
-
-    /**
-     * Constructor for [CompilerError]
-     * @param message the message of the exception _(Value for [CompilerError.message])_
-     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
-     * @param details the details of the exception _(Value for [CompilerError.details])_
-     * @param start the start position of the exception _(Value for [CompilerError.start])_
-     * @param end the end position of the exception _(Value for [CompilerError.end])_
-     * @param cause the cause for the exception
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    constructor(
-        message: String,
-        exceptionName: String,
-        details: String,
-        start: Position,
-        end: Position,
-        cause: Throwable? = null,
-    ) : this(
-        message,
-        createPositionMarker(
-            MAX_LENGTH,
-            start,
-            end,
-        ),
-        exceptionName,
-        details,
-        start,
-        end,
-        cause,
-    )
-
-    /**
-     * Constructor for [CompilerError]
-     * @param message the message of the exception _(Value for [CompilerError.message])_
-     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
-     * @param details the details of the exception _(Value for [CompilerError.details])_
-     * @param map the position map to resolve start and end _(Value for [CompilerError.start])_
-     * @param start the start position of the exception _(Value for [CompilerError.start])_
-     * @param end the end position of the exception _(Value for [CompilerError.end])_
-     * @param cause the cause for the exception
-     *
-     * @since 0.1.0
-     * @version 0.2.1
-     */
-    constructor(
-        message: String,
-        exceptionName: String,
-        details: String,
-        map: PositionMap,
-        start: Int,
-        end: Int,
-        cause: Throwable? = null,
-    ) : this(
-        message,
-        exceptionName,
-        details,
-        map.resolve(start),
-        map.resolve(end),
-        cause,
-    )
+    @JsName("end") val end: Position,
+    cause: Throwable? = null,
+) : Error(message, cause) {
 
     /**
      * Stringify the [CompilerError]

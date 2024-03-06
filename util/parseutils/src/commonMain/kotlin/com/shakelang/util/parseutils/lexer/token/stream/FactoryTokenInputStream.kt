@@ -29,15 +29,18 @@ open class FactoryTokenInputStream<
     }),
     TokenInputStream<Self, TT, T, CTX> {
 
+    final override lateinit var actual: T
+        private set
+
     override val source: String
         get() = map.location
 
     override fun skip() {
-        super.read()
+        actual = super.read()
     }
 
     override fun skip(amount: Int) {
-        for (i in 0 until amount) super.read()
+        for (i in 0 until amount) actual = super.read()
     }
 
     override fun has(amount: Int) = peek(amount).type != eof

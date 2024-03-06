@@ -1,6 +1,7 @@
 package com.shakelang.util.shason.processing
 
 import com.shakelang.util.parseutils.CompilerError
+import com.shakelang.util.parseutils.LexerErrorFactory
 import com.shakelang.util.parseutils.characters.Characters.isHexCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierStartCharacter
@@ -10,7 +11,6 @@ import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.AbstractLexer
 import com.shakelang.util.parseutils.lexer.token.TokenCreationContext
 import com.shakelang.util.parseutils.lexer.token.TokenFactory
-import kotlin.jvm.JvmOverloads
 
 /**
  * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
@@ -84,7 +84,7 @@ class JsonLexer(
             return makeNumber()
         } // If we can't parse the character throw an error
         else {
-            throw JsonTokenLexerError("Unknown symbol '$next'")
+            throw errorFactory.createErrorAtCurrent("Unknown symbol '$next'")
         }
     }
 
@@ -109,7 +109,7 @@ class JsonLexer(
             "false" -> factory.create(JsonTokenType.FALSE)
             "true" -> factory.create(JsonTokenType.TRUE)
             "null" -> factory.create(JsonTokenType.NULL)
-            else -> throw JsonTokenLexerError("Unknown identifier '$identifier'")
+            else -> throw errorFactory.createErrorAtCurrent("Unknown identifier '$identifier'")
         }
     }
 
@@ -149,13 +149,13 @@ class JsonLexer(
                         var s = ""
                         for (i in 0..3) {
                             val c: Char = this.input.next()
-                            if (!isHexCharacter(c)) throw JsonTokenLexerError("Expecting hex char")
+                            if (!isHexCharacter(c)) throw errorFactory.createErrorAtCurrent("Expecting hex char")
                             s += c
                         }
                         str.append(s.toInt(radix = 16).toChar())
                     }
 
-                    else -> throw JsonTokenLexerError("Unknown escape sequence '\\" + this.input.actual() + "'")
+                    else -> throw errorFactory.createErrorAtCurrent("Unknown escape sequence '\\${this.input.actual()}'")
                 }
             } else {
                 str.append(this.input.actual())
@@ -163,7 +163,7 @@ class JsonLexer(
         }
 
         // If we have not found the end throw an Error
-        if (this.input.actual() != end) throw JsonTokenLexerError("Unexpected End")
+        if (this.input.actual() != end) throw errorFactory.createErrorAtCurrent("Unexpected End")
 
         // Return a string JsonToken
         return factory.create(JsonTokenType.STRING, start, this.input.position, str.toString())
@@ -195,7 +195,7 @@ class JsonLexer(
             if (this.input.next() == '.') {
                 // Prevent two dots in a number
                 if (foundDot) {
-                    throw JsonTokenLexerError("Number must not contain two dots")
+                    throw errorFactory.createErrorAtCurrent("Number must not contain two dots")
                 } else {
                     foundDot = true
                 }
@@ -218,63 +218,20 @@ class JsonLexer(
         )
     }
 
+    private inner class JsonParserErrorFactory : LexerErrorFactory<JsonTokenLexerError>(
+        { message, start, end -> JsonTokenLexerError(message, start, end) },
+        input,
+    )
+    private val errorFactory = JsonParserErrorFactory()
+
     /**
-     * An [CompilerError] thrown by the [JsonLexer]
+     * A [CompilerError] thrown by the [JsonLexer]
      * @since 0.1.0
      * @version 0.3.0
      */
-    private inner class JsonTokenLexerError(
+    private class JsonTokenLexerError(
         message: String,
-        name: String,
-        details: String,
         start: Position,
         end: Position,
-    ) : CompilerError(message, name, details, start, end) {
-
-        /**
-         * Constructor for [JsonTokenLexerError]
-         *
-         * @param name the name of the [CompilerError]
-         * @param details the details of the [CompilerError]
-         * @param start the start position of the [CompilerError]
-         * @param end the end position of the [CompilerError]
-         * @since 0.1.0
-         * @version 0.3.0
-         */
-        @JvmOverloads
-        constructor(
-            name: String,
-            details: String,
-            start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
-            name,
-            details,
-            start,
-            end,
-        )
-
-        /**
-         * Constructor for [JsonTokenLexerError]
-         *
-         * @param details the details of the [CompilerError]
-         * @param start the start position of the [CompilerError]
-         * @param end the end position of the [CompilerError]
-         * @since 0.1.0
-         * @version 0.3.0
-         */
-        @JvmOverloads
-        constructor(
-            details: String,
-            start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
-            "LexerError",
-            details,
-            start,
-            end,
-        )
-    }
+    ) : CompilerError(message, start, end)
 }
