@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
     val source = CharacterSource.from(contents, args[0])
     val chars = SourceCharacterInputStream(source)
     val lexer = ShasPLexer(chars)
-    val tokens = lexer.makeTokens()
+    val tokens = lexer.stream()
     val parser = ShasPParser(tokens)
     val prog = parser.parse()
 

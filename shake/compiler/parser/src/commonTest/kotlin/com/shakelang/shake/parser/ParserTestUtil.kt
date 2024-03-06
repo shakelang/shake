@@ -16,7 +16,7 @@ object ParserTestUtil {
     fun parse(source: String, input: String): ShakeFileNode {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
-        val tokens = lexer.makeTokens()
+        val tokens = lexer.stream()
         val parser = ShakeParser.from(tokens)
         return parser.parse()
     }
@@ -24,7 +24,7 @@ object ParserTestUtil {
     fun parseStatement(source: String, input: String): ShakeBlockNode {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
-        val tokens = lexer.makeTokens()
+        val tokens = lexer.stream()
         val parser = ShakeParser.from(tokens)
         return parser.parseAsStatements()
     }
@@ -32,7 +32,7 @@ object ParserTestUtil {
     fun parseValue(source: String, input: String): ShakeValuedNode {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
-        val tokens = lexer.makeTokens()
+        val tokens = lexer.stream()
         val parser = ShakeParser.from(tokens)
         return parser.expectValue()
     }

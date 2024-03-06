@@ -182,7 +182,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val lexer = ShakeLexer(input)
 
     // Generate the tokens using the lexer
-    val tokens = lexer.makeTokens()
+    val tokens = lexer.stream()
 
     // if debug is enabled, we print out the lexer-tokens
     logger.debug("[DEBUG] Lexer-Tokens: $tokens")

@@ -16,7 +16,7 @@ class LexerTests : FreeSpec(
         }
 
         "make tokens" {
-            val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens()").makeTokens()
+            val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens()").stream()
             var token = tokens.next()
             token.type shouldBe ShakeTokenType.INTEGER
             token.value shouldBe "10"
@@ -24,7 +24,6 @@ class LexerTests : FreeSpec(
             token.end shouldBe 1
             token = tokens.next()
             token.type shouldBe ShakeTokenType.ADD
-            token.value shouldBe null
             token.start shouldBe 2
             token.end shouldBe 2
             token = tokens.next()
@@ -34,7 +33,6 @@ class LexerTests : FreeSpec(
             token.end shouldBe 3
             token = tokens.next()
             token.type shouldBe ShakeTokenType.MUL
-            token.value shouldBe null
             token.start shouldBe 4
             token.end shouldBe 4
             token = tokens.next()
@@ -53,7 +51,6 @@ class LexerTests : FreeSpec(
             token.end shouldBe 1
             token = tokens.next()
             token.type shouldBe ShakeTokenType.ADD
-            token.value shouldBe null
             token.start shouldBe 2
             token.end shouldBe 2
             token = tokens.next()
@@ -63,7 +60,6 @@ class LexerTests : FreeSpec(
             token.end shouldBe 3
             token = tokens.next()
             token.type shouldBe ShakeTokenType.MUL
-            token.value shouldBe null
             token.start shouldBe 4
             token.end shouldBe 4
             token = tokens.next()

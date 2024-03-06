@@ -39,7 +39,7 @@ abstract class ShakeProcessor<T> {
     open fun parseFile(src: String, contents: CharArray): ShakeFileNode {
         val chars: CharacterInputStream = SourceCharacterInputStream(src, contents)
         val lexer = ShakeLexer(chars)
-        val tokens = lexer.makeTokens()
+        val tokens = lexer.stream()
         val parser = com.shakelang.shake.parser.ShakeParser.from(tokens)
         return parser.parse()
     }

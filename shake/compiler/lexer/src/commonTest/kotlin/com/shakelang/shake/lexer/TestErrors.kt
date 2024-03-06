@@ -12,10 +12,10 @@ class TestErrors : FreeSpec(
 
         "string must end error" {
             // String type 1 not finished
-            val error = shouldThrow<ShakeLexingBase.LexerError> {
+            val error = shouldThrow<ShakeLexer.LexerError> {
                 val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"test")
                 val lexer = ShakeLexer(chars)
-                lexer.makeTokens()
+                lexer.stream().next()
             }
 
             error.start.index shouldBe 4
@@ -28,10 +28,10 @@ class TestErrors : FreeSpec(
 
         "unknown escape sequence error" {
             // Unknown escape sequence (using \a here)
-            val error = shouldThrow<ShakeLexingBase.LexerError> {
+            val error = shouldThrow<ShakeLexer.LexerError> {
                 val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\a\"")
                 val lexer = ShakeLexer(chars)
-                lexer.makeTokens()
+                lexer.stream().next()
             }
 
             error.start.index shouldBe 2
@@ -44,10 +44,10 @@ class TestErrors : FreeSpec(
 
         "expect hex character error" {
             // Wrong input to unicode character
-            val error = shouldThrow<ShakeLexingBase.LexerError> {
+            val error = shouldThrow<ShakeLexer.LexerError> {
                 val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\uatea\"")
                 val lexer = ShakeLexer(chars)
-                lexer.makeTokens()
+                lexer.stream().next()
             }
 
             error.start.index shouldBe 4
@@ -60,10 +60,10 @@ class TestErrors : FreeSpec(
 
         "unexpected token error" {
             // Unexpected Token
-            val error = shouldThrow<ShakeLexingBase.LexerError> {
+            val error = shouldThrow<ShakeLexer.LexerError> {
                 val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\u00dc")
                 val lexer = ShakeLexer(chars)
-                lexer.makeTokens()
+                lexer.stream().next()
             }
 
             error.start.index shouldBe 0

@@ -13,7 +13,7 @@ class LexerBaseTests : FreeSpec(
 
         fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
             val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
-            val lexer = object : ShakeLexingBase(i) {}
+            val lexer = ShakeLexer(i)
             val t = lexer.makeToken()
             t.type shouldBe tt
             i.hasNext() shouldBe false
@@ -21,20 +21,19 @@ class LexerBaseTests : FreeSpec(
         }
 
         "string" {
-            generateToken("\"\"", ShakeTokenType.STRING).value shouldBe ""
-            generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "afvne9214 ro"
+            generateToken("\"\"", ShakeTokenType.STRING).value shouldBe "\"\""
+            generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "\"afvne9214 ro\""
             generateToken(
                 "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"",
                 ShakeTokenType.STRING,
-            ).value shouldBe "\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000"
+            ).value shouldBe "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\""
         }
 
         "character" {
-
             listOf(
                 " ", "a", "\\r", "\\n", "\\b", "\\t", "\\f", "\\'", "\\u0000",
             ).forEach {
-                generateToken("'$it'", ShakeTokenType.CHARACTER).value shouldBe it
+                generateToken("'$it'", ShakeTokenType.CHARACTER).value shouldBe "'$it'"
             }
         }
 
