@@ -75,7 +75,7 @@ enum class ShakeTokenType(
     KEYWORD_VAR("var", "'var'"),
     KEYWORD_WHILE("while", "'while'"),
     LCURL("{", "'{'"),
-    LINE_SEPARATOR("\\n", "'\\n'"),
+    LINE_SEPARATOR("\n", "'\\n'"),
     LOGICAL_AND("&&", "'&&'"),
     LOGICAL_NOT("!", "'!'"),
     LOGICAL_OR("||", "'||'"),

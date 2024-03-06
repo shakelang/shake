@@ -2,6 +2,7 @@ import com.shakelang.util.changelog.public
 import com.shakelang.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
+import conventions.useKotest
 
 plugins {
     id("conventions.all")
@@ -17,6 +18,8 @@ kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
         implementation(project(":util:common-io"))
-        kotest()
+        testImplementation(project(":util:testlib:lexer"))
     }
 }
+
+useKotest()
