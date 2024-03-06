@@ -24,7 +24,6 @@ class AutoLexerTests : LexerSpec(
                 }
                 ValuePair("\"${Characters.escapeString(str)}\"", str)
             },
-            10,
         ),
         TokenSpecDefinition(
             JsonTokenType.INT,
@@ -35,7 +34,6 @@ class AutoLexerTests : LexerSpec(
                 }
                 ValuePair(str, str)
             },
-            10,
         ),
         TokenSpecDefinition(
             JsonTokenType.DOUBLE,
@@ -48,7 +46,6 @@ class AutoLexerTests : LexerSpec(
                 }
                 ValuePair(str, str)
             },
-            10,
         ),
     ),
 

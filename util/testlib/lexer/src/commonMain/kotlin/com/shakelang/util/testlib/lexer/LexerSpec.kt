@@ -91,7 +91,7 @@ class TokenSpecDefinition(
         tt: TokenType,
         matches: Regex,
         provider: Stream<ValuePair>,
-        maxTests: Int,
+        maxTests: Int = 100,
     ) : this(
         tt,
         matches,
