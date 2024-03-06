@@ -134,6 +134,13 @@ enum class JsonTokenType(
      * @version 0.1.0
      */
     INT(-1),
+
+    /**
+     * A [EOF] [JsonTokenType] represents the end of the file
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    EOF(0),
     ;
 
     /**
@@ -171,4 +178,4 @@ interface JsonTokenInputStream : TokenInputStream<
 class JsonTokenInputStreamImpl(
     tokens: TokenFactory<JsonToken>,
     map: PositionMap,
-) : JsonTokenInputStream, FactoryTokenInputStream<JsonTokenInputStream, JsonTokenType, JsonToken>(tokens, map)
+) : JsonTokenInputStream, FactoryTokenInputStream<JsonTokenInputStream, JsonTokenType, JsonToken>(tokens, map, JsonTokenType.EOF)

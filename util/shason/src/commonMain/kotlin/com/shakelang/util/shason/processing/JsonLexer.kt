@@ -33,7 +33,7 @@ class JsonLexer(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun makeTokens(): JsonTokenInputStream {
+    fun stream(): JsonTokenInputStream {
         // Create a new JsonTokenInputStream out of the tokens
         return JsonTokenInputStreamImpl(
             TokenFactory.of(this::makeToken),
@@ -41,15 +41,21 @@ class JsonLexer(
         )
     }
 
-    fun makeToken(): JsonToken {
+    private val eof = JsonToken(JsonTokenType.EOF, chars.position)
+
+    private fun makeToken(): JsonToken {
+        if (!chars.hasNext()) return eof
+
         // Store the next character (Store it in a variable to not get it every time to save performance)
         var next = this.chars.next()
 
-        // If the next character is a whitespace character we will just ignore it
-        while (next == ' ' || next == '\t' || next == '\r' || next == '\n')
+        // If the next character is a whitespace character, we will just ignore it
+        while (next == ' ' || next == '\t' || next == '\r' || next == '\n') {
+            if (!this.chars.hasNext()) return eof
             next = this.chars.next()
+        }
 
-        // If it is one of the simple tokens we just return a new Token
+        // If it is one of the simple tokens, we just return a new Token
         if (next == '{') {
             return JsonToken(JsonTokenType.LCURL, this.chars.position)
         }

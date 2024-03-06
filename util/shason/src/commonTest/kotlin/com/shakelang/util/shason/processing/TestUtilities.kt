@@ -7,7 +7,7 @@ object TestUtilities {
     fun makeTokens(source: String, contents: String): JsonTokenInputStream {
         val input = SourceCharacterInputStream(source, contents)
         val lexer = JsonLexer(input)
-        return lexer.makeTokens()
+        return lexer.stream()
     }
 
     fun parse(source: String, contents: String): JsonElement {

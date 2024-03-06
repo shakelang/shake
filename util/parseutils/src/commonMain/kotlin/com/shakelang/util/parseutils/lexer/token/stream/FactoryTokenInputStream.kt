@@ -14,6 +14,7 @@ open class FactoryTokenInputStream<
     >(
     val factory: TokenFactory<T>,
     override val map: PositionMap,
+    val eof: TT,
 ) :
     PeekableStreamImpl<T>(object : Stream<T> {
         override fun read(): T {
@@ -21,7 +22,7 @@ open class FactoryTokenInputStream<
         }
 
         override fun hasNext(): Boolean {
-            return factory.hasMoreTokens()
+            return true
         }
     }),
     TokenInputStream<Self, TT, T> {
@@ -36,4 +37,7 @@ open class FactoryTokenInputStream<
     override fun skip(amount: Int) {
         for (i in 0 until amount) super.read()
     }
+
+    override fun has(amount: Int) = peek(amount).type != eof
+    override fun hasNext(): Boolean = peek().type != eof
 }
