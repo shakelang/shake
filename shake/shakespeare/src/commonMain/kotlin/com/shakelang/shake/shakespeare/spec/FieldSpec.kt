@@ -8,6 +8,8 @@
 
 package com.shakelang.shake.shakespeare.spec
 
+import com.shakelang.shake.shakespeare.AbstractSpec
+
 class FieldSpec(
     val name: Identifier,
     val type: Type,
@@ -17,8 +19,8 @@ class FieldSpec(
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isStatic) builder.append("static ")

@@ -8,6 +8,7 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 
 /**
@@ -16,11 +17,11 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
  * @property statements A list of statements included in this code specification.
  * @since 0.1.0
  */
-class CodeSpec(
+open class CodeSpec(
 
     val statements: List<StatementSpec>,
 
-) {
+) : AbstractSpec {
 
     /**
      * Generates a string representation of the code based on the given context.
@@ -29,7 +30,7 @@ class CodeSpec(
      * @return A string representation of the generated code.
      * @since 0.1.0
      */
-    fun generate(context: GenerationContext): String {
+    override fun generate(context: GenerationContext): String {
         val builder = StringBuilder("{")
 
         if (statements.isNotEmpty()) builder.append("\n")

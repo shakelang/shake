@@ -8,6 +8,7 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.Identifier
 import com.shakelang.shake.shakespeare.spec.Type
@@ -16,14 +17,14 @@ import com.shakelang.shake.shakespeare.spec.Type
  * A [StatementSpec] is a specification for a statement in the code
  * @since 0.1.0
  */
-interface StatementSpec {
+interface StatementSpec : AbstractSpec {
 
     /**
      * Generate the statement
      * @param ctx The [GenerationContext] to use
      * @return The generated statement
      */
-    fun generate(ctx: GenerationContext): String
+    override fun generate(ctx: GenerationContext): String
 
     companion object {
 
@@ -49,7 +50,7 @@ interface StatementSpec {
  * @param value The value of the variable
  * @since 0.1.0
  */
-class VariableDeclarationSpec(
+open class VariableDeclarationSpec(
     val name: Identifier,
     val type: Type,
     val value: ValueSpec?,
@@ -112,7 +113,7 @@ class VariableDeclarationSpec(
     }
 }
 
-class WhileSpec(
+open class WhileSpec(
     val condition: ValueSpec,
     val body: CodeSpec,
 ) : StatementSpec {
@@ -154,7 +155,7 @@ class WhileSpec(
     }
 }
 
-class DoWhileSpec(
+open class DoWhileSpec(
     val body: CodeSpec,
     val condition: ValueSpec,
 ) : StatementSpec {
@@ -196,7 +197,7 @@ class DoWhileSpec(
     }
 }
 
-class ForSpec(
+open class ForSpec(
     val init: StatementSpec,
     val condition: ValueSpec,
     val update: StatementSpec,
@@ -264,7 +265,7 @@ class ForSpec(
     }
 }
 
-class IfSpec(
+open class IfSpec(
     val condition: ValueSpec,
     val body: CodeSpec,
     val elseBody: CodeSpec?,
@@ -315,7 +316,7 @@ class IfSpec(
     }
 }
 
-class ReturnSpec(
+open class ReturnSpec(
     val value: ValueSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {

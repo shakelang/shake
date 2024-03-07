@@ -8,6 +8,7 @@
 
 package com.shakelang.shake.shakespeare.spec
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 class ConstructorSpec(
@@ -17,9 +18,9 @@ class ConstructorSpec(
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
-) {
+) : AbstractSpec {
 
-    fun generate(ctx: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isSynchronized) builder.append("synchronized ")
@@ -109,8 +110,8 @@ class ClassSpec(
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isAbstract) builder.append("abstract ")
@@ -203,8 +204,8 @@ class InterfaceSpec(
     val methods: List<MethodSpec>,
     val isAbstract: Boolean = false,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isAbstract) builder.append("abstract ")
@@ -261,8 +262,8 @@ class EnumSpec(
     val name: Identifier,
     val constants: List<Identifier>,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         builder.append("enum ")
@@ -314,8 +315,8 @@ class ObjectSpec(
     val methods: List<MethodSpec>,
     val fields: List<FieldSpec>,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         builder.append("object ")

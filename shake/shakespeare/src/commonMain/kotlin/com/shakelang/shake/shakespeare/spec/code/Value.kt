@@ -8,11 +8,12 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.Identifier
 
-interface ValueSpec {
-    fun generate(ctx: GenerationContext): String
+interface ValueSpec : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String
 
     companion object {
         fun of(value: String): ValueSpec {
@@ -25,7 +26,7 @@ interface ValueSpec {
     }
 }
 
-class StringLiteralSpec(val value: String) : ValueSpec {
+open class StringLiteralSpec(val value: String) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "\"$value\""
     }
@@ -51,7 +52,7 @@ class StringLiteralSpec(val value: String) : ValueSpec {
     }
 }
 
-class IntLiteralSpec(val value: Long) : ValueSpec {
+open class IntLiteralSpec(val value: Long) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
@@ -93,7 +94,7 @@ class IntLiteralSpec(val value: Long) : ValueSpec {
     }
 }
 
-class FloatLiteralSpec(val value: Double) : ValueSpec {
+open class FloatLiteralSpec(val value: Double) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
@@ -125,7 +126,7 @@ class FloatLiteralSpec(val value: Double) : ValueSpec {
     }
 }
 
-class BooleanLiteralSpec(val value: Boolean) : ValueSpec {
+open class BooleanLiteralSpec(val value: Boolean) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
@@ -152,16 +153,17 @@ class BooleanLiteralSpec(val value: Boolean) : ValueSpec {
     }
 }
 
-enum class NullLiteralSpec : ValueSpec {
-    INSTANCE,
-    ;
-
+open class NullLiteralSpec : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "null"
     }
+
+    companion object {
+        val INSTANCE = NullLiteralSpec()
+    }
 }
 
-class VariableReferenceSpec(val name: Identifier) : ValueSpec {
+open class VariableReferenceSpec(val name: Identifier) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return name.name
     }
@@ -193,7 +195,7 @@ class VariableReferenceSpec(val name: Identifier) : ValueSpec {
     }
 }
 
-class AdditionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class AdditionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} + ${right.generate(ctx)}"
     }
@@ -237,7 +239,7 @@ class AdditionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class SubtractionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class SubtractionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} - ${right.generate(ctx)}"
     }
@@ -281,7 +283,7 @@ class SubtractionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class MultiplicationSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class MultiplicationSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} * ${right.generate(ctx)}"
     }
@@ -325,7 +327,7 @@ class MultiplicationSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec 
     }
 }
 
-class DivisionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class DivisionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} / ${right.generate(ctx)}"
     }
@@ -369,7 +371,7 @@ class DivisionSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class ModuloSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class ModuloSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} % ${right.generate(ctx)}"
     }
@@ -413,7 +415,7 @@ class ModuloSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class PowerSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class PowerSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} ** ${right.generate(ctx)}"
     }
@@ -457,7 +459,7 @@ class PowerSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class UnaryMinusSpec(val value: ValueSpec) : ValueSpec {
+open class UnaryMinusSpec(val value: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "-${value.generate(ctx)}"
     }
@@ -491,7 +493,7 @@ class UnaryMinusSpec(val value: ValueSpec) : ValueSpec {
 
 typealias NegationSpec = UnaryMinusSpec
 
-class UnaryPlusSpec(val value: ValueSpec) : ValueSpec {
+open class UnaryPlusSpec(val value: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "+${value.generate(ctx)}"
     }
@@ -523,7 +525,7 @@ class UnaryPlusSpec(val value: ValueSpec) : ValueSpec {
     }
 }
 
-class LogicalAndSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class LogicalAndSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} && ${right.generate(ctx)}"
     }
@@ -567,7 +569,7 @@ class LogicalAndSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class LogicalOrSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class LogicalOrSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} || ${right.generate(ctx)}"
     }
@@ -611,7 +613,7 @@ class LogicalOrSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class LogicalNotSpec(val value: ValueSpec) : ValueSpec {
+open class LogicalNotSpec(val value: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "!${value.generate(ctx)}"
     }
@@ -643,7 +645,7 @@ class LogicalNotSpec(val value: ValueSpec) : ValueSpec {
     }
 }
 
-class LogicalXorSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class LogicalXorSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} ^^ ${right.generate(ctx)}"
     }
@@ -687,7 +689,7 @@ class LogicalXorSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class EqualitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class EqualitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} == ${right.generate(ctx)}"
     }
@@ -731,7 +733,7 @@ class EqualitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class InequalitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class InequalitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} != ${right.generate(ctx)}"
     }
@@ -775,7 +777,7 @@ class InequalitySpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class GreaterThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class GreaterThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} > ${right.generate(ctx)}"
     }
@@ -819,7 +821,7 @@ class GreaterThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class GreaterThanOrEqualSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class GreaterThanOrEqualSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} >= ${right.generate(ctx)}"
     }
@@ -863,7 +865,7 @@ class GreaterThanOrEqualSpec(val left: ValueSpec, val right: ValueSpec) : ValueS
     }
 }
 
-class LessThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class LessThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} < ${right.generate(ctx)}"
     }
@@ -907,7 +909,7 @@ class LessThanSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     }
 }
 
-class LessThanOrEqualSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
+open class LessThanOrEqualSpec(val left: ValueSpec, val right: ValueSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${left.generate(ctx)} <= ${right.generate(ctx)}"
     }

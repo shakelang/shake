@@ -28,7 +28,7 @@ interface ValuedAssignmentSpec : StatementSpec, ValueSpec
  * @property value The value to assign to the variable
  * @constructor Creates a [VariableAssignmentSpec]
  */
-class VariableAssignmentSpec(
+open class VariableAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -137,7 +137,7 @@ class VariableAssignmentSpec(
  * @property value The value to add to the variable
  * @constructor Creates a [VariableAdditionAssignmentSpec]
  */
-class VariableAdditionAssignmentSpec(
+open class VariableAdditionAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -246,7 +246,7 @@ class VariableAdditionAssignmentSpec(
  * @property value The value to subtract from the variable
  * @constructor Creates a [VariableSubtractionAssignmentSpec]
  */
-class VariableSubtractionAssignmentSpec(
+open class VariableSubtractionAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -355,7 +355,7 @@ class VariableSubtractionAssignmentSpec(
  * @property value The value to multiply the variable with
  * @constructor Creates a [VariableMultiplicationAssignmentSpec]
  */
-class VariableMultiplicationAssignmentSpec(
+open class VariableMultiplicationAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -464,7 +464,7 @@ class VariableMultiplicationAssignmentSpec(
  * @property value The value to divide the variable by
  * @constructor Creates a [VariableDivisionAssignmentSpec]
  */
-class VariableDivisionAssignmentSpec(
+open class VariableDivisionAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -573,7 +573,7 @@ class VariableDivisionAssignmentSpec(
  * @property value The value to calculate the modulo with
  * @constructor Creates a [VariableModuloAssignmentSpec]
  */
-class VariableModuloAssignmentSpec(
+open class VariableModuloAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -682,7 +682,7 @@ class VariableModuloAssignmentSpec(
  * @property value The value to calculate the power with
  * @constructor Creates a [VariablePowerAssignmentSpec]
  */
-class VariablePowerAssignmentSpec(
+open class VariablePowerAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -789,9 +789,9 @@ class VariablePowerAssignmentSpec(
  * @since 0.1.0
  * @property name The name of the variable
  * @property value The value to shift the bits to the left
- * @constructor Creates a [VariableBitwiseLeftShiftAssignmentSpec]
+ * @constructor Creates a [VariableBitwiseAndAssignmentSpec]
  */
-class VariableBitwiseAndAssignmentSpec(
+open class VariableBitwiseAndAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -898,9 +898,9 @@ class VariableBitwiseAndAssignmentSpec(
  * @since 0.1.0
  * @property name The name of the variable
  * @property value The value to shift the bits to the left
- * @constructor Creates a [VariableBitwiseLeftShiftAssignmentSpec]
+ * @constructor Creates a [VariableBitwiseOrAssignmentSpec]
  */
-class VariableBitwiseOrAssignmentSpec(
+open class VariableBitwiseOrAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -1007,9 +1007,9 @@ class VariableBitwiseOrAssignmentSpec(
  * @since 0.1.0
  * @property name The name of the variable
  * @property value The value to shift the bits to the left
- * @constructor Creates a [VariableBitwiseLeftShiftAssignmentSpec]
+ * @constructor Creates a [VariableBitwiseXorAssignmentSpec]
  */
-class VariableBitwiseXorAssignmentSpec(
+open class VariableBitwiseXorAssignmentSpec(
     val name: Identifier,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
@@ -1116,7 +1116,7 @@ class VariableBitwiseXorAssignmentSpec(
  * @property name The name of the variable
  * @constructor Creates a [VariableIncrementBeforeSpec]
  */
-class VariableIncrementBeforeSpec(
+open class VariableIncrementBeforeSpec(
     val name: Identifier,
 ) : ValuedAssignmentSpec {
 
@@ -1197,7 +1197,7 @@ class VariableIncrementBeforeSpec(
  * @property name The name of the variable
  * @constructor Creates a [VariableIncrementAfterSpec]
  */
-class VariableIncrementAfterSpec(
+open class VariableIncrementAfterSpec(
     val name: Identifier,
 ) : ValuedAssignmentSpec {
 
@@ -1278,7 +1278,7 @@ class VariableIncrementAfterSpec(
  * @property name The name of the variable
  * @constructor Creates a [VariableDecrementBeforeSpec]
  */
-class VariableDecrementBeforeSpec(
+open class VariableDecrementBeforeSpec(
     val name: Identifier,
 ) : ValuedAssignmentSpec {
 
@@ -1359,7 +1359,7 @@ class VariableDecrementBeforeSpec(
  * @property name The name of the variable
  * @constructor Creates a [VariableDecrementAfterSpec]
  */
-class VariableDecrementAfterSpec(
+open class VariableDecrementAfterSpec(
     val name: Identifier,
 ) : ValuedAssignmentSpec {
 
@@ -1442,7 +1442,7 @@ class VariableDecrementAfterSpec(
  * @property arguments The arguments to pass to the function
  * @constructor Creates a [FunctionCallSpec]
  */
-class FunctionCallSpec(
+open class FunctionCallSpec(
     val name: Identifier,
     val arguments: List<ValueSpec>,
 ) : ValueSpec, StatementSpec {
@@ -1511,6 +1511,15 @@ class FunctionCallSpec(
          *
          * @param argument The argument to add
          * @return The builder
+         */
+        fun argument(argument: String): FunctionCallSpecBuilder {
+            arguments.add(ValueSpec.of(argument))
+            return this
+        }
+
+        /**
+         * Builds the [FunctionCallSpec]
+         * @return The [FunctionCallSpec]
          */
         fun build(): FunctionCallSpec {
             return FunctionCallSpec(

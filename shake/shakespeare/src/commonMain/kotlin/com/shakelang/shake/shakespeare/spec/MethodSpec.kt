@@ -8,13 +8,14 @@
 
 package com.shakelang.shake.shakespeare.spec
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 class ParameterSpec(
     val name: Identifier,
     val type: Type,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         return "${name.name}: ${type.generate(ctx)}"
     }
 
@@ -71,8 +72,8 @@ class MethodSpec(
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
 
         builder.append(accessModifier.prefix())
