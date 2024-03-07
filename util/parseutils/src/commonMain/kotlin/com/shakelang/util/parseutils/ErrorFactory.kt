@@ -26,5 +26,9 @@ open class ParserErrorFactory<E : CompilerError>(
     factory: (message: String, start: Position, end: Position) -> E,
     val input: TokenInputStream<*, *, *, *>,
 ) : ErrorFactory<E>(factory, input.map) {
-    fun createErrorAtCurrent(message: String) = createError(message, input.actual)
+    fun createErrorAtCurrent(message: String) = input.actual?.let {
+        createError(message, it)
+    } ?: input.map.resolve(0).let {
+        createError(message, it, it)
+    }
 }

@@ -84,7 +84,7 @@ class VariableTests : FreeSpec(
         listOf(
 //        VariableDeclarationDescriptor("var", ShakeVariableType.UNKNOWN),
             VariableDeclarationDescriptor("byte", ShakeVariableType.Type.BYTE),
-            VariableDeclarationDescriptor("shorts", ShakeVariableType.Type.SHORT),
+            VariableDeclarationDescriptor("short", ShakeVariableType.Type.SHORT),
             VariableDeclarationDescriptor("int", ShakeVariableType.Type.INTEGER),
             VariableDeclarationDescriptor("long", ShakeVariableType.Type.LONG),
             VariableDeclarationDescriptor("ubyte", ShakeVariableType.Type.UNSIGNED_BYTE),
@@ -92,7 +92,7 @@ class VariableTests : FreeSpec(
             VariableDeclarationDescriptor("uint", ShakeVariableType.Type.UNSIGNED_INTEGER),
             VariableDeclarationDescriptor("ulong", ShakeVariableType.Type.UNSIGNED_LONG),
             VariableDeclarationDescriptor("float", ShakeVariableType.Type.FLOAT),
-            VariableDeclarationDescriptor("doubles", ShakeVariableType.Type.DOUBLE),
+            VariableDeclarationDescriptor("double", ShakeVariableType.Type.DOUBLE),
             VariableDeclarationDescriptor("char", ShakeVariableType.Type.CHAR),
             VariableDeclarationDescriptor("boolean", ShakeVariableType.Type.BOOLEAN),
         ).forEach {

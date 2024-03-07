@@ -8,6 +8,7 @@ import com.shakelang.shake.parser.node.outer.ShakeFileNode
 import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.parser.AbstractParser
 
 /**
  * An abstract Parser for the Shake Programming language. An instance is created for each file in the compilation process.
@@ -16,12 +17,11 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
  * @see ShakeParserImpl
  * @see ShakeParser.from
  */
-abstract class ShakeParser {
-
-    /**
-     * The [ShakeTokenInputStream] to be parsed.
-     */
-    abstract val input: ShakeTokenInputStream
+abstract class ShakeParser(
+    input: ShakeTokenInputStream,
+) : AbstractParser<ShakeTokenInputStream, ShakeFileNode>(
+    input,
+) {
 
     /**
      * The [PositionMap] of the [input].
@@ -33,7 +33,7 @@ abstract class ShakeParser {
     /**
      * Parses the [input] and returns the root [ShakeNode] of the parsed tree (A [ShakeFileNode])
      */
-    abstract fun parse(): ShakeFileNode
+    abstract override fun parse(): ShakeFileNode
 
     /**
      * Starts the parsing process, but directly jumps into the statement parsing phase (statements can normally be found

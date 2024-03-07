@@ -1,9 +1,9 @@
 package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.ParserTestUtil
-import com.shakelang.shake.parser.impl.ShakeParserHelper
 import com.shakelang.util.io.streaming.general.AppendableStream
 import com.shakelang.util.io.streaming.general.Stream
+import com.shakelang.util.parseutils.parser.AbstractParser
 import com.shakelang.util.shason.json
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -17,11 +17,11 @@ val attributes = listOf(
 
 val primitiveTypes = listOf(
     "byte" to "byte",
-    "shorts" to "shorts",
-    "int" to "integers",
+    "short" to "short",
+    "int" to "integer",
     "long" to "long",
     "float" to "float",
-    "doubles" to "doubles",
+    "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
     "ubyte" to "unsigned_byte",
@@ -32,27 +32,27 @@ val primitiveTypes = listOf(
 
 val primitiveTypesNoUnsigned = listOf(
     "byte" to "byte",
-    "shorts" to "shorts",
-    "int" to "integers",
+    "short" to "short",
+    "int" to "integer",
     "long" to "long",
     "float" to "float",
-    "doubles" to "doubles",
+    "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
 )
 
 val primitiveTypesIncludingVoid = listOf(
     "byte" to "byte",
-    "shorts" to "shorts",
-    "int" to "integers",
+    "short" to "short",
+    "int" to "integer",
     "long" to "long",
     "float" to "float",
-    "doubles" to "doubles",
+    "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
     "void" to "void",
     "unsigned byte" to "unsigned_byte",
-    "unsigned shorts" to "unsigned_short",
+    "unsigned short" to "unsigned_short",
     "unsigned int" to "unsigned_integer",
     "unsigned long" to "unsigned_long",
 )
@@ -289,7 +289,7 @@ fun FreeSpec.generateTests(
             if (generated.isFailure) {
                 val test = generated.toFailure()
 
-                val error = shouldThrow<ShakeParserHelper.ParserError> {
+                val error = shouldThrow<AbstractParser.ParserError> {
                     ParserTestUtil.parse("${test.path}.shake", test.input)
                 }
 

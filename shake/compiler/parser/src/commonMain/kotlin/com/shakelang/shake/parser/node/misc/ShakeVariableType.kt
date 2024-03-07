@@ -1,14 +1,14 @@
 package com.shakelang.shake.parser.node.misc
 
-import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.ShakeNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.source.CharacterSource
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import com.shakelang.util.shason.JSON
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class ShakeVariableType(
+open class ShakeVariableType(
     val namespace: ShakeNamespaceNode,
 ) : ShakeNode {
 
@@ -16,11 +16,11 @@ class ShakeVariableType(
         when (namespace.name) {
             "dynamic" -> Type.DYNAMIC
             "byte" -> Type.BYTE
-            "shorts" -> Type.SHORT
+            "short" -> Type.SHORT
             "int" -> Type.INTEGER
             "long" -> Type.LONG
             "float" -> Type.FLOAT
-            "doubles" -> Type.DOUBLE
+            "double" -> Type.DOUBLE
             "ubyte" -> Type.UNSIGNED_BYTE
             "ushort" -> Type.UNSIGNED_SHORT
             "uint" -> Type.UNSIGNED_INTEGER
@@ -97,7 +97,7 @@ class ShakeVariableType(
                     CharacterSource.Companion.from("", ""),
                     intArrayOf(),
                 ),
-                ShakeToken(ShakeTokenType.IDENTIFIER, "void", -1, -1),
+                ShakeLexer(SourceCharacterInputStream(CharacterSource.from("void", "implicit_void"))).stream().next(),
                 null,
                 null,
             ),

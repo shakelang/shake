@@ -1,12 +1,12 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.impl.ShakeParserHelper
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
+import com.shakelang.util.parseutils.parser.AbstractParser
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -15,7 +15,7 @@ import io.kotest.matchers.shouldNotBe
 class InterfaceTests : FreeSpec(
     {
         "final interface" {
-            shouldThrow<ShakeParserHelper.ParserError> {
+            shouldThrow<AbstractParser.ParserError> {
                 ParserTestUtil.parse("<InterfaceTest>", "final interface test {}")
             }
         }
@@ -41,7 +41,7 @@ class InterfaceTests : FreeSpec(
 
             "${accessPrefix}final interface" {
 
-                shouldThrow<ShakeParserHelper.ParserError> {
+                shouldThrow<AbstractParser.ParserError> {
                     ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}final interface test {}")
                 }
             }

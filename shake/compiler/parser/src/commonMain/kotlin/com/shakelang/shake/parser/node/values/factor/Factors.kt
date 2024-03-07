@@ -123,14 +123,14 @@ class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLi
 }
 
 /**
- * Node for an integers literal
+ * Node for an integer literal
  */
 class ShakeIntegerLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
 
     /**
-     * The value of the integers literal
+     * The value of the integer literal
      */
-    val value: Int = valueToken.value?.toInt() ?: throw Exception("Value of integers token is null")
+    val value: Int = valueToken.value?.toInt() ?: throw Exception("Value of integer token is null")
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 

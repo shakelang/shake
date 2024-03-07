@@ -22,7 +22,7 @@ class FunctionTests : FreeSpec(
         listOf(
             FunctionDeclarationDescriptor("void", ShakeVariableType.Type.VOID),
             FunctionDeclarationDescriptor("byte", ShakeVariableType.Type.BYTE),
-            FunctionDeclarationDescriptor("shorts", ShakeVariableType.Type.SHORT),
+            FunctionDeclarationDescriptor("short", ShakeVariableType.Type.SHORT),
             FunctionDeclarationDescriptor("int", ShakeVariableType.Type.INTEGER),
             FunctionDeclarationDescriptor("long", ShakeVariableType.Type.LONG),
             FunctionDeclarationDescriptor("ubyte", ShakeVariableType.Type.UNSIGNED_BYTE),
@@ -30,7 +30,7 @@ class FunctionTests : FreeSpec(
             FunctionDeclarationDescriptor("uint", ShakeVariableType.Type.UNSIGNED_INTEGER),
             FunctionDeclarationDescriptor("ulong", ShakeVariableType.Type.UNSIGNED_LONG),
             FunctionDeclarationDescriptor("float", ShakeVariableType.Type.FLOAT),
-            FunctionDeclarationDescriptor("doubles", ShakeVariableType.Type.DOUBLE),
+            FunctionDeclarationDescriptor("double", ShakeVariableType.Type.DOUBLE),
             FunctionDeclarationDescriptor("char", ShakeVariableType.Type.CHAR),
             FunctionDeclarationDescriptor("boolean", ShakeVariableType.Type.BOOLEAN),
         ).forEach {

@@ -21,7 +21,7 @@ interface TokenInputStream<
     CTX : TokenContext<CTX, TT, T, Self>,
     > : PeekableStream<T> {
 
-    val actual: T
+    val actual: T?
 
     /**
      * The source (mostly filename) of the [TokenInputStream]
