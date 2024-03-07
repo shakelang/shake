@@ -21,6 +21,7 @@ include(":util:testlib")
 include(":util:testlib:lexer")
 
 include(":shake:shakespeare")
+include(":shake:shakespeare:nodes")
 include(":shake:bytecode:generator")
 include(":shake:bytecode:conventions")
 include(":shake:bytecode:utils")

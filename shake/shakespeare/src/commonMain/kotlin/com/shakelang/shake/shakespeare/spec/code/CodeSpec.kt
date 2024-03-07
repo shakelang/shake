@@ -19,23 +19,23 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
  */
 open class CodeSpec(
 
-    val statements: List<StatementSpec>,
+    open val statements: List<StatementSpec>,
 
 ) : AbstractSpec {
 
     /**
      * Generates a string representation of the code based on the given context.
      *
-     * @param context The generation context to be used for code generation.
+     * @param ctx The generation context to be used for code generation.
      * @return A string representation of the generated code.
      * @since 0.1.0
      */
-    override fun generate(context: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder("{")
 
         if (statements.isNotEmpty()) builder.append("\n")
 
-        val indented = context.indent()
+        val indented = ctx.indent()
 
         for (statement in statements) {
             builder.append((1..indented.indentLevel).joinToString("") { indented.indentType })

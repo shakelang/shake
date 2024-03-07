@@ -34,7 +34,7 @@ interface Type : AbstractSpec {
     }
 }
 
-class SimpleType(val name: String) : Type {
+open class SimpleType(val name: String) : Type {
     override fun generate(ctx: GenerationContext): String {
         return name
     }
@@ -75,7 +75,7 @@ enum class PrimitiveType(val type: String) : Type {
     }
 }
 
-class ClassType(val name: String) : Type {
+open class ClassType(val name: String) : Type {
     override fun generate(ctx: GenerationContext): String {
         return name
     }

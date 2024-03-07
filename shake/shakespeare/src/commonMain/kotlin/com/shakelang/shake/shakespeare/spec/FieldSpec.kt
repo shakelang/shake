@@ -10,7 +10,7 @@ package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 
-class FieldSpec(
+open class FieldSpec(
     val name: Identifier,
     val type: Type,
     val isVal: Boolean = true,

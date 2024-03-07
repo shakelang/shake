@@ -11,7 +11,7 @@ package com.shakelang.shake.shakespeare.spec
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
-class ParameterSpec(
+open class ParameterSpec(
     val name: Identifier,
     val type: Type,
 ) : AbstractSpec {
@@ -58,7 +58,7 @@ class ParameterSpec(
     }
 }
 
-class MethodSpec(
+open class MethodSpec(
     val name: Identifier,
     val returnType: Type,
     val extending: Type? = null,
