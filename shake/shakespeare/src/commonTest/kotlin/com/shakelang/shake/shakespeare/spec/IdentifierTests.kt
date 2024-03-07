@@ -5,12 +5,12 @@ import io.kotest.matchers.shouldBe
 
 class IdentifierTests : FreeSpec({
     "should be constructed correctly" {
-        val identifier = Identifier("test")
+        val identifier = NamespaceSpec("test")
         identifier.name shouldBe "test"
     }
 
     "should be converted to string correctly" {
-        val identifier = Identifier("test")
+        val identifier = NamespaceSpec("test")
         identifier.toString() shouldBe "test"
     }
 })

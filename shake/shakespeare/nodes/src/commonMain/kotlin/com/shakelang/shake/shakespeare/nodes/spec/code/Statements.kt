@@ -10,7 +10,7 @@ package com.shakelang.shake.shakespeare.nodes.spec.code
 
 import com.shakelang.shake.shakespeare.nodes.spec.AbstractNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.TypeNode
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.code.*
 
 /**
@@ -27,7 +27,7 @@ interface StatementNodeSpec : AbstractNodeSpec, StatementSpec
  * @since 0.1.0
  */
 open class VariableDeclarationNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     type: TypeNode,
     value: ValueNodeSpec?,
     isVal: Boolean = true,

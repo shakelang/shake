@@ -5,6 +5,8 @@ import com.shakelang.shake.lexer.token.ShakeTokenContext
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.util.io.streaming.output.bytes.CountingOutputStream
 import com.shakelang.util.io.streaming.output.bytes.OutputStream
+import com.shakelang.util.parseutils.characters.position.PositionMaker
+import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.source.CharacterSource
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -26,13 +28,23 @@ class NodeContext {
         }
     }
 
+    val positionMaker = PositionMaker(characterSource)
+
     val stream = CountingOutputStream(
         object : OutputStream() {
             override fun write(b: Int) {
-                built.append(b.toChar())
+                val c = b.toChar()
+                built.append(c)
+                if (c == '\n') {
+                    positionMaker.nextLine()
+                } else {
+                    positionMaker.nextColumn()
+                }
             }
         },
     )
+
+    val map: PositionMap get() = positionMaker
 
     fun createToken(type: ShakeTokenType, start: Int, end: Int, value: String? = null): ShakeToken {
         return ShakeToken(type, value ?: type.value ?: throw IllegalArgumentException("Value must be set"), start, end, ctx)
@@ -54,4 +66,8 @@ class NodeContext {
     fun createToken(type: ShakeTokenType, value: String? = null): ShakeToken {
         return createToken(type, stream.count - 1, value)
     }
+
+    fun print(str: String) = stream.write(str.encodeToByteArray())
+    fun println(str: String) = print("$str\n")
+    fun println() = print("\n")
 }

@@ -10,17 +10,17 @@ package com.shakelang.shake.shakespeare.nodes.spec
 
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
 import com.shakelang.shake.shakespeare.spec.AccessModifier
-import com.shakelang.shake.shakespeare.spec.Identifier
 import com.shakelang.shake.shakespeare.spec.MethodSpec
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.ParameterSpec
 
 class ParameterNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     type: TypeNode,
 ) : ParameterSpec(name, type), AbstractNodeSpec
 
 class MethodNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     returnType: TypeNode,
     extending: TypeNode? = null,
     parameters: List<ParameterNodeSpec>,

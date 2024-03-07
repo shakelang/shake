@@ -16,7 +16,7 @@ class ConstructorSpecTests : FreeSpec(
         }
 
         "should create a named constructor" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec(parameters, body, identifier)
@@ -33,7 +33,7 @@ class ConstructorSpecTests : FreeSpec(
         }
 
         "should generate a named constructor" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec(parameters, body, identifier)
@@ -53,7 +53,7 @@ class ConstructorSpecTests : FreeSpec(
         }
 
         "builder should create a named constructor" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec.builder()

@@ -14,7 +14,7 @@ import com.shakelang.shake.shakespeare.spec.*
 open class ConstructorNodeSpec(
     parameters: List<ParameterNodeSpec>,
     body: CodeNodeSpec,
-    name: Identifier? = null,
+    name: NamespaceSpec? = null,
     accessModifier: AccessModifier = AccessModifier.PUBLIC,
     isSynchronized: Boolean = false,
     isNative: Boolean = false,
@@ -31,7 +31,7 @@ open class ConstructorNodeSpec(
 interface ClassLikeNodeSpec : AbstractNodeSpec, ClassLikeSpec
 
 open class ClassNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,
@@ -52,7 +52,7 @@ open class ClassNodeSpec(
     ClassLikeNodeSpec
 
 class InterfaceNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,
@@ -67,8 +67,8 @@ class InterfaceNodeSpec(
     ClassLikeNodeSpec
 
 class EnumNodeSpec(
-    name: Identifier,
-    constants: List<Identifier>,
+    name: NamespaceSpec,
+    constants: List<NamespaceSpec>,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,
@@ -84,7 +84,7 @@ class EnumNodeSpec(
     ClassLikeNodeSpec
 
 class ObjectNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     methods: List<MethodSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,

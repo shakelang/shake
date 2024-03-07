@@ -14,7 +14,7 @@ import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 open class ConstructorSpec(
     val parameters: List<ParameterSpec>,
     val body: CodeSpec,
-    val name: Identifier? = null,
+    val name: NamespaceSpec? = null,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
@@ -44,7 +44,7 @@ open class ConstructorSpec(
     internal constructor() {
         val parameters: MutableList<ParameterSpec> = ArrayList()
         var body: CodeSpec? = null
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var accessModifier = AccessModifier.PUBLIC
         var isSynchronized = false
         var isNative = false
@@ -69,7 +69,7 @@ open class ConstructorSpec(
             return this
         }
 
-        fun name(name: Identifier): ConstructorSpecBuilder {
+        fun name(name: NamespaceSpec): ConstructorSpecBuilder {
             this.name = name
             return this
         }
@@ -102,7 +102,7 @@ open class ConstructorSpec(
 }
 
 interface ClassLikeSpec : AbstractSpec {
-    val name: Identifier
+    val name: NamespaceSpec
     val methods: List<MethodSpec>
     val fields: List<FieldSpec>
     val classes: List<ClassLikeSpec>
@@ -110,7 +110,7 @@ interface ClassLikeSpec : AbstractSpec {
 }
 
 open class ClassSpec(
-    override val name: Identifier,
+    override val name: NamespaceSpec,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
@@ -146,7 +146,7 @@ open class ClassSpec(
 
     open class ClassSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         val methods: MutableList<MethodSpec> = ArrayList()
         val fields: MutableList<FieldSpec> = ArrayList()
         val constructors: MutableList<ConstructorSpec> = ArrayList()
@@ -155,7 +155,7 @@ open class ClassSpec(
         var isFinal = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): ClassSpecBuilder {
+        fun name(name: NamespaceSpec): ClassSpecBuilder {
             this.name = name
             return this
         }
@@ -208,7 +208,7 @@ open class ClassSpec(
 }
 
 open class InterfaceSpec(
-    override val name: Identifier,
+    override val name: NamespaceSpec,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
@@ -229,14 +229,14 @@ open class InterfaceSpec(
 
     class InterfaceSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var isAbstract = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): InterfaceSpecBuilder {
+        fun name(name: NamespaceSpec): InterfaceSpecBuilder {
             this.name = name
             return this
         }
@@ -279,8 +279,8 @@ open class InterfaceSpec(
 }
 
 open class EnumSpec(
-    override val name: Identifier,
-    val constants: List<Identifier>,
+    override val name: NamespaceSpec,
+    val constants: List<NamespaceSpec>,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
@@ -302,19 +302,19 @@ open class EnumSpec(
 
     class EnumSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
-        val constants = mutableListOf<Identifier>()
+        var name: NamespaceSpec? = null
+        val constants = mutableListOf<NamespaceSpec>()
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): EnumSpecBuilder {
+        fun name(name: NamespaceSpec): EnumSpecBuilder {
             this.name = name
             return this
         }
 
-        fun addConstant(constant: Identifier): EnumSpecBuilder {
+        fun addConstant(constant: NamespaceSpec): EnumSpecBuilder {
             constants.add(constant)
             return this
         }
@@ -352,7 +352,7 @@ open class EnumSpec(
 }
 
 open class ObjectSpec(
-    override val name: Identifier,
+    override val name: NamespaceSpec,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec> = emptyList(),
@@ -377,13 +377,13 @@ open class ObjectSpec(
 
     class ObjectSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): ObjectSpecBuilder {
+        fun name(name: NamespaceSpec): ObjectSpecBuilder {
             this.name = name
             return this
         }

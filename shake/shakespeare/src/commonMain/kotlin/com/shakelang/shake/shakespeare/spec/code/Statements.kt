@@ -10,7 +10,7 @@ package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.Type
 
 /**
@@ -51,7 +51,7 @@ interface StatementSpec : AbstractSpec {
  * @since 0.1.0
  */
 open class VariableDeclarationSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val type: Type,
     val value: ValueSpec?,
     val isVal: Boolean = true,
@@ -67,13 +67,13 @@ open class VariableDeclarationSpec(
 
     open class VariableDeclarationSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var type: Type? = null,
         var value: ValueSpec? = null,
         var isVal: Boolean = true,
     ) {
 
-        fun name(name: Identifier): VariableDeclarationSpecBuilder {
+        fun name(name: NamespaceSpec): VariableDeclarationSpecBuilder {
             this.name = name
             return this
         }

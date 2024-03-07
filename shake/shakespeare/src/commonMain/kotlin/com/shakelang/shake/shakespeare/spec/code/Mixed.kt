@@ -9,7 +9,7 @@
 package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 /**
  * A [ValuedAssignmentSpec] is a StatementSpec and a ValueSpec at the same time
@@ -29,8 +29,8 @@ interface ValuedAssignmentSpec : StatementSpec, ValueSpec
  * @constructor Creates a [VariableAssignmentSpec]
  */
 open class VariableAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -54,7 +54,7 @@ open class VariableAssignmentSpec(
      */
     open class VariableAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -64,7 +64,7 @@ open class VariableAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -76,7 +76,7 @@ open class VariableAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -138,8 +138,8 @@ open class VariableAssignmentSpec(
  * @constructor Creates a [VariableAdditionAssignmentSpec]
  */
 open class VariableAdditionAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -163,7 +163,7 @@ open class VariableAdditionAssignmentSpec(
      */
     open class VariableAdditionAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -173,7 +173,7 @@ open class VariableAdditionAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableAdditionAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableAdditionAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -185,7 +185,7 @@ open class VariableAdditionAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableAdditionAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -247,8 +247,8 @@ open class VariableAdditionAssignmentSpec(
  * @constructor Creates a [VariableSubtractionAssignmentSpec]
  */
 open class VariableSubtractionAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -272,7 +272,7 @@ open class VariableSubtractionAssignmentSpec(
      */
     open class VariableSubtractionAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -282,7 +282,7 @@ open class VariableSubtractionAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableSubtractionAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableSubtractionAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -294,7 +294,7 @@ open class VariableSubtractionAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableSubtractionAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -356,8 +356,8 @@ open class VariableSubtractionAssignmentSpec(
  * @constructor Creates a [VariableMultiplicationAssignmentSpec]
  */
 open class VariableMultiplicationAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -381,7 +381,7 @@ open class VariableMultiplicationAssignmentSpec(
      */
     open class VariableMultiplicationAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -391,7 +391,7 @@ open class VariableMultiplicationAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableMultiplicationAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableMultiplicationAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -403,7 +403,7 @@ open class VariableMultiplicationAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableMultiplicationAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -465,8 +465,8 @@ open class VariableMultiplicationAssignmentSpec(
  * @constructor Creates a [VariableDivisionAssignmentSpec]
  */
 open class VariableDivisionAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -490,7 +490,7 @@ open class VariableDivisionAssignmentSpec(
      */
     open class VariableDivisionAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -500,7 +500,7 @@ open class VariableDivisionAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableDivisionAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableDivisionAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -512,7 +512,7 @@ open class VariableDivisionAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableDivisionAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -574,8 +574,8 @@ open class VariableDivisionAssignmentSpec(
  * @constructor Creates a [VariableModuloAssignmentSpec]
  */
 open class VariableModuloAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -599,7 +599,7 @@ open class VariableModuloAssignmentSpec(
      */
     open class VariableModuloAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -609,7 +609,7 @@ open class VariableModuloAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableModuloAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableModuloAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -621,7 +621,7 @@ open class VariableModuloAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableModuloAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -683,8 +683,8 @@ open class VariableModuloAssignmentSpec(
  * @constructor Creates a [VariablePowerAssignmentSpec]
  */
 open class VariablePowerAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -708,7 +708,7 @@ open class VariablePowerAssignmentSpec(
      */
     class VariablePowerAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -718,7 +718,7 @@ open class VariablePowerAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariablePowerAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariablePowerAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -730,7 +730,7 @@ open class VariablePowerAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariablePowerAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -792,8 +792,8 @@ open class VariablePowerAssignmentSpec(
  * @constructor Creates a [VariableBitwiseAndAssignmentSpec]
  */
 open class VariableBitwiseAndAssignmentSpec(
-    val name: Identifier,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -817,7 +817,7 @@ open class VariableBitwiseAndAssignmentSpec(
      */
     class VariableBitwiseAndAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -827,7 +827,7 @@ open class VariableBitwiseAndAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableBitwiseAndAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableBitwiseAndAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -839,7 +839,7 @@ open class VariableBitwiseAndAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableBitwiseAndAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -901,7 +901,7 @@ open class VariableBitwiseAndAssignmentSpec(
  * @constructor Creates a [VariableBitwiseOrAssignmentSpec]
  */
 open class VariableBitwiseOrAssignmentSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
@@ -926,7 +926,7 @@ open class VariableBitwiseOrAssignmentSpec(
      */
     class VariableBitwiseOrAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -936,7 +936,7 @@ open class VariableBitwiseOrAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableBitwiseOrAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableBitwiseOrAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -948,7 +948,7 @@ open class VariableBitwiseOrAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableBitwiseOrAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1010,7 +1010,7 @@ open class VariableBitwiseOrAssignmentSpec(
  * @constructor Creates a [VariableBitwiseXorAssignmentSpec]
  */
 open class VariableBitwiseXorAssignmentSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val value: ValueSpec,
 ) : ValuedAssignmentSpec {
 
@@ -1035,7 +1035,7 @@ open class VariableBitwiseXorAssignmentSpec(
      */
     class VariableBitwiseXorAssignmentSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var value: ValueSpec? = null,
     ) {
 
@@ -1045,7 +1045,7 @@ open class VariableBitwiseXorAssignmentSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableBitwiseXorAssignmentSpecBuilder {
+        fun name(name: NamespaceSpec): VariableBitwiseXorAssignmentSpecBuilder {
             this.name = name
             return this
         }
@@ -1057,7 +1057,7 @@ open class VariableBitwiseXorAssignmentSpec(
          * @return The builder
          */
         fun name(name: String): VariableBitwiseXorAssignmentSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1117,7 +1117,7 @@ open class VariableBitwiseXorAssignmentSpec(
  * @constructor Creates a [VariableIncrementBeforeSpec]
  */
 open class VariableIncrementBeforeSpec(
-    val name: Identifier,
+    open val name: NamespaceSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -1140,7 +1140,7 @@ open class VariableIncrementBeforeSpec(
      */
     open class VariableIncrementBeforeSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
     ) {
 
         /**
@@ -1149,7 +1149,7 @@ open class VariableIncrementBeforeSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableIncrementBeforeSpecBuilder {
+        fun name(name: NamespaceSpec): VariableIncrementBeforeSpecBuilder {
             this.name = name
             return this
         }
@@ -1161,7 +1161,7 @@ open class VariableIncrementBeforeSpec(
          * @return The builder
          */
         fun name(name: String): VariableIncrementBeforeSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1198,7 +1198,7 @@ open class VariableIncrementBeforeSpec(
  * @constructor Creates a [VariableIncrementAfterSpec]
  */
 open class VariableIncrementAfterSpec(
-    val name: Identifier,
+    open val name: NamespaceSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -1221,7 +1221,7 @@ open class VariableIncrementAfterSpec(
      */
     open class VariableIncrementAfterSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
     ) {
 
         /**
@@ -1230,7 +1230,7 @@ open class VariableIncrementAfterSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableIncrementAfterSpecBuilder {
+        fun name(name: NamespaceSpec): VariableIncrementAfterSpecBuilder {
             this.name = name
             return this
         }
@@ -1242,7 +1242,7 @@ open class VariableIncrementAfterSpec(
          * @return The builder
          */
         fun name(name: String): VariableIncrementAfterSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1279,7 +1279,7 @@ open class VariableIncrementAfterSpec(
  * @constructor Creates a [VariableDecrementBeforeSpec]
  */
 open class VariableDecrementBeforeSpec(
-    val name: Identifier,
+    open val name: NamespaceSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -1302,7 +1302,7 @@ open class VariableDecrementBeforeSpec(
      */
     open class VariableDecrementBeforeSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
     ) {
 
         /**
@@ -1311,7 +1311,7 @@ open class VariableDecrementBeforeSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableDecrementBeforeSpecBuilder {
+        fun name(name: NamespaceSpec): VariableDecrementBeforeSpecBuilder {
             this.name = name
             return this
         }
@@ -1323,7 +1323,7 @@ open class VariableDecrementBeforeSpec(
          * @return The builder
          */
         fun name(name: String): VariableDecrementBeforeSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1360,7 +1360,7 @@ open class VariableDecrementBeforeSpec(
  * @constructor Creates a [VariableDecrementAfterSpec]
  */
 open class VariableDecrementAfterSpec(
-    val name: Identifier,
+    open val name: NamespaceSpec,
 ) : ValuedAssignmentSpec {
 
     /**
@@ -1383,7 +1383,7 @@ open class VariableDecrementAfterSpec(
      */
     open class VariableDecrementAfterSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
     ) {
 
         /**
@@ -1392,7 +1392,7 @@ open class VariableDecrementAfterSpec(
          * @param name The name of the variable
          * @return The builder
          */
-        fun name(name: Identifier): VariableDecrementAfterSpecBuilder {
+        fun name(name: NamespaceSpec): VariableDecrementAfterSpecBuilder {
             this.name = name
             return this
         }
@@ -1404,7 +1404,7 @@ open class VariableDecrementAfterSpec(
          * @return The builder
          */
         fun name(name: String): VariableDecrementAfterSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -1443,8 +1443,8 @@ open class VariableDecrementAfterSpec(
  * @constructor Creates a [FunctionCallSpec]
  */
 open class FunctionCallSpec(
-    val name: Identifier,
-    val arguments: List<ValueSpec>,
+    open val name: NamespaceSpec,
+    open val arguments: List<ValueSpec>,
 ) : ValueSpec, StatementSpec {
 
     /**
@@ -1469,7 +1469,7 @@ open class FunctionCallSpec(
      */
     open class FunctionCallSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var arguments: MutableList<ValueSpec> = mutableListOf(),
     ) {
 
@@ -1479,7 +1479,7 @@ open class FunctionCallSpec(
          * @param name The name of the function
          * @return The builder
          */
-        fun name(name: Identifier): FunctionCallSpecBuilder {
+        fun name(name: NamespaceSpec): FunctionCallSpecBuilder {
             this.name = name
             return this
         }
@@ -1491,7 +1491,7 @@ open class FunctionCallSpec(
          * @return The builder
          */
         fun name(name: String): FunctionCallSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 

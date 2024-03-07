@@ -10,10 +10,10 @@ package com.shakelang.shake.shakespeare.nodes.spec
 
 import com.shakelang.shake.shakespeare.spec.AccessModifier
 import com.shakelang.shake.shakespeare.spec.FieldSpec
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 class FieldNodeSpec(
-    name: Identifier,
+    name: NamespaceSpec,
     type: TypeNode,
     isVal: Boolean = true,
     isStatic: Boolean = false,

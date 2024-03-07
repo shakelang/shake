@@ -75,12 +75,12 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
 
     fun Class(init: ClassDeclarationBuilder.() -> Unit, name: String) {
         val builder = ClassDeclarationBuilder(init)
-        builder.name = Identifier(name)
+        builder.name = NamespaceSpec(name)
         val classSpec = builder.build()
         contents.add(classSpec.generate(GenerationContext()))
     }
 
-    fun Class(init: ClassDeclarationBuilder.() -> Unit, name: Identifier) {
+    fun Class(init: ClassDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
         val builder = ClassDeclarationBuilder(init)
         builder.name = name
         val classSpec = builder.build()
@@ -94,12 +94,12 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
 
     fun Field(init: FieldDeclarationBuilder.() -> Unit, name: String) {
         val builder = FieldDeclarationBuilder(init)
-        builder.name = Identifier(name)
+        builder.name = NamespaceSpec(name)
         val fieldSpec = builder.build()
         contents.add(fieldSpec.generate(GenerationContext()))
     }
 
-    fun Field(init: FieldDeclarationBuilder.() -> Unit, name: Identifier) {
+    fun Field(init: FieldDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
         val builder = FieldDeclarationBuilder(init)
         builder.name = name
         val fieldSpec = builder.build()
@@ -113,12 +113,12 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
 
     fun Method(init: MethodDeclarationBuilder.() -> Unit, name: String) {
         val builder = MethodDeclarationBuilder(init)
-        builder.name = Identifier(name)
+        builder.name = NamespaceSpec(name)
         val methodSpec = builder.build()
         contents.add(methodSpec.generate(GenerationContext()))
     }
 
-    fun Method(init: MethodDeclarationBuilder.() -> Unit, name: Identifier) {
+    fun Method(init: MethodDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
         val builder = MethodDeclarationBuilder(init)
         builder.name = name
         val methodSpec = builder.build()
@@ -129,7 +129,7 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
         contents.add("package $name")
     }
 
-    fun Package(name: Identifier) {
+    fun Package(name: NamespaceSpec) {
         contents.add("package $name")
     }
 
@@ -137,7 +137,7 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
         contents.add("import $name")
     }
 
-    fun Import(name: Identifier) {
+    fun Import(name: NamespaceSpec) {
         contents.add("import $name")
     }
 

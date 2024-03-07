@@ -12,7 +12,7 @@ import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 open class ParameterSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val type: Type,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
@@ -21,15 +21,15 @@ open class ParameterSpec(
 
     open class ParameterSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var type: Type? = null
-        fun name(name: Identifier): ParameterSpecBuilder {
+        fun name(name: NamespaceSpec): ParameterSpecBuilder {
             this.name = name
             return this
         }
 
         fun name(name: String): ParameterSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 
@@ -59,7 +59,7 @@ open class ParameterSpec(
 }
 
 open class MethodSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val returnType: Type,
     val extending: Type? = null,
     val parameters: List<ParameterSpec>,
@@ -105,7 +105,7 @@ open class MethodSpec(
 
     open class MethodSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var returnType: Type? = null
         var extending: Type? = null
         val parameters: MutableList<ParameterSpec> = ArrayList()
@@ -119,13 +119,13 @@ open class MethodSpec(
         var isNative = false
         var isOperator = false
 
-        fun name(name: Identifier): MethodSpecBuilder {
+        fun name(name: NamespaceSpec): MethodSpecBuilder {
             this.name = name
             return this
         }
 
         fun name(name: String): MethodSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 

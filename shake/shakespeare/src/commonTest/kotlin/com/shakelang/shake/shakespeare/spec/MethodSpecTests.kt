@@ -16,7 +16,7 @@ class ParameterSpecTests : FreeSpec(
     {
 
         "should create a parameter" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val type = Type.of("int")
             val parameter = ParameterSpec(identifier, type)
             parameter.name shouldBe identifier
@@ -24,14 +24,14 @@ class ParameterSpecTests : FreeSpec(
         }
 
         "should generate a parameter" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val type = Type.of("int")
             val parameter = ParameterSpec(identifier, type)
             parameter.generate(GenerationContext()) shouldBe "int name"
         }
 
         "build should create a parameter" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val type = Type.of("int")
             val parameter = ParameterSpec.builder().name(identifier).type(type).build()
             parameter.name shouldBe identifier
@@ -44,7 +44,7 @@ class MethodSpecTests : FreeSpec(
     {
 
         "should create a method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -82,7 +82,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create static method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -110,7 +110,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create abstract method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -138,7 +138,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create final method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -166,7 +166,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create override method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -194,7 +194,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create private method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -222,7 +222,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create synchronized method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -250,7 +250,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create native method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -278,11 +278,11 @@ class MethodSpecTests : FreeSpec(
         }
 
         "should generate a method with parameters" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf(
-                ParameterSpec.builder().name(Identifier("param1")).type(Type.of("int")).build(),
-                ParameterSpec.builder().name(Identifier("param2")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name(NamespaceSpec("param1")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name(NamespaceSpec("param2")).type(Type.of("int")).build(),
             )
             val body = CodeSpec.empty()
             val isStatic = false
@@ -309,7 +309,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "should generate a method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -337,7 +337,7 @@ class MethodSpecTests : FreeSpec(
         }
 
         "builder should create a method" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -375,11 +375,11 @@ class MethodSpecTests : FreeSpec(
         }
 
         "builder should create a method with parameters" {
-            val identifier = Identifier("name")
+            val identifier = NamespaceSpec("name")
             val returnType = Type.of("int")
             val parameters = listOf(
-                ParameterSpec.builder().name(Identifier("param1")).type(Type.of("int")).build(),
-                ParameterSpec.builder().name(Identifier("param2")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name(NamespaceSpec("param1")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name(NamespaceSpec("param2")).type(Type.of("int")).build(),
             )
             val body = CodeSpec.empty()
             val isStatic = false

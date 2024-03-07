@@ -10,7 +10,7 @@ package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 interface ValueSpec : AbstractSpec {
     override fun generate(ctx: GenerationContext): String
@@ -163,23 +163,23 @@ open class NullLiteralSpec : ValueSpec {
     }
 }
 
-open class VariableReferenceSpec(val name: Identifier) : ValueSpec {
+open class VariableReferenceSpec(val name: NamespaceSpec) : ValueSpec {
     override fun generate(ctx: GenerationContext): String {
         return name.name
     }
 
     class VariableReferenceSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
     ) {
 
-        fun name(name: Identifier): VariableReferenceSpecBuilder {
+        fun name(name: NamespaceSpec): VariableReferenceSpecBuilder {
             this.name = name
             return this
         }
 
         fun name(name: String): VariableReferenceSpecBuilder {
-            this.name = Identifier(name)
+            this.name = NamespaceSpec(name)
             return this
         }
 

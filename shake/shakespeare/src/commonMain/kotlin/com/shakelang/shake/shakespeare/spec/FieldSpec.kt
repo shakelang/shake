@@ -11,7 +11,7 @@ package com.shakelang.shake.shakespeare.spec
 import com.shakelang.shake.shakespeare.AbstractSpec
 
 open class FieldSpec(
-    val name: Identifier,
+    val name: NamespaceSpec,
     val type: Type,
     val isVal: Boolean = true,
     val isStatic: Boolean = false,
@@ -37,7 +37,7 @@ open class FieldSpec(
 
     open class FieldSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var type: Type? = null
         var isStatic = false
         var isFinal = false
@@ -45,7 +45,7 @@ open class FieldSpec(
         var isSynchronized = false
         var isNative = false
 
-        fun name(name: Identifier): FieldSpecBuilder {
+        fun name(name: NamespaceSpec): FieldSpecBuilder {
             this.name = name
             return this
         }

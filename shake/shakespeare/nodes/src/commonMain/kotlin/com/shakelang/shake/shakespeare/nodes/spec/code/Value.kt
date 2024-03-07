@@ -8,11 +8,16 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec.code
 
+import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.shakespeare.nodes.spec.AbstractNodeSpec
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
+import com.shakelang.shake.shakespeare.spec.GenerationContext
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.code.*
 
-interface ValueNodeSpec : AbstractNodeSpec, ValueSpec
+interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode
+}
 
 open class StringLiteralNodeSpec(value: String) : StringLiteralSpec(value), ValueNodeSpec {
     companion object {
@@ -42,7 +47,7 @@ open class NullLiteralNodeSpec : NullLiteralSpec(), ValueNodeSpec {
     }
 }
 
-open class VariableReferenceNodeSpec(value: Identifier) : VariableReferenceSpec(value), ValueNodeSpec {
+open class VariableReferenceNodeSpec(value: NamespaceSpec) : VariableReferenceSpec(value), ValueNodeSpec {
     companion object {
         fun of(spec: VariableReferenceSpec): VariableReferenceNodeSpec = VariableReferenceNodeSpec(spec.name)
     }
