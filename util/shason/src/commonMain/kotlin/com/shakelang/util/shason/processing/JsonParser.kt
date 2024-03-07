@@ -33,7 +33,7 @@ class JsonParser(
         return when (next.type) {
             LCURL -> parseMap()
             LSQUARE -> parseArray()
-            STRING -> JsonElement.from(Characters.parseString(next.value))
+            STRING -> JsonElement.from(Characters.decodeStringContents(next.value))
             INT -> JsonElement.from(next.value.toLong())
             DOUBLE -> JsonElement.from(next.value.toDouble())
             TRUE -> JsonBooleanElement.TRUE
@@ -54,7 +54,7 @@ class JsonParser(
         var next = true
 
         while (input.hasNext() && next) {
-            val key = if (input.peek().type == STRING) Characters.parseString(input.next().value) else break
+            val key = if (input.peek().type == STRING) Characters.decodeStringContents(input.next().value) else break
             if (input.next().type != COLON) throw errorFactory.createErrorAtCurrent("Expecting ':'")
             map[key] = parseValue()
 

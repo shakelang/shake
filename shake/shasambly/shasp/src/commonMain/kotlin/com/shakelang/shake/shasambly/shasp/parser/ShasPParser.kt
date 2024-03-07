@@ -477,7 +477,7 @@ class ShasPParser(
         }
         if (token == ShasPTokenType.CHARACTER) {
             input.skip()
-            return ShasPCharLiteral(Characters.parseString(input.actualValue!!)[0])
+            return ShasPCharLiteral(Characters.decodeStringContents(input.actualValue!!)[0])
         }
         if (token == ShasPTokenType.KEYWORD_NEW) {
             return parseNew()

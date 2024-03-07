@@ -2,6 +2,7 @@ package com.shakelang.shake.parser.node.values.factor
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
+import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 /**
@@ -69,7 +70,7 @@ class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : Shak
     /**
      * The value of the character literal
      */
-    val value: Char = valueToken.value.substring(1, valueToken.value.length - 1).first() // TODO: Decode escape sequences
+    val value: Char = Characters.decodeStringContents(valueToken.value.substring(1, valueToken.value.length - 1)).first()
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to "$value")
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -161,7 +162,7 @@ class ShakeStringLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLi
     /**
      * The value of the string literal
      */
-    val value: String = valueToken.value.substring(1, valueToken.value.length - 1) // TODO: Decode escape sequences
+    val value: String = Characters.decodeStringContents(valueToken.value.substring(1, valueToken.value.length - 1))
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 

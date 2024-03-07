@@ -27,24 +27,24 @@ class CharactersTests {
 
     @Test
     fun testParseString() {
-        assertEquals("afaefefe", Characters.parseString("afaefefe"), "Normal string parsing failed")
+        assertEquals("afaefefe", Characters.decodeStringContents("afaefefe"), "Normal string parsing failed")
         assertEquals(
             "\\\t\b\r\n\'\"",
-            Characters.parseString("\\\\\\t\\b\\r\\n\\'\\\""),
+            Characters.decodeStringContents("\\\\\\t\\b\\r\\n\\'\\\""),
             "Escape string parsing failed",
         )
-        assertEquals("\u0015", Characters.parseString("\\u0015"), "Escape string parsing failed")
+        assertEquals("\u0015", Characters.decodeStringContents("\\u0015"), "Escape string parsing failed")
         assertFailsWith(IllegalArgumentException::class, "Invalid unicode escape sequence") {
-            Characters.parseString("\\u")
+            Characters.decodeStringContents("\\u")
         }
         assertFailsWith(IllegalArgumentException::class, "Invalid unicode escape sequence") {
-            Characters.parseString("\\u00")
+            Characters.decodeStringContents("\\u00")
         }
         assertFailsWith(IllegalArgumentException::class, "Invalid unicode escape sequence") {
-            Characters.parseString("\\u00ga")
+            Characters.decodeStringContents("\\u00ga")
         }
         assertFailsWith(IllegalArgumentException::class, "Unknown escape sequence '\\g'") {
-            Characters.parseString("\\g")
+            Characters.decodeStringContents("\\g")
         }
     }
 

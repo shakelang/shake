@@ -87,8 +87,8 @@ object Characters {
      * @since 0.2.1
      * @version 0.1.0
      */
-    @JsName("parseString")
-    fun parseString(s: String): String {
+    @JsName("decodeStringContents")
+    fun decodeStringContents(s: String): String {
         val string = StringBuilder()
 
         // We use a while loop because kotlin has no normal for loop
