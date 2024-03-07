@@ -8,8 +8,10 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec.code
 
-import com.shakelang.shake.shakespeare.nodes.spec.GenerationContext
-import com.shakelang.shake.shakespeare.nodes.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.GenerationContext
+import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.code.StatementSpec
+import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 
 /**
  * A [ValuedAssignmentSpec] is a StatementSpec and a ValueSpec at the same time
