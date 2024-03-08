@@ -11,8 +11,8 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
-import com.shakelang.shake.parser.node.ShakeBlockNode
-import com.shakelang.shake.parser.node.ShakeFileNode
+import com.shakelang.shake.parser.node.outer.ShakeFileNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.commander.CommanderValueValidators
@@ -182,7 +182,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val lexer = ShakeLexer(input)
 
     // Generate the tokens using the lexer
-    val tokens = lexer.makeTokens()
+    val tokens = lexer.stream()
 
     // if debug is enabled, we print out the lexer-tokens
     logger.debug("[DEBUG] Lexer-Tokens: $tokens")

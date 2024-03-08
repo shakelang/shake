@@ -1,7 +1,9 @@
 package com.shakelang.util.parseutils.lexer.token
 
+import com.shakelang.util.parseutils.lexer.token.stream.TokenInputStream
+
 /**
- * The input of the [com.shakelang.shake.lexer.Lexer] gets converted into [Token]s. These get parsed
+ * The input of a lexer gets converted into [Token]s. These get parsed
  * by the parser
  * @param type the [Token.type] of the [Token]
  * @param value the [Token.value] of the [Token]
@@ -11,7 +13,12 @@ package com.shakelang.util.parseutils.lexer.token
  * @since 0.1.0
  * @version 0.2.1
  */
-open class Token<T : TokenType>(
+open class Token<
+    Self : Token<Self, TT, ST, CTX>,
+    TT : TokenType,
+    ST : TokenInputStream<ST, TT, Self, CTX>,
+    CTX : TokenContext<CTX, TT, Self, ST>,
+    >(
     /**
      * The type of the [Token]
      * @see Token
@@ -19,7 +26,7 @@ open class Token<T : TokenType>(
      * @since 0.1.0
      * @version 0.2.1
      */
-    open val type: T,
+    open val type: TT,
 
     /**
      * The value of the [Token] (This is for identifiers, strings or numbers. If not necessary this is null)
@@ -28,7 +35,7 @@ open class Token<T : TokenType>(
      * @since 0.1.0
      * @version 0.2.1
      */
-    open val value: String?,
+    open val value: String,
 
     /**
      * The starting Position of the [Token]
@@ -47,28 +54,16 @@ open class Token<T : TokenType>(
      * @version 0.2.1
      */
     open val end: Int,
-) {
 
     /**
-     * Constructor for [Token]
-     * @param type the [Token.type] of the [Token]
-     * @param start the [Token.start] of the [Token]
-     * @param end the [Token.end] of the [Token]
-     *
+     * The context of the [Token]
      * @see Token
-     * @see Token.type
-     * @see Token.start
-     * @see Token.end
      *
-     * @since 0.1.0
-     * @version 0.2.1
+     * @since 0.5.0
+     * @version 0.5.0
      */
-    constructor(
-        type: T,
-        start: Int,
-        end: Int,
-    ) : this(type, null, start, end)
-
+    open val context: CTX,
+) {
     /**
      * String representation of the [Token]
      * @return the string representation of the [Token]
@@ -90,7 +85,7 @@ open class Token<T : TokenType>(
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null || other !is Token<*>) return false
+        if (other == null || other !is Token<*, *, *, *>) return false
         return type == other.type &&
             value == other.value
     }

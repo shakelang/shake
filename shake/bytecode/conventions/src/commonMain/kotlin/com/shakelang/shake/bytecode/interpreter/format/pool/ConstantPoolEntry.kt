@@ -1,8 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 
 /**
  * An exception that is thrown when the tag of a constant pool entry is invalid
@@ -280,22 +280,22 @@ sealed class ConstantPoolEntry {
     }
 
     /**
-     * A ShortConstant is a constant pool entry that contains a short
+     * A ShortConstant is a constant pool entry that contains a shorts
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#short-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#shorts-constant)
      *
-     * @param value the short value of the entry
+     * @param value the shorts value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
      * @version 0.1.0
      *
      * @constructor creates a new ShortConstant
-     * @param value the short value of the entry
+     * @param value the shorts value of the entry
      */
     class ShortConstant(
 
         /**
-         * The short value of the entry
+         * The shorts value of the entry
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -303,8 +303,8 @@ sealed class ConstantPoolEntry {
     ) : ConstantPoolEntry() {
 
         /**
-         * Get a string representation of the short constant
-         * @return a string representation of the short constant
+         * Get a string representation of the shorts constant
+         * @return a string representation of the shorts constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -313,8 +313,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Dump the short constant to the given [stream]
-         * @param stream the stream to dump the short constant to
+         * Dump the shorts constant to the given [stream]
+         * @param stream the stream to dump the shorts constant to
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -324,9 +324,9 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Check if the short constant is equal to the given [other] object
-         * @param other the object to check if it is equal to the short constant
-         * @return true if the short constant is equal to the given [other] object
+         * Check if the shorts constant is equal to the given [other] object
+         * @param other the object to check if it is equal to the shorts constant
+         * @return true if the shorts constant is equal to the given [other] object
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -340,8 +340,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Get the hash code of the short constant
-         * @return the hash code of the short constant
+         * Get the hash code of the shorts constant
+         * @return the hash code of the shorts constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -354,8 +354,8 @@ sealed class ConstantPoolEntry {
             /**
              * Create a new ShortConstant from the given [stream] without
              * reading the identifier byte
-             * @param stream the stream to create the short constant from
-             * @return the created short constant
+             * @param stream the stream to create the shorts constant from
+             * @return the created shorts constant
              * @since 0.1.0
              * @version 0.1.0
              */
@@ -365,8 +365,8 @@ sealed class ConstantPoolEntry {
 
             /**
              * Create a new ShortConstant from the given [stream]
-             * @param stream the stream to create the short constant from
-             * @return the created short constant
+             * @param stream the stream to create the shorts constant from
+             * @return the created shorts constant
              * @since 0.1.0
              * @version 0.1.0
              */
@@ -679,22 +679,22 @@ sealed class ConstantPoolEntry {
     }
 
     /**
-     * A DoubleConstant is a constant pool entry that contains a double
+     * A DoubleConstant is a constant pool entry that contains a doubles
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#doubles-constant)
      *
-     * @param value the double value of the entry
+     * @param value the doubles value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
      * @version 0.1.0
      *
      * @constructor creates a new DoubleConstant
-     * @param value the double value of the entry
+     * @param value the doubles value of the entry
      */
     class DoubleConstant(
 
         /**
-         * The double value of the entry
+         * The doubles value of the entry
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -703,8 +703,8 @@ sealed class ConstantPoolEntry {
     ) : ConstantPoolEntry() {
 
         /**
-         * Get a string representation of the double constant
-         * @return a string representation of the double constant
+         * Get a string representation of the doubles constant
+         * @return a string representation of the doubles constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -713,8 +713,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Dump the double constant to the given [stream]
-         * @param stream the stream to dump the double constant to
+         * Dump the doubles constant to the given [stream]
+         * @param stream the stream to dump the doubles constant to
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -724,9 +724,9 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Check if the double constant is equal to the given [other] object
-         * @param other the object to check if it is equal to the double constant
-         * @return true if the double constant is equal to the given [other] object
+         * Check if the doubles constant is equal to the given [other] object
+         * @param other the object to check if it is equal to the doubles constant
+         * @return true if the doubles constant is equal to the given [other] object
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -740,8 +740,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Get the hash code of the double constant
-         * @return the hash code of the double constant
+         * Get the hash code of the doubles constant
+         * @return the hash code of the doubles constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -754,8 +754,8 @@ sealed class ConstantPoolEntry {
             /**
              * Create a new DoubleConstant from the given [stream] without
              * reading the identifier byte
-             * @param stream the stream to create the double constant from
-             * @return the created double constant
+             * @param stream the stream to create the doubles constant from
+             * @return the created doubles constant
              * @since 0.1.0
              * @version 0.1.0
              */
@@ -765,8 +765,8 @@ sealed class ConstantPoolEntry {
 
             /**
              * Create a new DoubleConstant from the given [stream]
-             * @param stream the stream to create the double constant from
-             * @return the created double constant
+             * @param stream the stream to create the doubles constant from
+             * @return the created doubles constant
              * @since 0.1.0
              * @version 0.1.0
              */

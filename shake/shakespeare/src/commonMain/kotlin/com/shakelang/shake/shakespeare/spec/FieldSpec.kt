@@ -8,31 +8,36 @@
 
 package com.shakelang.shake.shakespeare.spec
 
-class FieldSpec(
-    val name: Identifier,
+import com.shakelang.shake.shakespeare.AbstractSpec
+
+open class FieldSpec(
+    val name: NamespaceSpec,
     val type: Type,
+    val isVal: Boolean = true,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
-) {
-    fun generate(ctx: GenerationContext): String {
+) : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isStatic) builder.append("static ")
         if (isFinal) builder.append("final ")
         if (isSynchronized) builder.append("synchronized ")
         if (isNative) builder.append("native ")
-        builder.append(type.generate(ctx))
-        builder.append(" ")
-        builder.append(name)
+        builder.append(if (isVal) "val" else "var")
+            .append(" ")
+            .append(name)
+            .append(": ")
+            .append(type.generate(ctx))
         return builder.toString()
     }
 
-    class FieldSpecBuilder
+    open class FieldSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var type: Type? = null
         var isStatic = false
         var isFinal = false
@@ -40,7 +45,7 @@ class FieldSpec(
         var isSynchronized = false
         var isNative = false
 
-        fun name(name: Identifier): FieldSpecBuilder {
+        fun name(name: NamespaceSpec): FieldSpecBuilder {
             this.name = name
             return this
         }

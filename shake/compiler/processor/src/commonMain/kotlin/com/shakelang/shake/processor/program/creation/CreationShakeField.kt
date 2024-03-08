@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
@@ -100,7 +100,7 @@ open class CreationShakeField(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode,
+            node: ShakeFieldDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 baseProject,
@@ -111,12 +111,12 @@ open class CreationShakeField(
                 node.isStatic,
                 node.isFinal,
                 false,
-                node.access == ShakeAccessDescriber.PRIVATE,
-                node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
                 node.isNative,
                 null,
-                parentScope.getType(node.type),
+                parentScope.getType(node.type ?: TODO("Automatic type detection")),
                 node.expandedType?.let { parentScope.getType(it) },
             )
         }
@@ -124,7 +124,7 @@ open class CreationShakeField(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode,
+            node: ShakeFieldDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 clazz.prj,
@@ -135,12 +135,12 @@ open class CreationShakeField(
                 node.isStatic,
                 node.isFinal,
                 false,
-                node.access == ShakeAccessDescriber.PRIVATE,
-                node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
                 node.isNative,
                 null,
-                parentScope.getType(node.type),
+                parentScope.getType(node.type ?: TODO("Automatic type detection")),
                 node.expandedType?.let { parentScope.getType(it) },
             )
         }

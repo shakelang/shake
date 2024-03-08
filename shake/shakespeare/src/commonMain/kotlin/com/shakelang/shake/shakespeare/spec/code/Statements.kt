@@ -8,14 +8,31 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.Identifier
+import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.Type
 
-interface StatementSpec {
-    fun generate(ctx: GenerationContext): String
+/**
+ * A [StatementSpec] is a specification for a statement in the code
+ * @since 0.1.0
+ */
+interface StatementSpec : AbstractSpec {
+
+    /**
+     * Generate the statement
+     * @param ctx The [GenerationContext] to use
+     * @return The generated statement
+     */
+    override fun generate(ctx: GenerationContext): String
 
     companion object {
+
+        /**
+         * Create a [StatementSpec] from a string
+         * @param value The string to create the [StatementSpec] from
+         * @return The [StatementSpec] created from the string
+         */
         fun of(value: String): StatementSpec {
             return object : StatementSpec {
                 override fun generate(ctx: GenerationContext): String {
@@ -26,23 +43,37 @@ interface StatementSpec {
     }
 }
 
-class VariableDeclarationSpec(
-    val name: Identifier,
+/**
+ * A [VariableDeclarationSpec] is a specification for a variable declaration in the code
+ * @param name The name of the variable
+ * @param type The type of the variable
+ * @param value The value of the variable
+ * @since 0.1.0
+ */
+open class VariableDeclarationSpec(
+    val name: NamespaceSpec,
     val type: Type,
-    val value: ValueSpec,
+    val value: ValueSpec?,
+    val isVal: Boolean = true,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "val $name: $type = $value"
+        val builder = StringBuilder()
+        if (isVal) builder.append("val ") else builder.append("var ")
+        builder.append(name.name).append(": ")
+        builder.append(type.generate(ctx)).append(" ")
+        if (value != null) builder.append(" = ").append(value.generate(ctx))
+        return builder.toString()
     }
 
     open class VariableDeclarationSpecBuilder
     internal constructor(
-        var name: Identifier? = null,
+        var name: NamespaceSpec? = null,
         var type: Type? = null,
         var value: ValueSpec? = null,
+        var isVal: Boolean = true,
     ) {
 
-        fun name(name: Identifier): VariableDeclarationSpecBuilder {
+        fun name(name: NamespaceSpec): VariableDeclarationSpecBuilder {
             this.name = name
             return this
         }
@@ -72,6 +103,7 @@ class VariableDeclarationSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 type ?: throw IllegalStateException("Type not set"),
                 value ?: throw IllegalStateException("Value not set"),
+                isVal,
             )
         }
     }
@@ -81,7 +113,7 @@ class VariableDeclarationSpec(
     }
 }
 
-class WhileSpec(
+open class WhileSpec(
     val condition: ValueSpec,
     val body: CodeSpec,
 ) : StatementSpec {
@@ -123,7 +155,7 @@ class WhileSpec(
     }
 }
 
-class DoWhileSpec(
+open class DoWhileSpec(
     val body: CodeSpec,
     val condition: ValueSpec,
 ) : StatementSpec {
@@ -165,7 +197,7 @@ class DoWhileSpec(
     }
 }
 
-class ForSpec(
+open class ForSpec(
     val init: StatementSpec,
     val condition: ValueSpec,
     val update: StatementSpec,
@@ -233,7 +265,7 @@ class ForSpec(
     }
 }
 
-class IfSpec(
+open class IfSpec(
     val condition: ValueSpec,
     val body: CodeSpec,
     val elseBody: CodeSpec?,
@@ -284,7 +316,7 @@ class IfSpec(
     }
 }
 
-class ReturnSpec(
+open class ReturnSpec(
     val value: ValueSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {

@@ -39,7 +39,7 @@ class ClassTests : FreeSpec(
                 package test;
                 
                 class TestSuper {}
-                class Test extends TestSuper {}
+                class Test : TestSuper {}
                 """.trimIndent(),
             )
 
@@ -58,7 +58,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                    package test;
+                    package test
                     
                     class TestSuper {}
                 """.trimIndent(),
@@ -67,9 +67,9 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test2.shake",
                 """
-                    package test;
+                    package test
                     
-                    class Test extends TestSuper {}
+                    class Test : TestSuper {}
                 """.trimIndent(),
             )
 
@@ -88,7 +88,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package abc;
+                package abc
                 
                 class TestSuper {}
                 """.trimIndent(),
@@ -97,11 +97,11 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
-                import abc.TestSuper;
+                import abc.TestSuper
                 
-                class Test extends TestSuper {}
+                class Test : TestSuper {}
                 """.trimIndent(),
             )
 
@@ -120,7 +120,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package abc;
+                package abc
                 
                 class TestSuper {}
                 """.trimIndent(),
@@ -129,11 +129,11 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
-                import abc.*;
+                import abc.*
                 
-                class Test extends TestSuper {}
+                class Test : TestSuper {}
                 """.trimIndent(),
             )
 
@@ -153,10 +153,10 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 class TestSuper {}
-                class Test extends test.TestSuper {}
+                class Test : test.TestSuper {}
                 """.trimIndent(),
             )
 
@@ -177,7 +177,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 class Test {}
                 """.trimIndent(),
@@ -198,10 +198,10 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 interface TestInterface {}
-                class Test implements TestInterface {}
+                class Test : TestInterface {}
                 """.trimIndent(),
             )
 
@@ -221,11 +221,11 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 interface TestInterface1 {}
                 interface TestInterface2 {}
-                class Test implements TestInterface1, TestInterface2 {}
+                class Test : TestInterface1, TestInterface2 {}
                 """.trimIndent(),
             )
 
@@ -233,6 +233,12 @@ class ClassTests : FreeSpec(
 
             val project = processor.project
             val testClass = project.getClass("test.Test")!!
+
+            val testInterface1 = project.getClass("test.TestInterface1")!!
+            val testInterface2 = project.getClass("test.TestInterface2")!!
+
+            testInterface1.isInterface shouldBe true
+            testInterface2.isInterface shouldBe true
 
             testClass.interfaces.size shouldBe 2
             testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface1"
@@ -246,7 +252,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 interface TestInterface {}
                 """.trimIndent(),
@@ -255,9 +261,9 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test2.shake",
                 """
-                package test;
+                package test
                 
-                class Test implements TestInterface {}
+                class Test : TestInterface {}
                 """.trimIndent(),
             )
 
@@ -277,7 +283,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package abc;
+                package abc
                 
                 interface TestInterface {}
                 """.trimIndent(),
@@ -286,11 +292,11 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
-                import abc.TestInterface;
+                import abc.TestInterface
                 
-                class Test implements TestInterface {}
+                class Test : TestInterface {}
                 """.trimIndent(),
             )
 
@@ -310,7 +316,7 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package abc;
+                package abc
                 
                 interface TestInterface {}
                 """.trimIndent(),
@@ -319,11 +325,11 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
-                import abc.*;
+                import abc.*
                 
-                class Test implements TestInterface {}
+                class Test : TestInterface {}
                 """.trimIndent(),
             )
 
@@ -345,10 +351,10 @@ class ClassTests : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-                package test;
+                package test
                 
                 interface TestInterface {}
-                class Test implements test.TestInterface {}
+                class Test : test.TestInterface {}
                 """.trimIndent(),
             )
 

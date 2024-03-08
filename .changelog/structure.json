@@ -71,13 +71,18 @@
       "dependencies": []
     },
     {
-      "path": ":shake:shasambly",
-      "name": "shake.shake:shasambly",
-      "version": "0.1.0-SNAPSHOT",
-      "description": "",
-      "author": "shake.shake",
+      "path": ":shake:shakespeare",
+      "name": "com.shakelang.shake:shakespeare",
+      "version": "0.1.0",
+      "description": "Shakespeare is a tool for generating shake source files.",
+      "author": "com.shakelang.shake",
       "license": "",
-      "dependencies": []
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:primitives:primitives:0.5.0",
+        ":util:logger:logger:0.5.2",
+        ":util:common-io:common-io:0.5.0"
+      ]
     },
     {
       "path": ":util:algo",
@@ -256,6 +261,7 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
+        ":util:common-io:common-io:0.5.0",
         ":util:parseutils:parseutils:0.4.1"
       ]
     },
@@ -277,7 +283,7 @@
       "path": ":bin:cli:jvm",
       "name": "shake.bin.cli:jvm",
       "version": "0.1.0",
-      "description": "Java distribution commands for Shasambly",
+      "description": "Java distribution commands for shake",
       "author": "shake.bin.cli",
       "license": "",
       "dependencies": [
@@ -447,66 +453,6 @@
       ]
     },
     {
-      "path": ":shake:shasambly:java-dist",
-      "name": "com.shakelang.shake.shasambly:java-dist",
-      "version": "0.1.0",
-      "description": "Java distribution commands for Shasambly",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.5.0",
-        ":util:parseutils:parseutils:0.4.1",
-        ":shake:shasambly:shasambly:shasambly:0.1.0",
-        ":shake:shasambly:shastools:shastools:0.1.0",
-        ":shake:shasambly:shasp:shasp:0.1.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shasambly",
-      "name": "com.shakelang.shake.shasambly:shasambly",
-      "version": "0.1.0",
-      "description": "Shake's own bytecode format interpreter",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.1",
-        ":util:common-io:common-io:0.5.0",
-        ":util:primitives:primitives:0.5.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shasp",
-      "name": "com.shakelang.shake.shasambly:shasp",
-      "version": "0.1.0",
-      "description": "Shasp is a very simple programming language that outputs shasambly bytecode.",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.1",
-        ":util:shason:shason:0.4.3",
-        ":shake:shasambly:shasambly:shasambly:0.1.0",
-        ":shake:shasambly:shastools:shastools:0.1.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shastools",
-      "name": "com.shakelang.shake.shasambly:shastools",
-      "version": "0.1.0",
-      "description": "Shake's own bytecode format interpreter",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:common-io:common-io:0.5.0",
-        ":util:primitives:primitives:0.5.0",
-        ":util:parseutils:parseutils:0.4.1",
-        ":shake:shasambly:shasambly:shasambly:0.1.0"
-      ]
-    },
-    {
       "path": ":util:embed:api",
       "name": "com.shakelang.util.embed:api",
       "version": "0.1.1",
@@ -529,7 +475,18 @@
         "unspecified:unspecified:unspecified",
         "com.squareup:kotlinpoet:1.16.0"
       ]
+    },
+    {
+      "path": ":shake:compiler:shakelib:generator",
+      "name": "shake.shake.compiler.shakelib:generator",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake.compiler.shakelib",
+      "license": "",
+      "dependencies": [
+        ":shake:shakespeare:shakespeare:0.1.0"
+      ]
     }
   ],
-  "lastUpdate": 1707495525269
+  "lastUpdate": 1709722408463
 }

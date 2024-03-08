@@ -3,7 +3,7 @@ package com.shakelang.util.parseutils.lexer.token.streaming
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.source.CharacterSource
 import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
-import com.shakelang.util.parseutils.lexer.LexingBase
+import com.shakelang.util.parseutils.lexer.AbstractLexer
 import com.shakelang.util.parseutils.lexer.token.Token
 import com.shakelang.util.parseutils.lexer.token.stream.OnDemandLexingTokenInputStream
 import kotlin.test.*
@@ -25,7 +25,7 @@ class OnDemandLexingTokenInputStreamTests {
 
     class TestLexer(
         tokens: List<Token<TokenType>>,
-    ) : LexingBase<TokenType, Token<TokenType>>(
+    ) : AbstractLexer<TokenType, Token<TokenType>>(
         SourceCharacterInputStream(
             CharacterSource.from(
                 "qwgg".toCharArray(),

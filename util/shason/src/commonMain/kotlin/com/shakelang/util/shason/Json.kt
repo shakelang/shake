@@ -24,7 +24,7 @@ object JSON {
         val source = CharacterSource.from(code, "JSON.parse")
         val chars = SourceCharacterInputStream(source)
         val lexer = JsonLexer(chars)
-        val tokens = lexer.makeTokens()
+        val tokens = lexer.stream()
         val parser = JsonParser(tokens)
         return parser.parse()
     }

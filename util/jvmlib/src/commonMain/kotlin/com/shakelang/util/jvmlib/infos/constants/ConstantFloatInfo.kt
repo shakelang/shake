@@ -1,9 +1,9 @@
 package com.shakelang.util.jvmlib.infos.constants
 
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.input.InputStream
-import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.input.bytes.InputStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 
 class ConstantFloatInfo(val value: Float) : ConstantInfo() {
 

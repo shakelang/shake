@@ -12,7 +12,7 @@ class BytecodeGeneratorTest : FreeSpec(
                 """
                 package test
                 
-                void main() {
+                fun main() {
                     print(1 + 2)
                 }
                 
@@ -28,11 +28,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 """
                 package test
                 
-                void main() {
+                fun main() {
                     test();
                 }
                 
-                void test() {
+                fun test() {
                     print(1)
                 }
                 
@@ -48,11 +48,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 """
                 package test
                 
-                void main() {
+                fun main() {
                     print(test())
                 }
                 
-                int test() {
+                fun test(): int {
                     return 1
                 }
                 
@@ -68,11 +68,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 """
                 package test
                 
-                void main() {
+                fun main() {
                     test(3)
                 }
                 
-                void test(int i) {
+                fun test(i: int) {
                     print(i)
                 }
                 
@@ -88,11 +88,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 """
                 package test
                 
-                void main() {
+                fun main() {
                     print(add(1, 2))
                 }
                 
-                int add(int a, int b) {
+                fun add(a: int, b: int): int {
                     return a + b
                 }
                 
@@ -110,7 +110,7 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    static void main() {
+                    static fun main() {
                         print(1 + 2)
                     }
                 }
@@ -129,11 +129,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    static void main() {
+                    static fun main() {
                         print(add(1, 2))
                     }
                     
-                    static int add(int a, int b) {
+                    static fun add(a: int, b: int): int {
                         return a + b
                     }
                 }
@@ -152,11 +152,11 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    static void main() {
+                    static fun main() {
                         print(add(1, 2))
                     }
                     
-                    static int add(int a, int b) {
+                    static fun add(a: int, b: int): int {
                         return a + b
                     }
                 }
@@ -180,8 +180,8 @@ class BytecodeGeneratorTest : FreeSpec(
                         print(10)
                     }
                 
-                    static void main() {
-                        Test test = new Test()
+                    static fun main() {
+                        val test : Test = Test()
                         print(test)
                     }
                 }
@@ -201,13 +201,13 @@ class BytecodeGeneratorTest : FreeSpec(
                 
                 class Test {
                 
-                    int i
+                    var i
                     
                     constructor() {
                         print(10)
                     }
                 
-                    static void main() {
+                    static fun main() {
                         Test test = new Test()
                         test.i = 42
                         print(test.i)

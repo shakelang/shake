@@ -8,22 +8,24 @@
 
 package com.shakelang.shake.shakespeare.spec
 
-interface Type {
-    fun generate(ctx: GenerationContext): String
+import com.shakelang.shake.shakespeare.AbstractSpec
+
+interface Type : AbstractSpec {
+    override fun generate(ctx: GenerationContext): String
 
     companion object {
         fun of(type: String): Type {
             return when (type) {
                 "byte" -> PrimitiveType.BYTE
-                "short" -> PrimitiveType.SHORT
+                "shorts" -> PrimitiveType.SHORT
                 "int" -> PrimitiveType.INT
                 "long" -> PrimitiveType.LONG
                 "unsigned byte" -> PrimitiveType.UNSIGNED_BYTE
-                "unsigned short" -> PrimitiveType.UNSIGNED_SHORT
+                "unsigned shorts" -> PrimitiveType.UNSIGNED_SHORT
                 "unsigned int" -> PrimitiveType.UNSIGNED_INT
                 "unsigned long" -> PrimitiveType.UNSIGNED_LONG
                 "float" -> PrimitiveType.FLOAT
-                "double" -> PrimitiveType.DOUBLE
+                "doubles" -> PrimitiveType.DOUBLE
                 "char" -> PrimitiveType.CHAR
                 "boolean" -> PrimitiveType.BOOLEAN
                 else -> SimpleType(type)
@@ -32,7 +34,7 @@ interface Type {
     }
 }
 
-class SimpleType(val name: String) : Type {
+open class SimpleType(val name: String) : Type {
     override fun generate(ctx: GenerationContext): String {
         return name
     }
@@ -55,15 +57,15 @@ class SimpleType(val name: String) : Type {
 
 enum class PrimitiveType(val type: String) : Type {
     BYTE("byte"),
-    SHORT("short"),
+    SHORT("shorts"),
     INT("int"),
     LONG("long"),
     UNSIGNED_BYTE("unsigned byte"),
-    UNSIGNED_SHORT("unsigned short"),
+    UNSIGNED_SHORT("unsigned shorts"),
     UNSIGNED_INT("unsigned int"),
     UNSIGNED_LONG("unsigned long"),
     FLOAT("float"),
-    DOUBLE("double"),
+    DOUBLE("doubles"),
     CHAR("char"),
     BOOLEAN("boolean"),
     ;
@@ -73,7 +75,7 @@ enum class PrimitiveType(val type: String) : Type {
     }
 }
 
-class ClassType(val name: String) : Type {
+open class ClassType(val name: String) : Type {
     override fun generate(ctx: GenerationContext): String {
         return name
     }

@@ -69,7 +69,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val lexer = Lexer(input)
 
     // Generate the tokens using the lexer
-    val tokens = lexer.makeTokens()
+    val tokens = lexer.stream()
 
     // if debug is enabled we print out the lexer-tokens
     debug("[DEBUG] Lexer-Tokens: $tokens")

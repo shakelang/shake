@@ -1,9 +1,9 @@
 package com.shakelang.shake.parser.tests.api
 
 import com.shakelang.shake.parser.ParserTestUtil
-import com.shakelang.shake.parser.ShakeParserImpl
-import com.shakelang.util.io.streaming.AppendableStream
-import com.shakelang.util.io.streaming.Stream
+import com.shakelang.util.io.streaming.general.AppendableStream
+import com.shakelang.util.io.streaming.general.Stream
+import com.shakelang.util.parseutils.parser.AbstractParser
 import com.shakelang.util.shason.json
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -24,10 +24,10 @@ val primitiveTypes = listOf(
     "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
-    "unsigned byte" to "unsigned_byte",
-    "unsigned short" to "unsigned_short",
-    "unsigned int" to "unsigned_integer",
-    "unsigned long" to "unsigned_long",
+    "ubyte" to "unsigned_byte",
+    "ushort" to "unsigned_short",
+    "uint" to "unsigned_integer",
+    "ulong" to "unsigned_long",
 )
 
 val primitiveTypesNoUnsigned = listOf(
@@ -289,7 +289,7 @@ fun FreeSpec.generateTests(
             if (generated.isFailure) {
                 val test = generated.toFailure()
 
-                val error = shouldThrow<ShakeParserImpl.ParserError> {
+                val error = shouldThrow<AbstractParser.ParserError> {
                     ParserTestUtil.parse("${test.path}.shake", test.input)
                 }
 

@@ -2,16 +2,16 @@
   "name": "ShakeFileNode",
   "children": [
     {
-      "name": "ShakeFunctionDeclarationNode",
-      "function_name": "m",
+      "name": "ShakeMethodDeclarationNode",
+      "method_name": "m",
       "args": [
         {
-          "name": "ShakeFunctionParameterNode",
+          "name": "ShakeParameterNode",
           "argument_name": "p",
           "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type0_name%\"}"
         },
         {
-          "name": "ShakeFunctionParameterNode",
+          "name": "ShakeParameterNode",
           "argument_name": "p2",
           "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type1_name%\"}"
         }

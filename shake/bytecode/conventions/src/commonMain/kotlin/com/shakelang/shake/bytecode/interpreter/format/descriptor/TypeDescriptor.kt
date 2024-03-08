@@ -1,7 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
-import com.shakelang.util.io.streaming.input.InputStream
-import com.shakelang.util.io.streaming.input.byteStream
+import com.shakelang.util.io.streaming.input.bytes.InputStream
+import com.shakelang.util.io.streaming.input.bytes.byteStream
 
 /**
  * A type (of a field, method, parameter, variable, etc.)
@@ -69,10 +69,10 @@ interface TypeDescriptor {
     }
 
     /**
-     * A [ShortType] represents the primitive type `short` in shake
+     * A [ShortType] represents the primitive type `shorts` in shake
      * It has the descriptor `S` and a size of 2
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#short)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#shorts)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -330,10 +330,10 @@ interface TypeDescriptor {
     }
 
     /**
-     * A [DoubleType] represents the primitive type `double` in shake
+     * A [DoubleType] represents the primitive type `doubles` in shake
      * It has the descriptor `D` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#doubles)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -629,7 +629,7 @@ interface TypeDescriptor {
         val BYTE = ByteType
 
         /**
-         * A [ShortType] represents the primitive type `short` in shake
+         * A [ShortType] represents the primitive type `shorts` in shake
          * It has the descriptor `S` and a size of 2
          *
          * This is a shortcut for [TypeDescriptor.ShortType]
@@ -717,7 +717,7 @@ interface TypeDescriptor {
         val FLOAT = FloatType
 
         /**
-         * A [DoubleType] represents the primitive type `double` in shake
+         * A [DoubleType] represents the primitive type `doubles` in shake
          * It has the descriptor `D` and a size of 8
          *
          * This is a shortcut for [TypeDescriptor.DoubleType]

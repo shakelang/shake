@@ -95,7 +95,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!!.first().value shouldBe "Hello World"
         }
 
-        "parse (with option using short alias)" {
+        "parse (with option using shorts alias)" {
             val command = command {
                 name = "test"
                 description = "test description"
@@ -112,7 +112,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!!.first().toBoolean() shouldBe true
         }
 
-        "parse (with option using short alias and value)" {
+        "parse (with option using shorts alias and value)" {
             val command = command {
                 name = "test"
                 description = "test description"

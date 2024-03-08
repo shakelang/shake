@@ -47,8 +47,8 @@ class CommanderParseResult(
     }
 
     /**
-     * Get an option by its short name (or alias)
-     * @param alias The short name or alias of the option
+     * Get an option by its shorts name (or alias)
+     * @param alias The shorts name or alias of the option
      * @return The option or null if the option does not exist
      * @since 0.1.0
      * @version 0.1.0
@@ -85,8 +85,8 @@ class CommanderParseResult(
     }
 
     /**
-     * Get an option value by its short name (or alias)
-     * @param name The short name or alias of the option
+     * Get an option value by its shorts name (or alias)
+     * @param name The shorts name or alias of the option
      * @return The value or null if the option was not found
      * @since 0.1.0
      * @version 0.1.0

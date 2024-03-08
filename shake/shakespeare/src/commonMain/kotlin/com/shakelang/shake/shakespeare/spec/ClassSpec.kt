@@ -8,18 +8,19 @@
 
 package com.shakelang.shake.shakespeare.spec
 
+import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
-class ConstructorSpec(
+open class ConstructorSpec(
     val parameters: List<ParameterSpec>,
     val body: CodeSpec,
-    val name: Identifier? = null,
+    val name: NamespaceSpec? = null,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
-) {
+) : AbstractSpec {
 
-    fun generate(ctx: GenerationContext): String {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isSynchronized) builder.append("synchronized ")
@@ -33,7 +34,7 @@ class ConstructorSpec(
 
         builder.append("(")
         builder.append(parameters.joinToString(", ") { it.generate(ctx) })
-        builder.append(")")
+        builder.append(") ")
 
         builder.append(body.generate(ctx))
         return builder.toString()
@@ -43,7 +44,7 @@ class ConstructorSpec(
     internal constructor() {
         val parameters: MutableList<ParameterSpec> = ArrayList()
         var body: CodeSpec? = null
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         var accessModifier = AccessModifier.PUBLIC
         var isSynchronized = false
         var isNative = false
@@ -53,12 +54,22 @@ class ConstructorSpec(
             return this
         }
 
+        fun parameters(parameters: List<ParameterSpec>): ConstructorSpecBuilder {
+            this.parameters.addAll(parameters)
+            return this
+        }
+
+        fun parameters(vararg parameters: ParameterSpec): ConstructorSpecBuilder {
+            this.parameters.addAll(parameters)
+            return this
+        }
+
         fun body(body: CodeSpec): ConstructorSpecBuilder {
             this.body = body
             return this
         }
 
-        fun name(name: Identifier): ConstructorSpecBuilder {
+        fun name(name: NamespaceSpec): ConstructorSpecBuilder {
             this.name = name
             return this
         }
@@ -79,21 +90,36 @@ class ConstructorSpec(
         }
 
         fun build(): ConstructorSpec {
-            return ConstructorSpec(parameters, body!!)
+            return ConstructorSpec(parameters, body!!, name, accessModifier, isSynchronized, isNative)
+        }
+    }
+
+    companion object {
+        fun builder(): ConstructorSpecBuilder {
+            return ConstructorSpecBuilder()
         }
     }
 }
 
-class ClassSpec(
-    val name: Identifier,
-    val methods: List<MethodSpec>,
-    val fields: List<FieldSpec>,
+interface ClassLikeSpec : AbstractSpec {
+    val name: NamespaceSpec
+    val methods: List<MethodSpec>
+    val fields: List<FieldSpec>
+    val classes: List<ClassLikeSpec>
+    val accessModifier: AccessModifier
+}
+
+open class ClassSpec(
+    override val name: NamespaceSpec,
+    override val methods: List<MethodSpec>,
+    override val fields: List<FieldSpec>,
+    override val classes: List<ClassLikeSpec>,
     val constructors: List<ConstructorSpec>,
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
-    val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+    override val accessModifier: AccessModifier = AccessModifier.PUBLIC,
+) : ClassLikeSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isAbstract) builder.append("abstract ")
@@ -106,26 +132,30 @@ class ClassSpec(
             builder.append(";")
         }
         for (constructor in constructors) {
-            builder.append(constructor.generate(ctx))
+            builder.append(constructor.generate(ctx.indent()))
         }
         for (method in methods) {
-            builder.append(method.generate(ctx))
+            builder.append(method.generate(ctx.indent()))
+        }
+        for (clazz in classes) {
+            builder.append(clazz.generate(ctx.indent()))
         }
         builder.append("}")
         return builder.toString()
     }
 
-    class ClassSpecBuilder
+    open class ClassSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
+        var name: NamespaceSpec? = null
         val methods: MutableList<MethodSpec> = ArrayList()
         val fields: MutableList<FieldSpec> = ArrayList()
         val constructors: MutableList<ConstructorSpec> = ArrayList()
+        val classes: MutableList<ClassSpec> = ArrayList()
         var isAbstract = false
         var isFinal = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): ClassSpecBuilder {
+        fun name(name: NamespaceSpec): ClassSpecBuilder {
             this.name = name
             return this
         }
@@ -145,6 +175,11 @@ class ClassSpec(
             return this
         }
 
+        fun addClass(clazz: ClassSpec): ClassSpecBuilder {
+            classes.add(clazz)
+            return this
+        }
+
         fun abstract(isAbstract: Boolean = true): ClassSpecBuilder {
             this.isAbstract = isAbstract
             return this
@@ -161,7 +196,7 @@ class ClassSpec(
         }
 
         fun build(): ClassSpec {
-            return ClassSpec(name!!, methods, fields, constructors)
+            return ClassSpec(name!!, methods, fields, classes, constructors, isAbstract, isFinal, accessModifier)
         }
     }
 
@@ -172,16 +207,16 @@ class ClassSpec(
     }
 }
 
-class InterfaceSpec(
-    val name: Identifier,
-    val methods: List<MethodSpec>,
-    val isAbstract: Boolean = false,
-    val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+open class InterfaceSpec(
+    override val name: NamespaceSpec,
+    override val methods: List<MethodSpec>,
+    override val fields: List<FieldSpec>,
+    override val classes: List<ClassLikeSpec>,
+    override val accessModifier: AccessModifier = AccessModifier.PUBLIC,
+) : ClassLikeSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
-        if (isAbstract) builder.append("abstract ")
         builder.append("interface ")
         builder.append(name)
         builder.append(" {")
@@ -194,18 +229,30 @@ class InterfaceSpec(
 
     class InterfaceSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
-        val methods: MutableList<MethodSpec> = ArrayList()
+        var name: NamespaceSpec? = null
+        val methods = mutableListOf<MethodSpec>()
+        val fields = mutableListOf<FieldSpec>()
+        val classes = mutableListOf<ClassLikeSpec>()
         var isAbstract = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): InterfaceSpecBuilder {
+        fun name(name: NamespaceSpec): InterfaceSpecBuilder {
             this.name = name
             return this
         }
 
         fun addMethod(method: MethodSpec): InterfaceSpecBuilder {
             methods.add(method)
+            return this
+        }
+
+        fun addField(field: FieldSpec): InterfaceSpecBuilder {
+            fields.add(field)
+            return this
+        }
+
+        fun addClass(clazz: ClassLikeSpec): InterfaceSpecBuilder {
+            classes.add(clazz)
             return this
         }
 
@@ -220,7 +267,7 @@ class InterfaceSpec(
         }
 
         fun build(): InterfaceSpec {
-            return InterfaceSpec(name!!, methods)
+            return InterfaceSpec(name!!, methods, fields, classes, accessModifier)
         }
     }
 
@@ -231,12 +278,15 @@ class InterfaceSpec(
     }
 }
 
-class EnumSpec(
-    val name: Identifier,
-    val constants: List<Identifier>,
-    val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+open class EnumSpec(
+    override val name: NamespaceSpec,
+    val constants: List<NamespaceSpec>,
+    override val methods: List<MethodSpec>,
+    override val fields: List<FieldSpec>,
+    override val classes: List<ClassLikeSpec>,
+    override val accessModifier: AccessModifier = AccessModifier.PUBLIC,
+) : ClassLikeSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         builder.append("enum ")
@@ -252,17 +302,35 @@ class EnumSpec(
 
     class EnumSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
-        val constants: MutableList<Identifier> = ArrayList()
+        var name: NamespaceSpec? = null
+        val constants = mutableListOf<NamespaceSpec>()
+        val methods = mutableListOf<MethodSpec>()
+        val fields = mutableListOf<FieldSpec>()
+        val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): EnumSpecBuilder {
+        fun name(name: NamespaceSpec): EnumSpecBuilder {
             this.name = name
             return this
         }
 
-        fun addConstant(constant: Identifier): EnumSpecBuilder {
+        fun addConstant(constant: NamespaceSpec): EnumSpecBuilder {
             constants.add(constant)
+            return this
+        }
+
+        fun addMethod(method: MethodSpec): EnumSpecBuilder {
+            methods.add(method)
+            return this
+        }
+
+        fun addField(field: FieldSpec): EnumSpecBuilder {
+            fields.add(field)
+            return this
+        }
+
+        fun addClass(clazz: ClassLikeSpec): EnumSpecBuilder {
+            classes.add(clazz)
             return this
         }
 
@@ -272,7 +340,7 @@ class EnumSpec(
         }
 
         fun build(): EnumSpec {
-            return EnumSpec(name!!, constants)
+            return EnumSpec(name!!, constants, methods, fields, classes, accessModifier)
         }
     }
 
@@ -283,13 +351,14 @@ class EnumSpec(
     }
 }
 
-class ObjectSpec(
-    val name: Identifier,
-    val methods: List<MethodSpec>,
-    val fields: List<FieldSpec>,
-    val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-) {
-    fun generate(ctx: GenerationContext): String {
+open class ObjectSpec(
+    override val name: NamespaceSpec,
+    override val methods: List<MethodSpec>,
+    override val fields: List<FieldSpec>,
+    override val classes: List<ClassLikeSpec> = emptyList(),
+    override val accessModifier: AccessModifier = AccessModifier.PUBLIC,
+) : ClassLikeSpec {
+    override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         builder.append("object ")
@@ -308,12 +377,13 @@ class ObjectSpec(
 
     class ObjectSpecBuilder
     internal constructor() {
-        var name: Identifier? = null
-        val methods: MutableList<MethodSpec> = ArrayList()
-        val fields: MutableList<FieldSpec> = ArrayList()
+        var name: NamespaceSpec? = null
+        val methods = mutableListOf<MethodSpec>()
+        val fields = mutableListOf<FieldSpec>()
+        val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: Identifier): ObjectSpecBuilder {
+        fun name(name: NamespaceSpec): ObjectSpecBuilder {
             this.name = name
             return this
         }
@@ -328,13 +398,18 @@ class ObjectSpec(
             return this
         }
 
+        fun addClass(clazz: ClassLikeSpec): ObjectSpecBuilder {
+            classes.add(clazz)
+            return this
+        }
+
         fun accessModifier(accessModifier: AccessModifier): ObjectSpecBuilder {
             this.accessModifier = accessModifier
             return this
         }
 
         fun build(): ObjectSpec {
-            return ObjectSpec(name!!, methods, fields)
+            return ObjectSpec(name!!, methods, fields, classes, accessModifier)
         }
     }
 

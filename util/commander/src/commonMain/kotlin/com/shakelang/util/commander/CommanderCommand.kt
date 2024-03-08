@@ -152,8 +152,8 @@ class CommanderCommand(
     }
 
     /**
-     * Get an option by its short alias
-     * @param name The short alias of the option
+     * Get an option by its shorts alias
+     * @param name The shorts alias of the option
      * @return The option or null if the option does not exist
      * @since 0.1.0
      * @version 0.1.0
@@ -612,7 +612,7 @@ class CommanderCommandCreationContext {
      * Add an option to the command
      * @param name The name of the option
      * @param aliases The aliases of the option
-     * @param shortAliases The short aliases of the option
+     * @param shortAliases The shorts aliases of the option
      * @param description The description of the option
      * @param required If the option is required
      * @param hasValue If the option has a value

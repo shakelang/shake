@@ -1,11 +1,12 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
+import com.shakelang.util.parseutils.parser.AbstractParser
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -14,15 +15,14 @@ import io.kotest.matchers.shouldNotBe
 class InterfaceTests : FreeSpec(
     {
         "final interface" {
-            shouldThrow<ShakeParserImpl.ParserError> {
+            shouldThrow<AbstractParser.ParserError> {
                 ParserTestUtil.parse("<InterfaceTest>", "final interface test {}")
             }
         }
 
-        ShakeAccessDescriber.entries.forEach { access ->
+        ShakeAccessDescriber.types.forEach { access ->
 
-            val accessPrefix = access.prefix?.plus(" ") ?: ""
-            val baseList = listOfNotNull(access.prefix)
+            val accessPrefix = access.realPrefix
 
             "${accessPrefix}interface" {
 
@@ -30,7 +30,7 @@ class InterfaceTests : FreeSpec(
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
-                node.access shouldBe access
+                node.access.type shouldBe access
                 node.isStatic shouldBe false
                 node.isFinal shouldBe false
                 node.name shouldBe "test"
@@ -41,38 +41,37 @@ class InterfaceTests : FreeSpec(
 
             "${accessPrefix}final interface" {
 
-                shouldThrow<ShakeParserImpl.ParserError> {
+                shouldThrow<AbstractParser.ParserError> {
                     ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}final interface test {}")
                 }
             }
 
-            ShakeAccessDescriber.entries.forEach { access2 ->
-                val accessPrefix2 = access2.prefix?.plus(" ") ?: ""
-                val baseList2 = listOfNotNull(access2.prefix)
+            ShakeAccessDescriber.types.forEach { access2 ->
+                val accessPrefix2 = access2.realPrefix
                 "${accessPrefix}class with a ${accessPrefix2}field" {
 
                     val tree =
                         ParserTestUtil.parse(
                             "<${accessPrefix}interface test>",
-                            "${accessPrefix}interface test { ${accessPrefix2}int i = 0; }",
+                            "${accessPrefix}interface test { ${accessPrefix2}val i: int = 0; }",
                         )
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
                     node.fields.size shouldBe 1
                     node.methods.size shouldBe 0
                     node.classes.size shouldBe 0
-                    node.fields[0] shouldBeOfType ShakeVariableDeclarationNode::class
+                    node.fields[0] shouldBeOfType ShakeFieldDeclarationNode::class
                     val variable = node.fields[0]
-                    variable.type.type shouldBe ShakeVariableType.Type.INTEGER
-                    variable.access shouldBe access2
+                    variable.type!!.type shouldBe ShakeVariableType.Type.INTEGER
+                    variable.access.type shouldBe access2
                     variable.value shouldNotBe null
-                    variable.value shouldBeOfType ShakeIntegerNode::class
-                    (variable.value as ShakeIntegerNode).number shouldBe 0
+                    variable.value shouldBeOfType ShakeIntegerLiteralNode::class
+                    (variable.value as ShakeIntegerLiteralNode).value shouldBe 0
                     variable.name shouldBe "i"
                     variable.isStatic shouldBe false
                     variable.isFinal shouldBe false
@@ -83,22 +82,22 @@ class InterfaceTests : FreeSpec(
                     val tree =
                         ParserTestUtil.parse(
                             "<${accessPrefix}interface test>",
-                            "${accessPrefix}interface test { ${accessPrefix2}void f() {} }",
+                            "${accessPrefix}interface test { ${accessPrefix2}fun f() {} }",
                         )
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
                     node.fields.size shouldBe 0
                     node.methods.size shouldBe 1
                     node.classes.size shouldBe 0
-                    node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
+                    node.methods[0] shouldBeOfType ShakeMethodDeclarationNode::class
                     val function = node.methods[0]
-                    function.type shouldBe ShakeVariableType.VOID
-                    function.access shouldBe access2
+                    function.type.type shouldBe ShakeVariableType.Type.VOID
+                    function.access.type shouldBe access2
                     function.args.size shouldBe 0
                     function.name shouldBe "f"
                     function.isStatic shouldBe false
@@ -115,7 +114,7 @@ class InterfaceTests : FreeSpec(
                     tree.children.size shouldBe 1
                     tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val node = tree.children[0] as ShakeClassDeclarationNode
-                    node.access shouldBe access
+                    node.access.type shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe false
                     node.name shouldBe "test"
@@ -124,7 +123,7 @@ class InterfaceTests : FreeSpec(
                     node.classes.size shouldBe 1
                     node.classes[0] shouldBeOfType ShakeClassDeclarationNode::class
                     val clazz = node.classes[0]
-                    clazz.access shouldBe access2
+                    clazz.access.type shouldBe access2
                     clazz.isStatic shouldBe false
                     clazz.isFinal shouldBe false
                     clazz.name shouldBe "Test"

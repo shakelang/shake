@@ -2,7 +2,7 @@
 
 package com.shakelang.util.jvmlib.infos.attributes
 
-import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
 import com.shakelang.util.jvmlib.infos.constants.Constant
 import com.shakelang.util.jvmlib.infos.constants.ConstantPool
 import kotlin.test.Test

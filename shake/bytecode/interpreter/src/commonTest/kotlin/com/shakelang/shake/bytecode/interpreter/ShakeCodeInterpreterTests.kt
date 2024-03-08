@@ -1462,7 +1462,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0
         }
 
-        "short compare (less)" {
+        "shorts compare (less)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1479,7 +1479,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 2
         }
-        "short compare (equal)" {
+        "shorts compare (equal)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1496,7 +1496,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 1
         }
-        "short compare (greater)" {
+        "shorts compare (greater)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1670,7 +1670,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0
         }
 
-        "double compare (less)" {
+        "doubles compare (less)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1687,7 +1687,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 2
         }
-        "double compare (equal)" {
+        "doubles compare (equal)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1704,7 +1704,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 1
         }
-        "double compare (greater)" {
+        "doubles compare (greater)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1776,7 +1776,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0
         }
 
-        "unsigned short compare (less)" {
+        "unsigned shorts compare (less)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1794,7 +1794,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 2
         }
 
-        "unsigned short compare (equal)" {
+        "unsigned shorts compare (equal)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1812,7 +1812,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 1
         }
 
-        "unsigned short compare (greater)" {
+        "unsigned shorts compare (greater)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -2827,7 +2827,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0x42
         }
 
-        "array load short" {
+        "array load shorts" {
             val interpreter = ShakeInterpreter()
             interpreter.classPath.load(
                 generatePackage {
@@ -3007,7 +3007,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             interpreter.globalMemory.getByte(array + 4) shouldBe 0x42
         }
 
-        "array store short" {
+        "array store shorts" {
             val interpreter = ShakeInterpreter()
             interpreter.classPath.load(
                 generatePackage {
@@ -3156,7 +3156,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0x42
         }
 
-        "store / load static field with short" {
+        "store / load static field with shorts" {
 
             val interpreter = ShakeInterpreter()
             interpreter.classPath.load(

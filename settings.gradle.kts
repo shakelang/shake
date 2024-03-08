@@ -18,8 +18,10 @@ include(":util:pointers")
 include(":util:primitives")
 include(":util:shason")
 include(":util:testlib")
+include(":util:testlib:lexer")
 
 include(":shake:shakespeare")
+include(":shake:shakespeare:nodes")
 include(":shake:bytecode:generator")
 include(":shake:bytecode:conventions")
 include(":shake:bytecode:utils")
@@ -28,15 +30,12 @@ include(":shake:bytecode:generator")
 include(":shake:bytecode:tools")
 
 include(":shake:compiler:shakelib")
+include(":shake:compiler:shakelib:generator")
 include(":shake:compiler:shaketest")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
 include(":shake:compiler:jsgenerator")
 include(":shake:compiler:processor")
-include(":shake:shasambly:shastools")
-include(":shake:shasambly:shasambly")
-include(":shake:shasambly:shasp")
-include(":shake:shasambly:java-dist")
 
 include(":bin:cli")
 include(":bin:cli:jvm")
@@ -57,3 +56,5 @@ gradleEnterprise {
         }
     }
 }
+include("shake:compiler:shakelib:generator")
+findProject(":shake:compiler:shakelib:generator")?.name = "generator"

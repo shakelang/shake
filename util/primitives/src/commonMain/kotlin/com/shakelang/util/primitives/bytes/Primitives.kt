@@ -129,7 +129,7 @@ inline fun byteOf(b: Byte): Byte = b
 /**
  * Short of two bytes
  *
- * @return The short
+ * @return The shorts
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -175,7 +175,7 @@ inline fun floatOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = Float.fromBits(intO
 /**
  * Double of four bytes
  *
- * @return The double
+ * @return The doubles
  *
  * @since 0.1.0
  * @version 0.1.1

@@ -1,7 +1,7 @@
 package com.shakelang.util.jvmlib.infos.attributes
 
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
 import com.shakelang.util.jvmlib.infos.constants.ConstantPool
 import com.shakelang.util.jvmlib.infos.constants.ConstantUser

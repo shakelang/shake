@@ -14,7 +14,7 @@ class CreationShakeVariableDeclaration(
     override val name: String,
     override var type: ShakeType,
     override val initialValue: CreationShakeValue?,
-    override val isFinal: Boolean,
+    override val isVal: Boolean,
 ) :
     CreationShakeDeclaration,
     CreationShakeStatement,
@@ -45,7 +45,7 @@ class CreationShakeVariableDeclaration(
             "name" to name,
             "type" to "variable-declaration",
             "variableType" to type.toJson(),
-            "isFinal" to isFinal,
+            "isVal" to isVal,
             "initialValue" to initialValue?.toJson(),
             "latestValue" to this.actualValue?.toJson(),
             "latestType" to this.actualType.toJson(),

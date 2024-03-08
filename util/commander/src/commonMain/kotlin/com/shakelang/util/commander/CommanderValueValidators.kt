@@ -25,19 +25,19 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a short
+     * Check if the given [value] is a shorts
      *
      * Accepts:
      * - Numbers between -32768 and 32767
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a short
+     * @throws ValueValidationException If the value is not a shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isShort(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a short")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a shorts")
     }
 
     /**
@@ -92,7 +92,7 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a double
+     * Check if the given [value] is a doubles
      *
      * Accepts:
      * - All numbers (positive and negative)
@@ -101,13 +101,13 @@ object CommanderValueValidators {
      * - NaN
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a double
+     * @throws ValueValidationException If the value is not a doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a double")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a doubles")
     }
 
     /**
@@ -218,19 +218,19 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is an unsigned short
+     * Check if the given [value] is an unsigned shorts
      *
      * Accepts:
      * - Numbers between 0 and 65535
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isUnsignedShort(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toUShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a unsigned short")
+        if (value.toUShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a unsigned shorts")
     }
 
     /**
@@ -283,20 +283,20 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a positive short
+     * Check if the given [value] is a positive shorts
      *
      * Accepts:
      * - Numbers between 0 and 32767
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a positive short
+     * @throws ValueValidationException If the value is not a positive shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isPositiveShort(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
-        if (value.toShort() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive shorts")
+        if (value.toShort() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive shorts")
     }
 
     /**
@@ -352,21 +352,21 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a positive double
+     * Check if the given [value] is a positive doubles
      *
      * Accepts:
      * - Numbers between 0 and Infinity
      * - E-Notation
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a positive double
+     * @throws ValueValidationException If the value is not a positive doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isPositiveDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
-        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
     }
 
     /**
@@ -405,20 +405,20 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a negative short
+     * Check if the given [value] is a negative shorts
      *
      * Accepts:
      * - Numbers between -32768 and 0
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a negative short
+     * @throws ValueValidationException If the value is not a negative shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isNegativeShort(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
-        if (value.toShort() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative shorts")
+        if (value.toShort() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative shorts")
     }
 
     /**
@@ -474,21 +474,21 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a negative double
+     * Check if the given [value] is a negative doubles
      *
      * Accepts:
      * - Numbers between -Infinity and 0
      * - E-Notation
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a negative double
+     * @throws ValueValidationException If the value is not a negative doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isNegativeDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
-        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
     }
 
     /**
@@ -523,12 +523,12 @@ object CommanderValueValidators {
     val isByte: CommanderValueValidator = CommanderValueValidator.of(::isByte)
 
     /**
-     * Check if the given value is a short
+     * Check if the given value is a shorts
      *
      * Accepts:
      * - Numbers between -32768 and 32767
      *
-     * @throws ValueValidationException If the value is not a short
+     * @throws ValueValidationException If the value is not a shorts
      * @since 0.1.0
      * @version 0.1.0
      * @see isShort
@@ -578,7 +578,7 @@ object CommanderValueValidators {
     val isFloat: CommanderValueValidator = CommanderValueValidator.of(::isFloat)
 
     /**
-     * Check if the given value is a double
+     * Check if the given value is a doubles
      *
      * Accepts:
      * - All numbers (positive and negative)
@@ -586,7 +586,7 @@ object CommanderValueValidators {
      * - Infinity
      * - NaN
      *
-     * @throws ValueValidationException If the value is not a double
+     * @throws ValueValidationException If the value is not a doubles
      * @since 0.1.0
      * @version 0.1.0
      * @see isDouble
@@ -680,12 +680,12 @@ object CommanderValueValidators {
     val isUnsignedByte: CommanderValueValidator = CommanderValueValidator.of(::isUnsignedByte)
 
     /**
-     * Check if the given value is an unsigned short
+     * Check if the given value is an unsigned shorts
      *
      * Accepts:
      * - Numbers between 0 and 65535
      *
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @since 0.1.0
      * @version 0.1.0
      * @see isUnsignedShort
@@ -732,12 +732,12 @@ object CommanderValueValidators {
     val isPositiveByte: CommanderValueValidator = CommanderValueValidator.of(::isPositiveByte)
 
     /**
-     * Check if the given value is a positive short
+     * Check if the given value is a positive shorts
      *
      * Accepts:
      * - Numbers between 0 and 32767
      *
-     * @throws ValueValidationException If the value is not a positive short
+     * @throws ValueValidationException If the value is not a positive shorts
      * @since 0.1.0
      * @version 0.1.0
      * @see isPositiveShort
@@ -785,13 +785,13 @@ object CommanderValueValidators {
     val isPositiveFloat: CommanderValueValidator = CommanderValueValidator.of(::isPositiveFloat)
 
     /**
-     * Check if the given value is a positive double
+     * Check if the given value is a positive doubles
      *
      * Accepts:
      * - Numbers between zero and positive Infinity
      * - E-Notation
      *
-     * @throws ValueValidationException If the value is not a positive double
+     * @throws ValueValidationException If the value is not a positive doubles
      * @since 0.1.0
      * @version 0.1.0
      * @see isPositiveDouble
@@ -826,12 +826,12 @@ object CommanderValueValidators {
     val isNegativeByte: CommanderValueValidator = CommanderValueValidator.of(::isNegativeByte)
 
     /**
-     * Check if the given value is a negative short
+     * Check if the given value is a negative shorts
      *
      * Accepts:
      * - Numbers between -32768 and 0
      *
-     * @throws ValueValidationException If the value is not a negative short
+     * @throws ValueValidationException If the value is not a negative shorts
      * @since 0.1.0
      * @version 0.1.0
      * @see isNegativeShort
@@ -879,13 +879,13 @@ object CommanderValueValidators {
     val isNegativeFloat: CommanderValueValidator = CommanderValueValidator.of(::isNegativeFloat)
 
     /**
-     * Check if the given value is a negative double
+     * Check if the given value is a negative doubles
      *
      * Accepts:
      * - Numbers between negative Infinity and 0
      * - E-Notation
      *
-     * @throws ValueValidationException If the value is not a negative double
+     * @throws ValueValidationException If the value is not a negative doubles
      * @since 0.1.0
      * @version 0.1.0
      * @see isNegativeDouble

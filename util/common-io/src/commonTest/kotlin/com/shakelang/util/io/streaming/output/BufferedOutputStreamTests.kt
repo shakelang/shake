@@ -1,5 +1,7 @@
 package com.shakelang.util.io.streaming.output
 
+import com.shakelang.util.io.streaming.output.bytes.BufferedOutputStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

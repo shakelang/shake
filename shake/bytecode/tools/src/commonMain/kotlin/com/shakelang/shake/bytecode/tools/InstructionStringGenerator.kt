@@ -2,9 +2,9 @@ package com.shakelang.shake.bytecode.tools
 
 import com.shakelang.shake.bytecode.interpreter.Opcodes
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
-import com.shakelang.util.io.streaming.input.InputStream
-import com.shakelang.util.io.streaming.input.countingStream
-import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.input.bytes.InputStream
+import com.shakelang.util.io.streaming.input.bytes.countingStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.primitives.bytes.toHexString
 

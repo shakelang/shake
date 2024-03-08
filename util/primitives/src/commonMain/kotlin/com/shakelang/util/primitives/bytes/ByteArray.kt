@@ -17,10 +17,10 @@ fun ByteArray.toByte(): Byte {
 }
 
 /**
- * Convert a byte array to short.
+ * Convert a byte array to shorts.
  *
  * @throws IllegalArgumentException if the array is not of size 2
- * @return the short
+ * @return the shorts
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -73,10 +73,10 @@ fun ByteArray.toFloat(): Float {
 }
 
 /**
- * Convert a byte array to a double.
+ * Convert a byte array to a doubles.
  *
  * @throws IllegalArgumentException if the array is not of size 8
- * @return the double
+ * @return the doubles
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -98,10 +98,10 @@ fun ByteArray.toDouble(): Double {
 fun ByteArray.toUnsignedByte(): UByte = this.toByte().toUByte()
 
 /**
- * Convert a byte array to an unsigned short
+ * Convert a byte array to an unsigned shorts
  *
  * @throws IllegalArgumentException if the array is not of size 2
- * @return the unsigned short
+ * @return the unsigned shorts
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -169,7 +169,7 @@ fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
 }
 
 /**
- * Set specific bytes in a byte array to a short
+ * Set specific bytes in a byte array to a shorts
  *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
@@ -251,7 +251,7 @@ fun ByteArray.setFloat(index: Int, float: Float): ByteArray {
 }
 
 /**
- * Set specific bytes in a byte array to a double
+ * Set specific bytes in a byte array to a doubles
  *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
@@ -284,7 +284,7 @@ fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
 }
 
 /**
- * Set specific bytes in a byte array to an unsigned short
+ * Set specific bytes in a byte array to an unsigned shorts
  *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
@@ -370,10 +370,10 @@ fun ByteArray.getByte(index: Int): Byte {
 }
 
 /**
- * Get specific short from a byte array at a given position
+ * Get specific shorts from a byte array at a given position
  *
  * @throws IllegalArgumentException if the array is not big enough
- * @return the short
+ * @return the shorts
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -443,10 +443,10 @@ fun ByteArray.getLong(index: Int): Long {
 fun ByteArray.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 
 /**
- * Get specific double from a byte array at a given position
+ * Get specific doubles from a byte array at a given position
  *
  * @throws IllegalArgumentException if the array is not big enough
- * @return the double
+ * @return the doubles
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -465,10 +465,10 @@ fun ByteArray.getDouble(index: Int): Double = Double.fromBits(this.getLong(index
 fun ByteArray.getUnsignedByte(index: Int): UByte = this.getByte(index).toUByte()
 
 /**
- * Get specific unsigned short from a byte array at a given position
+ * Get specific unsigned shorts from a byte array at a given position
  *
  * @throws IllegalArgumentException if the array is not big enough
- * @return the unsigned short
+ * @return the unsigned shorts
  *
  * @since 0.1.0
  * @version 0.1.1
