@@ -8,8 +8,11 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec.code
 
+import com.shakelang.shake.parser.node.ShakeStatementNode
 import com.shakelang.shake.shakespeare.nodes.spec.AbstractNodeSpec
+import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
 import com.shakelang.shake.shakespeare.nodes.spec.TypeNode
+import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.code.*
 
@@ -17,7 +20,9 @@ import com.shakelang.shake.shakespeare.spec.code.*
  * A [StatementSpec] is a specification for a statement in the code
  * @since 0.1.0
  */
-interface StatementNodeSpec : AbstractNodeSpec, StatementSpec
+interface StatementNodeSpec : AbstractNodeSpec, StatementSpec {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeStatementNode
+}
 
 /**
  * A [VariableDeclarationSpec] is a specification for a variable declaration in the code

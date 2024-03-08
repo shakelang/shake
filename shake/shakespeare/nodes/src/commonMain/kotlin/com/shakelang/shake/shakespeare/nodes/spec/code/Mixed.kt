@@ -40,7 +40,6 @@ open class VariableAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.print(" ")
-        nctx.print("=")
         val operator = nctx.createToken(ShakeTokenType.ASSIGN)
         nctx.print(" ")
         val value = value.dump(ctx, nctx)

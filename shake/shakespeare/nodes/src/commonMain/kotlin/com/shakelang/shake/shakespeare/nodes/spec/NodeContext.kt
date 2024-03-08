@@ -47,6 +47,7 @@ class NodeContext {
     val map: PositionMap get() = positionMaker
 
     fun createToken(type: ShakeTokenType, start: Int, end: Int, value: String? = null): ShakeToken {
+        this.print(value ?: type.value ?: throw IllegalArgumentException("Value must be set"))
         return ShakeToken(type, value ?: type.value ?: throw IllegalArgumentException("Value must be set"), start, end, ctx)
     }
 

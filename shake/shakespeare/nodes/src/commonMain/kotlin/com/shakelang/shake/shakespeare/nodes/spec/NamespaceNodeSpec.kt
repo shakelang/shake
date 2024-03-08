@@ -10,19 +10,14 @@ class NamespaceNodeSpec(
 ) : NamespaceSpec(*name), AbstractNodeSpec {
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeNamespaceNode {
         if (name.isEmpty()) throw IllegalStateException("Namespace must have at least one part")
-        nctx.print(name[0])
-
         var node = ShakeNamespaceNode(
             nctx.map,
             nctx.createToken(ShakeTokenType.IDENTIFIER, name[0]),
             null,
             null,
         )
-
         name.toList().subList(1, name.size).forEach {
-            nctx.print(".")
             val dot = nctx.createToken(ShakeTokenType.DOT)
-            nctx.print(it)
             node = ShakeNamespaceNode(
                 nctx.map,
                 dot,
