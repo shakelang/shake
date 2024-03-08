@@ -205,4 +205,4 @@ fun Changelog.readStructureFile(): ChangelogStructure {
 fun Project.resolveVersion(): Version =
     Changelog.instance.readStructureFile().projects.find {
         it.path == project.path
-    }?.version ?: Version.fromString("0.1.0-SNAPSHOT")
+    }?.version ?: Version.fromString("0.0.0-SNAPSHOT")

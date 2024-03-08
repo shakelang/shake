@@ -182,6 +182,14 @@
             "Update com.shakelang.util:parseutils to 0.4.1",
             "Update com.shakelang.util:shason to 0.4.3"
           ]
+        },
+        {
+          "version": "0.7.7",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.4"
+          ]
         }
       ]
     },
@@ -251,6 +259,12 @@
           "version": "0.5.0",
           "changes": [
             "Introduce generic Stream api"
+          ]
+        },
+        {
+          "version": "0.6.0",
+          "changes": [
+            "Enhance builtin stream (datastructure) api"
           ]
         }
       ]
@@ -339,6 +353,14 @@
             "Update com.shakelang.util:common-io to 0.5.0",
             "Update com.shakelang.util:parseutils to 0.4.1",
             "Update com.shakelang.util:shason to 0.4.3"
+          ]
+        },
+        {
+          "version": "0.2.4-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.4"
           ]
         }
       ]
@@ -479,6 +501,13 @@
           "changes": [
             "Update com.shakelang.util:common-io to 0.5.0"
           ]
+        },
+        {
+          "version": "0.5.0",
+          "changes": [
+            "Update TokenStream api to be built on top of common-io streaming api",
+            "Update com.shakelang.util:common-io to 0.6.0"
+          ]
         }
       ]
     },
@@ -604,6 +633,14 @@
             "Update com.shakelang.util:common-io to 0.5.0",
             "Update com.shakelang.util:parseutils to 0.4.1"
           ]
+        },
+        {
+          "version": "0.4.4",
+          "changes": [
+            "Introduce EOF token",
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0"
+          ]
         }
       ]
     },
@@ -692,6 +729,13 @@
             "Update com.shakelang.util:common-io to 0.5.0",
             "Update com.shakelang.util:parseutils to 0.4.1"
           ]
+        },
+        {
+          "version": "0.1.7-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0"
+          ]
         }
       ]
     },
@@ -765,6 +809,15 @@
             "Update com.shakelang.util:parseutils to 0.4.1",
             "Update com.shakelang.util:shason to 0.4.3",
             "Update com.shakelang.shake.compiler:lexer to 0.1.6-SNAPSHOT"
+          ]
+        },
+        {
+          "version": "0.1.9-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.4",
+            "Update com.shakelang.shake.compiler:lexer to 0.1.7-SNAPSHOT"
           ]
         }
       ]
@@ -866,6 +919,14 @@
             "Update com.shakelang.util:parseutils to 0.4.1",
             "Update com.shakelang.util:shason to 0.4.3"
           ]
+        },
+        {
+          "version": "0.2.4",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.4"
+          ]
         }
       ]
     },
@@ -923,6 +984,20 @@
           "version": "0.1.1",
           "changes": [
             "Add utility functions to files & folders. Move modification to companion"
+          ]
+        }
+      ]
+    },
+    {
+      "path": ":util:testlib:lexer",
+      "name": "lexer",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Update com.shakelang.util:common-io to 0.6.0",
+            "Update com.shakelang.util:parseutils to 0.5.0"
           ]
         }
       ]

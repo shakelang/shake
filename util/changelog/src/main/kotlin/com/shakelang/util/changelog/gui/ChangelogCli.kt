@@ -42,6 +42,7 @@ class ChangelogCli(
     }
 
     private fun showHomePage() {
+        println("--------------------")
         println("Showing home page")
 
         contentPane = HomePage(

@@ -61,7 +61,9 @@ open class VersionTask : DefaultTask() {
                 dependents.map { it.path },
             )
             bumpFile.add(bump)
-            dependents.forEach { dependent ->
+            dependents.filter {
+                it.public
+            }.forEach { dependent ->
                 if (!bumpedPackages.any { it.project.path == dependent.path }) {
                     println("Noticed changed dependency for ${dependent.path} (bumping patch)")
                     val newCache = VersionBumpCache()

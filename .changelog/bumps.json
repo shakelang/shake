@@ -1,25 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "minor",
-      "message": "Enhance builtin stream (datastructure) api",
-      "paths": [
-        ":util:common-io"
-      ]
-    },
-    {
-      "type": "minor",
-      "message": "Update TokenStream api to be built on top of common-io streaming api",
-      "paths": [
-        ":util:parseutils"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Introduce EOF token",
-      "paths": [
-        ":util:shason"
-      ]
-    }
-  ]
+  "bumps": []
 }
