@@ -1,35 +1,37 @@
 package com.shakelang.shake.parser.node.objects
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
-import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.outer.ShakeParameterNode
+import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
-import kotlin.jvm.JvmOverloads
 
-@Suppress("unused")
-class ShakeConstructorDeclarationNode
-@JvmOverloads constructor(
+@Suppress("unused", "MemberVisibilityCanBePrivate")
+class ShakeConstructorDeclarationNode(
 
     map: PositionMap,
-    val name: String?,
+    val nameToken: ShakeToken?,
     val body: ShakeBlockNode,
-    val args: Array<ShakeFunctionParameterNode>,
-    val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
-    val isNative: Boolean,
-    val isSynchronized: Boolean,
+    val args: Array<ShakeParameterNode>,
+    val access: ShakeAccessDescriber,
+    val constructorToken: ShakeToken,
+    val lparenToken: ShakeToken,
+    val rparenToken: ShakeToken,
+    val nativeToken: ShakeToken?,
+    val synchronizedToken: ShakeToken?,
+    val commaTokens: Array<ShakeToken>,
 
 ) : ShakeValuedNodeImpl(map) {
 
-    @JvmOverloads
-    constructor(
-        map: PositionMap,
-        body: ShakeBlockNode,
-        args: Array<ShakeFunctionParameterNode>,
-        access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
-        isNative: Boolean,
-        isSynchronized: Boolean,
-    ) : this(map, null, body, args, access, isNative, isSynchronized)
+    val name: String?
+        get() = nameToken?.value
+
+    val isNative: Boolean
+        get() = nativeToken != null
+
+    val isSynchronized: Boolean
+        get() = synchronizedToken != null
 
     override fun toJson(): Map<String, *> =
         mapOf(

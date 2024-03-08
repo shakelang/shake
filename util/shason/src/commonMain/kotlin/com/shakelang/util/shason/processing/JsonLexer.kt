@@ -1,13 +1,13 @@
 package com.shakelang.util.shason.processing
 
-import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters.isHexCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierCharacter
 import com.shakelang.util.parseutils.characters.Characters.isIdentifierStartCharacter
 import com.shakelang.util.parseutils.characters.Characters.isNumberOrDotCharacter
-import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
-import kotlin.jvm.JvmOverloads
+import com.shakelang.util.parseutils.lexer.AbstractLexer
+import com.shakelang.util.parseutils.lexer.token.TokenCreationContext
+import com.shakelang.util.parseutils.lexer.token.TokenFactory
 
 /**
  * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
@@ -17,79 +17,72 @@ import kotlin.jvm.JvmOverloads
 @Suppress("unused")
 class JsonLexer(
 
-    /**
-     * The [CharacterInputStream] to create the [JsonTokenInputStream] from
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    private val chars: CharacterInputStream,
+    input: CharacterInputStream,
 
-) {
+) : AbstractLexer<JsonTokenType, JsonToken, JsonTokenInputStream, JsonTokenContext>(input, JsonTokenContext()) {
+
+    override fun tokenFactory(ctx: TokenCreationContext<JsonTokenType, JsonToken, JsonTokenInputStream, JsonTokenContext>): JsonToken {
+        return JsonToken(ctx.type, ctx.startIndex, ctx.endIndex, ctx.value, ctx.context)
+    }
 
     /**
-     * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]
+     * Make a [JsonTokenInputStream] from the [input] of the [JsonLexer]
      * This function executes the [JsonLexer]
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun makeTokens(): JsonTokenInputStream {
-        // Set for storing the generated tokens
-        val tokens = mutableListOf<JsonToken>()
+    override fun createStream(factory: TokenFactory<JsonToken>) = JsonTokenInputStreamImpl(
+        factory,
+        input.positionMaker,
+    )
 
-        // Loop over all the characters in the characterInputStream
-        while (this.chars.hasNext()) {
-            // Store the next character (Store it in a variable to not get it every time to save performance)
-            val next = this.chars.next()
+    private val eof = factory.create(JsonTokenType.EOF, this.input.source.length)
 
-            // If the next character is a whitespace character we will just ignore it
-            if (next == ' ' || next == '\t' || next == '\r' || next == '\n') continue
+    override fun makeToken(): JsonToken {
+        if (!input.hasNext()) return eof
 
-            // If it is one of the simple tokens we just return a new Token
-            if (next == '{') {
-                tokens.add(JsonToken(JsonTokenType.LCURL, this.chars.position))
-                continue
-            }
-            if (next == '}') {
-                tokens.add(JsonToken(JsonTokenType.RCURL, this.chars.position))
-                continue
-            }
-            if (next == '[') {
-                tokens.add(JsonToken(JsonTokenType.LSQUARE, this.chars.position))
-                continue
-            }
-            if (next == ']') {
-                tokens.add(JsonToken(JsonTokenType.RSQUARE, this.chars.position))
-                continue
-            }
-            if (next == ':') {
-                tokens.add(JsonToken(JsonTokenType.COLON, this.chars.position))
-                continue
-            }
-            if (next == ',') {
-                tokens.add(JsonToken(JsonTokenType.COMMA, this.chars.position))
-                continue
-            }
+        // Store the next character (Store it in a variable to not get it every time to save performance)
+        var next = this.input.next()
 
-            // If the next token is a '"' or ''' call makeString()
-            if (next == '"' || next == '\'') {
-                tokens.add(makeString())
-            } // If the next token is an identifierStartCharacter (a-zA-Z_) call makeIdentifier() to generate a String
-            else if (isIdentifierStartCharacter(next)) {
-                tokens.add(makeIdentifier())
-            } // If the next character is 0-9 or '.' or '-' make a number
-            else if (isNumberOrDotCharacter(next) || next == '-') {
-                tokens.add(makeNumber())
-            } // If we can't parse the character throw an error
-            else {
-                throw JsonTokenLexerError("Unknown symbol '$next'")
-            }
+        // If the next character is a whitespace character, we will just ignore it
+        while (next == ' ' || next == '\t' || next == '\r' || next == '\n') {
+            if (!this.input.hasNext()) return eof
+            next = this.input.next()
         }
 
-        // Create a new JsonTokenInputStream out of the tokens
-        return JsonTokenInputStreamImpl(
-            tokens.toTypedArray(),
-            chars.positionMaker.createPositionMap(),
-        )
+        // If it is one of the simple tokens, we just return a new Token
+        if (next == '{') {
+            return factory.create(JsonTokenType.LCURL)
+        }
+        if (next == '}') {
+            return factory.create(JsonTokenType.RCURL)
+        }
+        if (next == '[') {
+            return factory.create(JsonTokenType.LSQUARE)
+        }
+        if (next == ']') {
+            return factory.create(JsonTokenType.RSQUARE)
+        }
+        if (next == ':') {
+            return factory.create(JsonTokenType.COLON)
+        }
+        if (next == ',') {
+            return factory.create(JsonTokenType.COMMA)
+        }
+
+        // If the next token is a '"' or ''' call makeString()
+        if (next == '"' || next == '\'') {
+            return makeString()
+        } // If the next token is an identifierStartCharacter (a-zA-Z_) call makeIdentifier() to generate a String
+        else if (isIdentifierStartCharacter(next)) {
+            return makeIdentifier()
+        } // If the next character is 0-9 or '.' or '-' make a number
+        else if (isNumberOrDotCharacter(next) || next == '-') {
+            return makeNumber()
+        } // If we can't parse the character throw an error
+        else {
+            throw errorFactory.createErrorAtCurrent("Unknown symbol '$next'")
+        }
     }
 
     /**
@@ -102,21 +95,18 @@ class JsonLexer(
      * @version 0.1.0
      */
     private fun makeIdentifier(): JsonToken {
-        // Store the start position
-        val start = this.chars.position
-
         // Loop over the characters that are contained in the Identifier
-        var identifier = chars.actual().toString()
-        while (chars.hasNext() && isIdentifierCharacter(chars.peek())) {
-            identifier += chars.next()
+        var identifier = input.actual().toString()
+        while (input.hasNext() && isIdentifierCharacter(input.peek())) {
+            identifier += input.next()
         }
 
         // return a new string token out of the identifier
         return when (identifier) {
-            "false" -> JsonToken(JsonTokenType.FALSE, start, this.chars.position)
-            "true" -> JsonToken(JsonTokenType.TRUE, start, this.chars.position)
-            "null" -> JsonToken(JsonTokenType.NULL, start, this.chars.position)
-            else -> throw JsonTokenLexerError("Unknown identifier '$identifier'")
+            "false" -> factory.create(JsonTokenType.FALSE)
+            "true" -> factory.create(JsonTokenType.TRUE)
+            "null" -> factory.create(JsonTokenType.NULL)
+            else -> throw errorFactory.createErrorAtCurrent("Unknown identifier '$identifier'")
         }
     }
 
@@ -131,20 +121,20 @@ class JsonLexer(
      */
     private fun makeString(): JsonToken {
         // Store the start position
-        val start = this.chars.position
+        val start = this.input.position
 
         // Store the string end ('"' or ''')
         // We will then run the loop till we find this character again
-        val end = this.chars.actual()
+        val end = this.input.actual()
 
         // String for storing the
         val str = StringBuilder()
 
         // Loop until we find the end character
-        while (this.chars.hasNext() && this.chars.next() != end) {
+        while (this.input.hasNext() && this.input.next() != end) {
             // If the character is an escape-character
-            if (this.chars.actual() == '\\') {
-                when (this.chars.next()) {
+            if (this.input.actual() == '\\') {
+                when (this.input.next()) {
                     '"' -> str.append('"')
                     '\'' -> str.append('\'')
                     '\\' -> str.append('\\')
@@ -155,25 +145,25 @@ class JsonLexer(
                     'u' -> {
                         var s = ""
                         for (i in 0..3) {
-                            val c: Char = this.chars.next()
-                            if (!isHexCharacter(c)) throw JsonTokenLexerError("Expecting hex char")
+                            val c: Char = this.input.next()
+                            if (!isHexCharacter(c)) throw errorFactory.createErrorAtCurrent("Expecting hex char")
                             s += c
                         }
                         str.append(s.toInt(radix = 16).toChar())
                     }
 
-                    else -> throw JsonTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
+                    else -> throw errorFactory.createErrorAtCurrent("Unknown escape sequence '\\${this.input.actual()}'")
                 }
             } else {
-                str.append(this.chars.actual())
+                str.append(this.input.actual())
             }
         }
 
         // If we have not found the end throw an Error
-        if (this.chars.actual() != end) throw JsonTokenLexerError("Unexpected End")
+        if (this.input.actual() != end) throw errorFactory.createErrorAtCurrent("Unexpected End")
 
         // Return a string JsonToken
-        return JsonToken(JsonTokenType.STRING, start, this.chars.position, str.toString())
+        return factory.create(JsonTokenType.STRING, start, this.input.position, str.toString())
     }
 
     /**
@@ -187,101 +177,41 @@ class JsonLexer(
      */
     private fun makeNumber(): JsonToken {
         // Store the start position
-        val start = this.chars.position
+        val start = this.input.position
 
         // Boolean if we found a dot. This is important for checking
-        // if we parsed a Integer or a double.
+        // if we parsed a Integer or a doubles.
         var foundDot = false
 
         // The number string
-        val number = StringBuilder().append(this.chars.actual())
-        if (this.chars.actual() == '.') foundDot = true
+        val number = StringBuilder().append(this.input.actual())
+        if (this.input.actual() == '.') foundDot = true
 
         // Loop as long we find a '.' or '0-9' char
-        while (this.chars.hasNext() && isNumberOrDotCharacter(this.chars.peek())) {
-            if (this.chars.next() == '.') {
+        while (this.input.hasNext() && isNumberOrDotCharacter(this.input.peek())) {
+            if (this.input.next() == '.') {
                 // Prevent two dots in a number
                 if (foundDot) {
-                    throw JsonTokenLexerError("Number must not contain two dots")
+                    throw errorFactory.createErrorAtCurrent("Number must not contain two dots")
                 } else {
                     foundDot = true
                 }
             }
 
             // Append the character to the number
-            number.append(this.chars.actual())
+            number.append(this.input.actual())
         }
 
-        // Create a new double-token or integer-token
-        return JsonToken(
+        // Create a new doubles-token or integers-token
+        return factory.create(
             if (foundDot) {
                 JsonTokenType.DOUBLE
             } else {
                 JsonTokenType.INT
             },
             start,
-            this.chars.position,
+            this.input.position,
             number.toString(),
-        )
-    }
-
-    /**
-     * An [CompilerError] thrown by the [JsonLexer]
-     * @since 0.1.0
-     * @version 0.3.0
-     */
-    private inner class JsonTokenLexerError(
-        message: String,
-        name: String,
-        details: String,
-        start: Position,
-        end: Position,
-    ) : CompilerError(message, name, details, start, end) {
-
-        /**
-         * Constructor for [JsonTokenLexerError]
-         *
-         * @param name the name of the [CompilerError]
-         * @param details the details of the [CompilerError]
-         * @param start the start position of the [CompilerError]
-         * @param end the end position of the [CompilerError]
-         * @since 0.1.0
-         * @version 0.3.0
-         */
-        @JvmOverloads
-        constructor(
-            name: String,
-            details: String,
-            start: Position = chars.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
-            name,
-            details,
-            start,
-            end,
-        )
-
-        /**
-         * Constructor for [JsonTokenLexerError]
-         *
-         * @param details the details of the [CompilerError]
-         * @param start the start position of the [CompilerError]
-         * @param end the end position of the [CompilerError]
-         * @since 0.1.0
-         * @version 0.3.0
-         */
-        @JvmOverloads
-        constructor(
-            details: String,
-            start: Position = chars.positionMaker.createPositionAtLocation(),
-            end: Position = start,
-        ) : this(
-            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
-            "LexerError",
-            details,
-            start,
-            end,
         )
     }
 }

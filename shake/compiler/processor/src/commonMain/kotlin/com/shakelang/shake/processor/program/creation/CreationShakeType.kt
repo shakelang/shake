@@ -163,7 +163,7 @@ abstract class CreationShakeType(
                 override val qualifiedName: String get() = "B"
             }
 
-            val SHORT: Primitive = object : Primitive("short", ShakeType.PrimitiveType.SHORT) {
+            val SHORT: Primitive = object : Primitive("shorts", ShakeType.PrimitiveType.SHORT) {
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if (other !is Primitive) {
                         -1
@@ -179,7 +179,7 @@ abstract class CreationShakeType(
                     }
 
                 override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "short")
+                    return mapOf("type" to "shorts")
                 }
 
                 override val qualifiedName: String get() = "S"
@@ -245,7 +245,7 @@ abstract class CreationShakeType(
                 override val qualifiedName: String get() = "F"
             }
 
-            val DOUBLE: Primitive = object : Primitive("double", ShakeType.PrimitiveType.DOUBLE) {
+            val DOUBLE: Primitive = object : Primitive("doubles", ShakeType.PrimitiveType.DOUBLE) {
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if (other !is Primitive) {
                         -1
@@ -257,7 +257,7 @@ abstract class CreationShakeType(
                     }
 
                 override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "double")
+                    return mapOf("type" to "doubles")
                 }
 
                 override val qualifiedName: String get() = "D"

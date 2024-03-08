@@ -2,10 +2,10 @@ package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 
 /**
  * Attribute implementation for the code attribute

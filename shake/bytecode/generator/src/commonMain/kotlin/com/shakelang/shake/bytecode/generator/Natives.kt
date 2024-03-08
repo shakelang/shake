@@ -66,7 +66,7 @@ object Natives {
 
                 // Type0 is the first type and type1 is the second type
                 // So for example plus(B, S) would be type0 = B and type1 = S
-                // The short is on top of the stack and the byte is below the short
+                // The shorts is on top of the stack and the byte is below the shorts
 
                 val biggerType = biggerType(type0, type1)
                 val sBiggerType = ShakeBytecodeGenerator.generateTypeDescriptor(biggerType)

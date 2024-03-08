@@ -1,8 +1,8 @@
 package com.shakelang.util.io
 
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
-import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
+import com.shakelang.util.io.streaming.output.bytes.OutputStream
 
 /**
  * An interface for objects that can be dumped to a OutputStreams

@@ -1,8 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
+import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -34,7 +34,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.isByte(1) shouldBe true
         }
 
-        "is short" {
+        "is shorts" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -78,7 +78,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.isFloat(1) shouldBe true
         }
 
-        "is double" {
+        "is doubles" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -129,7 +129,7 @@ class MutableConstantPoolTests : FreeSpec(
             }
         }
 
-        "get short" {
+        "get shorts" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -185,7 +185,7 @@ class MutableConstantPoolTests : FreeSpec(
             }
         }
 
-        "get double" {
+        "get doubles" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -237,7 +237,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.findByte(2) shouldBe null
         }
 
-        "find short" {
+        "find shorts" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -289,7 +289,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.findFloat(2f) shouldBe null
         }
 
-        "find double" {
+        "find doubles" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -474,7 +474,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "create short" {
+        "create shorts" {
             val pool = MutableConstantPool()
             pool.createShort(0) shouldBe 0
             pool.createShort(0) shouldBe 1
@@ -534,7 +534,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "create double" {
+        "create doubles" {
             val pool = MutableConstantPool()
             pool.createDouble(0.0) shouldBe 0
             pool.createDouble(0.0) shouldBe 1
@@ -595,7 +595,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "resolve short" {
+        "resolve shorts" {
             val pool = MutableConstantPool()
 
             pool.resolveShort(0) shouldBe 0
@@ -655,7 +655,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "resolve double" {
+        "resolve doubles" {
             val pool = MutableConstantPool()
 
             pool.resolveDouble(0.0) shouldBe 0

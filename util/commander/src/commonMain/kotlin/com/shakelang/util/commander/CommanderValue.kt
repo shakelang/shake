@@ -260,7 +260,7 @@ data class CommanderValue(
     fun toByteOrDefault(default: Byte) = toOrDefault(CommanderValueTransformers.toByte, default)
 
     /**
-     * Convert the value to a short
+     * Convert the value to a shorts
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -271,7 +271,7 @@ data class CommanderValue(
     fun toShort() = to(CommanderValueTransformers.toShort)
 
     /**
-     * Convert the value to a short or null
+     * Convert the value to a shorts or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers
@@ -281,7 +281,7 @@ data class CommanderValue(
     fun toShortOrNull() = toOrNull(CommanderValueTransformers.toShortOrNull)
 
     /**
-     * Convert the value to a short or a default value
+     * Convert the value to a shorts or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -388,7 +388,7 @@ data class CommanderValue(
     fun toFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toFloatOrNull, default)
 
     /**
-     * Convert the value to a double
+     * Convert the value to a doubles
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -399,7 +399,7 @@ data class CommanderValue(
     fun toDouble() = to(CommanderValueTransformers.toDouble)
 
     /**
-     * Convert the value to a double or null
+     * Convert the value to a doubles or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toDoubleOrNull
@@ -409,7 +409,7 @@ data class CommanderValue(
     fun toDoubleOrNull() = toOrNull(CommanderValueTransformers.toDoubleOrNull)
 
     /**
-     * Convert the value to a double or a default value
+     * Convert the value to a doubles or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -452,7 +452,7 @@ data class CommanderValue(
     fun toUnsignedByteOrDefault(default: UByte) = toOrDefault(CommanderValueTransformers.toUnsignedByteOrNull, default)
 
     /**
-     * Convert the value to an unsigned short
+     * Convert the value to an unsigned shorts
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -463,7 +463,7 @@ data class CommanderValue(
     fun toUnsignedShort() = to(CommanderValueTransformers.toUnsignedShort)
 
     /**
-     * Convert the value to an unsigned short or null
+     * Convert the value to an unsigned shorts or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toUnsignedShortOrNull
@@ -473,7 +473,7 @@ data class CommanderValue(
     fun toUnsignedShortOrNull() = toOrNull(CommanderValueTransformers.toUnsignedShortOrNull)
 
     /**
-     * Convert the value to an unsigned short or a default value
+     * Convert the value to an unsigned shorts or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -676,7 +676,7 @@ data class CommanderValue(
     fun toPositiveByteOrDefault(default: Byte) = toOrDefault(CommanderValueTransformers.toPositiveByteOrNull, default)
 
     /**
-     * Convert the value to a positive short
+     * Convert the value to a positive shorts
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -687,7 +687,7 @@ data class CommanderValue(
     fun toPositiveShort() = to(CommanderValueTransformers.toPositiveShort)
 
     /**
-     * Convert the value to a positive short or null
+     * Convert the value to a positive shorts or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toPositiveShortOrNull
@@ -697,7 +697,7 @@ data class CommanderValue(
     fun toPositiveShortOrNull() = toOrNull(CommanderValueTransformers.toPositiveShortOrNull)
 
     /**
-     * Convert the value to a positive short or a default value
+     * Convert the value to a positive shorts or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -804,7 +804,7 @@ data class CommanderValue(
     fun toPositiveFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toPositiveFloatOrNull, default)
 
     /**
-     * Convert the value to a positive double
+     * Convert the value to a positive doubles
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -815,7 +815,7 @@ data class CommanderValue(
     fun toPositiveDouble() = to(CommanderValueTransformers.toPositiveDouble)
 
     /**
-     * Convert the value to a positive double or null
+     * Convert the value to a positive doubles or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toPositiveDoubleOrNull
@@ -825,7 +825,7 @@ data class CommanderValue(
     fun toPositiveDoubleOrNull() = toOrNull(CommanderValueTransformers.toPositiveDoubleOrNull)
 
     /**
-     * Convert the value to a positive double or a default value
+     * Convert the value to a positive doubles or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -868,7 +868,7 @@ data class CommanderValue(
     fun toNegativeByteOrDefault(default: Byte) = toOrDefault(CommanderValueTransformers.toNegativeByteOrNull, default)
 
     /**
-     * Convert the value to a negative short
+     * Convert the value to a negative shorts
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -879,7 +879,7 @@ data class CommanderValue(
     fun toNegativeShort() = to(CommanderValueTransformers.toNegativeShort)
 
     /**
-     * Convert the value to a negative short or null
+     * Convert the value to a negative shorts or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toNegativeShortOrNull
@@ -889,7 +889,7 @@ data class CommanderValue(
     fun toNegativeShortOrNull() = toOrNull(CommanderValueTransformers.toNegativeShortOrNull)
 
     /**
-     * Convert the value to a negative short or a default value
+     * Convert the value to a negative shorts or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -996,7 +996,7 @@ data class CommanderValue(
     fun toNegativeFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toNegativeFloatOrNull, default)
 
     /**
-     * Convert the value to a negative double
+     * Convert the value to a negative doubles
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -1007,7 +1007,7 @@ data class CommanderValue(
     fun toNegativeDouble() = to(CommanderValueTransformers.toNegativeDouble)
 
     /**
-     * Convert the value to a negative double or null
+     * Convert the value to a negative doubles or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toNegativeDoubleOrNull
@@ -1017,7 +1017,7 @@ data class CommanderValue(
     fun toNegativeDoubleOrNull() = toOrNull(CommanderValueTransformers.toNegativeDoubleOrNull)
 
     /**
-     * Convert the value to a negative double or a default value
+     * Convert the value to a negative doubles or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -1115,8 +1115,8 @@ data class CommanderValue(
     fun isNotByte() = isInvalid(CommanderValueValidators.isByte)
 
     /**
-     * Validate the value to be a short
-     * @throws CommanderValueException if the value is not a short
+     * Validate the value to be a shorts
+     * @throws CommanderValueException if the value is not a shorts
      * @see CommanderValueValidators.isShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1124,8 +1124,8 @@ data class CommanderValue(
     fun validateShort() = validate(CommanderValueValidators.isShort)
 
     /**
-     * Is the value a short?
-     * @return true if the value is a short, false otherwise
+     * Is the value a shorts?
+     * @return true if the value is a shorts, false otherwise
      * @see CommanderValueValidators.isShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1133,8 +1133,8 @@ data class CommanderValue(
     fun isShort() = isValid(CommanderValueValidators.isShort)
 
     /**
-     * Is the value not a short?
-     * @return true if the value is not a short, false otherwise
+     * Is the value not a shorts?
+     * @return true if the value is not a shorts, false otherwise
      * @see CommanderValueValidators.isShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1223,8 +1223,8 @@ data class CommanderValue(
     fun isNotFloat() = isInvalid(CommanderValueValidators.isFloat)
 
     /**
-     * Validate the value to be a double
-     * @throws CommanderValueException if the value is not a double
+     * Validate the value to be a doubles
+     * @throws CommanderValueException if the value is not a doubles
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1232,8 +1232,8 @@ data class CommanderValue(
     fun validateDouble() = validate(CommanderValueValidators.isDouble)
 
     /**
-     * Is the value a double?
-     * @return true if the value is a double, false otherwise
+     * Is the value a doubles?
+     * @return true if the value is a doubles, false otherwise
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1241,8 +1241,8 @@ data class CommanderValue(
     fun isDouble() = isValid(CommanderValueValidators.isDouble)
 
     /**
-     * Is the value not a double?
-     * @return true if the value is not a double, false otherwise
+     * Is the value not a doubles?
+     * @return true if the value is not a doubles, false otherwise
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1277,8 +1277,8 @@ data class CommanderValue(
     fun isNotUnsignedByte() = isInvalid(CommanderValueValidators.isUnsignedByte)
 
     /**
-     * Validate the value to be an unsigned short
-     * @throws CommanderValueException if the value is not an unsigned short
+     * Validate the value to be an unsigned shorts
+     * @throws CommanderValueException if the value is not an unsigned shorts
      * @see CommanderValueValidators.isUnsignedShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1286,8 +1286,8 @@ data class CommanderValue(
     fun validateUnsignedShort() = validate(CommanderValueValidators.isUnsignedShort)
 
     /**
-     * Is the value an unsigned short?
-     * @return true if the value is an unsigned short, false otherwise
+     * Is the value an unsigned shorts?
+     * @return true if the value is an unsigned shorts, false otherwise
      * @see CommanderValueValidators.isUnsignedShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1295,8 +1295,8 @@ data class CommanderValue(
     fun isUnsignedShort() = isValid(CommanderValueValidators.isUnsignedShort)
 
     /**
-     * Is the value not an unsigned short?
-     * @return true if the value is not an unsigned short, false otherwise
+     * Is the value not an unsigned shorts?
+     * @return true if the value is not an unsigned shorts, false otherwise
      * @see CommanderValueValidators.isUnsignedShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1466,8 +1466,8 @@ data class CommanderValue(
     fun isNotPositiveByte() = isInvalid(CommanderValueValidators.isPositiveByte)
 
     /**
-     * Validate the value to be a positive short
-     * @throws CommanderValueException if the value is not a positive short
+     * Validate the value to be a positive shorts
+     * @throws CommanderValueException if the value is not a positive shorts
      * @see CommanderValueValidators.isPositiveShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1475,8 +1475,8 @@ data class CommanderValue(
     fun validatePositiveShort() = validate(CommanderValueValidators.isPositiveShort)
 
     /**
-     * Is the value a positive short?
-     * @return true if the value is a positive short, false otherwise
+     * Is the value a positive shorts?
+     * @return true if the value is a positive shorts, false otherwise
      * @see CommanderValueValidators.isPositiveShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1484,8 +1484,8 @@ data class CommanderValue(
     fun isPositiveShort() = isValid(CommanderValueValidators.isPositiveShort)
 
     /**
-     * Is the value not a positive short?
-     * @return true if the value is not a positive short, false otherwise
+     * Is the value not a positive shorts?
+     * @return true if the value is not a positive shorts, false otherwise
      * @see CommanderValueValidators.isPositiveShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1574,8 +1574,8 @@ data class CommanderValue(
     fun isNotPositiveFloat() = isInvalid(CommanderValueValidators.isPositiveFloat)
 
     /**
-     * Validate the value to be a positive double
-     * @throws CommanderValueException if the value is not a positive double
+     * Validate the value to be a positive doubles
+     * @throws CommanderValueException if the value is not a positive doubles
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1583,8 +1583,8 @@ data class CommanderValue(
     fun validatePositiveDouble() = validate(CommanderValueValidators.isPositiveDouble)
 
     /**
-     * Is the value a positive double?
-     * @return true if the value is a positive double, false otherwise
+     * Is the value a positive doubles?
+     * @return true if the value is a positive doubles, false otherwise
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1592,8 +1592,8 @@ data class CommanderValue(
     fun isPositiveDouble() = isValid(CommanderValueValidators.isPositiveDouble)
 
     /**
-     * Is the value not a positive double?
-     * @return true if the value is not a positive double, false otherwise
+     * Is the value not a positive doubles?
+     * @return true if the value is not a positive doubles, false otherwise
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1628,8 +1628,8 @@ data class CommanderValue(
     fun isNotNegativeByte() = isInvalid(CommanderValueValidators.isNegativeByte)
 
     /**
-     * Validate the value to be a negative short
-     * @throws CommanderValueException if the value is not a negative short
+     * Validate the value to be a negative shorts
+     * @throws CommanderValueException if the value is not a negative shorts
      * @see CommanderValueValidators.isNegativeShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1637,8 +1637,8 @@ data class CommanderValue(
     fun validateNegativeShort() = validate(CommanderValueValidators.isNegativeShort)
 
     /**
-     * Is the value a negative short?
-     * @return true if the value is a negative short, false otherwise
+     * Is the value a negative shorts?
+     * @return true if the value is a negative shorts, false otherwise
      * @see CommanderValueValidators.isNegativeShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1646,8 +1646,8 @@ data class CommanderValue(
     fun isNegativeShort() = isValid(CommanderValueValidators.isNegativeShort)
 
     /**
-     * Is the value not a negative short?
-     * @return true if the value is not a negative short, false otherwise
+     * Is the value not a negative shorts?
+     * @return true if the value is not a negative shorts, false otherwise
      * @see CommanderValueValidators.isNegativeShort
      * @since 0.1.0
      * @version 0.1.0
@@ -1736,8 +1736,8 @@ data class CommanderValue(
     fun isNotNegativeFloat() = isInvalid(CommanderValueValidators.isNegativeFloat)
 
     /**
-     * Validate the value to be a negative double
-     * @throws CommanderValueException if the value is not a negative double
+     * Validate the value to be a negative doubles
+     * @throws CommanderValueException if the value is not a negative doubles
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1745,8 +1745,8 @@ data class CommanderValue(
     fun validateNegativeDouble() = validate(CommanderValueValidators.isNegativeDouble)
 
     /**
-     * Is the value a negative double?
-     * @return true if the value is a negative double, false otherwise
+     * Is the value a negative doubles?
+     * @return true if the value is a negative doubles, false otherwise
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1754,8 +1754,8 @@ data class CommanderValue(
     fun isNegativeDouble() = isValid(CommanderValueValidators.isNegativeDouble)
 
     /**
-     * Is the value not a negative double?
-     * @return true if the value is not a negative double, false otherwise
+     * Is the value not a negative doubles?
+     * @return true if the value is not a negative doubles, false otherwise
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0

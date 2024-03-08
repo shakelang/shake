@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
@@ -23,7 +23,7 @@ private constructor(
     override val pkg: CreationShakePackage,
     override val parentScope: CreationShakeScope,
     override val clazz: ShakeClass?,
-    val clz: ShakeClassDeclarationNode,
+    private val clz: ShakeClassDeclarationNode,
 ) : ShakeClass {
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
@@ -89,12 +89,28 @@ private constructor(
      */
     override fun phase2() {
         debug("phases", "Phase 2 of class $qualifiedName")
-        val extends = clz.extends?.toString() ?: "shake.lang.Object"
-        this.superClass = parentScope.getClass(extends)
-            ?: throw IllegalStateException("Superclass $extends not found in classpath")
 
-        this.clz.implements.forEach {
-            this._interfaces.add(parentScope.getClass(it.toString()))
+        clz.superClasses.forEach {
+            val superClass = parentScope.getClass(it.toString()) ?: throw IllegalStateException("Superclass $it not found in classpath")
+
+            if (superClass.isInterface) {
+                this._interfaces.add(superClass)
+                debug("inheritance", "Added interface $it to class $qualifiedName")
+                return@forEach
+            }
+
+            if (superClass.isEnum) throw IllegalStateException("Superclass $it is an enum and cannot be extended")
+            if (superClass.isObject) throw IllegalStateException("Superclass $it is an object and cannot be extended")
+            if (superClass.isFinal) throw IllegalStateException("Superclass $it is final and cannot be extended")
+
+            debug("inheritance", "Set superclass of class $qualifiedName to $it")
+
+            if (this::superClass.isInitialized) throw IllegalStateException("Superclass already set, can only extend one class")
+            this.superClass = superClass
+        }
+
+        if (!this::superClass.isInitialized) {
+            this.superClass = parentScope.getClass("shake.lang.Object") ?: throw IllegalStateException("shake.lang.Object not found in classpath")
         }
     }
 
@@ -146,14 +162,14 @@ private constructor(
         this.isAbstract = false
         this.isFinal = clz.isFinal
         this.isStatic = clz.isStatic
-        this.isPublic = clz.access == ShakeAccessDescriber.PUBLIC
-        this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
-        this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
+        this.isPublic = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC
+        this.isPrivate = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE
+        this.isProtected = clz.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED
         this.isNative = clz.isNative
         this.isAnnotation = false // TODO implement
-        this.isEnum = false // TODO implement
-        this.isInterface = false // TODO implement
-        this.isObject = false // TODO implement
+        this.isEnum = clz.isEnum
+        this.isInterface = clz.isInterface
+        this.isObject = clz.isObject
     }
 
     fun asType(): CreationShakeType {

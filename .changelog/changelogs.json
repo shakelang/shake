@@ -19,12 +19,6 @@
       "versions": []
     },
     {
-      "path": ":shake:shasambly",
-      "name": "shake.shake:shasambly",
-      "description": "",
-      "versions": []
-    },
-    {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
       "description": "Changelog generation plugin for Shake",
@@ -785,30 +779,6 @@
       "path": ":shake:compiler:shakelib",
       "name": "com.shakelang.shake.compiler.shakelib:shakelib",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
-    },
-    {
-      "path": ":shake:shasambly:java-dist",
-      "name": "com.shakelang.shake.shasambly.java-dist:java-dist",
-      "description": "Java distribution commands for Shasambly",
-      "versions": []
-    },
-    {
-      "path": ":shake:shasambly:shasambly",
-      "name": "com.shakelang.shake.shasambly:shasambly",
-      "description": "Shake's own bytecode format interpreter",
-      "versions": []
-    },
-    {
-      "path": ":shake:shasambly:shasp",
-      "name": "com.shakelang.shake.shasambly.shasp:shasp",
-      "description": "Shasp is a very simple programming language that outputs shasambly bytecode.",
-      "versions": []
-    },
-    {
-      "path": ":shake:shasambly:shastools",
-      "name": "com.shakelang.shake.shasambly.shastools:shastools",
-      "description": "Shake's own bytecode format interpreter",
       "versions": []
     },
     {

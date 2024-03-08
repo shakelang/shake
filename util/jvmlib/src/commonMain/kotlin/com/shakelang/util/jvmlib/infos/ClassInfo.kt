@@ -1,8 +1,8 @@
 package com.shakelang.util.jvmlib.infos
 
-import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.util.io.streaming.output.DataOutputStream
-import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.io.streaming.input.bytes.DataInputStream
+import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
+import com.shakelang.util.io.streaming.output.bytes.OutputStream
 import com.shakelang.util.jvmlib.infos.attributes.AttributeMap
 import com.shakelang.util.jvmlib.infos.constants.ConstantClassInfo
 import com.shakelang.util.jvmlib.infos.constants.ConstantInfo

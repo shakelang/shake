@@ -1,4 +1,4 @@
 {
-  "name": "ShakeIntegerNode",
+  "name": "ShakeIntegerLiteralNode",
   "value": %value%
 }

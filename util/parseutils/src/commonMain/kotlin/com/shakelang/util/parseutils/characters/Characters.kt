@@ -12,7 +12,7 @@ object Characters {
 
     /**
      * All characters that are used to encode base16 integers (for encoding and decoding unicodes)
-     * The index of the character is the value of the base16 integer
+     * The index of the character is the value of the base16 integers
      * This array only contains lowercase characters
      *
      * @since 0.1.0
@@ -87,8 +87,8 @@ object Characters {
      * @since 0.2.1
      * @version 0.1.0
      */
-    @JsName("parseString")
-    fun parseString(s: String): String {
+    @JsName("decodeStringContents")
+    fun decodeStringContents(s: String): String {
         val string = StringBuilder()
 
         // We use a while loop because kotlin has no normal for loop
@@ -226,7 +226,7 @@ object Characters {
     fun toUnicode(char: Char) = "\\u${toBase16(char.code, 4)}"
 
     /**
-     * Get a base 16 char equivalent of an integer
+     * Get a base 16 char equivalent of an integers
      *
      * @since 0.2.1
      * @version 0.1.0

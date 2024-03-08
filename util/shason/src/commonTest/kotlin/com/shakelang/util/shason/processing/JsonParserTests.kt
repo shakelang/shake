@@ -6,14 +6,14 @@ import io.kotest.matchers.shouldBe
 class JsonParserTests : FreeSpec(
     {
 
-        "parse integer" {
+        "parse integers" {
             val parsed = TestUtilities.parse("JsonParserTests#testParseInteger()", "42")
             parsed.isJsonPrimitive() shouldBe true
             parsed.toJsonPrimitive().isInt() shouldBe true
             parsed.toJsonPrimitive().toInt().value shouldBe 42
         }
 
-        "parse double" {
+        "parse doubles" {
             val parsed = TestUtilities.parse("JsonParserTests#testParseDouble()", "42.2")
             parsed.isJsonPrimitive() shouldBe true
             parsed.toJsonPrimitive().isDouble() shouldBe true

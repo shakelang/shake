@@ -22,6 +22,7 @@ kotlin {
         implementation(project(":util:primitives"))
         implementation(project(":util:logger"))
         implementation(project(":util:common-io"))
+        implementation(project(":util:parseutils"))
         testImplementation(project(":util:testlib"))
         testImplementation(project(":shake:compiler:shakelib"))
     }

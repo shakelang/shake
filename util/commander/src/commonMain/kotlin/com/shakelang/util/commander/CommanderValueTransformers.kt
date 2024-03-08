@@ -38,17 +38,17 @@ object CommanderValueTransformers {
      * Transform a given [value] to a [Short]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a short
+     * @throws ValueValidationException If the value is not a shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toShort(value: String?): Short {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        return value.toShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a short")
+        return value.toShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a shorts")
     }
 
     /**
-     * Transform a given [value] to a [Short] or return null if the value is not a short
+     * Transform a given [value] to a [Short] or return null if the value is not a shorts
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -138,17 +138,17 @@ object CommanderValueTransformers {
      * Transform a given [value] to a [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a double
+     * @throws ValueValidationException If the value is not a doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a double")
+        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a doubles")
     }
 
     /**
-     * Transform a given [value] to a [Double] or return null if the value is not a double
+     * Transform a given [value] to a [Double] or return null if the value is not a doubles
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -217,19 +217,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a positive [Short]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a positive short
+     * @throws ValueValidationException If the value is not a positive shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toPositiveShort(value: String?): Short {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
-        if (value.toShort() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive shorts")
+        if (value.toShort() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive shorts")
         return value.toShort()
     }
 
     /**
-     * Transform a given [value] to a positive [Short] or return null if the value is not a positive short
+     * Transform a given [value] to a positive [Short] or return null if the value is not a positive shorts
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -333,19 +333,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a positive [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a positive double
+     * @throws ValueValidationException If the value is not a positive doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toPositiveDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
-        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
         return value.toDouble()
     }
 
     /**
-     * Transform a given [value] to a positive [Double] or return null if the value is not a positive double
+     * Transform a given [value] to a positive [Double] or return null if the value is not a positive doubles
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -420,19 +420,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a negative [Short]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a negative short
+     * @throws ValueValidationException If the value is not a negative shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toNegativeShort(value: String?): Short {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
-        if (value.toShort() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative shorts")
+        if (value.toShort() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative shorts")
         return value.toShort()
     }
 
     /**
-     * Transform a given [value] to a negative [Short] or return null if the value is not a negative short
+     * Transform a given [value] to a negative [Short] or return null if the value is not a negative shorts
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -536,19 +536,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a negative [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a negative double
+     * @throws ValueValidationException If the value is not a negative doubles
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toNegativeDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
-        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
         return value.toDouble()
     }
 
     /**
-     * Transform a given [value] to a negative [Double] or return null if the value is not a negative double
+     * Transform a given [value] to a negative [Double] or return null if the value is not a negative doubles
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -727,13 +727,13 @@ object CommanderValueTransformers {
      * Transform a given [value] to a [String] or return null if the value is null
      * @param value The value to transform
      * @return The transformed value or null
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toUnsignedShort(value: String?): UShort {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        return value.toUShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned short")
+        return value.toUShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned shorts")
     }
 
     /**
@@ -818,7 +818,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -886,7 +886,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not an unsigned double
+     * @throws ValueValidationException If the value is not an unsigned doubles
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -938,7 +938,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not a positive short
+     * @throws ValueValidationException If the value is not a positive shorts
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -948,7 +948,7 @@ object CommanderValueTransformers {
     /**
      * Transform a given value to a [String] or return null if the value is null
      * @return The transformed value or null
-     * @throws ValueValidationException If the value is not a positive short
+     * @throws ValueValidationException If the value is not a positive shorts
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -1010,7 +1010,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not a positive double
+     * @throws ValueValidationException If the value is not a positive doubles
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -1020,7 +1020,7 @@ object CommanderValueTransformers {
     /**
      * Transform a given value to a [String] or return null if the value is null
      * @return The transformed value or null
-     * @throws ValueValidationException If the value is not a positive double
+     * @throws ValueValidationException If the value is not a positive doubles
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -1262,7 +1262,7 @@ object CommanderValueTransformers {
     /**
      * Transform a given value to a [String] or return null if the value is null
      * @return The transformed value
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -1271,7 +1271,7 @@ object CommanderValueTransformers {
     /**
      * Transform a given value to a [String] or return null if the value is null
      * @return The transformed value or null
-     * @throws ValueValidationException If the value is not an unsigned short
+     * @throws ValueValidationException If the value is not an unsigned shorts
      * @since 0.1.0
      * @version 0.1.0
      */

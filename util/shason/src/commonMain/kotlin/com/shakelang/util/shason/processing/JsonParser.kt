@@ -1,8 +1,7 @@
 package com.shakelang.util.shason.processing
 
-import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
-import com.shakelang.util.parseutils.characters.position.Position
+import com.shakelang.util.parseutils.parser.AbstractParser
 import com.shakelang.util.shason.elements.*
 import com.shakelang.util.shason.processing.JsonTokenType.*
 
@@ -14,18 +13,13 @@ import com.shakelang.util.shason.processing.JsonTokenType.*
 @Suppress("unused")
 class JsonParser(
 
-    /**
-     * The [JsonToken]s to parse ([JsonTokenInputStream])
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    val tokens: JsonTokenInputStream,
+    tokens: JsonTokenInputStream,
 
-) {
+) : AbstractParser<JsonTokenInputStream, JsonElement>(tokens) {
 
-    fun parse(): JsonElement {
+    override fun parse(): JsonElement {
         val ret = parseValue()
-        if (tokens.hasNext()) throw ParserError("Input not finished")
+        if (input.hasNext()) throw errorFactory.createErrorAtCurrent("Input not finished")
         return ret
     }
 
@@ -35,17 +29,18 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseValue(): JsonElement {
-        return when (val next = tokens.next().type) {
+        val next = input.next()
+        return when (next.type) {
             LCURL -> parseMap()
             LSQUARE -> parseArray()
-            STRING -> JsonElement.from(Characters.parseString(tokens.actual.value!!))
-            INT -> JsonElement.from(tokens.actual.value!!.toLong())
-            DOUBLE -> JsonElement.from(tokens.actual.value!!.toDouble())
+            STRING -> JsonElement.from(Characters.decodeStringContents(next.value))
+            INT -> JsonElement.from(next.value.toLong())
+            DOUBLE -> JsonElement.from(next.value.toDouble())
             TRUE -> JsonBooleanElement.TRUE
             FALSE -> JsonBooleanElement.FALSE
             NULL -> JsonNullElement.INSTANCE
 
-            else -> throw ParserError("Could not parse token $next")
+            else -> throw errorFactory.createErrorAtCurrent("Could not parse token $next")
         }
     }
 
@@ -55,21 +50,19 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseMap(): JsonObject {
-        if (tokens.actual.type != LCURL) throw ParserError("Expecting '{'")
-
         val map = mutableJsonObjectOf()
         var next = true
 
-        while (tokens.hasNext() && next) {
-            val key = if (tokens.peek().type == STRING) Characters.parseString(tokens.next().value!!) else break
-            if (tokens.nextType() != COLON) throw ParserError("Expecting ':'")
+        while (input.hasNext() && next) {
+            val key = if (input.peek().type == STRING) Characters.decodeStringContents(input.next().value) else break
+            if (input.next().type != COLON) throw errorFactory.createErrorAtCurrent("Expecting ':'")
             map[key] = parseValue()
 
-            next = tokens.peek().type == COMMA
-            if (next) tokens.skip()
+            next = input.peek().type == COMMA
+            if (next) input.skip()
         }
 
-        if (tokens.next().type != RCURL) throw ParserError("Expecting '}'")
+        if (input.next().type != RCURL) throw errorFactory.createErrorAtCurrent("Expecting '}'")
 
         return map
     }
@@ -80,92 +73,17 @@ class JsonParser(
      * @version 0.1.0
      */
     private fun parseArray(): JsonArray {
-        if (tokens.actual.type != LSQUARE) throw ParserError("Expecting '['")
-
         val arr = mutableJsonArrayOf()
         var next = true
 
-        while (tokens.hasNext() && next) {
-            if (tokens.peek().type == RSQUARE) break
+        while (input.hasNext() && next) {
+            if (input.peek().type == RSQUARE) break
             arr.add(parseValue())
-            next = tokens.peek().type == COMMA
-            if (next) tokens.skip()
+            next = input.peek().type == COMMA
+            if (next) input.skip()
         }
 
-        if (tokens.next().type != RSQUARE) throw ParserError("Expecting ']")
+        if (input.next().type != RSQUARE) throw errorFactory.createErrorAtCurrent("Expecting ']")
         return arr
-    }
-
-    // ****************************************************************************
-    // Errors
-
-    /**
-     * An [CompilerError] thrown by the [JsonParser]
-     * @since 0.1.0
-     * @version 0.3.0
-     */
-    inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
-        CompilerError(message, name, details, start, end) {
-
-        /**
-         * Constructor for [ParserError]
-         *
-         * @param name the name of the [ParserError]
-         * @param details the details of the [ParserError]
-         * @param start the start position of the [ParserError]
-         * @param end the end position of the [ParserError]
-         * @since 0.1.0
-         * @version 0.3.0
-         */
-        constructor(
-            name: String,
-            details: String,
-            start: Position,
-            end: Position,
-        ) : this(
-            "Error occurred in parser: $name, $details in ${start.source}:${start.line}:${start.column}",
-            name,
-            details,
-            start,
-            end,
-        )
-
-        /**
-         * Constructor for [ParserError]
-         *
-         * @param details the details of the [ParserError]
-         * @param start the start position of the [ParserError]
-         * @param end the end position of the [ParserError]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        constructor(details: String, start: Position, end: Position) : this("ParserError", details, start, end)
-
-        /**
-         * Constructor for [ParserError]
-         * @param details the details of the [ParserError]
-         * @param start the start position of the [ParserError]
-         * @param end the end position of the [ParserError]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        constructor(details: String, start: Int, end: Int) : this(
-            "ParserError",
-            details,
-            tokens.map.resolve(start),
-            tokens.map.resolve(end),
-        )
-
-        /**
-         * Constructor for [ParserError]
-         * @param error the error message
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        constructor(error: String) : this(
-            error,
-            tokens.map.resolve(tokens.peek().start),
-            tokens.map.resolve(tokens.peek().end),
-        )
     }
 }

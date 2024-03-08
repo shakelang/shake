@@ -55,5 +55,9 @@ internal class CharArraySource(
      * @since 0.1.0
      * @version 0.2.1
      */
-    override fun get(start: Int, end: Int): CharArray = all.copyOfRange(start, end)
+    override fun get(start: Int, end: Int): CharArray =
+        all.copyOfRange(
+            maxOf(0, minOf(start, length)),
+            maxOf(0, minOf(end, length), start),
+        )
 }

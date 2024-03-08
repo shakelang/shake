@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope
@@ -45,15 +45,7 @@ abstract class CreationShakeScope : ShakeScope {
     fun getType(type: ShakeVariableType): CreationShakeType {
         return when (type.type) {
             ShakeVariableType.Type.OBJECT -> {
-                val namespace = (type as ShakeVariableType.Object).namespace
-                    ?: throw IllegalArgumentException("Object type must have subtype")
-                val clzName = namespace.parts.joinToString(".")
-                this.getType(clzName)
-            }
-
-            ShakeVariableType.Type.ARRAY -> {
-                val subtype = (type as ShakeVariableType.Array).subtype
-                this.getType(subtype)
+                this.getType(type.namespace.toArray().joinToString("."))
             }
 
             ShakeVariableType.Type.BYTE -> CreationShakeType.Primitives.BYTE
@@ -70,7 +62,6 @@ abstract class CreationShakeScope : ShakeScope {
             ShakeVariableType.Type.CHAR -> CreationShakeType.Primitives.CHAR
             ShakeVariableType.Type.DYNAMIC -> CreationShakeType.Primitives.DYNAMIC
             ShakeVariableType.Type.VOID -> CreationShakeType.Primitives.VOID
-            ShakeVariableType.Type.UNKNOWN -> CreationShakeType.Primitives.DYNAMIC // TODO: Change this
         }
     }
 

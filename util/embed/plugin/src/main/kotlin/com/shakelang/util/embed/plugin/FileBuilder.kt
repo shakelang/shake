@@ -7,7 +7,10 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
-import java.nio.file.*
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 import javax.inject.Inject
 
 open class FileBuilder

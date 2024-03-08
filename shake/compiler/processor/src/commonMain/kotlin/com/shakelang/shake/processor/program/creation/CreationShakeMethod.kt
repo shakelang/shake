@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
@@ -133,7 +133,7 @@ class CreationShakeMethod(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode,
+            node: ShakeMethodDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 baseProject,
@@ -147,9 +147,9 @@ class CreationShakeMethod(
                 false,
                 false,
                 false,
-                node.access == ShakeAccessDescriber.PRIVATE,
-                node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
                 node.isNative,
                 node.isOperator,
                 parentScope.getType(node.type),
@@ -167,7 +167,7 @@ class CreationShakeMethod(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode,
+            node: ShakeMethodDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 clazz.prj,
@@ -176,16 +176,16 @@ class CreationShakeMethod(
                 parentScope,
                 node.name,
                 node.body?.let { CreationShakeCode.fromTree(it) },
-                node.isStatic,
-                node.isFinal,
-                node.isAbstract,
-                node.isSynchronized,
-                false,
-                node.access == ShakeAccessDescriber.PRIVATE,
-                node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC,
-                node.isNative,
-                node.isOperator,
+                isStatic = node.isStatic,
+                isFinal = node.isFinal,
+                isAbstract = node.isAbstract,
+                isSynchronized = node.isSynchronized,
+                isStrict = false,
+                isPrivate = node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+                isProtected = node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+                isPublic = node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
+                isNative = node.isNative,
+                isOperator = node.isOperator,
                 parentScope.getType(node.type),
                 node.args.map {
                     CreationShakeParameter(

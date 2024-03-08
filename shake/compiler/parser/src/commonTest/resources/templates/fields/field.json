@@ -2,7 +2,7 @@
   "name": "ShakeFileNode",
   "children": [
     {
-      "name": "ShakeVariableDeclarationNode",
+      "name": "ShakeFieldDeclarationNode",
       "variable_name": "field",
       "type": {
         "name": "ShakeVariableType",
@@ -11,7 +11,11 @@
       "access": "%access%",
       "assignment": null,
       "is_static": %static%,
-      "is_final": %final%
+      "is_final": %final%,
+      "is_native": false,
+      "is_const": false,
+      "is_override": false,
+      "is_inline": false
     }
   ]
 }

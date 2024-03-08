@@ -40,6 +40,10 @@ dependencies {
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
     kover(project(":util:testlib"))
+    kover(project(":util:testlib:lexer"))
+
+    kover(project(":shake:shakespeare"))
+    kover(project(":shake:shakespeare:nodes"))
 
     kover(project(":shake:bytecode:conventions"))
     kover(project(":shake:bytecode:utils"))
@@ -53,10 +57,6 @@ dependencies {
     kover(project(":shake:compiler:parser"))
     kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))
-    kover(project(":shake:shasambly:shastools"))
-    kover(project(":shake:shasambly:shasambly"))
-    kover(project(":shake:shasambly:shasp"))
-//    kover(project(":shake:shasambly:java-dist"))
 }
 
 repositories {

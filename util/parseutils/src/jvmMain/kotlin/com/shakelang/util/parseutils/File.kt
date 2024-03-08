@@ -36,7 +36,7 @@ actual class File actual constructor(
     actual val contents: CharArray
         get() {
             val reader = BufferedReader(FileReader(this.file))
-            val chars = CharArray(this.file.length().toInt()) // FIXME files that are longer than 2^31 (integer limit)
+            val chars = CharArray(this.file.length().toInt()) // FIXME files that are longer than 2^31 (integers limit)
             for (i in chars.indices) chars[i] = reader.read().toChar()
             reader.close()
             return chars

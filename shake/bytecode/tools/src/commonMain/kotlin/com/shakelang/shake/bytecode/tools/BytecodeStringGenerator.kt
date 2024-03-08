@@ -6,7 +6,7 @@ import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
-import com.shakelang.util.io.streaming.input.inputStream
+import com.shakelang.util.io.streaming.input.bytes.inputStream
 import com.shakelang.util.primitives.bytes.toHexString
 import kotlin.jvm.JvmName
 

@@ -1,2 +1,2 @@
 // Method with no attributes
-%attributes%%type% %name%() {}
+%attributes%fun %name%(): %type% {}

@@ -1,8 +1,8 @@
 package com.shakelang.util.embed.api
 
-import com.shakelang.util.io.streaming.input.countingStream
-import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.util.io.streaming.input.inputStream
+import com.shakelang.util.io.streaming.input.bytes.countingStream
+import com.shakelang.util.io.streaming.input.bytes.dataStream
+import com.shakelang.util.io.streaming.input.bytes.inputStream
 
 /**
  * A virtual file in the file tree

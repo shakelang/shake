@@ -25,13 +25,13 @@ object Opcodes {
     const val BPUSH: Byte = 0x01
 
     /**
-     * Push a short onto the stack
+     * Push a shorts onto the stack
      *
      * Value: `0x02`
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spush)
      *
-     * @example Syntax: `SPUSH` <u2 short>
+     * @example Syntax: `SPUSH` <u2 shorts>
      */
     const val SPUSH: Byte = 0x02
 
@@ -72,7 +72,7 @@ object Opcodes {
     const val BLOAD: Byte = 0x05
 
     /**
-     * Load a short from a local variable onto the stack
+     * Load a shorts from a local variable onto the stack
      *
      * Value: `0x06`
      *
@@ -119,7 +119,7 @@ object Opcodes {
     const val BSTORE: Byte = 0x09
 
     /**
-     * Store a short from the stack into a local variable
+     * Store a shorts from the stack into a local variable
      *
      * Value: `0x0A`
      *
@@ -680,7 +680,7 @@ object Opcodes {
     const val BNEG: Byte = 0x3E
 
     /**
-     * Negate the short on top of the stack
+     * Negate the shorts on top of the stack
      *
      * Value: `0x3F`
      *
@@ -724,7 +724,7 @@ object Opcodes {
     const val FNEG: Byte = 0x42
 
     /**
-     * Negate the double on top of the stack
+     * Negate the doubles on top of the stack
      *
      * Value: `0x43`
      *
@@ -748,7 +748,7 @@ object Opcodes {
     const val BINC: Byte = 0x44
 
     /**
-     * Increment a short
+     * Increment a shorts
      *
      * Value: `0x45`
      *
@@ -792,7 +792,7 @@ object Opcodes {
     const val FINC: Byte = 0x48
 
     /**
-     * Increment a double
+     * Increment a doubles
      *
      * Value: `0x49`
      *
@@ -816,7 +816,7 @@ object Opcodes {
     const val BDEC: Byte = 0x4A
 
     /**
-     * Decrement a short
+     * Decrement a shorts
      *
      * Value: `0x4B`
      *
@@ -860,7 +860,7 @@ object Opcodes {
     const val FDEC: Byte = 0x4E
 
     /**
-     * Decrement a double
+     * Decrement a doubles
      *
      * Value: `0x4F`
      *
@@ -1022,7 +1022,7 @@ object Opcodes {
     const val BNOT: Byte = 0x5C
 
     /**
-     * Bitwise NOT the top short on the stack
+     * Bitwise NOT the top shorts on the stack
      *
      * Value: `0x5D`
      *
@@ -1068,7 +1068,7 @@ object Opcodes {
     const val BSHL: Byte = 0x60
 
     /**
-     * Bitwise shift left a short (the top byte is the amount, the second short is the value to shift)
+     * Bitwise shift left a shorts (the top byte is the amount, the second shorts is the value to shift)
      *
      * Value: `0x61`
      *
@@ -1114,7 +1114,7 @@ object Opcodes {
     const val BSHR: Byte = 0x64
 
     /**
-     * Bitwise shift right a short (the top byte is the amount, the second short is the value to shift)
+     * Bitwise shift right a shorts (the top byte is the amount, the second shorts is the value to shift)
      *
      * Value: `0x65`
      *
@@ -1160,7 +1160,7 @@ object Opcodes {
     const val BSHRU: Byte = 0x68
 
     /**
-     * Bitwise shift right unsigned a short (the top byte is the amount, the second short is the value to shift)
+     * Bitwise shift right unsigned a shorts (the top byte is the amount, the second shorts is the value to shift)
      *
      * Value: `0x69`
      *
@@ -1554,7 +1554,7 @@ object Opcodes {
     const val BRET: Byte = -111
 
     /**
-     * Store a short as return value
+     * Store a shorts as return value
      *
      * Value: `0x92`
      *
@@ -1741,7 +1741,7 @@ object Opcodes {
     const val BALOAD: Byte = -76
 
     /**
-     * Load a short from an array
+     * Load a shorts from an array
      *
      * Value: `0xB5`
      *
@@ -1807,7 +1807,7 @@ object Opcodes {
     const val BASTORE: Byte = -70
 
     /**
-     * Store a short in an array
+     * Store a shorts in an array
      *
      * Value: `0xBB`
      *

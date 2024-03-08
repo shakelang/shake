@@ -2,6 +2,7 @@
 
 package com.shakelang.util.io.streaming.input
 
+import com.shakelang.util.io.streaming.input.bytes.*
 import com.shakelang.util.primitives.bytes.byteArrayOf
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -2,8 +2,8 @@ package com.shakelang.shake.bytecode.interpreter.natives
 
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.wrapper.ClassRegister
-import com.shakelang.util.io.streaming.input.InputStream
-import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.io.streaming.input.bytes.InputStream
+import com.shakelang.util.io.streaming.output.bytes.OutputStream
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.primitives.bytes.toHexString
 import kotlin.math.pow
