@@ -4,9 +4,8 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
-// group = projectName("shasambly")
 version = "0.1.0"
-description = "Java distribution commands for Shasambly"
+description = "Java distribution commands for shake"
 
 repositories {
     mavenCentral()

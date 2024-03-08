@@ -85,15 +85,6 @@
       ]
     },
     {
-      "path": ":shake:shasambly",
-      "name": "shake.shake:shasambly",
-      "version": "0.1.0-SNAPSHOT",
-      "description": "",
-      "author": "shake.shake",
-      "license": "",
-      "dependencies": []
-    },
-    {
       "path": ":util:algo",
       "name": "com.shakelang.util:algo",
       "version": "0.1.0-SNAPSHOT",
@@ -292,7 +283,7 @@
       "path": ":bin:cli:jvm",
       "name": "shake.bin.cli:jvm",
       "version": "0.1.0",
-      "description": "Java distribution commands for Shasambly",
+      "description": "Java distribution commands for shake",
       "author": "shake.bin.cli",
       "license": "",
       "dependencies": [
@@ -459,66 +450,6 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:java-dist",
-      "name": "com.shakelang.shake.shasambly:java-dist",
-      "version": "0.1.0",
-      "description": "Java distribution commands for Shasambly",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        ":util:primitives:primitives:0.5.0",
-        ":util:common-io:common-io:0.5.0",
-        ":util:parseutils:parseutils:0.4.1",
-        ":shake:shasambly:shasambly:shasambly:0.1.0",
-        ":shake:shasambly:shastools:shastools:0.1.0",
-        ":shake:shasambly:shasp:shasp:0.1.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shasambly",
-      "name": "com.shakelang.shake.shasambly:shasambly",
-      "version": "0.1.0",
-      "description": "Shake's own bytecode format interpreter",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.1",
-        ":util:common-io:common-io:0.5.0",
-        ":util:primitives:primitives:0.5.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shasp",
-      "name": "com.shakelang.shake.shasambly:shasp",
-      "version": "0.1.0",
-      "description": "Shasp is a very simple programming language that outputs shasambly bytecode.",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.4.1",
-        ":util:shason:shason:0.4.3",
-        ":shake:shasambly:shasambly:shasambly:0.1.0",
-        ":shake:shasambly:shastools:shastools:0.1.0"
-      ]
-    },
-    {
-      "path": ":shake:shasambly:shastools",
-      "name": "com.shakelang.shake.shasambly:shastools",
-      "version": "0.1.0",
-      "description": "Shake's own bytecode format interpreter",
-      "author": "com.shakelang.shake.shasambly",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:common-io:common-io:0.5.0",
-        ":util:primitives:primitives:0.5.0",
-        ":util:parseutils:parseutils:0.4.1",
-        ":shake:shasambly:shasambly:shasambly:0.1.0"
       ]
     },
     {

@@ -57,10 +57,6 @@ dependencies {
     kover(project(":shake:compiler:parser"))
     kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))
-    kover(project(":shake:shasambly:shastools"))
-    kover(project(":shake:shasambly:shasambly"))
-    kover(project(":shake:shasambly:shasp"))
-//    kover(project(":shake:shasambly:java-dist"))
 }
 
 repositories {
