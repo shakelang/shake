@@ -49,6 +49,8 @@ kotlin {
             )
         }
     }
+
+    applyDefaultHierarchyTemplate()
 }
 
 node {
