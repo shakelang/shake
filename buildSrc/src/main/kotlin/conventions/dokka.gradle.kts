@@ -1,6 +1,6 @@
 package conventions
 
-import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.ext
+import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.ext
 import org.jetbrains.dokka.gradle.DokkaTask
 
 val rootProjectDir = project.rootProject.rootDir

@@ -1,6 +1,6 @@
 package conventions
 
-import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.kotlin
+import gradle.kotlin.dsl.accessors._11c752c08fee604d934630adf5f25d89.kotlin
 import org.gradle.crypto.checksum.Checksum
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmDependency
 
