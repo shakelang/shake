@@ -59,10 +59,9 @@ open class Embed : Plugin<Project> {
 
                         EmbedConfiguration.initDist(embedConfiguration, outFolder)
 
-                        val generatedSourceSet = sourceSets.create(generatedSourceSetName)
-                        generatedSourceSet.kotlin.srcDir(task.get().outputs)
                         project.repositories.mavenCentral()
-                        generatedSourceSet.dependencies {
+
+                        sourceSet.dependencies {
                             if (project.rootProject.subprojects.any { prj ->
                                     prj.path == ":util:embed:api"
                                 }
@@ -72,8 +71,7 @@ open class Embed : Plugin<Project> {
                                 implementation("com.shakelang.util.embed:api:0.1.0")
                             }
                         }
-
-                        sourceSet.dependsOn(generatedSourceSet)
+                        sourceSet.kotlin.srcDir(task.get().outputs)
 
                         // Execute the configureTask before the compileKotlin task
                     }

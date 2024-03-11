@@ -37,3 +37,7 @@ Utility for working with colors in console applications (Kotlin Multiplatform)
 ### 0.5.0
 
 * Introduce generic Stream api
+
+### 0.6.0
+
+* Enhance builtin stream (datastructure) api

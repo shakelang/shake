@@ -83,3 +83,11 @@ A json parser implemented in kotlin (mpp)
 * Update com.shakelang.util:common-io to 0.5.0
 
 * Update com.shakelang.util:parseutils to 0.4.1
+
+### 0.4.4
+
+* Introduce EOF token
+
+* Update com.shakelang.util:common-io to 0.6.0
+
+* Update com.shakelang.util:parseutils to 0.5.0
