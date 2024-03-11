@@ -1,3 +1,4 @@
+import com.shakelang.util.changelog.public
 import com.shakelang.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
@@ -16,6 +17,7 @@ repositories {
 group = projectGroup("shake.shakespeare")
 version = resolveVersion()
 description = "Shakespeare is a tool for generating shake source files."
+public = false
 
 kotlin {
     dependencies {

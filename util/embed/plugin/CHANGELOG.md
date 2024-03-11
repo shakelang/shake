@@ -23,3 +23,7 @@ Prints the current version
 ### 0.2.2
 
 * Fix for large amount of sources: Split into multiple functions
+
+### 0.2.3
+
+* Make compatible with kotlin 1.9.20 (Inline generated sourcesets)
