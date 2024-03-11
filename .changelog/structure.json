@@ -441,7 +441,8 @@
       "author": "com.shakelang.shake.compiler",
       "license": "",
       "dependencies": [
-        "unspecified:path-browserify:1.0.1"
+        "unspecified:path-browserify:1.0.1",
+        ":util:embed:api:api:0.1.1"
       ]
     },
     {
@@ -452,7 +453,8 @@
       "author": "com.shakelang.shake.compiler",
       "license": "",
       "dependencies": [
-        "unspecified:path-browserify:1.0.1"
+        "unspecified:path-browserify:1.0.1",
+        ":util:embed:api:api:0.1.1"
       ]
     },
     {
@@ -525,5 +527,5 @@
       ]
     }
   ],
-  "lastUpdate": 1710159439640
+  "lastUpdate": 1710159985665
 }
