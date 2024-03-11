@@ -972,6 +972,12 @@
           "changes": [
             "Fix for large amount of sources: Split into multiple functions"
           ]
+        },
+        {
+          "version": "0.2.3",
+          "changes": [
+            "Make compatible with kotlin 1.9.20 (Inline generated sourcesets)"
+          ]
         }
       ]
     },

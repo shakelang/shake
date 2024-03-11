@@ -487,7 +487,7 @@
     {
       "path": ":util:embed:plugin",
       "name": "com.shakelang.util.embed:plugin",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "description": "Gradle plugin for embedding resources into kotlin source",
       "author": "com.shakelang.util.embed",
       "license": "",
@@ -525,5 +525,5 @@
       ]
     }
   ],
-  "lastUpdate": 1709917781452
+  "lastUpdate": 1710159439640
 }
