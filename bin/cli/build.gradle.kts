@@ -28,7 +28,7 @@ kotlin {
             implementation(project(":shake:bytecode:interpreter"))
             implementation(project(":shake:bytecode:generator"))
 
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
             testImplementation(kotlin("test"))
         }
     }
