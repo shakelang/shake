@@ -17,8 +17,6 @@ class CompilerErrorTests {
         val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             map.resolve(10),
             map.resolve(10),
         )
@@ -31,8 +29,8 @@ class CompilerErrorTests {
         assertEquals("1  012345678901234567890123456789", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            error.marker.colorPreview,
+            "1  0123456789${"0".red().invert()}1234567890123456789",
+            error.marker.coloredPreview,
         )
     }
 
@@ -43,8 +41,6 @@ class CompilerErrorTests {
         val error = Error("Test")
         val caused = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             map.resolve(10),
             map.resolve(10),
             error,
@@ -58,64 +54,8 @@ class CompilerErrorTests {
         assertEquals("1  012345678901234567890123456789", caused.marker.preview)
         assertEquals("             ^", caused.marker.marker)
         assertEquals(
-            "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            caused.marker.colorPreview,
-        )
-
-        assertEquals(error, caused.cause)
-    }
-
-    @Test
-    fun testCompilerError2() {
-        val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
-        val error = CompilerError(
-            "message",
-            "TestingError",
-            "Some details",
-            map,
-            10,
-            10,
-        )
-
-        assertEquals(10, error.start.index)
-        assertEquals(error.start.line, 1)
-        assertEquals(error.start.column, 11)
-
-        assertEquals("<source>:1:11", error.marker.source)
-        assertEquals("1  012345678901234567890123456789", error.marker.preview)
-        assertEquals("             ^", error.marker.marker)
-        assertEquals(
-            "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            error.marker.colorPreview,
-        )
-    }
-
-    @Test
-    fun testCausedCompilerError2() {
-        val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
-        val error = Error("Test")
-        val caused = CompilerError(
-            "message",
-            "TestingError",
-            "Some details",
-            map,
-            10,
-            10,
-            error,
-        )
-
-        assertEquals(10, caused.start.index)
-        assertEquals(caused.start.line, 1)
-        assertEquals(caused.start.column, 11)
-
-        assertEquals("<source>:1:11", caused.marker.source)
-        assertEquals("1  012345678901234567890123456789", caused.marker.preview)
-        assertEquals("             ^", caused.marker.marker)
-        assertEquals(
-            "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            caused.marker.colorPreview,
+            "1  0123456789${"0".red().invert()}1234567890123456789",
+            caused.marker.coloredPreview,
         )
 
         assertEquals(error, caused.cause)
@@ -123,43 +63,39 @@ class CompilerErrorTests {
 
     @Test
     fun testCompilerErrorOverflowAfter() {
-        val source = CharacterSource.from(genLengthString(60), "<source>")
+        val source = CharacterSource.from(genLengthString(100), "<source>")
         val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             Position(map, 10, 11, 1),
             Position(map, 10, 11, 1),
         )
 
         assertEquals("<source>:1:11", error.marker.source)
-        assertEquals("1  0123456789012345678901234567890...+28", error.marker.preview)
+        assertEquals("1  012345678901234567890123456789012345678901234567890123456789012345678...(+31)", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "1  0123456789" + invert(red("0")) + "12345678901234567890...+28",
-            error.marker.colorPreview,
+            "1  0123456789${"0".red().invert()}1234567890123456789012345678901234567890123456789012345678...(+31)",
+            error.marker.coloredPreview,
         )
     }
 
     @Test
     fun testCompilerErrorOverflowBefore() {
-        val source = CharacterSource.from(genLengthString(60), "<source>")
+        val source = CharacterSource.from(genLengthString(100), "<source>")
         val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
-            map.resolve(39),
-            map.resolve(39),
+            map.resolve(69),
+            map.resolve(69),
         )
 
-        assertEquals("<source>:1:40", error.marker.source)
-        assertEquals("1  +18...890123456789012345678901234567890123456789", error.marker.preview)
-        assertEquals("                              ^", error.marker.marker)
+        assertEquals("<source>:1:70", error.marker.source)
+        assertEquals("1  (+32)...23456789012345678901234567890123456789012345678901234567890123456789", error.marker.preview)
+        assertEquals("                                                ^", error.marker.marker)
         assertEquals(
-            "1  +18...890123456789012345678" + invert(red("9")) + "01234567890123456789",
-            error.marker.colorPreview,
+            "1  (+32)...2345678901234567890123456789012345678${"9".red().invert()}012345678901234567890123456789",
+            error.marker.coloredPreview,
         )
     }
 
@@ -169,19 +105,16 @@ class CompilerErrorTests {
         val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             map.resolve(49),
             map.resolve(49),
         )
 
         assertEquals("<source>:1:50", error.marker.source)
-        assertEquals("1  +28...890123456789012345678901234567890123456789...+29", error.marker.preview)
-        assertEquals("                              ^", error.marker.marker)
+        assertEquals("1  (+19)...9012345678901234567890123456789012345678901234567890123456789...(+20)", error.marker.preview)
+        assertEquals("                                         ^", error.marker.marker)
         assertEquals(
-            "1  +28...890123456789012345678" + invert(red("9")) +
-                "01234567890123456789...+29",
-            error.marker.colorPreview,
+            "1  (+19)...901234567890123456789012345678${"9".red().invert()}012345678901234567890123456789...(+20)",
+            error.marker.coloredPreview,
         )
     }
 
@@ -191,8 +124,6 @@ class CompilerErrorTests {
         val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             map.resolve(9),
             map.resolve(14),
         )
@@ -202,11 +133,11 @@ class CompilerErrorTests {
         assertEquals(error.start.column, 10)
 
         assertEquals("<source>:1:10", error.marker.source)
-        assertEquals("1  012345678901234567890123456789012345678", error.marker.preview)
+        assertEquals("1  0123456789012345678901234567890123456789", error.marker.preview)
         assertEquals("            ^^^^^^", error.marker.marker)
         assertEquals(
-            "1  012345678" + invert(red("901234")) + "567890123456789012345678",
-            error.marker.colorPreview,
+            "1  012345678${"901234".red().invert()}5678901234567890123456789",
+            error.marker.coloredPreview,
         )
     }
 
@@ -227,18 +158,16 @@ class CompilerErrorTests {
         assertSame(3, pos.line)
         val error = CompilerError(
             "message",
-            "TestingError",
-            "Some details",
             pos,
             pos,
         )
 
         assertEquals("<source>:3:11", error.marker.source)
-        assertEquals("3  012345678901234567890123456789012...+7", error.marker.preview)
+        assertEquals("3  0123456789012345678901234567890123456789", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "3  0123456789" + invert(red("0")) + "1234567890123456789012...+7",
-            error.marker.colorPreview,
+            "3  0123456789${"0".red().invert()}12345678901234567890123456789",
+            error.marker.coloredPreview,
         )
     }
 
