@@ -97,7 +97,7 @@ nexusPublishing {
 val dokkaPlugin by configurations
 tasks.register<org.jetbrains.dokka.gradle.DokkaMultiModuleTask>("dokkaRoot") {
     dependencies {
-        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:1.9.10")
+        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:1.9.20")
     }
     outputDirectory.set(file("$buildDir/docs"))
     addChildTasks(childProjects.values, "dokkaHtmlPartial")
