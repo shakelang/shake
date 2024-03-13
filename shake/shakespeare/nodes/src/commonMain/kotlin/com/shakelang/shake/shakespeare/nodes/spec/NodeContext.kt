@@ -71,4 +71,5 @@ class NodeContext {
     fun print(str: String) = stream.write(str.encodeToByteArray())
     fun println(str: String) = print("$str\n")
     fun println() = print("\n")
+    fun space() = print(" ")
 }

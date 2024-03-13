@@ -9,43 +9,58 @@
 package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.AbstractSpec
+import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 
 open class FieldSpec(
-    val name: NamespaceSpec,
-    val type: TypeSpec,
+    val name: String,
+    open val type: TypeSpec?,
     val isVal: Boolean = true,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
-    val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
+    val isConst: Boolean = false,
+    val isOverride: Boolean = false,
+    val isInline: Boolean = false,
+    open val value: ValueSpec? = null,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         builder.append(accessModifier.prefix())
         if (isStatic) builder.append("static ")
         if (isFinal) builder.append("final ")
-        if (isSynchronized) builder.append("synchronized ")
         if (isNative) builder.append("native ")
+        if (isOverride) builder.append("override ")
+        if (isInline) builder.append("inline ")
+        if (isConst) builder.append("const ")
         builder.append(if (isVal) "val" else "var")
             .append(" ")
             .append(name)
-            .append(": ")
-            .append(type.generate(ctx))
+        if (type != null) builder.append(": ").append(type!!.generate(ctx))
+        if (value != null) builder.append(" = ").append(value!!.generate(ctx))
         return builder.toString()
     }
 
     open class FieldSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         var type: TypeSpec? = null
+        var isVal = false
         var isStatic = false
         var isFinal = false
         var accessModifier = AccessModifier.PUBLIC
-        var isSynchronized = false
         var isNative = false
+        var isConst = false
+        var isOverride = false
+        var isInline = false
+        var value: ValueSpec? = null
 
-        fun name(name: NamespaceSpec): FieldSpecBuilder {
+        fun isVal(isVal: Boolean = true): FieldSpecBuilder {
+            this.isVal = isVal
+            return this
+        }
+
+        fun name(name: String): FieldSpecBuilder {
             this.name = name
             return this
         }
@@ -70,18 +85,33 @@ open class FieldSpec(
             return this
         }
 
-        fun synchronized(isSynchronized: Boolean = true): FieldSpecBuilder {
-            this.isSynchronized = isSynchronized
-            return this
-        }
-
         fun native(isNative: Boolean = true): FieldSpecBuilder {
             this.isNative = isNative
             return this
         }
 
+        fun const(isConst: Boolean = true): FieldSpecBuilder {
+            this.isConst = isConst
+            return this
+        }
+
+        fun override(isOverride: Boolean = true): FieldSpecBuilder {
+            this.isOverride = isOverride
+            return this
+        }
+
+        fun inline(isInline: Boolean = true): FieldSpecBuilder {
+            this.isInline = isInline
+            return this
+        }
+
+        fun value(value: ValueSpec): FieldSpecBuilder {
+            this.value = value
+            return this
+        }
+
         fun build(): FieldSpec {
-            return FieldSpec(name!!, type!!)
+            return FieldSpec(name!!, type!!, isVal, isStatic, isFinal, accessModifier, isNative, isConst, isOverride, isInline, value)
         }
     }
 

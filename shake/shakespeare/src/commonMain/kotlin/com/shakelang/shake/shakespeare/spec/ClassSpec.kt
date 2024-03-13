@@ -305,7 +305,7 @@ open class InterfaceSpec(
 
 open class EnumSpec(
     override val name: String,
-    val constants: List<NamespaceSpec>,
+    open val constants: List<NamespaceSpec>,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,

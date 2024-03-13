@@ -64,7 +64,7 @@ open class VariableDeclarationNodeSpec(
             nctx.createToken(ShakeTokenType.KEYWORD_VAR)
         }
 
-        nctx.print(" ")
+        nctx.space()
 
         val nameToken = nctx.createToken(ShakeTokenType.IDENTIFIER, name)
 
@@ -73,18 +73,18 @@ open class VariableDeclarationNodeSpec(
 
         if (this.type != null) {
             colonToken = nctx.createToken(ShakeTokenType.COLON)
-            nctx.print(" ")
+            nctx.space()
             type = this.type!!.dump(ctx, nctx)
         }
 
-        nctx.print(" ")
+        nctx.space()
 
         var assignToken: ShakeToken? = null
         var value: ShakeValuedNode? = null
 
         if (this.value != null) {
             assignToken = nctx.createToken(ShakeTokenType.ASSIGN)
-            nctx.print(" ")
+            nctx.space()
             value = this.value!!.dump(ctx, nctx)
         }
 
@@ -122,7 +122,7 @@ open class WhileNodeSpec(
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
         val condition = condition.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        nctx.print(" ")
+        nctx.space()
         val body = body.dump(ctx, nctx)
         return ShakeWhileNode(nctx.map, body, condition, whileToken, lp, rp)
     }
@@ -145,9 +145,9 @@ open class DoWhileNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeDoWhileNode {
         val doToken = nctx.createToken(ShakeTokenType.KEYWORD_DO, "do")
-        nctx.print(" ")
+        nctx.space()
         val body = body.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val whileToken = nctx.createToken(ShakeTokenType.KEYWORD_WHILE, "while")
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
         val condition = condition.dump(ctx, nctx)
@@ -184,7 +184,7 @@ open class ForNodeSpec(
         val semicolon2 = nctx.createToken(ShakeTokenType.SEMICOLON)
         val update = update.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        nctx.print(" ")
+        nctx.space()
         val body = body.dump(ctx, nctx)
         return ShakeForNode(
             nctx.map,
@@ -225,12 +225,12 @@ open class IfNodeSpec(
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
         val condition = condition.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        nctx.print(" ")
+        nctx.space()
         val body = body.dump(ctx, nctx)
         if (elseBody != null) {
-            nctx.print(" ")
+            nctx.space()
             val elseToken = nctx.createToken(ShakeTokenType.KEYWORD_ELSE)
-            nctx.print(" ")
+            nctx.space()
             val elseBody = elseBody!!.dump(ctx, nctx)
             return ShakeIfNode(nctx.map, body, elseBody, condition, ifToken, lp, rp, elseToken)
         }
@@ -254,7 +254,7 @@ open class ReturnNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeReturnNode {
         val returnToken = nctx.createToken(ShakeTokenType.KEYWORD_RETURN)
-        nctx.print(" ")
+        nctx.space()
         val value = value.dump(ctx, nctx)
         return ShakeReturnNode(nctx.map, value, returnToken)
     }

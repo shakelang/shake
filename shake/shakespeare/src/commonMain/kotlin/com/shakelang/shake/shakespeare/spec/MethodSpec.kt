@@ -10,19 +10,30 @@ package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
+import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 
 open class ParameterSpec(
     open val name: String,
     open val type: TypeSpec,
+    open val defaultValue: ValueSpec? = null,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "$name: ${type.generate(ctx)}"
+        val builder = StringBuilder()
+        builder.append(name)
+        builder.append(": ")
+        builder.append(type.generate(ctx))
+        if (defaultValue != null) {
+            builder.append(" = ")
+            builder.append(defaultValue!!.generate(ctx))
+        }
+        return builder.toString()
     }
 
     open class ParameterSpecBuilder
     internal constructor() {
         var name: String? = null
         var type: TypeSpec? = null
+        var defaultValue: ValueSpec? = null
 
         fun name(name: String): ParameterSpecBuilder {
             this.name = name
@@ -39,10 +50,16 @@ open class ParameterSpec(
             return this
         }
 
+        fun defaultValue(defaultValue: ValueSpec): ParameterSpecBuilder {
+            this.defaultValue = defaultValue
+            return this
+        }
+
         fun build(): ParameterSpec {
             return ParameterSpec(
                 name ?: throw IllegalStateException("Name must be set"),
                 type ?: throw IllegalStateException("Type must be set"),
+                defaultValue ?: throw IllegalStateException("Default value must be set"),
             )
         }
     }
@@ -55,11 +72,11 @@ open class ParameterSpec(
 }
 
 open class MethodSpec(
-    val name: NamespaceSpec,
-    val returnType: TypeSpec,
-    val extending: TypeSpec? = null,
-    val parameters: List<ParameterSpec>,
-    val body: CodeSpec?,
+    val name: String,
+    open val returnType: TypeSpec,
+    open val extending: TypeSpec? = null,
+    open val parameters: List<ParameterSpec>,
+    open val body: CodeSpec?,
     val isStatic: Boolean = false,
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
@@ -68,6 +85,7 @@ open class MethodSpec(
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
+    val isInline: Boolean = false,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
@@ -84,7 +102,7 @@ open class MethodSpec(
         builder.append("fun ")
 
         if (extending != null) {
-            builder.append(extending.generate(ctx)).append(".")
+            builder.append(extending!!.generate(ctx)).append(".")
         }
 
         builder.append(name)
@@ -94,14 +112,14 @@ open class MethodSpec(
         builder.append(returnType.generate(ctx))
         if (body != null) {
             builder.append(" ")
-            builder.append(body.generate(ctx))
+            builder.append(body!!.generate(ctx))
         }
         return builder.toString()
     }
 
     open class MethodSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         var returnType: TypeSpec? = null
         var extending: TypeSpec? = null
         val parameters: MutableList<ParameterSpec> = ArrayList()
@@ -115,13 +133,8 @@ open class MethodSpec(
         var isNative = false
         var isOperator = false
 
-        fun name(name: NamespaceSpec): MethodSpecBuilder {
-            this.name = name
-            return this
-        }
-
         fun name(name: String): MethodSpecBuilder {
-            this.name = NamespaceSpec(name)
+            this.name = name
             return this
         }
 
