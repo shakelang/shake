@@ -59,7 +59,7 @@ open class ParameterSpec(
             return ParameterSpec(
                 name ?: throw IllegalStateException("Name must be set"),
                 type ?: throw IllegalStateException("Type must be set"),
-                defaultValue ?: throw IllegalStateException("Default value must be set"),
+                defaultValue,
             )
         }
     }
@@ -222,7 +222,7 @@ open class MethodSpec(
             return MethodSpec(
                 name ?: throw IllegalStateException("Name must be set"),
                 returnType ?: throw IllegalStateException("Return type must be set"),
-                extending ?: throw IllegalStateException("Extending must be set"),
+                extending,
                 parameters,
                 body,
                 isStatic,

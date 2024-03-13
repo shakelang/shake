@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class IdentifierTests : FreeSpec({
     "should be constructed correctly" {
         val identifier = NamespaceSpec("test")
-        identifier.name shouldBe "test"
+        identifier.name shouldBe arrayOf("test")
     }
 
     "should be converted to string correctly" {
