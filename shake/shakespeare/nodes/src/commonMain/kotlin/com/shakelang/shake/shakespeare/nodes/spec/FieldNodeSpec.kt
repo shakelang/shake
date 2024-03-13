@@ -14,7 +14,7 @@ import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 class FieldNodeSpec(
     name: NamespaceSpec,
-    type: TypeNode,
+    type: TypeNodeSpec,
     isVal: Boolean = true,
     isStatic: Boolean = false,
     isFinal: Boolean = false,

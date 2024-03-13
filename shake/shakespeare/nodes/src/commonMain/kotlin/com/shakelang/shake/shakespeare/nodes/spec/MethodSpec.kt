@@ -16,13 +16,13 @@ import com.shakelang.shake.shakespeare.spec.ParameterSpec
 
 class ParameterNodeSpec(
     name: NamespaceSpec,
-    type: TypeNode,
+    type: TypeNodeSpec,
 ) : ParameterSpec(name, type), AbstractNodeSpec
 
 class MethodNodeSpec(
     name: NamespaceSpec,
-    returnType: TypeNode,
-    extending: TypeNode? = null,
+    returnType: TypeNodeSpec,
+    extending: TypeNodeSpec? = null,
     parameters: List<ParameterNodeSpec>,
     body: CodeNodeSpec?,
     isStatic: Boolean = false,

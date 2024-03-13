@@ -10,52 +10,55 @@ package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 
-interface Type : AbstractSpec {
+interface TypeSpec : AbstractSpec {
     override fun generate(ctx: GenerationContext): String
 
     companion object {
-        fun of(type: String): Type {
+        fun of(type: String): TypeSpec {
             return when (type) {
                 "byte" -> PrimitiveType.BYTE
                 "shorts" -> PrimitiveType.SHORT
                 "int" -> PrimitiveType.INT
                 "long" -> PrimitiveType.LONG
-                "unsigned byte" -> PrimitiveType.UNSIGNED_BYTE
-                "unsigned shorts" -> PrimitiveType.UNSIGNED_SHORT
-                "unsigned int" -> PrimitiveType.UNSIGNED_INT
-                "unsigned long" -> PrimitiveType.UNSIGNED_LONG
+                "ubyte" -> PrimitiveType.UNSIGNED_BYTE
+                "ushorts" -> PrimitiveType.UNSIGNED_SHORT
+                "uint" -> PrimitiveType.UNSIGNED_INT
+                "ulong" -> PrimitiveType.UNSIGNED_LONG
                 "float" -> PrimitiveType.FLOAT
                 "doubles" -> PrimitiveType.DOUBLE
                 "char" -> PrimitiveType.CHAR
                 "boolean" -> PrimitiveType.BOOLEAN
-                else -> SimpleType(type)
+                else -> ObjectType(NamespaceSpec(*type.split(".").toTypedArray()))
             }
         }
     }
 }
 
-open class SimpleType(val name: String) : Type {
+open class ObjectType(open val namespace: NamespaceSpec) : TypeSpec {
+
+    constructor(vararg namespace: String) : this(NamespaceSpec(*namespace))
+
     override fun generate(ctx: GenerationContext): String {
-        return name
+        return namespace.generate(ctx)
     }
 
     override fun toString(): String {
-        return name
+        return namespace.toString()
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is SimpleType) return false
-        if (name != other.name) return false
+        if (other !is ObjectType) return false
+        if (namespace != other.namespace) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return name.hashCode()
+        return namespace.hashCode()
     }
 }
 
-enum class PrimitiveType(val type: String) : Type {
+enum class PrimitiveType(val type: String) : TypeSpec {
     BYTE("byte"),
     SHORT("shorts"),
     INT("int"),
@@ -72,11 +75,5 @@ enum class PrimitiveType(val type: String) : Type {
 
     override fun generate(ctx: GenerationContext): String {
         return type
-    }
-}
-
-open class ClassType(val name: String) : Type {
-    override fun generate(ctx: GenerationContext): String {
-        return name
     }
 }

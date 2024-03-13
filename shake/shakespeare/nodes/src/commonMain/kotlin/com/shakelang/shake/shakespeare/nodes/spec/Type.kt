@@ -8,16 +8,21 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec
 
-import com.shakelang.shake.shakespeare.spec.ClassType
-import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.SimpleType
-import com.shakelang.shake.shakespeare.spec.Type
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
+import com.shakelang.shake.shakespeare.spec.*
 
-interface TypeNode : AbstractNodeSpec, Type
+interface TypeNodeSpec : AbstractNodeSpec, TypeSpec {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableType
+}
 
-class SimpleTypeNode(name: String) : SimpleType(name), TypeNode
+class ObjectTypeNodeSpec(namespace: NamespaceNodeSpec) : ObjectType(namespace), TypeNodeSpec {
+    override val namespace get() = super.namespace as NamespaceNodeSpec
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableType {
+        return ShakeVariableType(namespace.dump(ctx, nctx))
+    }
+}
 
-enum class PrimitiveType(val type: String) : TypeNode {
+enum class PrimitiveType(val type: String) : TypeNodeSpec {
     BYTE("byte"),
     SHORT("short"),
     INT("int"),
@@ -32,11 +37,13 @@ enum class PrimitiveType(val type: String) : TypeNode {
     BOOLEAN("boolean"),
     ;
 
+    val namespace = NamespaceNodeSpec(type)
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableType {
+        return ShakeVariableType(namespace.dump(ctx, nctx))
+    }
+
     override fun generate(ctx: GenerationContext): String {
         return type
     }
-}
-
-class ClassTypeNode(name: String) : ClassType(name), TypeNode {
-    override fun generate(ctx: GenerationContext) = name
 }

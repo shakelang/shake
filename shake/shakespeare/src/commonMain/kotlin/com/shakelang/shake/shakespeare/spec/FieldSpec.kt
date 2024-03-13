@@ -12,7 +12,7 @@ import com.shakelang.shake.shakespeare.AbstractSpec
 
 open class FieldSpec(
     val name: NamespaceSpec,
-    val type: Type,
+    val type: TypeSpec,
     val isVal: Boolean = true,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false,
@@ -38,7 +38,7 @@ open class FieldSpec(
     open class FieldSpecBuilder
     internal constructor() {
         var name: NamespaceSpec? = null
-        var type: Type? = null
+        var type: TypeSpec? = null
         var isStatic = false
         var isFinal = false
         var accessModifier = AccessModifier.PUBLIC
@@ -50,7 +50,7 @@ open class FieldSpec(
             return this
         }
 
-        fun type(type: Type): FieldSpecBuilder {
+        fun type(type: TypeSpec): FieldSpecBuilder {
             this.type = type
             return this
         }

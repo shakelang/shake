@@ -27,6 +27,7 @@ interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
 
     companion object {
         fun of(spec: ValueSpec): ValueNodeSpec = when (spec) {
+            is
             is StringLiteralSpec -> StringLiteralNodeSpec.of(spec)
             is CharacterLiteralSpec -> CharacterLiteralNodeSpec.of(spec)
             is IntLiteralSpec -> IntLiteralNodeSpec.of(spec)

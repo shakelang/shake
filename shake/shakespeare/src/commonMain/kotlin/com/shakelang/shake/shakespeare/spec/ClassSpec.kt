@@ -12,9 +12,9 @@ import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 open class ConstructorSpec(
-    val parameters: List<ParameterSpec>,
-    val body: CodeSpec,
-    val name: NamespaceSpec? = null,
+    open val parameters: List<ParameterSpec>,
+    open val body: CodeSpec,
+    open val name: NamespaceSpec? = null,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,

@@ -18,10 +18,10 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.code.*
 
 /**
- * A [ValuedAssignmentSpec] is a StatementSpec and a ValueNodeSpec at the same time
+ * A [ValuedStatementNodeSpec] is a StatementSpec and a ValueNodeSpec at the same time
  * @since 0.1.0
  */
-interface ValuedAssignmentSpec : StatementSpec, ValueNodeSpec {
+interface ValuedStatementNodeSpec : StatementNodeSpec, ValueNodeSpec, ValuedStatementSpec {
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedStatementNode
 }
 

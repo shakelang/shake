@@ -8,6 +8,9 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec
 
+import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
 import com.shakelang.shake.shakespeare.spec.*
 
@@ -26,7 +29,40 @@ open class ConstructorNodeSpec(
     isSynchronized,
     isNative,
 ),
-    AbstractNodeSpec
+    AbstractNodeSpec {
+
+    @Suppress("UNCHECKED_CAST")
+    override val parameters: List<ParameterNodeSpec> get() = super.parameters as List<ParameterNodeSpec>
+    override val body: CodeNodeSpec get() = super.body as CodeNodeSpec
+    override val name: NamespaceNodeSpec? get() = super.name as NamespaceNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeConstructorDeclarationNode {
+        val constructorToken = nctx.createToken(ShakeTokenType.KEYWORD_CONSTRUCTOR)
+
+        val name = name?.let {
+            nctx.print(" ")
+            if (it.name.size != 1) throw Exception("Name of constructor must be a single identifier")
+            nctx.createToken(ShakeTokenType.IDENTIFIER, it.name[0])
+        }
+
+        val lp = nctx.createToken(ShakeTokenType.LPAREN)
+
+        val commaTokens = mutableListOf<ShakeToken>()
+
+        val parameters = parameters.map {
+            val p = it.dump(ctx, nctx)
+            if (it != parameters.last()) {
+                commaTokens.add(nctx.createToken(ShakeTokenType.COMMA))
+                nctx.print(" ")
+            }
+            p
+        }
+
+        val rp = nctx.createToken(ShakeTokenType.RPAREN)
+
+        val body = body.dump(ctx, nctx)
+    }
+}
 
 interface ClassLikeNodeSpec : AbstractNodeSpec, ClassLikeSpec
 

@@ -13,7 +13,7 @@ import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 open class ParameterSpec(
     val name: NamespaceSpec,
-    val type: Type,
+    val type: TypeSpec,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
         return "${name.name}: ${type.generate(ctx)}"
@@ -22,7 +22,7 @@ open class ParameterSpec(
     open class ParameterSpecBuilder
     internal constructor() {
         var name: NamespaceSpec? = null
-        var type: Type? = null
+        var type: TypeSpec? = null
         fun name(name: NamespaceSpec): ParameterSpecBuilder {
             this.name = name
             return this
@@ -33,13 +33,13 @@ open class ParameterSpec(
             return this
         }
 
-        fun type(type: Type): ParameterSpecBuilder {
+        fun type(type: TypeSpec): ParameterSpecBuilder {
             this.type = type
             return this
         }
 
         fun type(type: String): ParameterSpecBuilder {
-            this.type = Type.of(type)
+            this.type = TypeSpec.of(type)
             return this
         }
 
@@ -60,8 +60,8 @@ open class ParameterSpec(
 
 open class MethodSpec(
     val name: NamespaceSpec,
-    val returnType: Type,
-    val extending: Type? = null,
+    val returnType: TypeSpec,
+    val extending: TypeSpec? = null,
     val parameters: List<ParameterSpec>,
     val body: CodeSpec?,
     val isStatic: Boolean = false,
@@ -106,8 +106,8 @@ open class MethodSpec(
     open class MethodSpecBuilder
     internal constructor() {
         var name: NamespaceSpec? = null
-        var returnType: Type? = null
-        var extending: Type? = null
+        var returnType: TypeSpec? = null
+        var extending: TypeSpec? = null
         val parameters: MutableList<ParameterSpec> = ArrayList()
         var body: CodeSpec? = null
         var isStatic = false
@@ -129,23 +129,23 @@ open class MethodSpec(
             return this
         }
 
-        fun returnType(returnType: Type): MethodSpecBuilder {
+        fun returnType(returnType: TypeSpec): MethodSpecBuilder {
             this.returnType = returnType
             return this
         }
 
         fun returnType(returnType: String): MethodSpecBuilder {
-            this.returnType = Type.of(returnType)
+            this.returnType = TypeSpec.of(returnType)
             return this
         }
 
-        fun extending(extending: Type): MethodSpecBuilder {
+        fun extending(extending: TypeSpec): MethodSpecBuilder {
             this.extending = extending
             return this
         }
 
         fun extending(extending: String): MethodSpecBuilder {
-            this.extending = Type.of(extending)
+            this.extending = TypeSpec.of(extending)
             return this
         }
 

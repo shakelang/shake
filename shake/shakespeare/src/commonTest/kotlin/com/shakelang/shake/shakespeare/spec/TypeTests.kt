@@ -6,63 +6,63 @@ import io.kotest.matchers.shouldBe
 class TypeTests : FreeSpec({
 
     "Type.Companion.of should return PrimitiveType.BYTE for 'byte'" {
-        Type.of("byte") shouldBe PrimitiveType.BYTE
+        TypeSpec.of("byte") shouldBe PrimitiveType.BYTE
     }
 
     "Type.Companion.of should return PrimitiveType.SHORT for 'shorts'" {
-        Type.of("shorts") shouldBe PrimitiveType.SHORT
+        TypeSpec.of("shorts") shouldBe PrimitiveType.SHORT
     }
 
     "Type.Companion.of should return PrimitiveType.INT for 'int'" {
-        Type.of("int") shouldBe PrimitiveType.INT
+        TypeSpec.of("int") shouldBe PrimitiveType.INT
     }
 
     "Type.Companion.of should return PrimitiveType.LONG for 'long'" {
-        Type.of("long") shouldBe PrimitiveType.LONG
+        TypeSpec.of("long") shouldBe PrimitiveType.LONG
     }
 
     "Type.Companion.of should return PrimitiveType.UNSIGNED_BYTE for 'unsigned byte'" {
-        Type.of("unsigned byte") shouldBe PrimitiveType.UNSIGNED_BYTE
+        TypeSpec.of("unsigned byte") shouldBe PrimitiveType.UNSIGNED_BYTE
     }
 
     "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'unsigned shorts'" {
-        Type.of("unsigned shorts") shouldBe PrimitiveType.UNSIGNED_SHORT
+        TypeSpec.of("unsigned shorts") shouldBe PrimitiveType.UNSIGNED_SHORT
     }
 
     "Type.Companion.of should return PrimitiveType.UNSIGNED_INT for 'unsigned int'" {
-        Type.of("unsigned int") shouldBe PrimitiveType.UNSIGNED_INT
+        TypeSpec.of("unsigned int") shouldBe PrimitiveType.UNSIGNED_INT
     }
 
     "Type.Companion.of should return PrimitiveType.UNSIGNED_LONG for 'unsigned long'" {
-        Type.of("unsigned long") shouldBe PrimitiveType.UNSIGNED_LONG
+        TypeSpec.of("unsigned long") shouldBe PrimitiveType.UNSIGNED_LONG
     }
 
     "Type.Companion.of should return PrimitiveType.FLOAT for 'float'" {
-        Type.of("float") shouldBe PrimitiveType.FLOAT
+        TypeSpec.of("float") shouldBe PrimitiveType.FLOAT
     }
 
     "Type.Companion.of should return PrimitiveType.DOUBLE for 'doubles'" {
-        Type.of("doubles") shouldBe PrimitiveType.DOUBLE
+        TypeSpec.of("doubles") shouldBe PrimitiveType.DOUBLE
     }
 
     "Type.Companion.of should return PrimitiveType.CHAR for 'char'" {
-        Type.of("char") shouldBe PrimitiveType.CHAR
+        TypeSpec.of("char") shouldBe PrimitiveType.CHAR
     }
 
     "Type.Companion.of should return PrimitiveType.BOOLEAN for 'boolean'" {
-        Type.of("boolean") shouldBe PrimitiveType.BOOLEAN
+        TypeSpec.of("boolean") shouldBe PrimitiveType.BOOLEAN
     }
 
     "Type.Companion.of should return SimpleType for non-primitive 'String'" {
-        Type.of("String") shouldBe SimpleType("String")
+        TypeSpec.of("String") shouldBe ObjectType("String")
     }
 
     "Type.Companion.of should return SimpleType for non-primitive 'CustomType'" {
-        Type.of("CustomType") shouldBe SimpleType("CustomType")
+        TypeSpec.of("CustomType") shouldBe ObjectType("CustomType")
     }
 
     "SimpleType.generate should return type name for 'TestType'" {
-        val simpleType = SimpleType("TestType")
+        val simpleType = ObjectType("TestType")
         simpleType.generate(GenerationContext()) shouldBe "TestType"
     }
 
@@ -112,10 +112,5 @@ class TypeTests : FreeSpec({
 
     "PrimitiveType.BOOLEAN.generate should return 'boolean'" {
         PrimitiveType.BOOLEAN.generate(GenerationContext()) shouldBe "boolean"
-    }
-
-    "ClassType.generate should return class name for 'MyClass'" {
-        val classType = ClassType("MyClass")
-        classType.generate(GenerationContext()) shouldBe "MyClass"
     }
 })
