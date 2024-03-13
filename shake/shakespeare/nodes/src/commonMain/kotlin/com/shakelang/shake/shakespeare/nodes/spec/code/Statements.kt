@@ -26,6 +26,18 @@ import com.shakelang.shake.shakespeare.spec.code.*
  */
 interface StatementNodeSpec : AbstractNodeSpec, StatementSpec {
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeStatementNode
+
+    companion object {
+        fun of(spec: StatementSpec): StatementNodeSpec = when (spec) {
+            is ValuedStatementSpec -> ValuedStatementNodeSpec.of(spec)
+            is ReturnSpec -> ReturnNodeSpec(spec.value.let { ValueNodeSpec.of(it) })
+            is VariableDeclarationSpec -> VariableDeclarationNodeSpec.of(spec)
+            is WhileSpec -> WhileNodeSpec.of(spec)
+            is DoWhileSpec -> DoWhileNodeSpec.of(spec)
+            is ForSpec -> ForNodeSpec.of(spec)
+            else -> throw IllegalArgumentException("Unknown statement spec: $spec")
+        }
+    }
 }
 
 /**
@@ -86,6 +98,15 @@ open class VariableDeclarationNodeSpec(
             varToken,
         )
     }
+
+    companion object {
+        fun of(spec: VariableDeclarationSpec) = VariableDeclarationNodeSpec(
+            spec.name,
+            if (spec.type != null) TypeNodeSpec.of(spec.type!!) else null,
+            if (spec.value != null) ValueNodeSpec.of(spec.value!!) else null,
+            spec.isVal,
+        )
+    }
 }
 
 open class WhileNodeSpec(
@@ -104,6 +125,13 @@ open class WhileNodeSpec(
         nctx.print(" ")
         val body = body.dump(ctx, nctx)
         return ShakeWhileNode(nctx.map, body, condition, whileToken, lp, rp)
+    }
+
+    companion object {
+        fun of(spec: WhileSpec) = WhileNodeSpec(
+            ValueNodeSpec.of(spec.condition),
+            CodeNodeSpec.of(spec.body),
+        )
     }
 }
 
@@ -125,6 +153,13 @@ open class DoWhileNodeSpec(
         val condition = condition.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
         return ShakeDoWhileNode(nctx.map, body, condition, doToken, whileToken, lp, rp)
+    }
+
+    companion object {
+        fun of(spec: DoWhileSpec) = DoWhileNodeSpec(
+            CodeNodeSpec.of(spec.body),
+            ValueNodeSpec.of(spec.condition),
+        )
     }
 }
 
@@ -164,6 +199,15 @@ open class ForNodeSpec(
             rp,
         )
     }
+
+    companion object {
+        fun of(spec: ForSpec) = ForNodeSpec(
+            StatementNodeSpec.of(spec.init),
+            ValueNodeSpec.of(spec.condition),
+            StatementNodeSpec.of(spec.update),
+            CodeNodeSpec.of(spec.body),
+        )
+    }
 }
 
 open class IfNodeSpec(
@@ -191,6 +235,14 @@ open class IfNodeSpec(
             return ShakeIfNode(nctx.map, body, elseBody, condition, ifToken, lp, rp, elseToken)
         }
         return ShakeIfNode(nctx.map, body, null, condition, ifToken, lp, rp, null)
+    }
+
+    companion object {
+        fun of(spec: IfSpec) = IfNodeSpec(
+            ValueNodeSpec.of(spec.condition),
+            CodeNodeSpec.of(spec.body),
+            spec.elseBody?.let { CodeNodeSpec.of(it) },
+        )
     }
 }
 

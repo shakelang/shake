@@ -28,4 +28,10 @@ class NamespaceNodeSpec(
 
         return node
     }
+
+    companion object {
+        fun of(name: NamespaceSpec): NamespaceNodeSpec {
+            return NamespaceNodeSpec(*name.name)
+        }
+    }
 }

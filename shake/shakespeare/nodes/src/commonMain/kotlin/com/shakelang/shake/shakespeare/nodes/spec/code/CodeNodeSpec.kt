@@ -16,10 +16,11 @@ import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
+@Suppress("UNCHECKED_CAST")
 open class CodeNodeSpec(
     statements: List<StatementNodeSpec>,
 ) : CodeSpec(statements), AbstractNodeSpec {
-    override val statements = statements as List<StatementNodeSpec>
+    override val statements get() = super.statements as List<StatementNodeSpec>
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBlockNode {
         val nodes = mutableListOf<ShakeStatementNode>()
@@ -34,5 +35,11 @@ open class CodeNodeSpec(
         for (i in 0 until ctx.indentLevel) nctx.print(ctx.indentType)
         val rcurl = nctx.createToken(ShakeTokenType.RCURL)
         return ShakeBlockNode(nctx.map, nodes.toTypedArray(), lcurl, rcurl)
+    }
+
+    companion object {
+        fun of(body: CodeSpec): CodeNodeSpec {
+            return CodeNodeSpec(body.statements.map { StatementNodeSpec.of(it) })
+        }
     }
 }

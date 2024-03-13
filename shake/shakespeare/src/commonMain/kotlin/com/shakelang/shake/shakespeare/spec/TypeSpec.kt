@@ -16,25 +16,25 @@ interface TypeSpec : AbstractSpec {
     companion object {
         fun of(type: String): TypeSpec {
             return when (type) {
-                "byte" -> PrimitiveType.BYTE
-                "shorts" -> PrimitiveType.SHORT
-                "int" -> PrimitiveType.INT
-                "long" -> PrimitiveType.LONG
-                "ubyte" -> PrimitiveType.UNSIGNED_BYTE
-                "ushorts" -> PrimitiveType.UNSIGNED_SHORT
-                "uint" -> PrimitiveType.UNSIGNED_INT
-                "ulong" -> PrimitiveType.UNSIGNED_LONG
-                "float" -> PrimitiveType.FLOAT
-                "doubles" -> PrimitiveType.DOUBLE
-                "char" -> PrimitiveType.CHAR
-                "boolean" -> PrimitiveType.BOOLEAN
-                else -> ObjectType(NamespaceSpec(*type.split(".").toTypedArray()))
+                "byte" -> PrimitiveTypeSpec.BYTE
+                "shorts" -> PrimitiveTypeSpec.SHORT
+                "int" -> PrimitiveTypeSpec.INT
+                "long" -> PrimitiveTypeSpec.LONG
+                "ubyte" -> PrimitiveTypeSpec.UNSIGNED_BYTE
+                "ushorts" -> PrimitiveTypeSpec.UNSIGNED_SHORT
+                "uint" -> PrimitiveTypeSpec.UNSIGNED_INT
+                "ulong" -> PrimitiveTypeSpec.UNSIGNED_LONG
+                "float" -> PrimitiveTypeSpec.FLOAT
+                "doubles" -> PrimitiveTypeSpec.DOUBLE
+                "char" -> PrimitiveTypeSpec.CHAR
+                "boolean" -> PrimitiveTypeSpec.BOOLEAN
+                else -> ObjectTypeSpec(NamespaceSpec(*type.split(".").toTypedArray()))
             }
         }
     }
 }
 
-open class ObjectType(open val namespace: NamespaceSpec) : TypeSpec {
+open class ObjectTypeSpec(open val namespace: NamespaceSpec) : TypeSpec {
 
     constructor(vararg namespace: String) : this(NamespaceSpec(*namespace))
 
@@ -48,7 +48,7 @@ open class ObjectType(open val namespace: NamespaceSpec) : TypeSpec {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ObjectType) return false
+        if (other !is ObjectTypeSpec) return false
         if (namespace != other.namespace) return false
         return true
     }
@@ -58,7 +58,7 @@ open class ObjectType(open val namespace: NamespaceSpec) : TypeSpec {
     }
 }
 
-enum class PrimitiveType(val type: String) : TypeSpec {
+enum class PrimitiveTypeSpec(val type: String) : TypeSpec {
     BYTE("byte"),
     SHORT("shorts"),
     INT("int"),

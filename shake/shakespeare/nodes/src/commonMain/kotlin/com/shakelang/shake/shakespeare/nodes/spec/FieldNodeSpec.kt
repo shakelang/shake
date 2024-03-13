@@ -8,8 +8,10 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec
 
+import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.shakespeare.spec.AccessModifier
 import com.shakelang.shake.shakespeare.spec.FieldSpec
+import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 class FieldNodeSpec(
@@ -31,4 +33,7 @@ class FieldNodeSpec(
     isSynchronized,
     isNative,
 ),
-    AbstractNodeSpec
+    AbstractNodeSpec {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeFieldDeclarationNode {
+    }
+}

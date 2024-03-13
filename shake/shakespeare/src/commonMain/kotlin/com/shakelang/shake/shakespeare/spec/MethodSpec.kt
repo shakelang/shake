@@ -12,24 +12,20 @@ import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 open class ParameterSpec(
-    val name: NamespaceSpec,
-    val type: TypeSpec,
+    open val name: String,
+    open val type: TypeSpec,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "${name.name}: ${type.generate(ctx)}"
+        return "$name: ${type.generate(ctx)}"
     }
 
     open class ParameterSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         var type: TypeSpec? = null
-        fun name(name: NamespaceSpec): ParameterSpecBuilder {
-            this.name = name
-            return this
-        }
 
         fun name(name: String): ParameterSpecBuilder {
-            this.name = NamespaceSpec(name)
+            this.name = name
             return this
         }
 

@@ -10,6 +10,8 @@ package com.shakelang.shake.shakespeare.nodes.spec
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
 import com.shakelang.shake.shakespeare.spec.*
@@ -37,6 +39,29 @@ open class ConstructorNodeSpec(
     override val name: NamespaceNodeSpec? get() = super.name as NamespaceNodeSpec
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeConstructorDeclarationNode {
+        val access = when (accessModifier) {
+            AccessModifier.PUBLIC -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PUBLIC))
+            }
+            AccessModifier.PRIVATE -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PRIVATE))
+            }
+            AccessModifier.PROTECTED -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PROTECTED))
+            }
+            AccessModifier.PACKAGE_PRIVATE -> {
+                ShakeAccessDescriber.PACKAGE
+            }
+        }
+
+        if (access != ShakeAccessDescriber.PACKAGE) nctx.print(" ")
+
+        val nativeToken = if (isNative) nctx.createToken(ShakeTokenType.KEYWORD_NATIVE) else null
+        if (nativeToken != null) nctx.print(" ")
+
+        val synchronizedToken = if (isSynchronized) nctx.createToken(ShakeTokenType.KEYWORD_SYNCHRONIZED) else null
+        if (synchronizedToken != null) nctx.print(" ")
+
         val constructorToken = nctx.createToken(ShakeTokenType.KEYWORD_CONSTRUCTOR)
 
         val name = name?.let {
@@ -61,19 +86,36 @@ open class ConstructorNodeSpec(
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
 
         val body = body.dump(ctx, nctx)
+
+        return ShakeConstructorDeclarationNode(
+            nctx.map,
+            name,
+            body,
+            parameters.toTypedArray(),
+            access,
+            constructorToken,
+            lp,
+            rp,
+            nativeToken,
+            synchronizedToken,
+            commaTokens.toTypedArray(),
+        )
     }
 }
 
 interface ClassLikeNodeSpec : AbstractNodeSpec, ClassLikeSpec
 
+@Suppress("UNCHECKED_CAST")
 open class ClassNodeSpec(
-    name: NamespaceSpec,
+    name: String,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,
     constructors: List<ConstructorNodeSpec>,
     isAbstract: Boolean = false,
     isFinal: Boolean = false,
+    isStatic: Boolean = false,
+    isNative: Boolean = false,
     accessModifier: AccessModifier = AccessModifier.PUBLIC,
 ) : ClassSpec(
     name,
@@ -83,12 +125,103 @@ open class ClassNodeSpec(
     constructors,
     isAbstract,
     isFinal,
+    isStatic,
+    isNative,
     accessModifier,
 ),
-    ClassLikeNodeSpec
+    ClassLikeNodeSpec {
+
+    override val methods: List<MethodNodeSpec> get() = super.methods as List<MethodNodeSpec>
+    override val fields: List<FieldNodeSpec> get() = super.fields as List<FieldNodeSpec>
+    override val classes: List<ClassNodeSpec> get() = super.classes as List<ClassNodeSpec>
+    override val constructors: List<ConstructorNodeSpec> get() = super.constructors as List<ConstructorNodeSpec>
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeClassDeclarationNode {
+        val access = when (accessModifier) {
+            AccessModifier.PUBLIC -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PUBLIC))
+            }
+            AccessModifier.PRIVATE -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PRIVATE))
+            }
+            AccessModifier.PROTECTED -> {
+                ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PROTECTED))
+            }
+            AccessModifier.PACKAGE_PRIVATE -> {
+                ShakeAccessDescriber.PACKAGE
+            }
+        }
+        if (access != ShakeAccessDescriber.PACKAGE) nctx.print(" ")
+
+        val abstractToken = if (isAbstract) nctx.createToken(ShakeTokenType.KEYWORD_ABSTRACT) else null
+        if (abstractToken != null) nctx.print(" ")
+
+        val finalToken = if (isFinal) nctx.createToken(ShakeTokenType.KEYWORD_FINAL) else null
+        if (finalToken != null) nctx.print(" ")
+
+        val staticToken = if (isStatic) nctx.createToken(ShakeTokenType.KEYWORD_STATIC) else null
+        if (staticToken != null) nctx.print(" ")
+
+        val nativeToken = if (isNative) nctx.createToken(ShakeTokenType.KEYWORD_NATIVE) else null
+        if (nativeToken != null) nctx.print(" ")
+
+        val classToken = nctx.createToken(ShakeTokenType.KEYWORD_CLASS)
+        nctx.print(" ")
+
+        val nameToken = nctx.createToken(ShakeTokenType.IDENTIFIER, name)
+        nctx.print(" ")
+
+        val lc = nctx.createToken(ShakeTokenType.LCURL)
+
+        val indented = ctx.indent()
+        val fields = fields.map {
+            nctx.print("\n")
+            for (i in 0 until indented.indentLevel) nctx.print(indented.indentType)
+            it.dump(ctx, nctx)
+        }
+
+        val constructors = constructors.map {
+            nctx.print("\n")
+            for (i in 0 until indented.indentLevel) nctx.print(indented.indentType)
+            it.dump(ctx, nctx)
+        }
+
+        val methods = methods.map {
+            nctx.print("\n")
+            for (i in 0 until indented.indentLevel) nctx.print(indented.indentType)
+            it.dump(ctx, nctx)
+        }
+
+        val classes = classes.map {
+            nctx.print("\n")
+            for (i in 0 until indented.indentLevel) nctx.print(indented.indentType)
+            it.dump(ctx, nctx)
+        }
+
+        nctx.print("\n")
+
+        val rc = nctx.createToken(ShakeTokenType.RCURL)
+
+        return ShakeClassDeclarationNode(
+            nctx.map,
+            classToken,
+            nameToken,
+            emptyArray(),
+            fields.toTypedArray(),
+            methods.toTypedArray(),
+            classes.toTypedArray(),
+            constructors.toTypedArray(),
+            access,
+            staticToken,
+            finalToken,
+            abstractToken,
+            nativeToken,
+        )
+    }
+}
 
 class InterfaceNodeSpec(
-    name: NamespaceSpec,
+    name: String,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,
@@ -103,7 +236,7 @@ class InterfaceNodeSpec(
     ClassLikeNodeSpec
 
 class EnumNodeSpec(
-    name: NamespaceSpec,
+    name: String,
     constants: List<NamespaceSpec>,
     methods: List<MethodNodeSpec>,
     fields: List<FieldNodeSpec>,
@@ -120,7 +253,7 @@ class EnumNodeSpec(
     ClassLikeNodeSpec
 
 class ObjectNodeSpec(
-    name: NamespaceSpec,
+    name: String,
     methods: List<MethodSpec>,
     fields: List<FieldNodeSpec>,
     classes: List<ClassNodeSpec>,

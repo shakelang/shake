@@ -8,16 +8,21 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec
 
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeParameterNode
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
-import com.shakelang.shake.shakespeare.spec.AccessModifier
-import com.shakelang.shake.shakespeare.spec.MethodSpec
-import com.shakelang.shake.shakespeare.spec.NamespaceSpec
-import com.shakelang.shake.shakespeare.spec.ParameterSpec
+import com.shakelang.shake.shakespeare.spec.*
 
 class ParameterNodeSpec(
-    name: NamespaceSpec,
+    name: String,
     type: TypeNodeSpec,
-) : ParameterSpec(name, type), AbstractNodeSpec
+) : ParameterSpec(name, type), AbstractNodeSpec {
+
+    override val type get() = super.type as TypeNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeParameterNode {
+    }
+}
 
 class MethodNodeSpec(
     name: NamespaceSpec,
@@ -48,4 +53,7 @@ class MethodNodeSpec(
     isSynchronized,
     isNative,
 ),
-    AbstractNodeSpec
+    AbstractNodeSpec {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeMethodDeclarationNode {
+    }
+}
