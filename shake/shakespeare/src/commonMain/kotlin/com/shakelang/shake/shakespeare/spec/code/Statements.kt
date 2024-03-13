@@ -271,7 +271,7 @@ open class IfSpec(
     open val elseBody: CodeSpec?,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        val elsePart = if (elseBody != null) " else ${elseBody.generate(ctx.indent())}" else ""
+        val elsePart = if (elseBody != null) " else ${elseBody!!.generate(ctx.indent())}" else ""
         return "if(${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
     }
 

@@ -30,11 +30,12 @@ interface StatementNodeSpec : AbstractNodeSpec, StatementSpec {
     companion object {
         fun of(spec: StatementSpec): StatementNodeSpec = when (spec) {
             is ValuedStatementSpec -> ValuedStatementNodeSpec.of(spec)
-            is ReturnSpec -> ReturnNodeSpec(spec.value.let { ValueNodeSpec.of(it) })
+            is ReturnSpec -> ReturnNodeSpec.of(spec)
             is VariableDeclarationSpec -> VariableDeclarationNodeSpec.of(spec)
             is WhileSpec -> WhileNodeSpec.of(spec)
             is DoWhileSpec -> DoWhileNodeSpec.of(spec)
             is ForSpec -> ForNodeSpec.of(spec)
+            is IfSpec -> IfNodeSpec.of(spec)
             else -> throw IllegalArgumentException("Unknown statement spec: $spec")
         }
     }
@@ -258,4 +259,16 @@ open class ReturnNodeSpec(
         val value = value.dump(ctx, nctx)
         return ShakeReturnNode(nctx.map, value, returnToken)
     }
+
+    companion object {
+        fun of(spec: ReturnSpec) = ReturnNodeSpec(ValueNodeSpec.of(spec.value))
+    }
 }
+
+fun StatementSpec.toNodeSpec(): StatementNodeSpec = StatementNodeSpec.of(this)
+fun VariableDeclarationSpec.toNodeSpec(): VariableDeclarationNodeSpec = VariableDeclarationNodeSpec.of(this)
+fun WhileSpec.toNodeSpec(): WhileNodeSpec = WhileNodeSpec.of(this)
+fun DoWhileSpec.toNodeSpec(): DoWhileNodeSpec = DoWhileNodeSpec.of(this)
+fun ForSpec.toNodeSpec(): ForNodeSpec = ForNodeSpec.of(this)
+fun IfSpec.toNodeSpec(): IfNodeSpec = IfNodeSpec.of(this)
+fun ReturnSpec.toNodeSpec(): ReturnNodeSpec = ReturnNodeSpec.of(this)
