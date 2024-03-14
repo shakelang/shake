@@ -171,7 +171,7 @@ open class AdditionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Additio
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeAddNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.ADD)
@@ -198,7 +198,7 @@ open class SubtractionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Subt
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeSubNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.SUB)
@@ -225,7 +225,7 @@ open class MultiplicationNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : M
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeMulNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.MUL)
@@ -255,13 +255,13 @@ open class DivisionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Divisio
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeDivNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.DIV)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakeDivNode(
             nctx.map,
             left,
             right,
@@ -285,13 +285,13 @@ open class ModuloNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : ModuloSpe
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeModNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.MOD)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakeModNode(
             nctx.map,
             left,
             right,
@@ -315,13 +315,13 @@ open class PowerNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : PowerSpec(
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakePowNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.POW)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakePowNode(
             nctx.map,
             left,
             right,
@@ -342,9 +342,9 @@ open class UnaryMinusNodeSpec(value: ValueNodeSpec) : UnaryMinusSpec(value), Val
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("-")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeUnaryMinusNode {
+        val minus = nctx.createToken(ShakeTokenType.SUB)
+        return ShakeUnaryMinusNode(nctx.map, value.dump(ctx, nctx), minus)
     }
 
     companion object {
@@ -359,9 +359,9 @@ open class UnaryPlusNodeSpec(value: ValueNodeSpec) : UnaryPlusSpec(value), Value
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("+")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeUnaryPlusNode {
+        val plus = nctx.createToken(ShakeTokenType.ADD)
+        return ShakeUnaryPlusNode(nctx.map, value.dump(ctx, nctx), plus)
     }
 
     companion object {
@@ -377,7 +377,7 @@ open class LogicalAndNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logic
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalAndNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_AND)
@@ -407,13 +407,13 @@ open class LogicalOrNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logica
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalOrNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_OR)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLogicalOrNode(
             nctx.map,
             left,
             right,
@@ -434,9 +434,10 @@ open class LogicalNotNodeSpec(value: ValueNodeSpec) : LogicalNotSpec(value), Val
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("!")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalNotNode {
+        val operator = nctx.createToken(ShakeTokenType.LOGICAL_NOT)
+        val value = this.value.dump(ctx, nctx)
+        return ShakeLogicalNotNode(nctx.map, value, operator)
     }
 
     companion object {
@@ -452,13 +453,13 @@ open class LogicalXorNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logic
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalXOrNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_XOR)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLogicalXOrNode(
             nctx.map,
             left,
             right,
@@ -482,13 +483,13 @@ open class EqualityNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Equalit
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeEqualNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.EQ_EQUALS)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeEqualNode(
             nctx.map,
             left,
             right,
@@ -512,13 +513,13 @@ open class InequalityNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Inequ
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeNotEqualNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.NOT_EQUALS)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeNotEqualNode(
             nctx.map,
             left,
             right,
@@ -542,13 +543,13 @@ open class GreaterThanNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Grea
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeGreaterThanNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.BIGGER)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeGreaterThanNode(
             nctx.map,
             left,
             right,
@@ -572,13 +573,13 @@ open class GreaterThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec)
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeGreaterThanOrEqualNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.BIGGER_EQUALS)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeGreaterThanOrEqualNode(
             nctx.map,
             left,
             right,
@@ -602,13 +603,13 @@ open class LessThanNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : LessTha
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLessThanNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.SMALLER)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLessThanNode(
             nctx.map,
             left,
             right,
@@ -632,13 +633,13 @@ open class LessThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : 
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLessThanOrEqualNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
         val operator = nctx.createToken(ShakeTokenType.SMALLER_EQUALS)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLessThanOrEqualNode(
             nctx.map,
             left,
             right,
