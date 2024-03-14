@@ -2,7 +2,6 @@ package com.shakelang.shake.parser.node.misc
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeNodeImpl
-import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
@@ -22,10 +21,10 @@ class ShakeNamespaceNode(
 
     fun toIdentifier(): ShakeIdentifierNode {
         if (parent == null) return ShakeIdentifierNode(map, null, nameToken, null)
-        return ShakeIdentifierNode(map, toValue(), nameToken, dotToken)
+        return ShakeIdentifierNode(map, parent.toValue(), nameToken, dotToken)
     }
 
-    fun toValue(): ShakeValuedNode {
+    fun toValue(): ShakeVariableUsageNode {
         return ShakeVariableUsageNode(map, toIdentifier())
     }
 

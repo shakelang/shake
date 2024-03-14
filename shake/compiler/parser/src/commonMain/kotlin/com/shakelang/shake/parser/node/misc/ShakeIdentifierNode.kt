@@ -13,7 +13,7 @@ class ShakeIdentifierNode(
     val dotToken: ShakeToken?,
 ) : ShakeNodeImpl(map) {
 
-    val name: String get() = nameToken.value ?: throw IllegalStateException("Name token has no value")
+    val name: String get() = nameToken.value
 
     override fun toJson(): Map<String, *> =
         mapOf(

@@ -95,7 +95,7 @@ class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : Shak
 /**
  * Node for a doubles literal
  */
-class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
+class ShakeFloatLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
 
     /**
      * The value of the doubles literal
@@ -106,14 +106,14 @@ class ShakeDoubleLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLi
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeDoubleLiteralNode) return false
+        if (other !is ShakeFloatLiteralNode) return false
         if (value != other.value) return false
         return true
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ShakeDoubleLiteralNode) return false
+        if (other !is ShakeFloatLiteralNode) return false
         if (value != other.value) return false
         return true
     }

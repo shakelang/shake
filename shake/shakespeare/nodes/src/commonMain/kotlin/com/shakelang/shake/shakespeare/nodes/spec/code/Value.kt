@@ -10,16 +10,13 @@ package com.shakelang.shake.shakespeare.nodes.spec.code
 
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeValuedNode
-import com.shakelang.shake.parser.node.values.expression.ShakeAddNode
-import com.shakelang.shake.parser.node.values.expression.ShakeLogicalAndNode
-import com.shakelang.shake.parser.node.values.expression.ShakeMulNode
-import com.shakelang.shake.parser.node.values.expression.ShakeSubNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.*
 import com.shakelang.shake.parser.node.values.factor.*
 import com.shakelang.shake.shakespeare.nodes.spec.AbstractNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.NamespaceNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.code.*
 
 interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
@@ -60,7 +57,7 @@ interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
 
 open class StringLiteralNodeSpec(value: String) : StringLiteralSpec(value), ValueNodeSpec {
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeStringLiteralNode {
         return ShakeStringLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.STRING, "\"$escaped\""))
     }
 
@@ -71,7 +68,7 @@ open class StringLiteralNodeSpec(value: String) : StringLiteralSpec(value), Valu
 
 open class CharacterLiteralNodeSpec(value: Char) : CharacterLiteralSpec(value), ValueNodeSpec {
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeCharacterLiteralNode {
         return ShakeCharacterLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.CHARACTER, "'$escaped'"))
     }
 
@@ -82,7 +79,20 @@ open class CharacterLiteralNodeSpec(value: Char) : CharacterLiteralSpec(value), 
 
 open class IntLiteralNodeSpec(value: Long) : IntLiteralSpec(value), ValueNodeSpec {
 
+    constructor(value: Int) : this(value.toLong())
+
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+        if (value < 0) {
+            val minus = nctx.createToken(ShakeTokenType.SUB)
+            return ShakeUnaryMinusNode(
+                nctx.map,
+                ShakeIntegerLiteralNode(
+                    nctx.map,
+                    nctx.createToken(ShakeTokenType.INTEGER, (-value).toString()),
+                ),
+                minus,
+            )
+        }
         return ShakeIntegerLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.INTEGER, value.toString()))
     }
 
@@ -94,7 +104,18 @@ open class IntLiteralNodeSpec(value: Long) : IntLiteralSpec(value), ValueNodeSpe
 open class FloatLiteralNodeSpec(value: Double) : FloatLiteralSpec(value), ValueNodeSpec {
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        return ShakeDoubleLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, value.toString()))
+        if (value < 0) {
+            val minus = nctx.createToken(ShakeTokenType.SUB)
+            return ShakeUnaryMinusNode(
+                nctx.map,
+                ShakeFloatLiteralNode(
+                    nctx.map,
+                    nctx.createToken(ShakeTokenType.FLOAT, (-value).toString()),
+                ),
+                minus,
+            )
+        }
+        return ShakeFloatLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, (value).toString()))
     }
 
     companion object {
@@ -126,17 +147,19 @@ open class NullLiteralNodeSpec : NullLiteralSpec(), ValueNodeSpec {
     }
 }
 
-open class VariableReferenceNodeSpec(value: NamespaceSpec) : VariableReferenceSpec(value), ValueNodeSpec {
+open class VariableReferenceNodeSpec(value: NamespaceNodeSpec) : VariableReferenceSpec(value), ValueNodeSpec {
+
+    constructor(vararg value: String) : this(NamespaceNodeSpec(*value))
 
     override val name: NamespaceNodeSpec
         get() = super.name as NamespaceNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableUsageNode {
         return name.dump(ctx, nctx).toValue()
     }
 
     companion object {
-        fun of(spec: VariableReferenceSpec): VariableReferenceNodeSpec = VariableReferenceNodeSpec(spec.name)
+        fun of(spec: VariableReferenceSpec): VariableReferenceNodeSpec = VariableReferenceNodeSpec(NamespaceNodeSpec.of(spec.name))
     }
 }
 
@@ -632,6 +655,13 @@ open class LessThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : 
 }
 
 fun ValueSpec.toNodeSpec(): ValueNodeSpec = ValueNodeSpec.of(this)
+fun StringLiteralSpec.toNodeSpec(): StringLiteralNodeSpec = StringLiteralNodeSpec.of(this)
+fun CharacterLiteralSpec.toNodeSpec(): CharacterLiteralNodeSpec = CharacterLiteralNodeSpec.of(this)
+fun IntLiteralSpec.toNodeSpec(): IntLiteralNodeSpec = IntLiteralNodeSpec.of(this)
+fun FloatLiteralSpec.toNodeSpec(): FloatLiteralNodeSpec = FloatLiteralNodeSpec.of(this)
+fun BooleanLiteralSpec.toNodeSpec(): BooleanLiteralNodeSpec = BooleanLiteralNodeSpec.of(this)
+fun NullLiteralSpec.toNodeSpec(): NullLiteralNodeSpec = NullLiteralNodeSpec.of(this)
+fun VariableReferenceSpec.toNodeSpec(): VariableReferenceNodeSpec = VariableReferenceNodeSpec.of(this)
 fun AdditionSpec.toNodeSpec(): AdditionNodeSpec = AdditionNodeSpec.of(this)
 fun SubtractionSpec.toNodeSpec(): SubtractionNodeSpec = SubtractionNodeSpec.of(this)
 fun MultiplicationSpec.toNodeSpec(): MultiplicationNodeSpec = MultiplicationNodeSpec.of(this)

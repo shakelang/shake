@@ -1238,7 +1238,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
 
             ShakeTokenType.FLOAT -> {
-                return ShakeDoubleLiteralNode(map, input.next())
+                return ShakeFloatLiteralNode(map, input.next())
             }
 
             ShakeTokenType.IDENTIFIER -> {

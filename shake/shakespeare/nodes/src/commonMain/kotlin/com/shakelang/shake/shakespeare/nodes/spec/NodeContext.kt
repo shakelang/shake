@@ -53,7 +53,7 @@ class NodeContext {
 
     fun createToken(type: ShakeTokenType, end: Int, value: String? = null): ShakeToken {
         val realValue = value ?: type.value ?: throw IllegalArgumentException("Value must be set")
-        return createToken(type, end - realValue.length, end, realValue)
+        return createToken(type, end - realValue.length + 1, end, realValue)
     }
 
     fun createToken(type: ShakeTokenType, start: Long, end: Long, value: String? = null): ShakeToken {
@@ -65,7 +65,8 @@ class NodeContext {
     }
 
     fun createToken(type: ShakeTokenType, value: String? = null): ShakeToken {
-        return createToken(type, stream.count - 1, value)
+        val realValue = value ?: type.value ?: throw IllegalArgumentException("Value must be set")
+        return createToken(type, stream.count + realValue.length - 1, realValue)
     }
 
     fun print(str: String) = stream.write(str.encodeToByteArray())

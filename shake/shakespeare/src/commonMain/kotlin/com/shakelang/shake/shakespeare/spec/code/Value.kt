@@ -61,7 +61,7 @@ open class CharacterLiteralSpec(val value: Char) : ValueSpec {
     val escaped = Characters.escapeCharacter(value)
 
     override fun generate(ctx: GenerationContext): String {
-        return "'$value'"
+        return "'${Characters.escapeCharacter(value)}'"
     }
 
     class CharacterLiteralSpecBuilder
@@ -86,6 +86,9 @@ open class CharacterLiteralSpec(val value: Char) : ValueSpec {
 }
 
 open class IntLiteralSpec(val value: Long) : ValueSpec {
+
+    constructor(value: Int) : this(value.toLong())
+
     override fun generate(ctx: GenerationContext): String {
         return value.toString()
     }
@@ -197,6 +200,9 @@ open class NullLiteralSpec : ValueSpec {
 }
 
 open class VariableReferenceSpec(open val name: NamespaceSpec) : ValueSpec {
+
+    constructor(vararg name: String) : this(NamespaceSpec(*name))
+
     override fun generate(ctx: GenerationContext): String {
         return name.generate(ctx)
     }

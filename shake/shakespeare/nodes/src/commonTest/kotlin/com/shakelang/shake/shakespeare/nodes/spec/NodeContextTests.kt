@@ -1,6 +1,6 @@
-package com.shakelang.shake.shakespeare.nodes
+package com.shakelang.shake.shakespeare.nodes.spec
 
-import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -34,5 +34,25 @@ class NodeContextTests : FreeSpec({
         context.positionMaker.line shouldBe 2
         context.positionMaker.column shouldBe 14
         context.positionMaker.index shouldBe 26
+    }
+
+    "create token should create tokens" {
+        val context = NodeContext()
+        val token = context.createToken(ShakeTokenType.COLON)
+        token.type shouldBe ShakeTokenType.COLON
+        token.value shouldBe ":"
+        token.start shouldBe 0
+        token.end shouldBe 0
+        context.built.toString() shouldBe ":"
+    }
+
+    "create token with value should create tokens" {
+        val context = NodeContext()
+        val token = context.createToken(ShakeTokenType.IDENTIFIER, "TEST")
+        token.type shouldBe ShakeTokenType.IDENTIFIER
+        token.value shouldBe "TEST"
+        token.start shouldBe 0
+        token.end shouldBe 3
+        context.built.toString() shouldBe "TEST"
     }
 })
