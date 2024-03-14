@@ -21,20 +21,20 @@ class TypeTests : FreeSpec({
         TypeSpec.of("long") shouldBe PrimitiveTypeSpec.LONG
     }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_BYTE for 'unsigned byte'" {
-        TypeSpec.of("unsigned byte") shouldBe PrimitiveTypeSpec.UNSIGNED_BYTE
+    "Type.Companion.of should return PrimitiveType.UNSIGNED_BYTE for 'ubyte'" {
+        TypeSpec.of("ubyte") shouldBe PrimitiveTypeSpec.UNSIGNED_BYTE
     }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'unsigned shorts'" {
-        TypeSpec.of("unsigned shorts") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
+    "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'ushorts'" {
+        TypeSpec.of("ushorts") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
     }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_INT for 'unsigned int'" {
-        TypeSpec.of("unsigned int") shouldBe PrimitiveTypeSpec.UNSIGNED_INT
+    "Type.Companion.of should return PrimitiveType.UNSIGNED_INT for 'uint'" {
+        TypeSpec.of("uint") shouldBe PrimitiveTypeSpec.UNSIGNED_INT
     }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_LONG for 'unsigned long'" {
-        TypeSpec.of("unsigned long") shouldBe PrimitiveTypeSpec.UNSIGNED_LONG
+    "Type.Companion.of should return PrimitiveType.UNSIGNED_LONG for 'ulong'" {
+        TypeSpec.of("ulong") shouldBe PrimitiveTypeSpec.UNSIGNED_LONG
     }
 
     "Type.Companion.of should return PrimitiveType.FLOAT for 'float'" {
