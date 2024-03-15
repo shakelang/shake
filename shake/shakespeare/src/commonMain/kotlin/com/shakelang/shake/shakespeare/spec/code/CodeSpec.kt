@@ -20,6 +20,9 @@ import kotlin.math.max
  */
 open class CodeSpec(
 
+    /**
+     * A list of statements included in this code specification.
+     */
     open val statements: List<StatementSpec>,
 
 ) : AbstractSpec {
@@ -33,15 +36,15 @@ open class CodeSpec(
      */
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder("{")
-
-        if (statements.isNotEmpty()) builder.append("\n")
-
         val indented = ctx.indent()
 
         for (statement in statements) {
-            builder.append((1..indented.indentLevel).joinToString("") { indented.indentType })
+            builder.append("\n" + (1..indented.indentLevel).joinToString("") { indented.indentType })
             builder.append(statement.generate(indented))
         }
+
+        if (statements.isNotEmpty()) builder.append("\n")
+
         return builder.append("}").toString()
     }
 
