@@ -38,6 +38,12 @@ interface ValueSpec : AbstractSpec {
                 override fun generate(ctx: GenerationContext): String {
                     return value
                 }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) return true
+                    if (other !is ValueSpec) return false
+                    return value == other.generate(GenerationContext())
+                }
             }
         }
     }

@@ -248,20 +248,26 @@ open class IfNodeSpec(
 }
 
 open class ReturnNodeSpec(
-    value: ValueNodeSpec,
+    value: ValueNodeSpec?,
 ) : ReturnSpec(value), StatementNodeSpec {
 
-    override val value get() = super.value as ValueNodeSpec
+    override val value get() = super.value as ValueNodeSpec?
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeReturnNode {
         val returnToken = nctx.createToken(ShakeTokenType.KEYWORD_RETURN)
-        nctx.space()
-        val value = value.dump(ctx, nctx)
+
+        val value = if (value != null) {
+            nctx.space()
+            value!!.dump(ctx, nctx)
+        } else {
+            null
+        }
+
         return ShakeReturnNode(nctx.map, value, returnToken)
     }
 
     companion object {
-        fun of(spec: ReturnSpec) = ReturnNodeSpec(ValueNodeSpec.of(spec.value))
+        fun of(spec: ReturnSpec) = ReturnNodeSpec(spec.value?.let { ValueNodeSpec.of(it) })
     }
 }
 

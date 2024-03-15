@@ -37,6 +37,16 @@ interface StatementSpec : AbstractSpec {
                 override fun generate(ctx: GenerationContext): String {
                     return value
                 }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) return true
+                    if (other !is StatementSpec) return false
+                    return value == other.generate(GenerationContext())
+                }
+
+                override fun hashCode(): Int {
+                    return value.hashCode()
+                }
             }
         }
     }
@@ -60,9 +70,26 @@ open class VariableDeclarationSpec(
         if (isVal) builder.append("val ") else builder.append("var ")
         builder.append(name)
         if (type != null) builder.append(": ").append(type!!.generate(ctx))
-        builder.append(" ")
         if (value != null) builder.append(" = ").append(value!!.generate(ctx))
         return builder.toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDeclarationSpec) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (value != other.value) return false
+        if (isVal != other.isVal) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (type?.hashCode() ?: 0)
+        result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + isVal.hashCode()
+        return result
     }
 
     open class VariableDeclarationSpecBuilder
@@ -98,6 +125,11 @@ open class VariableDeclarationSpec(
             return this
         }
 
+        fun isVal(isVal: Boolean = true): VariableDeclarationSpecBuilder {
+            this.isVal = isVal
+            return this
+        }
+
         fun build(): VariableDeclarationSpec {
             return VariableDeclarationSpec(
                 name ?: throw IllegalStateException("Name not set"),
@@ -118,7 +150,21 @@ open class WhileSpec(
     open val body: CodeSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "while(${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
+        return "while (${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WhileSpec) return false
+        if (condition != other.condition) return false
+        if (body != other.body) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = condition.hashCode()
+        result = 31 * result + body.hashCode()
+        return result
     }
 
     open class WhileSpecBuilder
@@ -160,7 +206,21 @@ open class DoWhileSpec(
     open val condition: ValueSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "do ${body.generate(ctx.indent())} while(${condition.generate(ctx)})"
+        return "do ${body.generate(ctx.indent())} while (${condition.generate(ctx)})"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DoWhileSpec) return false
+        if (body != other.body) return false
+        if (condition != other.condition) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = body.hashCode()
+        result = 31 * result + condition.hashCode()
+        return result
     }
 
     open class DoWhileSpecBuilder
@@ -205,6 +265,24 @@ open class ForSpec(
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         return "for(${init.generate(ctx)}; ${condition.generate(ctx)}; ${update.generate(ctx)}) ${body.generate(ctx.indent())}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ForSpec) return false
+        if (init != other.init) return false
+        if (condition != other.condition) return false
+        if (update != other.update) return false
+        if (body != other.body) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = init.hashCode()
+        result = 31 * result + condition.hashCode()
+        result = 31 * result + update.hashCode()
+        result = 31 * result + body.hashCode()
+        return result
     }
 
     open class ForSpecBuilder
@@ -272,7 +350,23 @@ open class IfSpec(
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         val elsePart = if (elseBody != null) " else ${elseBody!!.generate(ctx.indent())}" else ""
-        return "if(${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
+        return "if (${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is IfSpec) return false
+        if (condition != other.condition) return false
+        if (body != other.body) return false
+        if (elseBody != other.elseBody) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = condition.hashCode()
+        result = 31 * result + body.hashCode()
+        result = 31 * result + (elseBody?.hashCode() ?: 0)
+        return result
     }
 
     open class IfSpecBuilder
@@ -317,10 +411,21 @@ open class IfSpec(
 }
 
 open class ReturnSpec(
-    open val value: ValueSpec,
+    open val value: ValueSpec?,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "return ${value.generate(ctx)}"
+        return "return${if (value != null) " ${value!!.generate(ctx)}" else ""}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ReturnSpec) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value?.hashCode() ?: this::class.hashCode()
     }
 
     open class ReturnSpecBuilder
@@ -328,7 +433,7 @@ open class ReturnSpec(
         var value: ValueSpec? = null,
     ) {
 
-        fun value(value: ValueSpec): ReturnSpecBuilder {
+        fun value(value: ValueSpec?): ReturnSpecBuilder {
             this.value = value
             return this
         }
@@ -343,5 +448,9 @@ open class ReturnSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
         }
+    }
+
+    companion object {
+        fun builder() = ReturnSpecBuilder()
     }
 }
