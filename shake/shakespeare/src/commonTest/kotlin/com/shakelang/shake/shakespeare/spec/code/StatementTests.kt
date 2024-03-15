@@ -318,7 +318,7 @@ class StatementTests : FreeSpec({
         )
 
         val ctx = GenerationContext()
-        spec.generate(ctx) shouldBe "for(init; condition; update) {}"
+        spec.generate(ctx) shouldBe "for (init; condition; update) {}"
     }
 
     "build ForSpec" {
