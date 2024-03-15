@@ -10,16 +10,13 @@ package com.shakelang.shake.shakespeare.nodes.spec.code
 
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeValuedNode
-import com.shakelang.shake.parser.node.values.expression.ShakeAddNode
-import com.shakelang.shake.parser.node.values.expression.ShakeLogicalAndNode
-import com.shakelang.shake.parser.node.values.expression.ShakeMulNode
-import com.shakelang.shake.parser.node.values.expression.ShakeSubNode
+import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
+import com.shakelang.shake.parser.node.values.expression.*
 import com.shakelang.shake.parser.node.values.factor.*
 import com.shakelang.shake.shakespeare.nodes.spec.AbstractNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.NamespaceNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.NodeContext
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.shake.shakespeare.spec.code.*
 
 interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
@@ -27,6 +24,7 @@ interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
 
     companion object {
         fun of(spec: ValueSpec): ValueNodeSpec = when (spec) {
+            is ValuedStatementSpec -> ValuedStatementNodeSpec.of(spec)
             is StringLiteralSpec -> StringLiteralNodeSpec.of(spec)
             is CharacterLiteralSpec -> CharacterLiteralNodeSpec.of(spec)
             is IntLiteralSpec -> IntLiteralNodeSpec.of(spec)
@@ -55,141 +53,167 @@ interface ValueNodeSpec : AbstractNodeSpec, ValueSpec {
             else -> throw IllegalArgumentException("Unknown value spec: $spec")
         }
     }
+}
 
-    open class StringLiteralNodeSpec(value: String) : StringLiteralSpec(value), ValueNodeSpec {
+open class StringLiteralNodeSpec(value: String) : StringLiteralSpec(value), ValueNodeSpec {
 
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            return ShakeStringLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.STRING, "\"$escaped\""))
-        }
-
-        companion object {
-            fun of(spec: StringLiteralSpec): StringLiteralNodeSpec = StringLiteralNodeSpec(spec.value)
-        }
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeStringLiteralNode {
+        return ShakeStringLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.STRING, "\"$escaped\""))
     }
 
-    open class CharacterLiteralNodeSpec(value: Char) : CharacterLiteralSpec(value), ValueNodeSpec {
+    companion object {
+        fun of(spec: StringLiteralSpec): StringLiteralNodeSpec = StringLiteralNodeSpec(spec.value)
+    }
+}
 
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            return ShakeCharacterLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.CHARACTER, "'$escaped'"))
-        }
+open class CharacterLiteralNodeSpec(value: Char) : CharacterLiteralSpec(value), ValueNodeSpec {
 
-        companion object {
-            fun of(spec: CharacterLiteralSpec): CharacterLiteralNodeSpec = CharacterLiteralNodeSpec(spec.value)
-        }
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeCharacterLiteralNode {
+        return ShakeCharacterLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.CHARACTER, "'$escaped'"))
     }
 
-    open class IntLiteralNodeSpec(value: Long) : IntLiteralSpec(value), ValueNodeSpec {
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            return ShakeIntegerLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.INTEGER, value.toString()))
-        }
-
-        companion object {
-            fun of(spec: IntLiteralSpec): IntLiteralNodeSpec = IntLiteralNodeSpec(spec.value)
-        }
+    companion object {
+        fun of(spec: CharacterLiteralSpec): CharacterLiteralNodeSpec = CharacterLiteralNodeSpec(spec.value)
     }
+}
 
-    open class FloatLiteralNodeSpec(value: Double) : FloatLiteralSpec(value), ValueNodeSpec {
+open class IntLiteralNodeSpec(value: Long) : IntLiteralSpec(value), ValueNodeSpec {
 
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            return ShakeDoubleLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, value.toString()))
-        }
+    constructor(value: Int) : this(value.toLong())
 
-        companion object {
-            fun of(spec: FloatLiteralSpec): FloatLiteralNodeSpec = FloatLiteralNodeSpec(spec.value)
-        }
-    }
-
-    open class BooleanLiteralNodeSpec(value: Boolean) : BooleanLiteralSpec(value), ValueNodeSpec {
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            if (value) return ShakeTrueLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_TRUE))
-            return ShakeFalseLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_FALSE))
-        }
-
-        companion object {
-            fun of(spec: BooleanLiteralSpec): BooleanLiteralNodeSpec = BooleanLiteralNodeSpec(spec.value)
-        }
-    }
-
-    open class NullLiteralNodeSpec : NullLiteralSpec(), ValueNodeSpec {
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeNullLiteralNode {
-            return ShakeNullLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_NULL))
-        }
-
-        companion object {
-            @Suppress("unused_parameter")
-            fun of(spec: NullLiteralSpec): NullLiteralNodeSpec = NullLiteralNodeSpec()
-        }
-    }
-
-    open class VariableReferenceNodeSpec(value: NamespaceSpec) : VariableReferenceSpec(value), ValueNodeSpec {
-
-        override val name: NamespaceNodeSpec
-            get() = super.name as NamespaceNodeSpec
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            return name.dump(ctx, nctx).toValue()
-        }
-
-        companion object {
-            fun of(spec: VariableReferenceSpec): VariableReferenceNodeSpec = VariableReferenceNodeSpec(spec.name)
-        }
-    }
-
-    open class AdditionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : AdditionSpec(left, right), ValueNodeSpec {
-
-        override val left: ValueNodeSpec
-            get() = super.left as ValueNodeSpec
-
-        override val right: ValueNodeSpec
-            get() = super.right as ValueNodeSpec
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            val left = this.left.dump(ctx, nctx)
-            nctx.print(" ")
-            val operator = nctx.createToken(ShakeTokenType.ADD)
-            nctx.print(" ")
-            val right = this.right.dump(ctx, nctx)
-            return ShakeAddNode(
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+        if (value < 0) {
+            val minus = nctx.createToken(ShakeTokenType.SUB)
+            return ShakeUnaryMinusNode(
                 nctx.map,
-                left,
-                right,
-                operator,
+                ShakeIntegerLiteralNode(
+                    nctx.map,
+                    nctx.createToken(ShakeTokenType.INTEGER, (-value).toString()),
+                ),
+                minus,
             )
         }
-
-        companion object {
-            fun of(spec: AdditionSpec): AdditionNodeSpec = AdditionNodeSpec(of(spec.left), of(spec.right))
-        }
+        return ShakeIntegerLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.INTEGER, value.toString()))
     }
 
-    open class SubtractionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : SubtractionSpec(left, right), ValueNodeSpec {
+    companion object {
+        fun of(spec: IntLiteralSpec): IntLiteralNodeSpec = IntLiteralNodeSpec(spec.value)
+    }
+}
 
-        override val left: ValueNodeSpec
-            get() = super.left as ValueNodeSpec
+open class FloatLiteralNodeSpec(value: Double) : FloatLiteralSpec(value), ValueNodeSpec {
 
-        override val right: ValueNodeSpec
-            get() = super.right as ValueNodeSpec
-
-        override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-            val left = this.left.dump(ctx, nctx)
-            nctx.print(" ")
-            val operator = nctx.createToken(ShakeTokenType.SUB)
-            nctx.print(" ")
-            val right = this.right.dump(ctx, nctx)
-            return ShakeSubNode(
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+        if (value < 0) {
+            val minus = nctx.createToken(ShakeTokenType.SUB)
+            return ShakeUnaryMinusNode(
                 nctx.map,
-                left,
-                right,
-                operator,
+                ShakeFloatLiteralNode(
+                    nctx.map,
+                    nctx.createToken(ShakeTokenType.FLOAT, (-value).toString()),
+                ),
+                minus,
             )
         }
+        return ShakeFloatLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, (value).toString()))
+    }
 
-        companion object {
-            fun of(spec: SubtractionSpec): SubtractionNodeSpec = SubtractionNodeSpec(of(spec.left), of(spec.right))
-        }
+    companion object {
+        fun of(spec: FloatLiteralSpec): FloatLiteralNodeSpec = FloatLiteralNodeSpec(spec.value)
+    }
+}
+
+open class BooleanLiteralNodeSpec(value: Boolean) : BooleanLiteralSpec(value), ValueNodeSpec {
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+        if (value) return ShakeTrueLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_TRUE))
+        return ShakeFalseLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_FALSE))
+    }
+
+    companion object {
+        fun of(spec: BooleanLiteralSpec): BooleanLiteralNodeSpec = BooleanLiteralNodeSpec(spec.value)
+    }
+}
+
+open class NullLiteralNodeSpec : NullLiteralSpec(), ValueNodeSpec {
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeNullLiteralNode {
+        return ShakeNullLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.KEYWORD_NULL))
+    }
+
+    companion object {
+        @Suppress("unused_parameter")
+        fun of(spec: NullLiteralSpec): NullLiteralNodeSpec = NullLiteralNodeSpec()
+    }
+}
+
+open class VariableReferenceNodeSpec(value: NamespaceNodeSpec) : VariableReferenceSpec(value), ValueNodeSpec {
+
+    constructor(vararg value: String) : this(NamespaceNodeSpec(*value))
+
+    override val name: NamespaceNodeSpec
+        get() = super.name as NamespaceNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableUsageNode {
+        return name.dump(ctx, nctx).toValue()
+    }
+
+    companion object {
+        fun of(spec: VariableReferenceSpec): VariableReferenceNodeSpec = VariableReferenceNodeSpec(NamespaceNodeSpec.of(spec.name))
+    }
+}
+
+open class AdditionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : AdditionSpec(left, right), ValueNodeSpec {
+
+    override val left: ValueNodeSpec
+        get() = super.left as ValueNodeSpec
+
+    override val right: ValueNodeSpec
+        get() = super.right as ValueNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeAddNode {
+        val left = this.left.dump(ctx, nctx)
+        nctx.space()
+        val operator = nctx.createToken(ShakeTokenType.ADD)
+        nctx.space()
+        val right = this.right.dump(ctx, nctx)
+        return ShakeAddNode(
+            nctx.map,
+            left,
+            right,
+            operator,
+        )
+    }
+
+    companion object {
+        fun of(spec: AdditionSpec): AdditionNodeSpec = AdditionNodeSpec(ValueNodeSpec.of(spec.left), ValueNodeSpec.of(spec.right))
+    }
+}
+
+open class SubtractionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : SubtractionSpec(left, right), ValueNodeSpec {
+
+    override val left: ValueNodeSpec
+        get() = super.left as ValueNodeSpec
+
+    override val right: ValueNodeSpec
+        get() = super.right as ValueNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeSubNode {
+        val left = this.left.dump(ctx, nctx)
+        nctx.space()
+        val operator = nctx.createToken(ShakeTokenType.SUB)
+        nctx.space()
+        val right = this.right.dump(ctx, nctx)
+        return ShakeSubNode(
+            nctx.map,
+            left,
+            right,
+            operator,
+        )
+    }
+
+    companion object {
+        fun of(spec: SubtractionSpec): SubtractionNodeSpec = SubtractionNodeSpec(ValueNodeSpec.of(spec.left), ValueNodeSpec.of(spec.right))
     }
 }
 
@@ -201,11 +225,11 @@ open class MultiplicationNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : M
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeMulNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.MUL)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
         return ShakeMulNode(
             nctx.map,
@@ -231,13 +255,13 @@ open class DivisionNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Divisio
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeDivNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.DIV)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakeDivNode(
             nctx.map,
             left,
             right,
@@ -261,13 +285,13 @@ open class ModuloNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : ModuloSpe
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeModNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.MOD)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakeModNode(
             nctx.map,
             left,
             right,
@@ -291,13 +315,13 @@ open class PowerNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : PowerSpec(
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakePowNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.POW)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeMulNode(
+        return ShakePowNode(
             nctx.map,
             left,
             right,
@@ -318,9 +342,9 @@ open class UnaryMinusNodeSpec(value: ValueNodeSpec) : UnaryMinusSpec(value), Val
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("-")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeUnaryMinusNode {
+        val minus = nctx.createToken(ShakeTokenType.SUB)
+        return ShakeUnaryMinusNode(nctx.map, value.dump(ctx, nctx), minus)
     }
 
     companion object {
@@ -335,9 +359,9 @@ open class UnaryPlusNodeSpec(value: ValueNodeSpec) : UnaryPlusSpec(value), Value
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("+")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeUnaryPlusNode {
+        val plus = nctx.createToken(ShakeTokenType.ADD)
+        return ShakeUnaryPlusNode(nctx.map, value.dump(ctx, nctx), plus)
     }
 
     companion object {
@@ -353,11 +377,11 @@ open class LogicalAndNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logic
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalAndNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_AND)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
         return ShakeLogicalAndNode(
             nctx.map,
@@ -383,13 +407,13 @@ open class LogicalOrNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logica
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalOrNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_OR)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLogicalOrNode(
             nctx.map,
             left,
             right,
@@ -410,9 +434,10 @@ open class LogicalNotNodeSpec(value: ValueNodeSpec) : LogicalNotSpec(value), Val
     override val value: ValueNodeSpec
         get() = super.value as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
-        nctx.print("!")
-        return value.dump(ctx, nctx)
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalNotNode {
+        val operator = nctx.createToken(ShakeTokenType.LOGICAL_NOT)
+        val value = this.value.dump(ctx, nctx)
+        return ShakeLogicalNotNode(nctx.map, value, operator)
     }
 
     companion object {
@@ -428,13 +453,13 @@ open class LogicalXorNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Logic
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLogicalXOrNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.LOGICAL_XOR)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLogicalXOrNode(
             nctx.map,
             left,
             right,
@@ -458,13 +483,13 @@ open class EqualityNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Equalit
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeEqualNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.EQ_EQUALS)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeEqualNode(
             nctx.map,
             left,
             right,
@@ -488,13 +513,13 @@ open class InequalityNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Inequ
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeNotEqualNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.NOT_EQUALS)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeNotEqualNode(
             nctx.map,
             left,
             right,
@@ -518,13 +543,13 @@ open class GreaterThanNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Grea
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeGreaterThanNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.BIGGER)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeGreaterThanNode(
             nctx.map,
             left,
             right,
@@ -548,13 +573,13 @@ open class GreaterThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec)
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeGreaterThanOrEqualNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.BIGGER_EQUALS)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeGreaterThanOrEqualNode(
             nctx.map,
             left,
             right,
@@ -578,13 +603,13 @@ open class LessThanNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : LessTha
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLessThanNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.SMALLER)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLessThanNode(
             nctx.map,
             left,
             right,
@@ -608,13 +633,13 @@ open class LessThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : 
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeValuedNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeLessThanOrEqualNode {
         val left = this.left.dump(ctx, nctx)
-        nctx.print(" ")
+        nctx.space()
         val operator = nctx.createToken(ShakeTokenType.SMALLER_EQUALS)
-        nctx.print(" ")
+        nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeLogicalAndNode(
+        return ShakeLessThanOrEqualNode(
             nctx.map,
             left,
             right,
@@ -629,3 +654,30 @@ open class LessThanOrEqualNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : 
         )
     }
 }
+
+fun ValueSpec.toNodeSpec(): ValueNodeSpec = ValueNodeSpec.of(this)
+fun StringLiteralSpec.toNodeSpec(): StringLiteralNodeSpec = StringLiteralNodeSpec.of(this)
+fun CharacterLiteralSpec.toNodeSpec(): CharacterLiteralNodeSpec = CharacterLiteralNodeSpec.of(this)
+fun IntLiteralSpec.toNodeSpec(): IntLiteralNodeSpec = IntLiteralNodeSpec.of(this)
+fun FloatLiteralSpec.toNodeSpec(): FloatLiteralNodeSpec = FloatLiteralNodeSpec.of(this)
+fun BooleanLiteralSpec.toNodeSpec(): BooleanLiteralNodeSpec = BooleanLiteralNodeSpec.of(this)
+fun NullLiteralSpec.toNodeSpec(): NullLiteralNodeSpec = NullLiteralNodeSpec.of(this)
+fun VariableReferenceSpec.toNodeSpec(): VariableReferenceNodeSpec = VariableReferenceNodeSpec.of(this)
+fun AdditionSpec.toNodeSpec(): AdditionNodeSpec = AdditionNodeSpec.of(this)
+fun SubtractionSpec.toNodeSpec(): SubtractionNodeSpec = SubtractionNodeSpec.of(this)
+fun MultiplicationSpec.toNodeSpec(): MultiplicationNodeSpec = MultiplicationNodeSpec.of(this)
+fun DivisionSpec.toNodeSpec(): DivisionNodeSpec = DivisionNodeSpec.of(this)
+fun ModuloSpec.toNodeSpec(): ModuloNodeSpec = ModuloNodeSpec.of(this)
+fun PowerSpec.toNodeSpec(): PowerNodeSpec = PowerNodeSpec.of(this)
+fun UnaryMinusSpec.toNodeSpec(): UnaryMinusNodeSpec = UnaryMinusNodeSpec.of(this)
+fun UnaryPlusSpec.toNodeSpec(): UnaryPlusNodeSpec = UnaryPlusNodeSpec.of(this)
+fun LogicalAndSpec.toNodeSpec(): LogicalAndNodeSpec = LogicalAndNodeSpec.of(this)
+fun LogicalOrSpec.toNodeSpec(): LogicalOrNodeSpec = LogicalOrNodeSpec.of(this)
+fun LogicalNotSpec.toNodeSpec(): LogicalNotNodeSpec = LogicalNotNodeSpec.of(this)
+fun LogicalXorSpec.toNodeSpec(): LogicalXorNodeSpec = LogicalXorNodeSpec.of(this)
+fun EqualitySpec.toNodeSpec(): EqualityNodeSpec = EqualityNodeSpec.of(this)
+fun InequalitySpec.toNodeSpec(): InequalityNodeSpec = InequalityNodeSpec.of(this)
+fun GreaterThanSpec.toNodeSpec(): GreaterThanNodeSpec = GreaterThanNodeSpec.of(this)
+fun GreaterThanOrEqualSpec.toNodeSpec(): GreaterThanOrEqualNodeSpec = GreaterThanOrEqualNodeSpec.of(this)
+fun LessThanSpec.toNodeSpec(): LessThanNodeSpec = LessThanNodeSpec.of(this)
+fun LessThanOrEqualSpec.toNodeSpec(): LessThanOrEqualNodeSpec = LessThanOrEqualNodeSpec.of(this)

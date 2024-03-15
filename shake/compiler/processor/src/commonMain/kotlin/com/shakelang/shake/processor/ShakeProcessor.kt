@@ -110,7 +110,7 @@ open class ShakeASTProcessor {
         return when (value) {
             // Literals
             is ShakeIntegerLiteralNode -> visitIntegerNode(scope, value)
-            is ShakeDoubleLiteralNode -> visitDoubleNode(scope, value)
+            is ShakeFloatLiteralNode -> visitDoubleNode(scope, value)
             is ShakeStringLiteralNode -> visitStringNode(scope, value)
             is ShakeTrueLiteralNode -> visitLogicalTrueNode(scope, value)
             is ShakeFalseLiteralNode -> visitLogicalFalseNode(scope, value)
@@ -193,7 +193,7 @@ open class ShakeASTProcessor {
         }
     }
 
-    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeDoubleLiteralNode): CreationShakeDoubleLiteral {
+    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeFloatLiteralNode): CreationShakeDoubleLiteral {
         return CreationShakeDoubleLiteral(scope.project, n.value)
     }
 

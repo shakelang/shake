@@ -10,6 +10,7 @@ package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
+import kotlin.math.max
 
 /**
  * Represents a specification of code in the Shake programming language.
@@ -42,6 +43,21 @@ open class CodeSpec(
             builder.append(statement.generate(indented))
         }
         return builder.append("}").toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CodeSpec) return false
+
+        for (i in 0..max(statements.size, other.statements.size)) {
+            if (statements.getOrNull(i) != other.statements.getOrNull(i)) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return statements.hashCode()
     }
 
     /**

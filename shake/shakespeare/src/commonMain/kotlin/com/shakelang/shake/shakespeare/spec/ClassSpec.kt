@@ -12,9 +12,9 @@ import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 
 open class ConstructorSpec(
-    val parameters: List<ParameterSpec>,
-    val body: CodeSpec,
-    val name: NamespaceSpec? = null,
+    open val parameters: List<ParameterSpec>,
+    open val body: CodeSpec,
+    open val name: NamespaceSpec? = null,
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
@@ -102,7 +102,7 @@ open class ConstructorSpec(
 }
 
 interface ClassLikeSpec : AbstractSpec {
-    val name: NamespaceSpec
+    val name: String
     val methods: List<MethodSpec>
     val fields: List<FieldSpec>
     val classes: List<ClassLikeSpec>
@@ -110,13 +110,15 @@ interface ClassLikeSpec : AbstractSpec {
 }
 
 open class ClassSpec(
-    override val name: NamespaceSpec,
+    override val name: String,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
-    val constructors: List<ConstructorSpec>,
+    open val constructors: List<ConstructorSpec>,
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
+    val isStatic: Boolean = false,
+    val isNative: Boolean = false,
     override val accessModifier: AccessModifier = AccessModifier.PUBLIC,
 ) : ClassLikeSpec {
     override fun generate(ctx: GenerationContext): String {
@@ -146,16 +148,18 @@ open class ClassSpec(
 
     open class ClassSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         val methods: MutableList<MethodSpec> = ArrayList()
         val fields: MutableList<FieldSpec> = ArrayList()
         val constructors: MutableList<ConstructorSpec> = ArrayList()
         val classes: MutableList<ClassSpec> = ArrayList()
         var isAbstract = false
         var isFinal = false
+        var isStatic = false
+        var isNative = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: NamespaceSpec): ClassSpecBuilder {
+        fun name(name: String): ClassSpecBuilder {
             this.name = name
             return this
         }
@@ -190,13 +194,34 @@ open class ClassSpec(
             return this
         }
 
+        fun static(isStatic: Boolean = true): ClassSpecBuilder {
+            this.isStatic = isStatic
+            return this
+        }
+
+        fun native(isNative: Boolean = true): ClassSpecBuilder {
+            this.isNative = isNative
+            return this
+        }
+
         fun accessModifier(accessModifier: AccessModifier): ClassSpecBuilder {
             this.accessModifier = accessModifier
             return this
         }
 
         fun build(): ClassSpec {
-            return ClassSpec(name!!, methods, fields, classes, constructors, isAbstract, isFinal, accessModifier)
+            return ClassSpec(
+                name ?: throw IllegalStateException("Name must be set"),
+                methods,
+                fields,
+                classes,
+                constructors,
+                isAbstract,
+                isFinal,
+                isStatic,
+                isNative,
+                accessModifier,
+            )
         }
     }
 
@@ -208,7 +233,7 @@ open class ClassSpec(
 }
 
 open class InterfaceSpec(
-    override val name: NamespaceSpec,
+    override val name: String,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
@@ -229,14 +254,14 @@ open class InterfaceSpec(
 
     class InterfaceSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var isAbstract = false
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: NamespaceSpec): InterfaceSpecBuilder {
+        fun name(name: String): InterfaceSpecBuilder {
             this.name = name
             return this
         }
@@ -279,8 +304,8 @@ open class InterfaceSpec(
 }
 
 open class EnumSpec(
-    override val name: NamespaceSpec,
-    val constants: List<NamespaceSpec>,
+    override val name: String,
+    open val constants: List<NamespaceSpec>,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec>,
@@ -302,14 +327,14 @@ open class EnumSpec(
 
     class EnumSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         val constants = mutableListOf<NamespaceSpec>()
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: NamespaceSpec): EnumSpecBuilder {
+        fun name(name: String): EnumSpecBuilder {
             this.name = name
             return this
         }
@@ -352,7 +377,7 @@ open class EnumSpec(
 }
 
 open class ObjectSpec(
-    override val name: NamespaceSpec,
+    override val name: String,
     override val methods: List<MethodSpec>,
     override val fields: List<FieldSpec>,
     override val classes: List<ClassLikeSpec> = emptyList(),
@@ -366,7 +391,6 @@ open class ObjectSpec(
         builder.append(" {")
         for (field in fields) {
             builder.append(field.generate(ctx))
-            builder.append(";")
         }
         for (method in methods) {
             builder.append(method.generate(ctx))
@@ -377,13 +401,13 @@ open class ObjectSpec(
 
     class ObjectSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
+        var name: String? = null
         val methods = mutableListOf<MethodSpec>()
         val fields = mutableListOf<FieldSpec>()
         val classes = mutableListOf<ClassLikeSpec>()
         var accessModifier = AccessModifier.PUBLIC
 
-        fun name(name: NamespaceSpec): ObjectSpecBuilder {
+        fun name(name: String): ObjectSpecBuilder {
             this.name = name
             return this
         }

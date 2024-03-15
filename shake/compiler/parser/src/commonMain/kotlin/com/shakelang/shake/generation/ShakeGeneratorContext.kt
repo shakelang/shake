@@ -11,8 +11,8 @@ import com.shakelang.shake.parser.node.statements.*
 import com.shakelang.shake.parser.node.values.ShakeCastNode
 import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
 import com.shakelang.shake.parser.node.values.expression.*
-import com.shakelang.shake.parser.node.values.factor.ShakeDoubleLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeFalseLiteralNode
+import com.shakelang.shake.parser.node.values.factor.ShakeFloatLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 
@@ -20,7 +20,7 @@ import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl, context: C): T {
         if (n is ShakeBlockNode) return visitTree(n, context)
-        if (n is ShakeDoubleLiteralNode) return visitDoubleNode(n, context)
+        if (n is ShakeFloatLiteralNode) return visitDoubleNode(n, context)
         if (n is ShakeIntegerLiteralNode) return visitIntegerNode(n, context)
         if (n is ShakeAddNode) return visitAddNode(n, context)
         if (n is ShakeSubNode) return visitSubNode(n, context)
@@ -61,7 +61,7 @@ abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.Shak
     }
 
     abstract fun visitTree(t: ShakeBlockNode?, context: C): T
-    abstract fun visitDoubleNode(n: ShakeDoubleLiteralNode?, context: C): T
+    abstract fun visitDoubleNode(n: ShakeFloatLiteralNode?, context: C): T
     abstract fun visitIntegerNode(n: ShakeIntegerLiteralNode?, context: C): T
     abstract fun visitAddNode(n: ShakeAddNode?, context: C): T
     abstract fun visitSubNode(n: ShakeSubNode?, context: C): T

@@ -16,23 +16,23 @@ class ParameterSpecTests : FreeSpec(
     {
 
         "should create a parameter" {
-            val identifier = NamespaceSpec("name")
-            val type = Type.of("int")
+            val identifier = "name"
+            val type = TypeSpec.of("int")
             val parameter = ParameterSpec(identifier, type)
             parameter.name shouldBe identifier
             parameter.type shouldBe type
         }
 
         "should generate a parameter" {
-            val identifier = NamespaceSpec("name")
-            val type = Type.of("int")
+            val identifier = "name"
+            val type = TypeSpec.of("int")
             val parameter = ParameterSpec(identifier, type)
-            parameter.generate(GenerationContext()) shouldBe "int name"
+            parameter.generate(GenerationContext()) shouldBe "name: int"
         }
 
         "build should create a parameter" {
-            val identifier = NamespaceSpec("name")
-            val type = Type.of("int")
+            val identifier = "name"
+            val type = TypeSpec.of("int")
             val parameter = ParameterSpec.builder().name(identifier).type(type).build()
             parameter.name shouldBe identifier
             parameter.type shouldBe type
@@ -44,8 +44,8 @@ class MethodSpecTests : FreeSpec(
     {
 
         "should create a method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -55,15 +55,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -82,8 +85,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create static method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = true
@@ -93,15 +96,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -110,8 +116,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create abstract method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -121,15 +127,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -138,8 +147,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create final method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -149,15 +158,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -166,8 +178,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create override method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -177,15 +189,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -193,9 +208,40 @@ class MethodSpecTests : FreeSpec(
             method.isOverride shouldBe true
         }
 
+        "create operator method" {
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
+            val parameters = listOf<ParameterSpec>()
+            val body = CodeSpec.empty()
+            val isStatic = false
+            val isAbstract = false
+            val isFinal = false
+            val isOverride = false
+            val accessModifier = AccessModifier.PUBLIC
+            val isSynchronized = false
+            val isNative = false
+            val isOperator = true
+            val method = MethodSpec(
+                identifier,
+                returnType,
+                null,
+                parameters,
+                body,
+                isStatic,
+                isAbstract,
+                isFinal,
+                isOverride,
+                isOperator,
+                accessModifier,
+                isSynchronized,
+                isNative,
+            )
+            method.isOperator shouldBe true
+        }
+
         "create private method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -205,15 +251,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PRIVATE
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -222,8 +271,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create synchronized method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -233,15 +282,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = true
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -250,8 +302,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "create native method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -261,15 +313,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = true
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -278,11 +333,11 @@ class MethodSpecTests : FreeSpec(
         }
 
         "should generate a method with parameters" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf(
-                ParameterSpec.builder().name(NamespaceSpec("param1")).type(Type.of("int")).build(),
-                ParameterSpec.builder().name(NamespaceSpec("param2")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name("param1").type(TypeSpec.of("int")).build(),
+                ParameterSpec.builder().name("param2").type(TypeSpec.of("int")).build(),
             )
             val body = CodeSpec.empty()
             val isStatic = false
@@ -292,15 +347,18 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
@@ -309,8 +367,8 @@ class MethodSpecTests : FreeSpec(
         }
 
         "should generate a method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -320,25 +378,28 @@ class MethodSpecTests : FreeSpec(
             val accessModifier = AccessModifier.PUBLIC
             val isSynchronized = false
             val isNative = false
+            val isOperator = false
             val method = MethodSpec(
                 identifier,
                 returnType,
+                null,
                 parameters,
                 body,
                 isStatic,
                 isAbstract,
                 isFinal,
                 isOverride,
+                isOperator,
                 accessModifier,
                 isSynchronized,
                 isNative,
             )
-            method.generate(GenerationContext()) shouldBe "public int name() {}"
+            method.generate(GenerationContext()) shouldBe "public fun name(): int {}"
         }
 
         "builder should create a method" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val isStatic = false
@@ -375,11 +436,11 @@ class MethodSpecTests : FreeSpec(
         }
 
         "builder should create a method with parameters" {
-            val identifier = NamespaceSpec("name")
-            val returnType = Type.of("int")
+            val identifier = "name"
+            val returnType = TypeSpec.of("int")
             val parameters = listOf(
-                ParameterSpec.builder().name(NamespaceSpec("param1")).type(Type.of("int")).build(),
-                ParameterSpec.builder().name(NamespaceSpec("param2")).type(Type.of("int")).build(),
+                ParameterSpec.builder().name("param1").type(TypeSpec.of("int")).build(),
+                ParameterSpec.builder().name("param2").type(TypeSpec.of("int")).build(),
             )
             val body = CodeSpec.empty()
             val isStatic = false

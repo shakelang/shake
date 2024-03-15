@@ -12,10 +12,10 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 /**
- * A [ValuedAssignmentSpec] is a StatementSpec and a ValueSpec at the same time
+ * A [ValuedStatementSpec] is a StatementSpec and a ValueSpec at the same time
  * @since 0.1.0
  */
-interface ValuedAssignmentSpec : StatementSpec, ValueSpec
+interface ValuedStatementSpec : StatementSpec, ValueSpec
 
 /**
  * A variable assignment assigns a value to a variable
@@ -31,7 +31,7 @@ interface ValuedAssignmentSpec : StatementSpec, ValueSpec
 open class VariableAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableAssignmentSpec]
@@ -140,7 +140,7 @@ open class VariableAssignmentSpec(
 open class VariableAdditionAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableAdditionAssignmentSpec]
@@ -249,7 +249,7 @@ open class VariableAdditionAssignmentSpec(
 open class VariableSubtractionAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableSubtractionAssignmentSpec]
@@ -358,7 +358,7 @@ open class VariableSubtractionAssignmentSpec(
 open class VariableMultiplicationAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableMultiplicationAssignmentSpec]
@@ -467,7 +467,7 @@ open class VariableMultiplicationAssignmentSpec(
 open class VariableDivisionAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableDivisionAssignmentSpec]
@@ -576,7 +576,7 @@ open class VariableDivisionAssignmentSpec(
 open class VariableModuloAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableModuloAssignmentSpec]
@@ -685,7 +685,7 @@ open class VariableModuloAssignmentSpec(
 open class VariablePowerAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariablePowerAssignmentSpec]
@@ -794,7 +794,7 @@ open class VariablePowerAssignmentSpec(
 open class VariableBitwiseAndAssignmentSpec(
     open val name: NamespaceSpec,
     open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableBitwiseAndAssignmentSpec]
@@ -903,7 +903,7 @@ open class VariableBitwiseAndAssignmentSpec(
 open class VariableBitwiseOrAssignmentSpec(
     val name: NamespaceSpec,
     val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableBitwiseOrAssignmentSpec]
@@ -1012,7 +1012,7 @@ open class VariableBitwiseOrAssignmentSpec(
 open class VariableBitwiseXorAssignmentSpec(
     val name: NamespaceSpec,
     val value: ValueSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableBitwiseXorAssignmentSpec]
@@ -1118,7 +1118,7 @@ open class VariableBitwiseXorAssignmentSpec(
  */
 open class VariableIncrementBeforeSpec(
     open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableIncrementBeforeSpec]
@@ -1199,7 +1199,7 @@ open class VariableIncrementBeforeSpec(
  */
 open class VariableIncrementAfterSpec(
     open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableIncrementAfterSpec]
@@ -1280,7 +1280,7 @@ open class VariableIncrementAfterSpec(
  */
 open class VariableDecrementBeforeSpec(
     open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableDecrementBeforeSpec]
@@ -1361,7 +1361,7 @@ open class VariableDecrementBeforeSpec(
  */
 open class VariableDecrementAfterSpec(
     open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [VariableDecrementAfterSpec]

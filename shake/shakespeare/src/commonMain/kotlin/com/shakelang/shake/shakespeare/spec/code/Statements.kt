@@ -10,8 +10,7 @@ package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import com.shakelang.shake.shakespeare.spec.NamespaceSpec
-import com.shakelang.shake.shakespeare.spec.Type
+import com.shakelang.shake.shakespeare.spec.TypeSpec
 
 /**
  * A [StatementSpec] is a specification for a statement in the code
@@ -38,6 +37,16 @@ interface StatementSpec : AbstractSpec {
                 override fun generate(ctx: GenerationContext): String {
                     return value
                 }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) return true
+                    if (other !is StatementSpec) return false
+                    return value == other.generate(GenerationContext())
+                }
+
+                override fun hashCode(): Int {
+                    return value.hashCode()
+                }
             }
         }
     }
@@ -51,40 +60,58 @@ interface StatementSpec : AbstractSpec {
  * @since 0.1.0
  */
 open class VariableDeclarationSpec(
-    val name: NamespaceSpec,
-    val type: Type,
-    val value: ValueSpec?,
+    val name: String,
+    open val type: TypeSpec?,
+    open val value: ValueSpec?,
     val isVal: Boolean = true,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
         if (isVal) builder.append("val ") else builder.append("var ")
-        builder.append(name.name).append(": ")
-        builder.append(type.generate(ctx)).append(" ")
-        if (value != null) builder.append(" = ").append(value.generate(ctx))
+        builder.append(name)
+        if (type != null) builder.append(": ").append(type!!.generate(ctx))
+        if (value != null) builder.append(" = ").append(value!!.generate(ctx))
         return builder.toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDeclarationSpec) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (value != other.value) return false
+        if (isVal != other.isVal) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (type?.hashCode() ?: 0)
+        result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + isVal.hashCode()
+        return result
     }
 
     open class VariableDeclarationSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var type: Type? = null,
+        var name: String? = null,
+        var type: TypeSpec? = null,
         var value: ValueSpec? = null,
         var isVal: Boolean = true,
     ) {
 
-        fun name(name: NamespaceSpec): VariableDeclarationSpecBuilder {
+        fun name(name: String): VariableDeclarationSpecBuilder {
             this.name = name
             return this
         }
 
-        fun type(type: Type): VariableDeclarationSpecBuilder {
+        fun type(type: TypeSpec): VariableDeclarationSpecBuilder {
             this.type = type
             return this
         }
 
         fun type(type: String): VariableDeclarationSpecBuilder {
-            this.type = Type.of(type)
+            this.type = TypeSpec.of(type)
             return this
         }
 
@@ -95,6 +122,11 @@ open class VariableDeclarationSpec(
 
         fun value(value: String): VariableDeclarationSpecBuilder {
             this.value = ValueSpec.of(value)
+            return this
+        }
+
+        fun isVal(isVal: Boolean = true): VariableDeclarationSpecBuilder {
+            this.isVal = isVal
             return this
         }
 
@@ -114,11 +146,25 @@ open class VariableDeclarationSpec(
 }
 
 open class WhileSpec(
-    val condition: ValueSpec,
-    val body: CodeSpec,
+    open val condition: ValueSpec,
+    open val body: CodeSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "while(${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
+        return "while (${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WhileSpec) return false
+        if (condition != other.condition) return false
+        if (body != other.body) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = condition.hashCode()
+        result = 31 * result + body.hashCode()
+        return result
     }
 
     open class WhileSpecBuilder
@@ -156,11 +202,25 @@ open class WhileSpec(
 }
 
 open class DoWhileSpec(
-    val body: CodeSpec,
-    val condition: ValueSpec,
+    open val body: CodeSpec,
+    open val condition: ValueSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "do ${body.generate(ctx.indent())} while(${condition.generate(ctx)})"
+        return "do ${body.generate(ctx.indent())} while (${condition.generate(ctx)})"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DoWhileSpec) return false
+        if (body != other.body) return false
+        if (condition != other.condition) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = body.hashCode()
+        result = 31 * result + condition.hashCode()
+        return result
     }
 
     open class DoWhileSpecBuilder
@@ -198,13 +258,31 @@ open class DoWhileSpec(
 }
 
 open class ForSpec(
-    val init: StatementSpec,
-    val condition: ValueSpec,
-    val update: StatementSpec,
-    val body: CodeSpec,
+    open val init: StatementSpec,
+    open val condition: ValueSpec,
+    open val update: StatementSpec,
+    open val body: CodeSpec,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
         return "for(${init.generate(ctx)}; ${condition.generate(ctx)}; ${update.generate(ctx)}) ${body.generate(ctx.indent())}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ForSpec) return false
+        if (init != other.init) return false
+        if (condition != other.condition) return false
+        if (update != other.update) return false
+        if (body != other.body) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = init.hashCode()
+        result = 31 * result + condition.hashCode()
+        result = 31 * result + update.hashCode()
+        result = 31 * result + body.hashCode()
+        return result
     }
 
     open class ForSpecBuilder
@@ -266,13 +344,29 @@ open class ForSpec(
 }
 
 open class IfSpec(
-    val condition: ValueSpec,
-    val body: CodeSpec,
-    val elseBody: CodeSpec?,
+    open val condition: ValueSpec,
+    open val body: CodeSpec,
+    open val elseBody: CodeSpec?,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        val elsePart = if (elseBody != null) " else ${elseBody.generate(ctx.indent())}" else ""
-        return "if(${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
+        val elsePart = if (elseBody != null) " else ${elseBody!!.generate(ctx.indent())}" else ""
+        return "if (${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is IfSpec) return false
+        if (condition != other.condition) return false
+        if (body != other.body) return false
+        if (elseBody != other.elseBody) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = condition.hashCode()
+        result = 31 * result + body.hashCode()
+        result = 31 * result + (elseBody?.hashCode() ?: 0)
+        return result
     }
 
     open class IfSpecBuilder
@@ -317,10 +411,21 @@ open class IfSpec(
 }
 
 open class ReturnSpec(
-    val value: ValueSpec,
+    open val value: ValueSpec?,
 ) : StatementSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "return ${value.generate(ctx)}"
+        return "return${if (value != null) " ${value!!.generate(ctx)}" else ""}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ReturnSpec) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value?.hashCode() ?: this::class.hashCode()
     }
 
     open class ReturnSpecBuilder
@@ -328,7 +433,7 @@ open class ReturnSpec(
         var value: ValueSpec? = null,
     ) {
 
-        fun value(value: ValueSpec): ReturnSpecBuilder {
+        fun value(value: ValueSpec?): ReturnSpecBuilder {
             this.value = value
             return this
         }
@@ -343,5 +448,9 @@ open class ReturnSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
         }
+    }
+
+    companion object {
+        fun builder() = ReturnSpecBuilder()
     }
 }
