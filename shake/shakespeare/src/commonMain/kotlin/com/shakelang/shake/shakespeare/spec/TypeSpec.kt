@@ -8,8 +8,6 @@
 
 package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.AbstractSpec
-
 interface TypeSpec : AbstractSpec {
     override fun generate(ctx: GenerationContext): String
 

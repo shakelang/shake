@@ -8,7 +8,7 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
-import com.shakelang.shake.shakespeare.AbstractSpec
+import com.shakelang.shake.shakespeare.spec.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.util.parseutils.characters.Characters

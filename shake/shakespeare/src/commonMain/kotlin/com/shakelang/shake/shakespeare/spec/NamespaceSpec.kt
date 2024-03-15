@@ -1,7 +1,5 @@
 package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.AbstractSpec
-
 open class NamespaceSpec(vararg name: String) : AbstractSpec {
 
     val name = name.flatMap { it.split(".") }.toTypedArray()
