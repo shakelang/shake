@@ -208,3 +208,9 @@ tasks.named<KotlinJvmTest>("jvmTest") {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinTest::class).configureEach {
     reports.junitXml.required.set(true)
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class) {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xexpect-actual-classes")
+    }
+}
