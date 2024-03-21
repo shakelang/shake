@@ -58,15 +58,15 @@ open class ObjectTypeSpec(open val namespace: NamespaceSpec) : TypeSpec {
 
 enum class PrimitiveTypeSpec(val type: String) : TypeSpec {
     BYTE("byte"),
-    SHORT("shorts"),
+    SHORT("short"),
     INT("int"),
     LONG("long"),
-    UNSIGNED_BYTE("unsigned byte"),
-    UNSIGNED_SHORT("unsigned shorts"),
-    UNSIGNED_INT("unsigned int"),
-    UNSIGNED_LONG("unsigned long"),
+    UNSIGNED_BYTE("ubyte"),
+    UNSIGNED_SHORT("ushort"),
+    UNSIGNED_INT("uint"),
+    UNSIGNED_LONG("ulong"),
     FLOAT("float"),
-    DOUBLE("doubles"),
+    DOUBLE("double"),
     CHAR("char"),
     BOOLEAN("boolean"),
     ;

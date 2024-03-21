@@ -9,13 +9,13 @@
 package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
-import io.kotest.core.spec.style.FreeSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 
-class ParameterSpecTests : FreeSpec(
+class ParameterSpecTests : FlatTestSpec(
     {
 
-        "should create a parameter" {
+        it("should create a parameter") {
             val identifier = "name"
             val type = TypeSpec.of("int")
             val parameter = ParameterSpec(identifier, type)
@@ -23,14 +23,14 @@ class ParameterSpecTests : FreeSpec(
             parameter.type shouldBe type
         }
 
-        "should generate a parameter" {
+        it("should generate a parameter") {
             val identifier = "name"
             val type = TypeSpec.of("int")
             val parameter = ParameterSpec(identifier, type)
             parameter.generate(GenerationContext()) shouldBe "name: int"
         }
 
-        "build should create a parameter" {
+        it("build should create a parameter") {
             val identifier = "name"
             val type = TypeSpec.of("int")
             val parameter = ParameterSpec.builder().name(identifier).type(type).build()
@@ -40,10 +40,10 @@ class ParameterSpecTests : FreeSpec(
     },
 )
 
-class MethodSpecTests : FreeSpec(
+class MethodSpecTests : FlatTestSpec(
     {
 
-        "should create a method" {
+        it("should create a method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -84,7 +84,7 @@ class MethodSpecTests : FreeSpec(
             method.isNative shouldBe isNative
         }
 
-        "create static method" {
+        it("create static method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -115,7 +115,7 @@ class MethodSpecTests : FreeSpec(
             method.isStatic shouldBe true
         }
 
-        "create abstract method" {
+        it("create abstract method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -146,7 +146,7 @@ class MethodSpecTests : FreeSpec(
             method.isAbstract shouldBe true
         }
 
-        "create final method" {
+        it("create final method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -177,7 +177,7 @@ class MethodSpecTests : FreeSpec(
             method.isFinal shouldBe true
         }
 
-        "create override method" {
+        it("create override method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -208,7 +208,7 @@ class MethodSpecTests : FreeSpec(
             method.isOverride shouldBe true
         }
 
-        "create operator method" {
+        it("create operator method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -239,7 +239,7 @@ class MethodSpecTests : FreeSpec(
             method.isOperator shouldBe true
         }
 
-        "create private method" {
+        it("create private method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -270,7 +270,7 @@ class MethodSpecTests : FreeSpec(
             method.accessModifier shouldBe AccessModifier.PRIVATE
         }
 
-        "create synchronized method" {
+        it("create synchronized method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -301,7 +301,7 @@ class MethodSpecTests : FreeSpec(
             method.isSynchronized shouldBe true
         }
 
-        "create native method" {
+        it("create native method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -332,7 +332,7 @@ class MethodSpecTests : FreeSpec(
             method.isNative shouldBe true
         }
 
-        "should generate a method with parameters" {
+        it("should generate a method with parameters") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf(
@@ -366,7 +366,7 @@ class MethodSpecTests : FreeSpec(
             method.parameters shouldBe parameters
         }
 
-        "should generate a method" {
+        it("should generate a method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -397,7 +397,7 @@ class MethodSpecTests : FreeSpec(
             method.generate(GenerationContext()) shouldBe "public fun name(): int {}"
         }
 
-        "builder should create a method" {
+        it("builder should create a method") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf<ParameterSpec>()
@@ -435,7 +435,7 @@ class MethodSpecTests : FreeSpec(
             method.isNative shouldBe isNative
         }
 
-        "builder should create a method with parameters" {
+        it("builder should create a method with parameters") {
             val identifier = "name"
             val returnType = TypeSpec.of("int")
             val parameters = listOf(

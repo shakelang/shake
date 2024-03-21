@@ -1,13 +1,13 @@
 package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
-import io.kotest.core.spec.style.FreeSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 
-class ConstructorSpecTests : FreeSpec(
+class ConstructorSpecTests : FlatTestSpec(
     {
 
-        "should create a constructor" {
+        it("should create a constructor") {
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec(parameters, body)
@@ -15,7 +15,7 @@ class ConstructorSpecTests : FreeSpec(
             constructor.body shouldBe body
         }
 
-        "should create a named constructor" {
+        it("should create a named constructor") {
             val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -25,14 +25,14 @@ class ConstructorSpecTests : FreeSpec(
             constructor.body shouldBe body
         }
 
-        "should generate a constructor" {
+        it("should generate a constructor") {
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec(parameters, body)
             constructor.generate(GenerationContext()) shouldBe "public constructor() {}"
         }
 
-        "should generate a named constructor" {
+        it("should generate a named constructor") {
             val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
@@ -40,7 +40,7 @@ class ConstructorSpecTests : FreeSpec(
             constructor.generate(GenerationContext()) shouldBe "public constructor name() {}"
         }
 
-        "builder should create a constructor" {
+        it("builder should create a constructor") {
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
             val constructor = ConstructorSpec.builder()
@@ -52,7 +52,7 @@ class ConstructorSpecTests : FreeSpec(
             constructor.name shouldBe null
         }
 
-        "builder should create a named constructor" {
+        it("builder should create a named constructor") {
             val identifier = NamespaceSpec("name")
             val parameters = listOf<ParameterSpec>()
             val body = CodeSpec.empty()
