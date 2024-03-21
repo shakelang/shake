@@ -369,7 +369,7 @@ open class FloatLiteralSpec(
      * @return The generated float
      */
     override fun generate(ctx: GenerationContext): String {
-        return value.toString()
+        return value.stringifyIncludeComma()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -381,6 +381,11 @@ open class FloatLiteralSpec(
 
     override fun hashCode(): Int {
         return value.hashCode()
+    }
+
+    private fun Double.stringifyIncludeComma(): String {
+        val str = this.toString()
+        return if(str.contains(".")) str else "$str.0"
     }
 
     /**

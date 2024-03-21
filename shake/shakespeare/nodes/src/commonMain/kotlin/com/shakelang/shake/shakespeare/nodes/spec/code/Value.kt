@@ -110,12 +110,17 @@ open class FloatLiteralNodeSpec(value: Double) : FloatLiteralSpec(value), ValueN
                 nctx.map,
                 ShakeFloatLiteralNode(
                     nctx.map,
-                    nctx.createToken(ShakeTokenType.FLOAT, (-value).toString()),
+                    nctx.createToken(ShakeTokenType.FLOAT, (-value).stringifyIncludeComma()),
                 ),
                 minus,
             )
         }
-        return ShakeFloatLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, (value).toString()))
+        return ShakeFloatLiteralNode(nctx.map, nctx.createToken(ShakeTokenType.FLOAT, (value).stringifyIncludeComma()))
+    }
+
+    private fun Double.stringifyIncludeComma(): String {
+        val str = this.toString()
+        return if(str.contains(".")) str else "$str.0"
     }
 
     companion object {
