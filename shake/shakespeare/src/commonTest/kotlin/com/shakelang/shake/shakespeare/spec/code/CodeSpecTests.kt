@@ -1,12 +1,12 @@
 package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.spec.GenerationContext
-import io.kotest.core.spec.style.FreeSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class CodeSpecTests : FreeSpec({
-    "create CodeSpec" {
+class CodeSpecTests : FlatTestSpec({
+    it("create") {
 
         val codeSpec = CodeSpec(
             listOf(),
@@ -15,7 +15,7 @@ class CodeSpecTests : FreeSpec({
         codeSpec.statements shouldBe listOf()
     }
 
-    "create CodeSpec with statements" {
+    it("create with statements") {
 
         val codeSpec = CodeSpec(
             listOf(
@@ -28,7 +28,7 @@ class CodeSpecTests : FreeSpec({
         )
     }
 
-    "generate code" {
+    it("generate code") {
         val codeSpec = CodeSpec(
             listOf(
                 StatementSpec.of("statement1"),
@@ -39,7 +39,7 @@ class CodeSpecTests : FreeSpec({
         codeSpec.generate(GenerationContext()) shouldBe "{\n    statement1\n    statement2\n}"
     }
 
-    "generate code with empty statements" {
+    it("generate with empty statements") {
         val codeSpec = CodeSpec(
             listOf(),
         )
@@ -47,7 +47,7 @@ class CodeSpecTests : FreeSpec({
         codeSpec.generate(GenerationContext()) shouldBe "{}"
     }
 
-    "equals" {
+    it("equals") {
         val codeSpec = CodeSpec(
             listOf(
                 StatementSpec.of("statement1"),
@@ -78,7 +78,7 @@ class CodeSpecTests : FreeSpec({
         )
     }
 
-    "build" {
+    it("build") {
         val codeSpec = CodeSpec.builder()
             .addStatement(StatementSpec.of("statement1"))
             .addStatement(StatementSpec.of("statement2"))

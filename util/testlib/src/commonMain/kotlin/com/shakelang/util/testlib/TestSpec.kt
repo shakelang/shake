@@ -3,6 +3,7 @@ package com.shakelang.util.testlib
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.spec.style.scopes.DescribeSpecContainerScope
 import io.kotest.core.test.TestScope
+import kotlin.reflect.KClass
 
 abstract class TestSpec(
 
@@ -48,9 +49,16 @@ abstract class TestSpec(
     context.body()
 })
 
+abstract class FlatTestSpec(
+    body: TestSpecContext.() -> Unit,
+) : TestSpec(body, flatten = true)
+
 interface TestSpecContext {
     fun describe(name: String, init: TestSpecContext.() -> Unit)
+    fun describe(clazz: KClass<*>, init: TestSpecContext.() -> Unit) = describe(clazz.simpleName ?: "", init)
     fun it(name: String, test: suspend TestScope.() -> Unit, enabled: Boolean = true)
     fun xit(name: String, test: suspend TestScope.() -> Unit) = it(name, test, false)
     fun it(name: String, test: suspend TestScope.() -> Unit) = it(name, test, true)
 }
+
+inline fun <reified T> TestSpecContext.describe(noinline init: TestSpecContext.() -> Unit, s: String) = describe(T::class, init)

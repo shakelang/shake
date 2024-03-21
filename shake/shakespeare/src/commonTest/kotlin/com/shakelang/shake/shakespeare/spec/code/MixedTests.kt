@@ -2,11 +2,11 @@ package com.shakelang.shake.shakespeare.spec.code
 
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
-import com.shakelang.util.testlib.TestSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class MixedTests : TestSpec({
+class MixedTests : FlatTestSpec({
 
     describe("VariableAssignmentSpec") {
         it("create") {
@@ -312,4 +312,4 @@ class MixedTests : TestSpec({
             spec shouldNotBe FunctionCallSpec(NamespaceSpec("function2"), listOf())
         }
     }
-}, flatten = true)
+})
