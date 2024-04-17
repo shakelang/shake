@@ -385,7 +385,7 @@ open class FloatLiteralSpec(
 
     private fun Double.stringifyIncludeComma(): String {
         val str = this.toString()
-        return if(str.contains(".")) str else "$str.0"
+        return if (str.contains(".")) str else "$str.0"
     }
 
     /**
