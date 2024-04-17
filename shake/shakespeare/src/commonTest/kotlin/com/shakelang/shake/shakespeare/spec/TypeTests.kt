@@ -1,116 +1,123 @@
 package com.shakelang.shake.shakespeare.spec
 
-import io.kotest.core.spec.style.FreeSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 
-class TypeTests : FreeSpec({
+class TypeTests : FlatTestSpec({
 
-    "Type.Companion.of should return PrimitiveType.BYTE for 'byte'" {
-        TypeSpec.of("byte") shouldBe PrimitiveTypeSpec.BYTE
+    describe("Companion.of") {
+        it("should return BYTE for 'byte'") {
+            TypeSpec.of("byte") shouldBe PrimitiveTypeSpec.BYTE
+        }
+
+        it("should return SHORT for 'shorts'") {
+            TypeSpec.of("shorts") shouldBe PrimitiveTypeSpec.SHORT
+        }
+
+        it("should return INT for 'int'") {
+            TypeSpec.of("int") shouldBe PrimitiveTypeSpec.INT
+        }
+
+        it("should return LONG for 'long'") {
+            TypeSpec.of("long") shouldBe PrimitiveTypeSpec.LONG
+        }
+
+        it("should return UNSIGNED_BYTE for 'ubyte'") {
+            TypeSpec.of("ubyte") shouldBe PrimitiveTypeSpec.UNSIGNED_BYTE
+        }
+
+        it("should return UNSIGNED_SHORT for 'ushorts'") {
+            TypeSpec.of("ushorts") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
+        }
+
+        it("should return UNSIGNED_INT for 'uint'") {
+            TypeSpec.of("uint") shouldBe PrimitiveTypeSpec.UNSIGNED_INT
+        }
+
+        it("should return UNSIGNED_LONG for 'ulong'") {
+            TypeSpec.of("ulong") shouldBe PrimitiveTypeSpec.UNSIGNED_LONG
+        }
+
+        it("should return FLOAT for 'float'") {
+            TypeSpec.of("float") shouldBe PrimitiveTypeSpec.FLOAT
+        }
+
+        it("should return DOUBLE for 'doubles'") {
+            TypeSpec.of("doubles") shouldBe PrimitiveTypeSpec.DOUBLE
+        }
+
+        it("should return CHAR for 'char'") {
+            TypeSpec.of("char") shouldBe PrimitiveTypeSpec.CHAR
+        }
+
+        it("should return BOOLEAN for 'boolean'") {
+            TypeSpec.of("boolean") shouldBe PrimitiveTypeSpec.BOOLEAN
+        }
+
+        it("should return SimpleType for non-primitive 'String'") {
+            TypeSpec.of("String") shouldBe ObjectTypeSpec("String")
+        }
+
+        it("should return SimpleType for non-primitive 'CustomType'") {
+            TypeSpec.of("CustomType") shouldBe ObjectTypeSpec("CustomType")
+        }
     }
 
-    "Type.Companion.of should return PrimitiveType.SHORT for 'shorts'" {
-        TypeSpec.of("shorts") shouldBe PrimitiveTypeSpec.SHORT
+    describe("SimpleType.generate") {
+
+        it("should return type name for 'TestType'") {
+            val simpleType = ObjectTypeSpec("TestType")
+            simpleType.generate(GenerationContext()) shouldBe "TestType"
+        }
     }
 
-    "Type.Companion.of should return PrimitiveType.INT for 'int'" {
-        TypeSpec.of("int") shouldBe PrimitiveTypeSpec.INT
-    }
+    describe("PrimitiveType") {
+        it("BYTE.generate should return 'byte'") {
+            PrimitiveTypeSpec.BYTE.generate(GenerationContext()) shouldBe "byte"
+        }
 
-    "Type.Companion.of should return PrimitiveType.LONG for 'long'" {
-        TypeSpec.of("long") shouldBe PrimitiveTypeSpec.LONG
-    }
+        it("SHORT.generate should return 'short'") {
+            PrimitiveTypeSpec.SHORT.generate(GenerationContext()) shouldBe "short"
+        }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_BYTE for 'ubyte'" {
-        TypeSpec.of("ubyte") shouldBe PrimitiveTypeSpec.UNSIGNED_BYTE
-    }
+        it("INT.generate should return 'int'") {
+            PrimitiveTypeSpec.INT.generate(GenerationContext()) shouldBe "int"
+        }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_SHORT for 'ushorts'" {
-        TypeSpec.of("ushorts") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
-    }
+        it("LONG.generate should return 'long'") {
+            PrimitiveTypeSpec.LONG.generate(GenerationContext()) shouldBe "long"
+        }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_INT for 'uint'" {
-        TypeSpec.of("uint") shouldBe PrimitiveTypeSpec.UNSIGNED_INT
-    }
+        it("UNSIGNED_BYTE.generate should return 'ubyte'") {
+            PrimitiveTypeSpec.UNSIGNED_BYTE.generate(GenerationContext()) shouldBe "ubyte"
+        }
 
-    "Type.Companion.of should return PrimitiveType.UNSIGNED_LONG for 'ulong'" {
-        TypeSpec.of("ulong") shouldBe PrimitiveTypeSpec.UNSIGNED_LONG
-    }
+        it("UNSIGNED_SHORT.generate should return 'ushort'") {
+            PrimitiveTypeSpec.UNSIGNED_SHORT.generate(GenerationContext()) shouldBe "ushort"
+        }
 
-    "Type.Companion.of should return PrimitiveType.FLOAT for 'float'" {
-        TypeSpec.of("float") shouldBe PrimitiveTypeSpec.FLOAT
-    }
+        it("UNSIGNED_INT.generate should return 'uint'") {
+            PrimitiveTypeSpec.UNSIGNED_INT.generate(GenerationContext()) shouldBe "uint"
+        }
 
-    "Type.Companion.of should return PrimitiveType.DOUBLE for 'doubles'" {
-        TypeSpec.of("doubles") shouldBe PrimitiveTypeSpec.DOUBLE
-    }
+        it("UNSIGNED_LONG.generate should return 'ulong'") {
+            PrimitiveTypeSpec.UNSIGNED_LONG.generate(GenerationContext()) shouldBe "ulong"
+        }
 
-    "Type.Companion.of should return PrimitiveType.CHAR for 'char'" {
-        TypeSpec.of("char") shouldBe PrimitiveTypeSpec.CHAR
-    }
+        it("FLOAT.generate should return 'float'") {
+            PrimitiveTypeSpec.FLOAT.generate(GenerationContext()) shouldBe "float"
+        }
 
-    "Type.Companion.of should return PrimitiveType.BOOLEAN for 'boolean'" {
-        TypeSpec.of("boolean") shouldBe PrimitiveTypeSpec.BOOLEAN
-    }
+        it("DOUBLE.generate should return 'double'") {
+            PrimitiveTypeSpec.DOUBLE.generate(GenerationContext()) shouldBe "double"
+        }
 
-    "Type.Companion.of should return SimpleType for non-primitive 'String'" {
-        TypeSpec.of("String") shouldBe ObjectTypeSpec("String")
-    }
+        it("CHAR.generate should return 'char'") {
+            PrimitiveTypeSpec.CHAR.generate(GenerationContext()) shouldBe "char"
+        }
 
-    "Type.Companion.of should return SimpleType for non-primitive 'CustomType'" {
-        TypeSpec.of("CustomType") shouldBe ObjectTypeSpec("CustomType")
-    }
-
-    "SimpleType.generate should return type name for 'TestType'" {
-        val simpleType = ObjectTypeSpec("TestType")
-        simpleType.generate(GenerationContext()) shouldBe "TestType"
-    }
-
-    "PrimitiveType.BYTE.generate should return 'byte'" {
-        PrimitiveTypeSpec.BYTE.generate(GenerationContext()) shouldBe "byte"
-    }
-
-    "PrimitiveType.SHORT.generate should return 'shorts'" {
-        PrimitiveTypeSpec.SHORT.generate(GenerationContext()) shouldBe "shorts"
-    }
-
-    "PrimitiveType.INT.generate should return 'int'" {
-        PrimitiveTypeSpec.INT.generate(GenerationContext()) shouldBe "int"
-    }
-
-    "PrimitiveType.LONG.generate should return 'long'" {
-        PrimitiveTypeSpec.LONG.generate(GenerationContext()) shouldBe "long"
-    }
-
-    "PrimitiveType.UNSIGNED_BYTE.generate should return 'unsigned byte'" {
-        PrimitiveTypeSpec.UNSIGNED_BYTE.generate(GenerationContext()) shouldBe "unsigned byte"
-    }
-
-    "PrimitiveType.UNSIGNED_SHORT.generate should return 'unsigned shorts'" {
-        PrimitiveTypeSpec.UNSIGNED_SHORT.generate(GenerationContext()) shouldBe "unsigned shorts"
-    }
-
-    "PrimitiveType.UNSIGNED_INT.generate should return 'unsigned int'" {
-        PrimitiveTypeSpec.UNSIGNED_INT.generate(GenerationContext()) shouldBe "unsigned int"
-    }
-
-    "PrimitiveType.UNSIGNED_LONG.generate should return 'unsigned long'" {
-        PrimitiveTypeSpec.UNSIGNED_LONG.generate(GenerationContext()) shouldBe "unsigned long"
-    }
-
-    "PrimitiveType.FLOAT.generate should return 'float'" {
-        PrimitiveTypeSpec.FLOAT.generate(GenerationContext()) shouldBe "float"
-    }
-
-    "PrimitiveType.DOUBLE.generate should return 'doubles'" {
-        PrimitiveTypeSpec.DOUBLE.generate(GenerationContext()) shouldBe "doubles"
-    }
-
-    "PrimitiveType.CHAR.generate should return 'char'" {
-        PrimitiveTypeSpec.CHAR.generate(GenerationContext()) shouldBe "char"
-    }
-
-    "PrimitiveType.BOOLEAN.generate should return 'boolean'" {
-        PrimitiveTypeSpec.BOOLEAN.generate(GenerationContext()) shouldBe "boolean"
+        it("BOOLEAN.generate should return 'boolean'") {
+            PrimitiveTypeSpec.BOOLEAN.generate(GenerationContext()) shouldBe "boolean"
+        }
     }
 })

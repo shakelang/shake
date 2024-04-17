@@ -25,7 +25,7 @@ class IntegrationTestValues : FreeSpec(
         }
 
         "doubles literal" {
-            testCodeSnippetValue("42.0", mapOf("name" to "ShakeDoubleLiteralNode", "value" to 42.0))
+            testCodeSnippetValue("42.0", mapOf("name" to "ShakeFloatLiteralNode", "value" to 42.0))
         }
 
         "string literal" {

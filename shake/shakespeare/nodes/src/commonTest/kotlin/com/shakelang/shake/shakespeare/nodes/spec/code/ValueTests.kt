@@ -254,7 +254,7 @@ class ValueTests : FreeSpec({
         (node is ShakeFloatLiteralNode) shouldBe true
         (node as ShakeFloatLiteralNode).value shouldBe value
         node.valueToken.type shouldBe ShakeTokenType.FLOAT
-        node.valueToken.value shouldBe value.toString()
+        node.valueToken.value shouldBe "0.0"
         node.valueToken.start shouldBe 0
         node.valueToken.end shouldBe 2
     }
@@ -270,7 +270,7 @@ class ValueTests : FreeSpec({
         (node is ShakeFloatLiteralNode) shouldBe true
         (node as ShakeFloatLiteralNode).value shouldBe value
         node.valueToken.type shouldBe ShakeTokenType.FLOAT
-        node.valueToken.value shouldBe value.toString()
+        node.valueToken.value shouldBe "123.0"
         node.valueToken.start shouldBe 0
         node.valueToken.end shouldBe 4
     }

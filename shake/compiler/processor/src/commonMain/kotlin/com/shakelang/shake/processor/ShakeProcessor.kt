@@ -624,7 +624,7 @@ open class ShakeASTProcessor {
     }
 
     private fun visitReturnNode(scope: CreationShakeScope, n: ShakeReturnNode): CreationShakeReturn {
-        val value = visitValue(scope, n.value)
+        val value = n.value?.let { visitValue(scope, it) }
         return CreationShakeReturn(value)
     }
 }

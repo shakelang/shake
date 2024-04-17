@@ -194,7 +194,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled, we print out the tree
-    logger.debug { "[DEBUG] Parsed Tree: $tree" }
+    logger.debug("[DEBUG] Parsed Tree: $tree")
 
     // return the Tree
     return ParseResult(tree, tokens.map)

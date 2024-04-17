@@ -40,7 +40,19 @@ open class VariableAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name = $value"
+        return "${name.generate(ctx)} = ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -149,7 +161,19 @@ open class VariableAdditionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name += $value"
+        return "${name.generate(ctx)} += ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableAdditionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -258,7 +282,19 @@ open class VariableSubtractionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name -= $value"
+        return "${name.generate(ctx)} -= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableSubtractionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -367,7 +403,19 @@ open class VariableMultiplicationAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name *= $value"
+        return "${name.generate(ctx)} *= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableMultiplicationAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -476,7 +524,19 @@ open class VariableDivisionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name /= $value"
+        return "${name.generate(ctx)} /= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDivisionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -585,7 +645,15 @@ open class VariableModuloAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name %= $value"
+        return "${name.generate(ctx)} %= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableModuloAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
     }
 
     /**
@@ -694,7 +762,19 @@ open class VariablePowerAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name **= $value"
+        return "${name.generate(ctx)} **= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariablePowerAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -803,7 +883,19 @@ open class VariableBitwiseAndAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name &= $value"
+        return "${name.generate(ctx)} &= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseAndAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -912,7 +1004,19 @@ open class VariableBitwiseOrAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name |= $value"
+        return "${name.generate(ctx)} |= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseOrAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -1021,7 +1125,19 @@ open class VariableBitwiseXorAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name ^= $value"
+        return "${name.generate(ctx)} ^= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseXorAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -1127,7 +1243,18 @@ open class VariableIncrementBeforeSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "++$name"
+        return "++${name.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableIncrementBeforeSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1208,7 +1335,18 @@ open class VariableIncrementAfterSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name++"
+        return "${name.generate(ctx)}++"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableIncrementAfterSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1289,7 +1427,18 @@ open class VariableDecrementBeforeSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "--$name"
+        return "--${name.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDecrementBeforeSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1370,7 +1519,18 @@ open class VariableDecrementAfterSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name--"
+        return "${name.generate(ctx)}--"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDecrementAfterSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1455,7 +1615,21 @@ open class FunctionCallSpec(
      */
     override fun generate(ctx: GenerationContext): String {
         val args = arguments.joinToString(", ") { it.generate(ctx) }
-        return "$name($args)"
+        return "${name.generate(ctx)}($args)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is FunctionCallSpec) return false
+        if (name != other.name) return false
+        if (arguments != other.arguments) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + arguments.hashCode()
+        return result
     }
 
     /**

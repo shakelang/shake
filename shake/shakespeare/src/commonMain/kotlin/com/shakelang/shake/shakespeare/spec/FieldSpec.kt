@@ -8,7 +8,6 @@
 
 package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 
 open class FieldSpec(

@@ -12,10 +12,11 @@ kotlin {
     dependencies {
         common {
             implementation(project(":util:commander"))
+            implementation(project(":util:common-io"))
+            implementation(project(":util:embed:api"))
+            implementation(project(":util:logger"))
             implementation(project(":util:parseutils"))
             implementation(project(":util:shason"))
-            implementation(project(":util:logger"))
-            implementation(project(":util:embed:api"))
 
             implementation(project(":shake:compiler:lexer"))
             implementation(project(":shake:compiler:parser"))
