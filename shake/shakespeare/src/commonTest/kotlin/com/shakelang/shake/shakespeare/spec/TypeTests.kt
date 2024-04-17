@@ -89,7 +89,7 @@ class TypeTests : FlatTestSpec({
         }
 
         it("UNSIGNED_BYTE.generate should return 'ubyte'") {
-            PrimitiveTypeSpec.UNSIGNED_BYTE.generate(GenerationContext()) shouldBe "byte"
+            PrimitiveTypeSpec.UNSIGNED_BYTE.generate(GenerationContext()) shouldBe "ubyte"
         }
 
         it("UNSIGNED_SHORT.generate should return 'ushort'") {

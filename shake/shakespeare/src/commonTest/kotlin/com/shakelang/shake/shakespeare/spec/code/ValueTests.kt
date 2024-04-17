@@ -77,7 +77,7 @@ class ValueTests : FlatTestSpec({
             val value = 42.0
             val node = FloatLiteralSpec(value)
             val ctx = GenerationContext()
-            node.generate(ctx) shouldBe value.toString()
+            node.generate(ctx) shouldBe "42.0"
         }
 
         it("equals") {
