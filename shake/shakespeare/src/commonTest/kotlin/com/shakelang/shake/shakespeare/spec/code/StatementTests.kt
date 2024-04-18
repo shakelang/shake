@@ -3,6 +3,7 @@ package com.shakelang.shake.shakespeare.spec.code
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.TypeSpec
 import com.shakelang.util.testlib.FlatTestSpec
+import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
@@ -241,39 +242,126 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = VariableDeclarationSpec.builder()
-                builder.name("name")
-                builder.type("String")
-                builder.value("value")
-                builder.isVal(false)
-                val spec = builder.build()
+        describe("builder()") {
 
-                spec.type shouldBe TypeSpec.of("String")
-                spec.value shouldBe ValueSpec.of("value")
-                spec.name shouldBe "name"
-                spec.isVal shouldBe false
+            it("should create builder") {
+                val builder = VariableDeclarationSpec.builder()
+                builder shouldNotBe null
+                builder.type shouldBe null
+                builder.value shouldBe null
+                builder.name shouldBe null
+                builder.isVal shouldBe false
             }
 
-            it("should build (val)") {
-                val builder = VariableDeclarationSpec.builder()
-                builder.name("name")
-                builder.type(TypeSpec.of("String"))
-                builder.value("value")
-                builder.isVal()
-                val spec = builder.build()
+            describe("builder.type()") {
+                it("should set type (String)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.type("String") shouldBe builder
+                    builder.type shouldBe TypeSpec.of("String")
+                }
 
-                spec.type shouldBe TypeSpec.of("String")
-                spec.value shouldBe ValueSpec.of("value")
-                spec.name shouldBe "name"
-                spec.isVal shouldBe true
+                it("should set type (TypeSpec)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.type(TypeSpec.of("String")) shouldBe builder
+                    builder.type shouldBe TypeSpec.of("String")
+                }
+            }
+
+            describe("builder.value()") {
+                it("should set value (String)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.value("value") shouldBe builder
+                    builder.value shouldBe ValueSpec.of("value")
+                }
+
+                it("should set value (ValueSpec)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.value(ValueSpec.of("value")) shouldBe builder
+                    builder.value shouldBe ValueSpec.of("value")
+                }
+            }
+
+            describe("builder.name()") {
+                it("should set name") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.name("name") shouldBe builder
+                    builder.name shouldBe "name"
+                }
+            }
+
+            describe("builder.isVal()") {
+                it("should make it a val (with no argument)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.isVal() shouldBe builder
+                    builder.isVal shouldBe true
+                }
+
+                it("should make builder a val (with true argument)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.isVal(true) shouldBe builder
+                    builder.isVal shouldBe true
+                }
+
+                it("should make builder a var (with false argument)") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.isVal(false) shouldBe builder
+                    builder.isVal shouldBe false
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.type("String")
+                    builder.value("value")
+                    builder.name("name")
+                    builder.isVal(true)
+                    val spec = builder.build()
+
+                    spec.type shouldBe TypeSpec.of("String")
+                    spec.value shouldBe ValueSpec.of("value")
+                    spec.name shouldBe "name"
+                    spec.isVal shouldBe true
+                }
+
+                it("should throw exception if no name") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.type("String")
+                    builder.value("value")
+                    builder.isVal(true)
+
+                    shouldThrowWithMessage<IllegalStateException>("Name not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no type") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.value("value")
+                    builder.name("name")
+                    builder.isVal(true)
+
+                    shouldThrowWithMessage<IllegalStateException>("Type not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no value") {
+                    val builder = VariableDeclarationSpec.builder()
+                    builder.type("String")
+                    builder.name("name")
+                    builder.isVal(true)
+
+                    shouldThrowWithMessage<IllegalStateException>("Value not set") {
+                        builder.build()
+                    }
+                }
             }
         }
     }
 
     describe("WhileSpec") {
-        describe("create") {
+        describe("create()") {
             it("should create") {
                 val spec = WhileSpec(
                     ValueSpec.of("condition"),
@@ -285,7 +373,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("generate") {
+        describe("generate()") {
             it("should generate") {
                 val spec = WhileSpec(
                     ValueSpec.of("condition"),
@@ -297,19 +385,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = WhileSpec.builder()
-                builder.condition("condition")
-                builder.body(CodeSpec.empty())
-                val spec = builder.build()
-
-                spec.condition shouldBe ValueSpec.of("condition")
-                spec.body shouldBe CodeSpec.empty()
-            }
-        }
-
-        describe("equals") {
+        describe("equals()") {
             it("should return true if same instance") {
                 val spec = WhileSpec(
                     ValueSpec.of("condition"),
@@ -355,11 +431,73 @@ class StatementTests : FlatTestSpec({
                 ) shouldNotBe "condition"
             }
         }
+
+        describe("builder()") {
+
+            it("should create builder") {
+                val builder = WhileSpec.builder()
+                builder shouldNotBe null
+                builder.condition shouldBe null
+                builder.body shouldBe null
+            }
+
+            describe("builder.condition()") {
+                it("should set condition (String)") {
+                    val builder = WhileSpec.builder()
+                    builder.condition("condition") shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+
+                it("should set condition (ValueSpec)") {
+                    val builder = WhileSpec.builder()
+                    builder.condition(ValueSpec.of("condition")) shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+            }
+
+            describe("builder.body()") {
+                it("should set body") {
+                    val builder = WhileSpec.builder()
+                    builder.body(CodeSpec.empty()) shouldBe builder
+                    builder.body shouldBe CodeSpec.empty()
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = WhileSpec.builder()
+                    builder.condition("condition")
+                    builder.body(CodeSpec.empty())
+                    val spec = builder.build()
+
+                    spec.condition shouldBe ValueSpec.of("condition")
+                    spec.body shouldBe CodeSpec.empty()
+                }
+
+                it("should throw exception if no condition") {
+                    val builder = WhileSpec.builder()
+                    builder.body(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Condition not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no body") {
+                    val builder = WhileSpec.builder()
+                    builder.condition("condition")
+
+                    shouldThrowWithMessage<IllegalStateException>("Body not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
     }
 
     describe("DoWhileSpec") {
 
-        describe("create") {
+        describe("create()") {
             it("should create") {
                 val spec = DoWhileSpec(
                     CodeSpec.empty(),
@@ -371,7 +509,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("generate") {
+        describe("generate()") {
             it("should generate") {
                 val spec = DoWhileSpec(
                     CodeSpec.empty(),
@@ -383,19 +521,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = DoWhileSpec.builder()
-                builder.body(CodeSpec.empty())
-                builder.condition("condition")
-                val spec = builder.build()
-
-                spec.body shouldBe CodeSpec.empty()
-                spec.condition shouldBe ValueSpec.of("condition")
-            }
-        }
-
-        describe("equals") {
+        describe("equals()") {
             it("should return true if same instance") {
                 val spec = DoWhileSpec(
                     CodeSpec.empty(),
@@ -441,9 +567,70 @@ class StatementTests : FlatTestSpec({
                 ) shouldNotBe "condition"
             }
         }
+
+        describe("builder()") {
+            it("should create builder") {
+                val builder = DoWhileSpec.builder()
+                builder shouldNotBe null
+                builder.condition shouldBe null
+                builder.body shouldBe null
+            }
+
+            describe("builder.condition()") {
+                it("should set condition (String)") {
+                    val builder = DoWhileSpec.builder()
+                    builder.condition("condition") shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+
+                it("should set condition (ValueSpec)") {
+                    val builder = DoWhileSpec.builder()
+                    builder.condition(ValueSpec.of("condition")) shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+            }
+
+            describe("builder.body()") {
+                it("should set body") {
+                    val builder = DoWhileSpec.builder()
+                    builder.body(CodeSpec.empty()) shouldBe builder
+                    builder.body shouldBe CodeSpec.empty()
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = DoWhileSpec.builder()
+                    builder.condition("condition")
+                    builder.body(CodeSpec.empty())
+                    val spec = builder.build()
+
+                    spec.condition shouldBe ValueSpec.of("condition")
+                    spec.body shouldBe CodeSpec.empty()
+                }
+
+                it("should throw exception if no condition") {
+                    val builder = DoWhileSpec.builder()
+                    builder.body(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Condition not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no body") {
+                    val builder = DoWhileSpec.builder()
+                    builder.condition("condition")
+
+                    shouldThrowWithMessage<IllegalStateException>("Body not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
     }
     describe("ForSpec") {
-        describe("create") {
+        describe("create()") {
             it("should create") {
                 val spec = ForSpec(
                     StatementSpec.of("init"),
@@ -459,7 +646,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("generate") {
+        describe("generate()") {
             it("should generate") {
                 val spec = ForSpec(
                     StatementSpec.of("init"),
@@ -473,23 +660,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = ForSpec.builder()
-                builder.init("init")
-                builder.condition("condition")
-                builder.update("update")
-                builder.body(CodeSpec.empty())
-                val spec = builder.build()
-
-                spec.init shouldBe StatementSpec.of("init")
-                spec.condition shouldBe ValueSpec.of("condition")
-                spec.update shouldBe StatementSpec.of("update")
-                spec.body shouldBe CodeSpec.empty()
-            }
-        }
-
-        describe("equals") {
+        describe("equals()") {
             it("should return true if same instance") {
                 val spec = ForSpec(
                     StatementSpec.of("init"),
@@ -579,10 +750,131 @@ class StatementTests : FlatTestSpec({
                 ) shouldNotBe "condition"
             }
         }
+
+        describe("builder()") {
+            it("should create builder") {
+                val builder = ForSpec.builder()
+                builder shouldNotBe null
+                builder.init shouldBe null
+                builder.condition shouldBe null
+                builder.update shouldBe null
+                builder.body shouldBe null
+            }
+
+            describe("builder.init()") {
+                it("should set init (String)") {
+                    val builder = ForSpec.builder()
+                    builder.init("init") shouldBe builder
+                    builder.init shouldBe StatementSpec.of("init")
+                }
+
+                it("should set init (StatementSpec)") {
+                    val builder = ForSpec.builder()
+                    builder.init(StatementSpec.of("init")) shouldBe builder
+                    builder.init shouldBe StatementSpec.of("init")
+                }
+            }
+
+            describe("builder.condition()") {
+                it("should set condition (String)") {
+                    val builder = ForSpec.builder()
+                    builder.condition("condition") shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+
+                it("should set condition (ValueSpec)") {
+                    val builder = ForSpec.builder()
+                    builder.condition(ValueSpec.of("condition")) shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+            }
+
+            describe("builder.update()") {
+                it("should set update (String)") {
+                    val builder = ForSpec.builder()
+                    builder.update("update") shouldBe builder
+                    builder.update shouldBe StatementSpec.of("update")
+                }
+
+                it("should set update (StatementSpec)") {
+                    val builder = ForSpec.builder()
+                    builder.update(StatementSpec.of("update")) shouldBe builder
+                    builder.update shouldBe StatementSpec.of("update")
+                }
+            }
+
+            describe("builder.body()") {
+                it("should set body") {
+                    val builder = ForSpec.builder()
+                    builder.body(CodeSpec.empty()) shouldBe builder
+                    builder.body shouldBe CodeSpec.empty()
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = ForSpec.builder()
+                    builder.init("init")
+                    builder.condition("condition")
+                    builder.update("update")
+                    builder.body(CodeSpec.empty())
+                    val spec = builder.build()
+
+                    spec.init shouldBe StatementSpec.of("init")
+                    spec.condition shouldBe ValueSpec.of("condition")
+                    spec.update shouldBe StatementSpec.of("update")
+                    spec.body shouldBe CodeSpec.empty()
+                }
+
+                it("should throw exception if no init") {
+                    val builder = ForSpec.builder()
+                    builder.condition("condition")
+                    builder.update("update")
+                    builder.body(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Init not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no condition") {
+                    val builder = ForSpec.builder()
+                    builder.init("init")
+                    builder.update("update")
+                    builder.body(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Condition not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no update") {
+                    val builder = ForSpec.builder()
+                    builder.init("init")
+                    builder.condition("condition")
+                    builder.body(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Update not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no body") {
+                    val builder = ForSpec.builder()
+                    builder.init("init")
+                    builder.condition("condition")
+                    builder.update("update")
+
+                    shouldThrowWithMessage<IllegalStateException>("Body not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
     }
 
     describe("IfSpec") {
-        describe("create") {
+        describe("create()") {
             it("should create (with else)") {
                 val spec = IfSpec(
                     ValueSpec.of("condition"),
@@ -608,7 +900,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("generate") {
+        describe("generate()") {
             it("should generate") {
                 val spec = IfSpec(
                     ValueSpec.of("condition"),
@@ -632,32 +924,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = IfSpec.builder()
-                builder.condition("condition")
-                builder.body(CodeSpec.empty())
-                builder.elseBody(CodeSpec.empty())
-                val spec = builder.build()
-
-                spec.condition shouldBe ValueSpec.of("condition")
-                spec.body shouldBe CodeSpec.empty()
-                spec.elseBody shouldBe CodeSpec.empty()
-            }
-
-            it("should build (no else)") {
-                val builder = IfSpec.builder()
-                builder.condition("condition")
-                builder.body(CodeSpec.empty())
-                val spec = builder.build()
-
-                spec.condition shouldBe ValueSpec.of("condition")
-                spec.body shouldBe CodeSpec.empty()
-                spec.elseBody shouldBe null
-            }
-        }
-
-        describe("equals") {
+        describe("equals()") {
             it("should return true if same instance") {
                 val spec = IfSpec(
                     ValueSpec.of("condition"),
@@ -723,10 +990,95 @@ class StatementTests : FlatTestSpec({
                 ) shouldNotBe "condition"
             }
         }
-    }
-    describe("ReturnSpec") {
 
-        describe("create") {
+        describe("builder()") {
+            it("should create builder") {
+                val builder = IfSpec.builder()
+                builder shouldNotBe null
+                builder.condition shouldBe null
+                builder.body shouldBe null
+                builder.elseBody shouldBe null
+            }
+
+            describe("builder.condition()") {
+                it("should set condition (String)") {
+                    val builder = IfSpec.builder()
+                    builder.condition("condition") shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+
+                it("should set condition (ValueSpec)") {
+                    val builder = IfSpec.builder()
+                    builder.condition(ValueSpec.of("condition")) shouldBe builder
+                    builder.condition shouldBe ValueSpec.of("condition")
+                }
+            }
+
+            describe("builder.body()") {
+                it("should set body") {
+                    val builder = IfSpec.builder()
+                    builder.body(CodeSpec.empty()) shouldBe builder
+                    builder.body shouldBe CodeSpec.empty()
+                }
+            }
+
+            describe("builder.elseBody()") {
+                it("should set elseBody") {
+                    val builder = IfSpec.builder()
+                    builder.elseBody(CodeSpec.empty()) shouldBe builder
+                    builder.elseBody shouldBe CodeSpec.empty()
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = IfSpec.builder()
+                    builder.condition("condition")
+                    builder.body(CodeSpec.empty())
+                    builder.elseBody(CodeSpec.empty())
+                    val spec = builder.build()
+
+                    spec.condition shouldBe ValueSpec.of("condition")
+                    spec.body shouldBe CodeSpec.empty()
+                    spec.elseBody shouldBe CodeSpec.empty()
+                }
+
+                it("should throw exception if no condition") {
+                    val builder = IfSpec.builder()
+                    builder.body(CodeSpec.empty())
+                    builder.elseBody(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Condition not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw exception if no body") {
+                    val builder = IfSpec.builder()
+                    builder.condition("condition")
+                    builder.elseBody(CodeSpec.empty())
+
+                    shouldThrowWithMessage<IllegalStateException>("Body not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should work if no elseBody") {
+                    val builder = IfSpec.builder()
+                    builder.condition("condition")
+                    builder.body(CodeSpec.empty())
+
+                    val spec = builder.build()
+                    spec.condition shouldBe ValueSpec.of("condition")
+                    spec.body shouldBe CodeSpec.empty()
+                    spec.elseBody shouldBe null
+                }
+            }
+        }
+    }
+
+    describe("ReturnSpec") {
+        describe("create()") {
             it("should create (with value)") {
                 val spec = ReturnSpec(
                     ValueSpec.of("value"),
@@ -741,7 +1093,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("generate") {
+        describe("generate()") {
             it("should generate") {
                 val spec = ReturnSpec(
                     ValueSpec.of("value"),
@@ -761,17 +1113,7 @@ class StatementTests : FlatTestSpec({
             }
         }
 
-        describe("build") {
-            it("should build") {
-                val builder = ReturnSpec.builder()
-                builder.value("value")
-                val spec = builder.build()
-
-                spec.value shouldBe ValueSpec.of("value")
-            }
-        }
-
-        describe("equals") {
+        describe("equals()") {
             it("should return true if same instance") {
                 val spec = ReturnSpec(
                     ValueSpec.of("value"),
@@ -799,6 +1141,45 @@ class StatementTests : FlatTestSpec({
                 ReturnSpec(
                     ValueSpec.of("value"),
                 ) shouldNotBe "value"
+            }
+        }
+
+        describe("builder()") {
+            it("should create builder") {
+                val builder = ReturnSpec.builder()
+                builder shouldNotBe null
+                builder.value shouldBe null
+            }
+
+            describe("builder.value()") {
+                it("should set value (String)") {
+                    val builder = ReturnSpec.builder()
+                    builder.value("value") shouldBe builder
+                    builder.value shouldBe ValueSpec.of("value")
+                }
+
+                it("should set value (ValueSpec)") {
+                    val builder = ReturnSpec.builder()
+                    builder.value(ValueSpec.of("value")) shouldBe builder
+                    builder.value shouldBe ValueSpec.of("value")
+                }
+            }
+
+            describe("builder.build()") {
+                it("should build") {
+                    val builder = ReturnSpec.builder()
+                    builder.value("value")
+                    val spec = builder.build()
+
+                    spec.value shouldBe ValueSpec.of("value")
+                }
+
+                it("should work if no value") {
+                    val builder = ReturnSpec.builder()
+                    val spec = builder.build()
+
+                    spec.value shouldBe null
+                }
             }
         }
     }

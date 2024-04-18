@@ -136,7 +136,7 @@ open class VariableDeclarationSpec(
         /**
          * If the variable is a val or a var
          */
-        var isVal: Boolean = true,
+        var isVal: Boolean = false,
     ) {
 
         /**
@@ -826,7 +826,7 @@ open class ReturnSpec(
          */
         fun build(): ReturnSpec {
             return ReturnSpec(
-                value ?: throw IllegalStateException("Value not set"),
+                value,
             )
         }
     }
