@@ -131,10 +131,59 @@ class ValueTests : FlatTestSpec({
                 }
 
                 describe("builder.value()") {
-                    it("should set the value") {
+                    it("should set the value (Byte)") {
                         val value = 42
                         val builder = IntLiteralSpec.builder()
-                        builder.value(value)
+                        builder.value(42.toByte()) shouldBe builder
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (Short)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42.toShort()) shouldBe builder
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (Int)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42) shouldBe builder
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (Long)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42L)
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (UByte)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42.toUByte()) shouldBe builder
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (UShort)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42.toUShort())
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (UInt)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42.toUInt()) shouldBe builder
+                        builder.value shouldBe value
+                    }
+
+                    it("should set the value (ULong)") {
+                        val value = 42
+                        val builder = IntLiteralSpec.builder()
+                        builder.value(42.toULong()) shouldBe builder
                         builder.value shouldBe value
                     }
                 }
@@ -343,11 +392,87 @@ class ValueTests : FlatTestSpec({
                 it("should be equal to same instance") {
                     NullLiteralSpec.INSTANCE shouldBe NullLiteralSpec.INSTANCE
                 }
+                it("should be equal to another NullLiteralSpec") {
+                    NullLiteralSpec.INSTANCE shouldBe NullLiteralSpec()
+                }
                 it("should not be equal to another type") {
                     NullLiteralSpec.INSTANCE shouldNotBe StringLiteralSpec("null")
                 }
                 it("should not be equal to another type") {
                     NullLiteralSpec.INSTANCE shouldNotBe StringLiteralSpec("null")
+                }
+            }
+        }
+
+        describe("CharacterLiteralSpec") {
+
+            describe("create") {
+                it("should create from char") {
+                    val value = 'a'
+                    val node = CharacterLiteralSpec(value)
+                    node.value shouldBe value
+                }
+            }
+
+            describe("generate()") {
+                it("should generate the char") {
+                    val value = 'a'
+                    val node = CharacterLiteralSpec(value)
+                    val ctx = GenerationContext()
+                    node.generate(ctx) shouldBe "'a'"
+                }
+            }
+
+            describe("equals()") {
+                it("should be equal to same instance") {
+                    val node = CharacterLiteralSpec('a')
+                    node shouldBe node
+                }
+                it("should be equal to another CharacterLiteralSpec with the same value") {
+                    CharacterLiteralSpec('a') shouldBe CharacterLiteralSpec('a')
+                }
+                it("should not be equal to another CharacterLiteralSpec with a different value") {
+                    CharacterLiteralSpec('a') shouldNotBe CharacterLiteralSpec('b')
+                }
+                it("should not be equal to another type") {
+                    CharacterLiteralSpec('a') shouldNotBe StringLiteralSpec("a")
+                }
+                it("should not be equal to null") {
+                    CharacterLiteralSpec('a') shouldNotBe null
+                }
+            }
+
+            describe("builder()") {
+                it("should create a builder") {
+                    val builder = CharacterLiteralSpec.builder()
+                    builder shouldNotBe null
+                    builder.value shouldBe null
+                }
+
+                describe("builder.value()") {
+                    it("should set the value") {
+                        val value = 'a'
+                        val builder = CharacterLiteralSpec.builder()
+                        builder.value(value)
+                        builder.value shouldBe value
+                    }
+                }
+
+                describe("builder.build()") {
+                    it("should build the CharacterLiteralSpec") {
+                        val value = 'a'
+                        val node = CharacterLiteralSpec.builder()
+                            .value(value)
+                            .build()
+                        node.value shouldBe value
+                    }
+
+                    it("should throw an exception if the value is not set") {
+                        val builder = CharacterLiteralSpec.builder()
+                        shouldThrowWithMessage<IllegalStateException>("Value not set") {
+                            builder.build()
+                        }
+                    }
                 }
             }
         }

@@ -252,7 +252,7 @@ open class IntLiteralSpec(
     /**
      * Builder for IntLiteralSpec
      */
-    class NumberLiteralSpecBuilder
+    class IntLiteralSpecBuilder
     internal constructor(
 
         /**
@@ -266,7 +266,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: Long): NumberLiteralSpecBuilder {
+        fun value(value: Long): IntLiteralSpecBuilder {
             this.value = value
             return this
         }
@@ -276,7 +276,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: Int): NumberLiteralSpecBuilder {
+        fun value(value: Int): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -286,7 +286,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: Short): NumberLiteralSpecBuilder {
+        fun value(value: Short): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -296,7 +296,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: Byte): NumberLiteralSpecBuilder {
+        fun value(value: Byte): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -306,7 +306,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: ULong): NumberLiteralSpecBuilder {
+        fun value(value: ULong): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -316,7 +316,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: UInt): NumberLiteralSpecBuilder {
+        fun value(value: UInt): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -326,7 +326,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: UShort): NumberLiteralSpecBuilder {
+        fun value(value: UShort): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -336,7 +336,7 @@ open class IntLiteralSpec(
          * @param value The value of the integer
          * @return The builder
          */
-        fun value(value: UByte): NumberLiteralSpecBuilder {
+        fun value(value: UByte): IntLiteralSpecBuilder {
             this.value = value.toLong()
             return this
         }
@@ -358,7 +358,7 @@ open class IntLiteralSpec(
          * Create a new NumberLiteralSpecBuilder
          * @return The created NumberLiteralSpecBuilder
          */
-        fun builder() = NumberLiteralSpecBuilder()
+        fun builder() = IntLiteralSpecBuilder()
     }
 }
 
