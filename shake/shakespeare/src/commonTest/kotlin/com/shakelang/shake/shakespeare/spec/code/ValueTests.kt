@@ -470,10 +470,38 @@ class ValueTests : FlatTestSpec({
                 builder.left shouldBe left
             }
 
-            it("should set the left value (IntLiteralSpec)") {
+            it("should set the left value (ValueSpec)") {
                 val left = IntLiteralSpec(42)
                 val builder = createBuilder()
                 builder.left(left)
+                builder.left shouldBe left
+            }
+
+            it("should set the left value (NamespaceSpec)") {
+                val left = VariableReferenceSpec("variable")
+                val builder = createBuilder()
+                builder.left("variable")
+                builder.left shouldBe left
+            }
+
+            it("should set the left value (Boolean)") {
+                val left = BooleanLiteralSpec(true)
+                val builder = createBuilder()
+                builder.left(true)
+                builder.left shouldBe left
+            }
+
+            it("should set the left value (Byte)") {
+                val left = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.left(42.toByte())
+                builder.left shouldBe left
+            }
+
+            it("should set the left value (Short)") {
+                val left = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.left(42.toShort())
                 builder.left shouldBe left
             }
 
@@ -521,7 +549,35 @@ class ValueTests : FlatTestSpec({
                 builder.right shouldBe right
             }
 
-            it("should set the right value (IntLiteralSpec)") {
+            it("should set the right value (NamespaceSpec)") {
+                val right = VariableReferenceSpec("variable")
+                val builder = createBuilder()
+                builder.right("variable")
+                builder.right shouldBe right
+            }
+
+            it("should set the right value (Boolean)") {
+                val right = BooleanLiteralSpec(true)
+                val builder = createBuilder()
+                builder.right(true)
+                builder.right shouldBe right
+            }
+
+            it("should set the right value (Byte)") {
+                val right = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.right(42.toByte())
+                builder.right shouldBe right
+            }
+
+            it("should set the right value (Short)") {
+                val right = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.right(42.toShort())
+                builder.right shouldBe right
+            }
+
+            it("should set the right value (ValueSpec)") {
                 val right = IntLiteralSpec(42)
                 val builder = createBuilder()
                 builder.right(right)
@@ -567,10 +623,38 @@ class ValueTests : FlatTestSpec({
                 builder.value shouldBe value
             }
 
-            it("should set the value (IntLiteralSpec)") {
+            it("should set the value (ValueSpec)") {
                 val value = IntLiteralSpec(42)
                 val builder = createBuilder()
                 builder.value(value)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (NamespaceSpec)") {
+                val value = VariableReferenceSpec("variable")
+                val builder = createBuilder()
+                builder.value("variable")
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Boolean)") {
+                val value = BooleanLiteralSpec(true)
+                val builder = createBuilder()
+                builder.value(true)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Byte)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42.toByte())
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Short)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42.toShort())
                 builder.value shouldBe value
             }
 
@@ -1183,348 +1267,734 @@ class ValueTests : FlatTestSpec({
     }
 
     describe("UnaryPlusSpec") {
-        it("create") {
-            val value = IntLiteralSpec(42)
-            val node = UnaryPlusSpec(value)
-            node.value shouldBe value
+        describe("create") {
+            it("should create") {
+                val value = IntLiteralSpec(42)
+                val node = UnaryPlusSpec(value)
+                node.value shouldBe value
+            }
         }
 
-        it("generate") {
-            val value = IntLiteralSpec(42)
-            val node = UnaryPlusSpec(value)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "+42"
+        describe("generate") {
+            it("should generate") {
+                val value = IntLiteralSpec(42)
+                val node = UnaryPlusSpec(value)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "+42"
+            }
         }
 
-        it("equals") {
-            val value = IntLiteralSpec(42)
-            UnaryPlusSpec(value) shouldBe UnaryPlusSpec(value)
-            UnaryPlusSpec(value) shouldNotBe UnaryPlusSpec(IntLiteralSpec(43))
+        describe("equals") {
+            it("should be equal to same instance") {
+                val value = IntLiteralSpec(42)
+                val node = UnaryPlusSpec(value)
+                node shouldBe node
+            }
+            it("should be equal to another UnaryPlusSpec with the same value") {
+                UnaryPlusSpec(IntLiteralSpec(42)) shouldBe UnaryPlusSpec(IntLiteralSpec(42))
+            }
+            it("should not be equal to another UnaryPlusSpec with a different value") {
+                UnaryPlusSpec(IntLiteralSpec(42)) shouldNotBe UnaryPlusSpec(IntLiteralSpec(43))
+            }
+            it("should not be equal to another type") {
+                UnaryPlusSpec(IntLiteralSpec(42)) shouldNotBe IntLiteralSpec(42)
+            }
+            it("should not be equal to null") {
+                UnaryPlusSpec(IntLiteralSpec(42)) shouldNotBe null
+            }
         }
 
-        it("build") {
-            val value = IntLiteralSpec(42)
-            val node = UnaryPlusSpec.builder()
-                .value(value)
-                .build()
-            node.value shouldBe value
+        describe("builder") {
+            it("should create a builder") {
+                val builder = UnaryPlusSpec.builder()
+                builder shouldNotBe null
+                builder.value shouldBe null
+            }
+
+            abstractUnaryOperatorSpecBuilderTests(UnaryPlusSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the UnaryPlusSpec") {
+                    val value = IntLiteralSpec(42)
+                    val node = UnaryPlusSpec.builder()
+                        .value(value)
+                        .build()
+                    node.value shouldBe value
+                }
+
+                it("should throw an exception if the value is not set") {
+                    val builder = UnaryPlusSpec.builder()
+                    shouldThrowWithMessage<IllegalStateException>("Value not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("LogicalAndSpec") {
-        it("create") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalAndSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalAndSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalAndSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "true && false"
+        describe("generate") {
+            it("should generate") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalAndSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "true && false"
+            }
         }
 
-        it("equals") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            LogicalAndSpec(left, right) shouldBe LogicalAndSpec(left, right)
-            LogicalAndSpec(left, right) shouldNotBe LogicalAndSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalAndSpec(left, right) shouldBe LogicalAndSpec(left, right)
+            }
+            it("should not be equal to another LogicalAndSpec with different values") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalAndSpec(left, right) shouldNotBe LogicalAndSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalAndSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LogicalAndSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(LogicalAndSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LogicalAndSpec") {
+                    val left = BooleanLiteralSpec(true)
+                    val right = BooleanLiteralSpec(false)
+                    val node = LogicalAndSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = LogicalAndSpec.builder()
+                    builder.right(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = LogicalAndSpec.builder()
+                    builder.left(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("LogicalOrSpec") {
-        it("create") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalOrSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalOrSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalOrSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "true || false"
+        describe("generate") {
+            it("should generate") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalOrSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "true || false"
+            }
         }
 
-        it("equals") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            LogicalOrSpec(left, right) shouldBe LogicalOrSpec(left, right)
-            LogicalOrSpec(left, right) shouldNotBe LogicalOrSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalOrSpec(left, right) shouldBe LogicalOrSpec(left, right)
+            }
+            it("should not be equal to another LogicalOrSpec with different values") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalOrSpec(left, right) shouldNotBe LogicalOrSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = BooleanLiteralSpec(true)
-            val right = BooleanLiteralSpec(false)
-            val node = LogicalOrSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LogicalOrSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(LogicalOrSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LogicalOrSpec") {
+                    val left = BooleanLiteralSpec(true)
+                    val right = BooleanLiteralSpec(false)
+                    val node = LogicalOrSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = LogicalOrSpec.builder()
+                    builder.right(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = LogicalOrSpec.builder()
+                    builder.left(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("LogicalNotSpec") {
-        it("create") {
-            val value = BooleanLiteralSpec(true)
-            val node = LogicalNotSpec(value)
-            node.value shouldBe value
+        describe("create") {
+            it("should create") {
+                val value = BooleanLiteralSpec(true)
+                val node = LogicalNotSpec(value)
+                node.value shouldBe value
+            }
         }
 
-        it("generate") {
-            val value = BooleanLiteralSpec(true)
-            val node = LogicalNotSpec(value)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "!true"
+        describe("generate") {
+            it("should generate") {
+                val value = BooleanLiteralSpec(true)
+                val node = LogicalNotSpec(value)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "!true"
+            }
         }
 
-        it("equals") {
-            val value = BooleanLiteralSpec(true)
-            LogicalNotSpec(value) shouldBe LogicalNotSpec(value)
-            LogicalNotSpec(value) shouldNotBe LogicalNotSpec(BooleanLiteralSpec(false))
+        describe("equals") {
+            it("should be equal to same instance") {
+                val value = BooleanLiteralSpec(true)
+                val node = LogicalNotSpec(value)
+                node shouldBe node
+            }
+            it("should be equal to another LogicalNotSpec with the same value") {
+                LogicalNotSpec(BooleanLiteralSpec(true)) shouldBe LogicalNotSpec(BooleanLiteralSpec(true))
+            }
+            it("should not be equal to another LogicalNotSpec with a different value") {
+                LogicalNotSpec(BooleanLiteralSpec(true)) shouldNotBe LogicalNotSpec(BooleanLiteralSpec(false))
+            }
+            it("should not be equal to another type") {
+                LogicalNotSpec(BooleanLiteralSpec(true)) shouldNotBe BooleanLiteralSpec(true)
+            }
+            it("should not be equal to null") {
+                LogicalNotSpec(BooleanLiteralSpec(true)) shouldNotBe null
+            }
         }
 
-        it("build") {
-            val value = BooleanLiteralSpec(true)
-            val node = LogicalNotSpec.builder()
-                .value(value)
-                .build()
-            node.value shouldBe value
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LogicalNotSpec.builder()
+                builder shouldNotBe null
+                builder.value shouldBe null
+            }
+
+            abstractUnaryOperatorSpecBuilderTests(LogicalNotSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LogicalNotSpec") {
+                    val value = BooleanLiteralSpec(true)
+                    val node = LogicalNotSpec.builder()
+                        .value(value)
+                        .build()
+                    node.value shouldBe value
+                }
+
+                it("should throw an exception if the value is not set") {
+                    val builder = LogicalNotSpec.builder()
+                    shouldThrowWithMessage<IllegalStateException>("Value not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("EqualitySpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = EqualitySpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = EqualitySpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = EqualitySpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 == 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = EqualitySpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 == 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            EqualitySpec(left, right) shouldBe EqualitySpec(left, right)
-            EqualitySpec(left, right) shouldNotBe EqualitySpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                EqualitySpec(left, right) shouldBe EqualitySpec(left, right)
+            }
+            it("should not be equal to another EqualitySpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                EqualitySpec(left, right) shouldNotBe EqualitySpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = EqualitySpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = EqualitySpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(EqualitySpec::builder)
+
+            describe("builder.build()") {
+                it("should build the EqualitySpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = EqualitySpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = EqualitySpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = EqualitySpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("InequalitySpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = InequalitySpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = InequalitySpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = InequalitySpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 != 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = InequalitySpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 != 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            InequalitySpec(left, right) shouldBe InequalitySpec(left, right)
-            InequalitySpec(left, right) shouldNotBe InequalitySpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                InequalitySpec(left, right) shouldBe InequalitySpec(left, right)
+            }
+            it("should not be equal to another InequalitySpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                InequalitySpec(left, right) shouldNotBe InequalitySpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = InequalitySpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = InequalitySpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(InequalitySpec::builder)
+
+            describe("builder.build()") {
+                it("should build the InequalitySpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = InequalitySpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = InequalitySpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = InequalitySpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("LessThanSpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = LessThanSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 < 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = LessThanSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 < 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            LessThanSpec(left, right) shouldBe LessThanSpec(left, right)
-            LessThanSpec(left, right) shouldNotBe LessThanSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                LessThanSpec(left, right) shouldBe LessThanSpec(left, right)
+            }
+            it("should not be equal to another LessThanSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                LessThanSpec(left, right) shouldNotBe LessThanSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LessThanSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(LessThanSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LessThanSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = LessThanSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = LessThanSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = LessThanSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("LessThanOrEqualSpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanOrEqualSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = LessThanOrEqualSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanOrEqualSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 <= 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = LessThanOrEqualSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 <= 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            LessThanOrEqualSpec(left, right) shouldBe LessThanOrEqualSpec(left, right)
-            LessThanOrEqualSpec(left, right) shouldNotBe LessThanOrEqualSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                LessThanOrEqualSpec(left, right) shouldBe LessThanOrEqualSpec(left, right)
+            }
+            it("should not be equal to another LessThanOrEqualSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                LessThanOrEqualSpec(left, right) shouldNotBe LessThanOrEqualSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = LessThanOrEqualSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LessThanOrEqualSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(LessThanOrEqualSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LessThanOrEqualSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = LessThanOrEqualSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = LessThanOrEqualSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = LessThanOrEqualSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("GreaterThanSpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = GreaterThanSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 > 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = GreaterThanSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 > 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            GreaterThanSpec(left, right) shouldBe GreaterThanSpec(left, right)
-            GreaterThanSpec(left, right) shouldNotBe GreaterThanSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                GreaterThanSpec(left, right) shouldBe GreaterThanSpec(left, right)
+            }
+            it("should not be equal to another GreaterThanSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                GreaterThanSpec(left, right) shouldNotBe GreaterThanSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = GreaterThanSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(GreaterThanSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the GreaterThanSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = GreaterThanSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = GreaterThanSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = GreaterThanSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 
     describe("GreaterThanOrEqualSpec") {
-        it("create") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanOrEqualSpec(left, right)
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = GreaterThanOrEqualSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
         }
 
-        it("generate") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanOrEqualSpec(left, right)
-            val ctx = GenerationContext()
-            node.generate(ctx) shouldBe "42 >= 43"
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = GreaterThanOrEqualSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 >= 43"
+            }
         }
 
-        it("equals") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            GreaterThanOrEqualSpec(left, right) shouldBe GreaterThanOrEqualSpec(left, right)
-            GreaterThanOrEqualSpec(left, right) shouldNotBe GreaterThanOrEqualSpec(right, left)
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                GreaterThanOrEqualSpec(left, right) shouldBe GreaterThanOrEqualSpec(left, right)
+            }
+            it("should not be equal to another GreaterThanOrEqualSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                GreaterThanOrEqualSpec(left, right) shouldNotBe GreaterThanOrEqualSpec(right, left)
+            }
         }
 
-        it("build") {
-            val left = IntLiteralSpec(42)
-            val right = IntLiteralSpec(43)
-            val node = GreaterThanOrEqualSpec.builder()
-                .left(left)
-                .right(right)
-                .build()
-            node.left shouldBe left
-            node.right shouldBe right
+        describe("builder") {
+            it("should create a builder") {
+                val builder = GreaterThanOrEqualSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(GreaterThanOrEqualSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the GreaterThanOrEqualSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = GreaterThanOrEqualSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = GreaterThanOrEqualSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = GreaterThanOrEqualSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
         }
     }
 })

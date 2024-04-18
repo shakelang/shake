@@ -215,6 +215,18 @@ open class IntLiteralSpec(
      * Constructor for IntLiteralSpec
      * @param value The value of the integer
      */
+    constructor(value: Byte) : this(value.toLong())
+
+    /**
+     * Constructor for IntLiteralSpec
+     * @param value The value of the integer
+     */
+    constructor(value: Short) : this(value.toLong())
+
+    /**
+     * Constructor for IntLiteralSpec
+     * @param value The value of the integer
+     */
     constructor(value: Int) : this(value.toLong())
 
     /**
@@ -688,6 +700,46 @@ abstract class AbstractDualOperatorSpec(
          * @param left The left value of the addition
          * @return The builder
          */
+        fun left(left: NamespaceSpec): THIS {
+            this.left = VariableReferenceSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Boolean): THIS {
+            this.left = BooleanLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Byte): THIS {
+            this.left = IntLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Short): THIS {
+            this.left = IntLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
         fun left(left: Int): THIS {
             this.left = IntLiteralSpec(left)
             return getThis()
@@ -740,6 +792,46 @@ abstract class AbstractDualOperatorSpec(
          */
         fun right(right: String): THIS {
             this.right = ValueSpec.of(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: NamespaceSpec): THIS {
+            this.right = VariableReferenceSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Boolean): THIS {
+            this.right = BooleanLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Byte): THIS {
+            this.right = IntLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Short): THIS {
+            this.right = IntLiteralSpec(right)
             return getThis()
         }
 
@@ -834,6 +926,46 @@ abstract class AbstractUnaryOperatorSpec(
          * @param value The value
          * @return The builder
          */
+        fun value(value: NamespaceSpec): THIS {
+            this.value = VariableReferenceSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: Boolean): THIS {
+            this.value = BooleanLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: Byte): THIS {
+            this.value = IntLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: Short): THIS {
+            this.value = IntLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
         fun value(value: Int): THIS {
             this.value = IntLiteralSpec(value)
             return getThis()
@@ -844,7 +976,6 @@ abstract class AbstractUnaryOperatorSpec(
          * @param value The value
          * @return The builder
          */
-
         fun value(value: Long): THIS {
             this.value = IntLiteralSpec(value)
             return getThis()
@@ -855,7 +986,6 @@ abstract class AbstractUnaryOperatorSpec(
          * @param value The value
          * @return The builder
          */
-
         fun value(value: Float): THIS {
             this.value = FloatLiteralSpec(value)
             return getThis()
@@ -1427,11 +1557,6 @@ open class UnaryMinusSpec(
 /**
  * A ValueSpec that represents a unary plus
  */
-typealias NegationSpec = UnaryMinusSpec
-
-/**
- * A ValueSpec that represents a unary plus
- */
 open class UnaryPlusSpec(
 
     /**
@@ -1583,13 +1708,13 @@ open class LogicalOrSpec(
     /**
      * The left value of the logical or
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the logical or
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the logical or
@@ -1623,59 +1748,21 @@ open class LogicalOrSpec(
         /**
          * The left value of the logical or
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the logical or
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LogicalOrSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the logical or
-         * @param left The left value of the logical or
-         * @return The builder
-         */
-        fun left(left: ValueSpec): LogicalOrSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the logical or
-         * @param left The left value of the logical or
-         * @return The builder
-         */
-        fun left(left: String): LogicalOrSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the logical or
-         * @param right The right value of the logical or
-         * @return The builder
-         */
-        fun right(right: ValueSpec): LogicalOrSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the logical or
-         * @param right The right value of the logical or
-         * @return The builder
-         */
-        fun right(right: String): LogicalOrSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LogicalOrSpec
          * @return The created LogicalOrSpec
          */
-        fun build(): LogicalOrSpec {
+        override fun build(): LogicalOrSpec {
             return LogicalOrSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1701,8 +1788,8 @@ open class LogicalNotSpec(
     /**
      * The value to negate
      */
-    open val value: ValueSpec,
-) : ValueSpec {
+    value: ValueSpec,
+) : AbstractUnaryOperatorSpec(value) {
 
     /**
      * Generate the logical not
@@ -1733,34 +1820,16 @@ open class LogicalNotSpec(
         /**
          * The value to negate
          */
-        var value: ValueSpec? = null,
-    ) {
+        value: ValueSpec? = null,
+    ) : AbstractUnaryOperatorSpecBuilder<LogicalNotSpecBuilder>(value) {
 
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: ValueSpec): LogicalNotSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: String): LogicalNotSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LogicalNotSpec
          * @return The created LogicalNotSpec
          */
-        fun build(): LogicalNotSpec {
+        override fun build(): LogicalNotSpec {
             return LogicalNotSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
@@ -1785,13 +1854,13 @@ open class LogicalXorSpec(
     /**
      * The left value of the logical xor
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the logical xor
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the logical xor
@@ -1825,59 +1894,21 @@ open class LogicalXorSpec(
         /**
          * The left value of the logical xor
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the logical xor
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LogicalXorSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the logical xor
-         * @param left The left value of the logical xor
-         * @return The builder
-         */
-        fun left(left: ValueSpec): LogicalXorSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the logical xor
-         * @param left The left value of the logical xor
-         * @return The builder
-         */
-        fun left(left: String): LogicalXorSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the logical xor
-         * @param right The right value of the logical xor
-         * @return The builder
-         */
-        fun right(right: ValueSpec): LogicalXorSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the logical xor
-         * @param right The right value of the logical xor
-         * @return The builder
-         */
-        fun right(right: String): LogicalXorSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LogicalXorSpec
          * @return The created LogicalXorSpec
          */
-        fun build(): LogicalXorSpec {
+        override fun build(): LogicalXorSpec {
             return LogicalXorSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1903,13 +1934,13 @@ open class EqualitySpec(
     /**
      * The left value of the equality comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the equality comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the equality comparison
@@ -1943,59 +1974,21 @@ open class EqualitySpec(
         /**
          * The left value of the equality comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the equality comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<EqualitySpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the equality comparison
-         * @param left The left value of the equality comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): EqualitySpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the equality comparison
-         * @param left The left value of the equality comparison
-         * @return The builder
-         */
-        fun left(left: String): EqualitySpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the equality comparison
-         * @param right The right value of the equality comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): EqualitySpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the equality comparison
-         * @param right The right value of the equality comparison
-         * @return The builder
-         */
-        fun right(right: String): EqualitySpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the EqualitySpec
          * @return The created EqualitySpec
          */
-        fun build(): EqualitySpec {
+        override fun build(): EqualitySpec {
             return EqualitySpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -2021,13 +2014,13 @@ open class InequalitySpec(
     /**
      * The left value of the inequality comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the inequality comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the inequality comparison
@@ -2061,59 +2054,21 @@ open class InequalitySpec(
         /**
          * The left value of the inequality comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the inequality comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<InequalitySpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the inequality comparison
-         * @param left The left value of the inequality comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): InequalitySpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the inequality comparison
-         * @param left The left value of the inequality comparison
-         * @return The builder
-         */
-        fun left(left: String): InequalitySpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the inequality comparison
-         * @param right The right value of the inequality comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): InequalitySpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the inequality comparison
-         * @param right The right value of the inequality comparison
-         * @return The builder
-         */
-        fun right(right: String): InequalitySpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the InequalitySpec
          * @return The created InequalitySpec
          */
-        fun build(): InequalitySpec {
+        override fun build(): InequalitySpec {
             return InequalitySpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -2139,13 +2094,13 @@ open class GreaterThanSpec(
     /**
      * The left value of the greater than comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the greater than comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the greater than comparison
@@ -2179,59 +2134,21 @@ open class GreaterThanSpec(
         /**
          * The left value of the greater than comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the greater than comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<GreaterThanSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the greater than comparison
-         * @param left The left value of the greater than comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): GreaterThanSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the greater than comparison
-         * @param left The left value of the greater than comparison
-         * @return The builder
-         */
-        fun left(left: String): GreaterThanSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the greater than comparison
-         * @param right The right value of the greater than comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): GreaterThanSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the greater than comparison
-         * @param right The right value of the greater than comparison
-         * @return The builder
-         */
-        fun right(right: String): GreaterThanSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the GreaterThanSpec
          * @return The created GreaterThanSpec
          */
-        fun build(): GreaterThanSpec {
+        override fun build(): GreaterThanSpec {
             return GreaterThanSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -2257,13 +2174,13 @@ open class GreaterThanOrEqualSpec(
     /**
      * The left value of the greater than or equal comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
 /**
      * The right value of the greater than or equal comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the greater than or equal comparison
@@ -2297,59 +2214,21 @@ open class GreaterThanOrEqualSpec(
         /**
          * The left value of the greater than or equal comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
-/**
+        /**
          * The right value of the greater than or equal comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<GreaterThanOrEqualSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the greater than or equal comparison
-         * @param left The left value of the greater than or equal comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): GreaterThanOrEqualSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the greater than or equal comparison
-         * @param left The left value of the greater than or equal comparison
-         * @return The builder
-         */
-        fun left(left: String): GreaterThanOrEqualSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the greater than or equal comparison
-         * @param right The right value of the greater than or equal comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): GreaterThanOrEqualSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the greater than or equal comparison
-         * @param right The right value of the greater than or equal comparison
-         * @return The builder
-         */
-        fun right(right: String): GreaterThanOrEqualSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the GreaterThanOrEqualSpec
          * @return The created GreaterThanOrEqualSpec
          */
-        fun build(): GreaterThanOrEqualSpec {
+        override fun build(): GreaterThanOrEqualSpec {
             return GreaterThanOrEqualSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -2375,13 +2254,13 @@ open class LessThanSpec(
     /**
      * The left value of the less than comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the less than comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the less than comparison
@@ -2415,59 +2294,21 @@ open class LessThanSpec(
         /**
          * The left value of the less than comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the less than comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LessThanSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the less than comparison
-         * @param left The left value of the less than comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): LessThanSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the less than comparison
-         * @param left The left value of the less than comparison
-         * @return The builder
-         */
-        fun left(left: String): LessThanSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the less than comparison
-         * @param right The right value of the less than comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): LessThanSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the less than comparison
-         * @param right The right value of the less than comparison
-         * @return The builder
-         */
-        fun right(right: String): LessThanSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LessThanSpec
          * @return The created LessThanSpec
          */
-        fun build(): LessThanSpec {
+        override fun build(): LessThanSpec {
             return LessThanSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -2493,13 +2334,13 @@ open class LessThanOrEqualSpec(
     /**
      * The left value of the less than or equal comparison
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the less than or equal comparison
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the less than or equal comparison
@@ -2533,59 +2374,21 @@ open class LessThanOrEqualSpec(
         /**
          * The left value of the less than or equal comparison
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the less than or equal comparison
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LessThanOrEqualSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the less than or equal comparison
-         * @param left The left value of the less than or equal comparison
-         * @return The builder
-         */
-        fun left(left: ValueSpec): LessThanOrEqualSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the less than or equal comparison
-         * @param left The left value of the less than or equal comparison
-         * @return The builder
-         */
-        fun left(left: String): LessThanOrEqualSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the less than or equal comparison
-         * @param right The right value of the less than or equal comparison
-         * @return The builder
-         */
-        fun right(right: ValueSpec): LessThanOrEqualSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the less than or equal comparison
-         * @param right The right value of the less than or equal comparison
-         * @return The builder
-         */
-        fun right(right: String): LessThanOrEqualSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LessThanOrEqualSpec
          * @return The created LessThanOrEqualSpec
          */
-        fun build(): LessThanOrEqualSpec {
+        override fun build(): LessThanOrEqualSpec {
             return LessThanOrEqualSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
