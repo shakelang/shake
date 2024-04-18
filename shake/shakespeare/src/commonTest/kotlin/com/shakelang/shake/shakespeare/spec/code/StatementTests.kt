@@ -8,525 +8,798 @@ import io.kotest.matchers.shouldNotBe
 
 class StatementTests : FlatTestSpec({
 
+    describe("StatementSpec.of()") {
+
+        describe("generate()") {
+            it("should return the statement") {
+                val ctx = GenerationContext()
+                StatementSpec.of("statement").generate(ctx) shouldBe "statement"
+            }
+        }
+
+        describe("equals()") {
+            it("should return true if same instance") {
+                val spec = StatementSpec.of("statement")
+                spec shouldBe spec
+            }
+            it("should return true if the statements are the same") {
+                StatementSpec.of("statement") shouldBe StatementSpec.of("statement")
+            }
+            it("should return false if the statements are different") {
+                StatementSpec.of("statement") shouldNotBe StatementSpec.of("statement2")
+            }
+            it("should return false if the other object is not a StatementSpec") {
+                StatementSpec.of("statement") shouldNotBe "statement"
+            }
+        }
+    }
+
     describe("VariableDeclarationSpec") {
-        it("create") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                false,
-            )
+        describe("create()") {
+            it("should create object") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
 
-            spec.type shouldBe TypeSpec.of("String")
-            spec.value shouldBe ValueSpec.of("value")
-            spec.name shouldBe "name"
-            spec.isVal shouldBe false
+                spec.type shouldBe TypeSpec.of("String")
+                spec.value shouldBe ValueSpec.of("value")
+                spec.name shouldBe "name"
+                spec.isVal shouldBe false
+            }
         }
 
-        it("generate (var, no value, type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                null,
-                false,
-            )
+        describe("generate()") {
+            it("should generate (var, no value, type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    null,
+                    false,
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "var name: String"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "var name: String"
+            }
+
+            it("should generate (var, value, type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "var name: String = value"
+            }
+
+            it("should generate (val, no value, type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    null,
+                    true,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "val name: String"
+            }
+
+            it("should generate (val, value, type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    true,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "val name: String = value"
+            }
+
+            it("should generate (var, no value, no type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    null,
+                    null,
+                    false,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "var name"
+            }
+
+            it("should generate (var, value, no type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    null,
+                    ValueSpec.of("value"),
+                    false,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "var name = value"
+            }
+
+            it("should generate (val, no value, no type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    null,
+                    null,
+                    true,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "val name"
+            }
+
+            it("should generate (val, value, no type)") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    null,
+                    ValueSpec.of("value"),
+                    true,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "val name = value"
+            }
         }
 
-        it("generate (var, value, type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                false,
-            )
+        describe("equals()") {
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "var name: String = value"
+            it("should return true if same instance") {
+                val spec = VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+                spec shouldBe spec
+            }
+
+            it("should return true if the statements are the same") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldBe VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+            }
+
+            it("should return false if the statements are the same (val)") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    true,
+                ) shouldNotBe VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+            }
+
+            it("should return false if the names are different") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldNotBe VariableDeclarationSpec(
+                    "name2",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+            }
+
+            it("should return false if the types are different") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldNotBe VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String2"),
+                    ValueSpec.of("value"),
+                    false,
+                )
+            }
+
+            it("should return false if the values are different") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldNotBe VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value2"),
+                    false,
+                )
+            }
+
+            it("should return false if the other object is not a VariableDeclarationSpec") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldNotBe "name"
+            }
         }
 
-        it("generate (val, no value, type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                null,
-                true,
-            )
+        describe("build") {
+            it("should build") {
+                val builder = VariableDeclarationSpec.builder()
+                builder.name("name")
+                builder.type("String")
+                builder.value("value")
+                builder.isVal(false)
+                val spec = builder.build()
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "val name: String"
-        }
+                spec.type shouldBe TypeSpec.of("String")
+                spec.value shouldBe ValueSpec.of("value")
+                spec.name shouldBe "name"
+                spec.isVal shouldBe false
+            }
 
-        it("generate (val, value, type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                true,
-            )
+            it("should build (val)") {
+                val builder = VariableDeclarationSpec.builder()
+                builder.name("name")
+                builder.type(TypeSpec.of("String"))
+                builder.value("value")
+                builder.isVal()
+                val spec = builder.build()
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "val name: String = value"
-        }
-
-        it("generate (var, no value, no type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                null,
-                null,
-                false,
-            )
-
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "var name"
-        }
-
-        it("generate (var, value, no type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                null,
-                ValueSpec.of("value"),
-                false,
-            )
-
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "var name = value"
-        }
-
-        it("generate (val, no value, no type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                null,
-                null,
-                true,
-            )
-
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "val name"
-        }
-
-        it("generate (val, value, no type)") {
-            val spec = VariableDeclarationSpec(
-                "name",
-                null,
-                ValueSpec.of("value"),
-                true,
-            )
-
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "val name = value"
-        }
-
-        it("equals") {
-
-            val spec = VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                false,
-            )
-
-            spec shouldBe spec
-
-            spec shouldBe VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                false,
-            )
-
-            spec shouldNotBe VariableDeclarationSpec(
-                "name",
-                TypeSpec.of("String2"),
-                ValueSpec.of("value"),
-                false,
-            )
-
-            spec shouldNotBe VariableDeclarationSpec(
-                "name2",
-                TypeSpec.of("String"),
-                ValueSpec.of("value"),
-                false,
-            )
-
-            spec shouldNotBe "name"
-        }
-
-        it("build") {
-            val builder = VariableDeclarationSpec.builder()
-            builder.name("name")
-            builder.type("String")
-            builder.value("value")
-            builder.isVal(false)
-            val spec = builder.build()
-
-            spec.type shouldBe TypeSpec.of("String")
-            spec.value shouldBe ValueSpec.of("value")
-            spec.name shouldBe "name"
-            spec.isVal shouldBe false
-        }
-
-        it("build (val)") {
-            val builder = VariableDeclarationSpec.builder()
-            builder.name("name")
-            builder.type(TypeSpec.of("String"))
-            builder.value("value")
-            builder.isVal()
-            val spec = builder.build()
-
-            spec.type shouldBe TypeSpec.of("String")
-            spec.value shouldBe ValueSpec.of("value")
-            spec.name shouldBe "name"
-            spec.isVal shouldBe true
+                spec.type shouldBe TypeSpec.of("String")
+                spec.value shouldBe ValueSpec.of("value")
+                spec.name shouldBe "name"
+                spec.isVal shouldBe true
+            }
         }
     }
 
     describe("WhileSpec") {
-        it("create") {
-            val spec = WhileSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-            )
+        describe("create") {
+            it("should create") {
+                val spec = WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                )
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+            }
         }
 
-        it("generate") {
-            val spec = WhileSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-            )
+        describe("generate") {
+            it("should generate") {
+                val spec = WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "while (condition) {}"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "while (condition) {}"
+            }
         }
 
-        it("build") {
-            val builder = WhileSpec.builder()
-            builder.condition("condition")
-            builder.body(CodeSpec.empty())
-            val spec = builder.build()
+        describe("build") {
+            it("should build") {
+                val builder = WhileSpec.builder()
+                builder.condition("condition")
+                builder.body(CodeSpec.empty())
+                val spec = builder.build()
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+            }
         }
 
-        it("equals") {
+        describe("equals") {
+            it("should return true if same instance") {
+                val spec = WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                )
+                spec shouldBe spec
+            }
 
-            val spec = WhileSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-            )
+            it("should return true if the statements are the same") {
+                WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                ) shouldBe WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldBe spec
+            it("should return false if conditions are different") {
+                WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                ) shouldNotBe WhileSpec(
+                    ValueSpec.of("condition2"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldBe WhileSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-            )
+            it("should return false if the bodies are different") {
+                WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                ) shouldNotBe WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
+                )
+            }
 
-            spec shouldNotBe WhileSpec(
-                ValueSpec.of("condition2"),
-                CodeSpec.empty(),
-            )
-
-            spec shouldNotBe WhileSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
-            )
-
-            spec shouldNotBe "condition"
+            it("should return false if the other object is not a WhileSpec") {
+                WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                ) shouldNotBe "condition"
+            }
         }
     }
 
     describe("DoWhileSpec") {
-        it("create ") {
-            val spec = DoWhileSpec(
-                CodeSpec.empty(),
-                ValueSpec.of("condition"),
-            )
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
+        describe("create") {
+            it("should create") {
+                val spec = DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                )
+
+                spec.body shouldBe CodeSpec.empty()
+                spec.condition shouldBe ValueSpec.of("condition")
+            }
         }
 
-        it("generate") {
-            val spec = DoWhileSpec(
-                CodeSpec.empty(),
-                ValueSpec.of("condition"),
-            )
+        describe("generate") {
+            it("should generate") {
+                val spec = DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "do {} while (condition)"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "do {} while (condition)"
+            }
         }
 
-        it("build") {
-            val builder = DoWhileSpec.builder()
-            builder.condition("condition")
-            builder.body(CodeSpec.empty())
-            val spec = builder.build()
+        describe("build") {
+            it("should build") {
+                val builder = DoWhileSpec.builder()
+                builder.body(CodeSpec.empty())
+                builder.condition("condition")
+                val spec = builder.build()
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
+                spec.body shouldBe CodeSpec.empty()
+                spec.condition shouldBe ValueSpec.of("condition")
+            }
         }
 
-        it("equals") {
+        describe("equals") {
+            it("should return true if same instance") {
+                val spec = DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                )
+                spec shouldBe spec
+            }
 
-            val spec = DoWhileSpec(
-                CodeSpec.empty(),
-                ValueSpec.of("condition"),
-            )
+            it("should return true if the statements are the same") {
+                DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                ) shouldBe DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                )
+            }
 
-            spec shouldBe spec
+            it("should return false if the conditions are different") {
+                DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                ) shouldNotBe DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition2"),
+                )
+            }
 
-            spec shouldBe DoWhileSpec(
-                CodeSpec.empty(),
-                ValueSpec.of("condition"),
-            )
+            it("should return false if the bodies are different") {
+                DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                ) shouldNotBe DoWhileSpec(
+                    CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
+                    ValueSpec.of("condition"),
+                )
+            }
 
-            spec shouldNotBe DoWhileSpec(
-                CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
-                ValueSpec.of("condition"),
-            )
-
-            spec shouldNotBe DoWhileSpec(
-                CodeSpec.empty(),
-                ValueSpec.of("condition2"),
-            )
-
-            spec shouldNotBe "condition"
+            it("should return false if the other object is not a DoWhileSpec") {
+                DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                ) shouldNotBe "condition"
+            }
         }
     }
     describe("ForSpec") {
-        it("create") {
-            val spec = ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+        describe("create") {
+            it("should create") {
+                val spec = ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
 
-            spec.init shouldBe StatementSpec.of("init")
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.update shouldBe StatementSpec.of("update")
-            spec.body shouldBe CodeSpec.empty()
+                spec.init shouldBe StatementSpec.of("init")
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.update shouldBe StatementSpec.of("update")
+                spec.body shouldBe CodeSpec.empty()
+            }
         }
 
-        it("generate") {
-            val spec = ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+        describe("generate") {
+            it("should generate") {
+                val spec = ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "for (init; condition; update) {}"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "for (init; condition; update) {}"
+            }
         }
 
-        it("build") {
-            val builder = ForSpec.builder()
-            builder.init("init")
-            builder.condition("condition")
-            builder.update("update")
-            builder.body(CodeSpec.empty())
-            val spec = builder.build()
+        describe("build") {
+            it("should build") {
+                val builder = ForSpec.builder()
+                builder.init("init")
+                builder.condition("condition")
+                builder.update("update")
+                builder.body(CodeSpec.empty())
+                val spec = builder.build()
 
-            spec.init shouldBe StatementSpec.of("init")
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.update shouldBe StatementSpec.of("update")
-            spec.body shouldBe CodeSpec.empty()
+                spec.init shouldBe StatementSpec.of("init")
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.update shouldBe StatementSpec.of("update")
+                spec.body shouldBe CodeSpec.empty()
+            }
         }
 
-        it("equals") {
+        describe("equals") {
+            it("should return true if same instance") {
+                val spec = ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
+                spec shouldBe spec
+            }
 
-            val spec = ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+            it("should return true if the statements are the same") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldBe ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldBe spec
+            it("should return false if the inits are different") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe ForSpec(
+                    StatementSpec.of("init2"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldBe ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+            it("should return false if the conditions are different") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition2"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldNotBe ForSpec(
-                StatementSpec.of("init2"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+            it("should return false if the updates are different") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update2"),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldNotBe ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition2"),
-                StatementSpec.of("update"),
-                CodeSpec.empty(),
-            )
+            it("should return false if the bodies are different") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
+                )
+            }
 
-            spec shouldNotBe ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update2"),
-                CodeSpec.empty(),
-            )
-
-            spec shouldNotBe ForSpec(
-                StatementSpec.of("init"),
-                ValueSpec.of("condition"),
-                StatementSpec.of("update"),
-                CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
-            )
-
-            spec shouldNotBe "condition"
+            it("should return false if the other object is not a ForSpec") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe "condition"
+            }
         }
     }
 
     describe("IfSpec") {
-        it("create") {
-            val spec = IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                CodeSpec.empty(),
-            )
+        describe("create") {
+            it("should create (with else)") {
+                val spec = IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                )
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
-            spec.elseBody shouldBe CodeSpec.empty()
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+                spec.elseBody shouldBe CodeSpec.empty()
+            }
+
+            it("should create (no else)") {
+                val spec = IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    null,
+                )
+
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+                spec.elseBody shouldBe null
+            }
         }
 
-        it("generate") {
-            val spec = IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                CodeSpec.empty(),
-            )
+        describe("generate") {
+            it("should generate") {
+                val spec = IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "if (condition) {} else {}"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "if (condition) {} else {}"
+            }
+
+            it("should generate (no else)") {
+                val spec = IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    null,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "if (condition) {}"
+            }
         }
 
-        it("generate (no else)") {
-            val spec = IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                null,
-            )
+        describe("build") {
+            it("should build") {
+                val builder = IfSpec.builder()
+                builder.condition("condition")
+                builder.body(CodeSpec.empty())
+                builder.elseBody(CodeSpec.empty())
+                val spec = builder.build()
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "if (condition) {}"
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+                spec.elseBody shouldBe CodeSpec.empty()
+            }
+
+            it("should build (no else)") {
+                val builder = IfSpec.builder()
+                builder.condition("condition")
+                builder.body(CodeSpec.empty())
+                val spec = builder.build()
+
+                spec.condition shouldBe ValueSpec.of("condition")
+                spec.body shouldBe CodeSpec.empty()
+                spec.elseBody shouldBe null
+            }
         }
 
-        it("build") {
-            val builder = IfSpec.builder()
-            builder.condition("condition")
-            builder.body(CodeSpec.empty())
-            builder.elseBody(CodeSpec.empty())
-            val spec = builder.build()
+        describe("equals") {
+            it("should return true if same instance") {
+                val spec = IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                )
+                spec shouldBe spec
+            }
 
-            spec.condition shouldBe ValueSpec.of("condition")
-            spec.body shouldBe CodeSpec.empty()
-            spec.elseBody shouldBe CodeSpec.empty()
-        }
+            it("should return true if the statements are the same") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldBe IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                )
+            }
 
-        it("equals") {
+            it("should return false if the conditions are different") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldNotBe IfSpec(
+                    ValueSpec.of("condition2"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                )
+            }
 
-            val spec = IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                CodeSpec.empty(),
-            )
+            it("should return false if the bodies are different") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldNotBe IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
+                    CodeSpec.empty(),
+                )
+            }
 
-            spec shouldBe spec
+            it("should return false if the else bodies are different") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldNotBe IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
+                )
+            }
 
-            spec shouldBe IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                CodeSpec.empty(),
-            )
-
-            spec shouldNotBe IfSpec(
-                ValueSpec.of("condition2"),
-                CodeSpec.empty(),
-                CodeSpec.empty(),
-            )
-
-            spec shouldNotBe IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
-                CodeSpec.empty(),
-            )
-
-            spec shouldNotBe IfSpec(
-                ValueSpec.of("condition"),
-                CodeSpec.empty(),
-                CodeSpec.builder().addStatement(StatementSpec.of("statement")).build(),
-            )
-
-            spec shouldNotBe "condition"
+            it("should return false if the other object is not a IfSpec") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldNotBe "condition"
+            }
         }
     }
     describe("ReturnSpec") {
-        it("create") {
-            val spec = ReturnSpec(
-                ValueSpec.of("value"),
-            )
 
-            spec.value shouldBe ValueSpec.of("value")
+        describe("create") {
+            it("should create (with value)") {
+                val spec = ReturnSpec(
+                    ValueSpec.of("value"),
+                )
+
+                spec.value shouldBe ValueSpec.of("value")
+            }
+
+            it("should create (no value)") {
+                val spec = ReturnSpec()
+                spec.value shouldBe null
+            }
         }
 
-        it("generate") {
-            val spec = ReturnSpec(
-                ValueSpec.of("value"),
-            )
+        describe("generate") {
+            it("should generate") {
+                val spec = ReturnSpec(
+                    ValueSpec.of("value"),
+                )
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "return value"
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "return value"
+            }
+
+            it("should generate (no value)") {
+                val spec = ReturnSpec(
+                    null,
+                )
+
+                val ctx = GenerationContext()
+                spec.generate(ctx) shouldBe "return"
+            }
         }
 
-        it("generate (no value)") {
-            val spec = ReturnSpec(
-                null,
-            )
+        describe("build") {
+            it("should build") {
+                val builder = ReturnSpec.builder()
+                builder.value("value")
+                val spec = builder.build()
 
-            val ctx = GenerationContext()
-            spec.generate(ctx) shouldBe "return"
+                spec.value shouldBe ValueSpec.of("value")
+            }
         }
 
-        it("build") {
-            val builder = ReturnSpec.builder()
-            builder.value("value")
-            val spec = builder.build()
+        describe("equals") {
+            it("should return true if same instance") {
+                val spec = ReturnSpec(
+                    ValueSpec.of("value"),
+                )
+                spec shouldBe spec
+            }
 
-            spec.value shouldBe ValueSpec.of("value")
-        }
+            it("should return true if the values are the same") {
+                ReturnSpec(
+                    ValueSpec.of("value"),
+                ) shouldBe ReturnSpec(
+                    ValueSpec.of("value"),
+                )
+            }
 
-        it("equals") {
+            it("should return false if the values are different") {
+                ReturnSpec(
+                    ValueSpec.of("value"),
+                ) shouldNotBe ReturnSpec(
+                    ValueSpec.of("value2"),
+                )
+            }
 
-            val spec = ReturnSpec(
-                ValueSpec.of("value"),
-            )
-
-            spec shouldBe spec
-
-            spec shouldBe ReturnSpec(
-                ValueSpec.of("value"),
-            )
-
-            spec shouldNotBe ReturnSpec(
-                ValueSpec.of("value2"),
-            )
-
-            spec shouldNotBe "value"
+            it("should return false if the other object is not a ReturnSpec") {
+                ReturnSpec(
+                    ValueSpec.of("value"),
+                ) shouldNotBe "value"
+            }
         }
     }
 })

@@ -765,7 +765,7 @@ open class ReturnSpec(
     /**
      * The value to return
      */
-    open val value: ValueSpec?,
+    open val value: ValueSpec? = null,
 ) : StatementSpec {
 
     /**
