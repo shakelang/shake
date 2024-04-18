@@ -46,6 +46,70 @@ interface ValueSpec : AbstractSpec {
                 }
             }
         }
+
+        fun literal(value: Boolean): ValueSpec {
+            return BooleanLiteralSpec(value)
+        }
+
+        fun literal(value: Byte): ValueSpec {
+            return IntLiteralSpec(value)
+        }
+
+        fun literal(value: Short): ValueSpec {
+            return IntLiteralSpec(value)
+        }
+
+        fun literal(value: Int): ValueSpec {
+            return IntLiteralSpec(value)
+        }
+
+        fun literal(value: Long): ValueSpec {
+            return IntLiteralSpec(value)
+        }
+
+        fun literal(value: Float): ValueSpec {
+            return FloatLiteralSpec(value)
+        }
+
+        fun literal(value: Double): ValueSpec {
+            return FloatLiteralSpec(value)
+        }
+
+        fun literal(value: String): ValueSpec {
+            return StringLiteralSpec(value)
+        }
+
+        fun literal(value: Char): ValueSpec {
+            return CharacterLiteralSpec(value)
+        }
+
+        fun literal(value: UByte): ValueSpec {
+            return IntLiteralSpec(value.toLong())
+        }
+
+        fun literal(value: UShort): ValueSpec {
+            return IntLiteralSpec(value.toLong())
+        }
+
+        fun literal(value: UInt): ValueSpec {
+            return IntLiteralSpec(value.toLong())
+        }
+
+        fun literal(value: ULong): ValueSpec {
+            return IntLiteralSpec(value.toLong())
+        }
+
+        fun literal(value: Number): ValueSpec {
+            return when (value) {
+                is Byte -> IntLiteralSpec(value)
+                is Short -> IntLiteralSpec(value)
+                is Int -> IntLiteralSpec(value)
+                is Long -> IntLiteralSpec(value)
+                is Float -> FloatLiteralSpec(value)
+                is Double -> FloatLiteralSpec(value)
+                else -> throw IllegalArgumentException("Unsupported number type")
+            }
+        }
     }
 }
 
