@@ -32,6 +32,9 @@ class StatementTests : FlatTestSpec({
             it("should return false if the other object is not a StatementSpec") {
                 StatementSpec.of("statement") shouldNotBe "statement"
             }
+            it("should return false if other object is null") {
+                StatementSpec.of("statement") shouldNotBe null
+            }
         }
     }
 
@@ -240,6 +243,15 @@ class StatementTests : FlatTestSpec({
                     false,
                 ) shouldNotBe "name"
             }
+
+            it("should return false if the other object is null") {
+                VariableDeclarationSpec(
+                    "name",
+                    TypeSpec.of("String"),
+                    ValueSpec.of("value"),
+                    false,
+                ) shouldNotBe null
+            }
         }
 
         describe("builder()") {
@@ -430,6 +442,13 @@ class StatementTests : FlatTestSpec({
                     CodeSpec.empty(),
                 ) shouldNotBe "condition"
             }
+
+            it("should return false if the other object is null") {
+                WhileSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                ) shouldNotBe null
+            }
         }
 
         describe("builder()") {
@@ -565,6 +584,13 @@ class StatementTests : FlatTestSpec({
                     CodeSpec.empty(),
                     ValueSpec.of("condition"),
                 ) shouldNotBe "condition"
+            }
+
+            it("should return false if the other object is null") {
+                DoWhileSpec(
+                    CodeSpec.empty(),
+                    ValueSpec.of("condition"),
+                ) shouldNotBe null
             }
         }
 
@@ -748,6 +774,15 @@ class StatementTests : FlatTestSpec({
                     StatementSpec.of("update"),
                     CodeSpec.empty(),
                 ) shouldNotBe "condition"
+            }
+
+            it("should return false if the other object is null") {
+                ForSpec(
+                    StatementSpec.of("init"),
+                    ValueSpec.of("condition"),
+                    StatementSpec.of("update"),
+                    CodeSpec.empty(),
+                ) shouldNotBe null
             }
         }
 
@@ -989,6 +1024,14 @@ class StatementTests : FlatTestSpec({
                     CodeSpec.empty(),
                 ) shouldNotBe "condition"
             }
+
+            it("should return false if the other object is null") {
+                IfSpec(
+                    ValueSpec.of("condition"),
+                    CodeSpec.empty(),
+                    CodeSpec.empty(),
+                ) shouldNotBe null
+            }
         }
 
         describe("builder()") {
@@ -1141,6 +1184,12 @@ class StatementTests : FlatTestSpec({
                 ReturnSpec(
                     ValueSpec.of("value"),
                 ) shouldNotBe "value"
+            }
+
+            it("should return false if the other object is null") {
+                ReturnSpec(
+                    ValueSpec.of("value"),
+                ) shouldNotBe null
             }
         }
 

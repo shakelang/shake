@@ -363,6 +363,8 @@ open class FloatLiteralSpec(
     val value: Double,
 ) : ValueSpec {
 
+    constructor(value: Float) : this(value.toDouble())
+
     /**
      * Generate the float
      * @param ctx The context to generate the float in
@@ -641,6 +643,242 @@ open class VariableReferenceSpec(open val name: NamespaceSpec) : ValueSpec {
     }
 }
 
+abstract class AbstractDualOperatorSpec(
+    open val left: ValueSpec,
+    open val right: ValueSpec,
+) : ValueSpec {
+    abstract class AbstractDualOperatorSpecBuilder<THIS : AbstractDualOperatorSpecBuilder<THIS>>
+    internal constructor(
+
+        /**
+         * The left value of the addition
+         */
+        var left: ValueSpec? = null,
+
+        /**
+         * The right value of the addition
+         */
+        var right: ValueSpec? = null,
+    ) {
+
+        abstract fun getThis(): THIS
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: ValueSpec): THIS {
+            this.left = left
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: String): THIS {
+            this.left = ValueSpec.of(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Int): THIS {
+            this.left = IntLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Long): THIS {
+            this.left = IntLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Float): THIS {
+            this.left = FloatLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the left value of the addition
+         * @param left The left value of the addition
+         * @return The builder
+         */
+        fun left(left: Double): THIS {
+            this.left = FloatLiteralSpec(left)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: ValueSpec): THIS {
+            this.right = right
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: String): THIS {
+            this.right = ValueSpec.of(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Int): THIS {
+            this.right = IntLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Long): THIS {
+            this.right = IntLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Float): THIS {
+            this.right = FloatLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Set the right value of the addition
+         * @param right The right value of the addition
+         * @return The builder
+         */
+        fun right(right: Double): THIS {
+            this.right = FloatLiteralSpec(right)
+            return getThis()
+        }
+
+        /**
+         * Build the AdditionSpec
+         * @return The created AdditionSpec
+         */
+        abstract fun build(): AbstractDualOperatorSpec
+    }
+}
+
+/**
+ * A ValueSpec that represents an unary operation
+ */
+abstract class AbstractUnaryOperatorSpec(
+    open val value: ValueSpec,
+) : ValueSpec {
+
+    abstract class AbstractUnaryOperatorSpecBuilder<THIS : AbstractUnaryOperatorSpecBuilder<THIS>>
+    internal constructor(
+
+        /**
+         * The value
+         */
+        var value: ValueSpec? = null,
+    ) {
+
+        abstract fun getThis(): THIS
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: ValueSpec): THIS {
+            this.value = value
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: String): THIS {
+            this.value = ValueSpec.of(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: Int): THIS {
+            this.value = IntLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+
+        fun value(value: Long): THIS {
+            this.value = IntLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+
+        fun value(value: Float): THIS {
+            this.value = FloatLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Set the value
+         * @param value The value
+         * @return The builder
+         */
+        fun value(value: Double): THIS {
+            this.value = FloatLiteralSpec(value)
+            return getThis()
+        }
+
+        /**
+         * Build the [AbstractUnaryOperatorSpec]
+         * @return The created [AbstractUnaryOperatorSpec]
+         */
+        abstract fun build(): AbstractUnaryOperatorSpec
+    }
+}
+
 /**
  * A ValueSpec that represents a calculation
  */
@@ -648,13 +886,13 @@ open class AdditionSpec(
     /**
      * The left value of the addition
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the addition
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the addition
@@ -688,59 +926,21 @@ open class AdditionSpec(
         /**
          * The left value of the addition
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the addition
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<AdditionSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the addition
-         * @param left The left value of the addition
-         * @return The builder
-         */
-        fun left(left: ValueSpec): AdditionSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the addition
-         * @param left The left value of the addition
-         * @return The builder
-         */
-        fun left(left: String): AdditionSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the addition
-         * @param right The right value of the addition
-         * @return The builder
-         */
-        fun right(right: ValueSpec): AdditionSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the addition
-         * @param right The right value of the addition
-         * @return The builder
-         */
-        fun right(right: String): AdditionSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the AdditionSpec
          * @return The created AdditionSpec
          */
-        fun build(): AdditionSpec {
+        override fun build(): AdditionSpec {
             return AdditionSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -766,13 +966,13 @@ open class SubtractionSpec(
     /**
      * The left value of the subtraction
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
-/**
+    /**
      * The right value of the subtraction
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the subtraction
@@ -806,59 +1006,21 @@ open class SubtractionSpec(
         /**
          * The left value of the subtraction
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the subtraction
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<SubtractionSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the subtraction
-         * @param left The left value of the subtraction
-         * @return The builder
-         */
-        fun left(left: ValueSpec): SubtractionSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the subtraction
-         * @param left The left value of the subtraction
-         * @return The builder
-         */
-        fun left(left: String): SubtractionSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the subtraction
-         * @param right The right value of the subtraction
-         * @return The builder
-         */
-        fun right(right: ValueSpec): SubtractionSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the subtraction
-         * @param right The right value of the subtraction
-         * @return The builder
-         */
-        fun right(right: String): SubtractionSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the SubtractionSpec
          * @return The created SubtractionSpec
          */
-        fun build(): SubtractionSpec {
+        override fun build(): SubtractionSpec {
             return SubtractionSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -884,13 +1046,13 @@ open class MultiplicationSpec(
     /**
      * The left value of the multiplication
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the multiplication
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the multiplication
@@ -924,59 +1086,21 @@ open class MultiplicationSpec(
         /**
          * The left value of the multiplication
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the multiplication
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<MultiplicationSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the multiplication
-         * @param left The left value of the multiplication
-         * @return The builder
-         */
-        fun left(left: ValueSpec): MultiplicationSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the multiplication
-         * @param left The left value of the multiplication
-         * @return The builder
-         */
-        fun left(left: String): MultiplicationSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the multiplication
-         * @param right The right value of the multiplication
-         * @return The builder
-         */
-        fun right(right: ValueSpec): MultiplicationSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the multiplication
-         * @param right The right value of the multiplication
-         * @return The builder
-         */
-        fun right(right: String): MultiplicationSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the MultiplicationSpec
          * @return The created MultiplicationSpec
          */
-        fun build(): MultiplicationSpec {
+        override fun build(): MultiplicationSpec {
             return MultiplicationSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1002,13 +1126,13 @@ open class DivisionSpec(
     /**
      * The left value of the division
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the division
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the division
@@ -1042,59 +1166,21 @@ open class DivisionSpec(
         /**
          * The left value of the division
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the division
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<DivisionSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the division
-         * @param left The left value of the division
-         * @return The builder
-         */
-        fun left(left: ValueSpec): DivisionSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the division
-         * @param left The left value of the division
-         * @return The builder
-         */
-        fun left(left: String): DivisionSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the division
-         * @param right The right value of the division
-         * @return The builder
-         */
-        fun right(right: ValueSpec): DivisionSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the division
-         * @param right The right value of the division
-         * @return The builder
-         */
-        fun right(right: String): DivisionSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the DivisionSpec
          * @return The created DivisionSpec
          */
-        fun build(): DivisionSpec {
+        override fun build(): DivisionSpec {
             return DivisionSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1120,13 +1206,13 @@ open class ModuloSpec(
     /**
      * The left value of the modulo
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the modulo
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the modulo
@@ -1160,59 +1246,21 @@ open class ModuloSpec(
         /**
          * The left value of the modulo
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the modulo
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<ModuloSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the modulo
-         * @param left The left value of the modulo
-         * @return The builder
-         */
-        fun left(left: ValueSpec): ModuloSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the modulo
-         * @param left The left value of the modulo
-         * @return The builder
-         */
-        fun left(left: String): ModuloSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the modulo
-         * @param right The right value of the modulo
-         * @return The builder
-         */
-        fun right(right: ValueSpec): ModuloSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the modulo
-         * @param right The right value of the modulo
-         * @return The builder
-         */
-        fun right(right: String): ModuloSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the ModuloSpec
          * @return The created ModuloSpec
          */
-        fun build(): ModuloSpec {
+        override fun build(): ModuloSpec {
             return ModuloSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1238,13 +1286,13 @@ open class PowerSpec(
     /**
      * The left value of the power
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the power
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the power
@@ -1278,59 +1326,21 @@ open class PowerSpec(
         /**
          * The left value of the power
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the power
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<PowerSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the power
-         * @param left The left value of the power
-         * @return The builder
-         */
-        fun left(left: ValueSpec): PowerSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the power
-         * @param left The left value of the power
-         * @return The builder
-         */
-        fun left(left: String): PowerSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the power
-         * @param right The right value of the power
-         * @return The builder
-         */
-        fun right(right: ValueSpec): PowerSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the power
-         * @param right The right value of the power
-         * @return The builder
-         */
-        fun right(right: String): PowerSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the PowerSpec
          * @return The created PowerSpec
          */
-        fun build(): PowerSpec {
+        override fun build(): PowerSpec {
             return PowerSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
@@ -1356,8 +1366,8 @@ open class UnaryMinusSpec(
     /**
      * The value to negate
      */
-    open val value: ValueSpec,
-) : ValueSpec {
+    value: ValueSpec,
+) : AbstractUnaryOperatorSpec(value) {
 
     /**
      * Generate the unary minus
@@ -1388,34 +1398,16 @@ open class UnaryMinusSpec(
         /**
          * The value to negate
          */
-        var value: ValueSpec? = null,
-    ) {
+        value: ValueSpec? = null,
+    ) : AbstractUnaryOperatorSpecBuilder<UnaryMinusSpecBuilder>(value) {
 
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: ValueSpec): UnaryMinusSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: String): UnaryMinusSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the UnaryMinusSpec
          * @return The created UnaryMinusSpec
          */
-        fun build(): UnaryMinusSpec {
+        override fun build(): UnaryMinusSpec {
             return UnaryMinusSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
@@ -1445,8 +1437,8 @@ open class UnaryPlusSpec(
     /**
      * The value to negate
      */
-    open val value: ValueSpec,
-) : ValueSpec {
+    value: ValueSpec,
+) : AbstractUnaryOperatorSpec(value) {
 
     /**
      * Generate the unary plus
@@ -1477,34 +1469,16 @@ open class UnaryPlusSpec(
         /**
          * The value to negate
          */
-        var value: ValueSpec? = null,
-    ) {
+        value: ValueSpec? = null,
+    ) : AbstractUnaryOperatorSpecBuilder<UnaryPlusSpecBuilder>(value) {
 
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: ValueSpec): UnaryPlusSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Set the value to negate
-         * @param value The value to negate
-         * @return The builder
-         */
-        fun value(value: String): UnaryPlusSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the UnaryPlusSpec
          * @return The created UnaryPlusSpec
          */
-        fun build(): UnaryPlusSpec {
+        override fun build(): UnaryPlusSpec {
             return UnaryPlusSpec(
                 value ?: throw IllegalStateException("Value not set"),
             )
@@ -1529,13 +1503,13 @@ open class LogicalAndSpec(
     /**
      * The left value of the logical and
      */
-    open val left: ValueSpec,
+    left: ValueSpec,
 
     /**
      * The right value of the logical and
      */
-    open val right: ValueSpec,
-) : ValueSpec {
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
 
     /**
      * Generate the logical and
@@ -1569,59 +1543,21 @@ open class LogicalAndSpec(
         /**
          * The left value of the logical and
          */
-        var left: ValueSpec? = null,
+        left: ValueSpec? = null,
 
         /**
          * The right value of the logical and
          */
-        var right: ValueSpec? = null,
-    ) {
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LogicalAndSpecBuilder>(left, right) {
 
-        /**
-         * Set the left value of the logical and
-         * @param left The left value of the logical and
-         * @return The builder
-         */
-        fun left(left: ValueSpec): LogicalAndSpecBuilder {
-            this.left = left
-            return this
-        }
-
-        /**
-         * Set the left value of the logical and
-         * @param left The left value of the logical and
-         * @return The builder
-         */
-        fun left(left: String): LogicalAndSpecBuilder {
-            this.left = ValueSpec.of(left)
-            return this
-        }
-
-        /**
-         * Set the right value of the logical and
-         * @param right The right value of the logical and
-         * @return The builder
-         */
-        fun right(right: ValueSpec): LogicalAndSpecBuilder {
-            this.right = right
-            return this
-        }
-
-        /**
-         * Set the right value of the logical and
-         * @param right The right value of the logical and
-         * @return The builder
-         */
-        fun right(right: String): LogicalAndSpecBuilder {
-            this.right = ValueSpec.of(right)
-            return this
-        }
+        override fun getThis() = this
 
         /**
          * Build the LogicalAndSpec
          * @return The created LogicalAndSpec
          */
-        fun build(): LogicalAndSpec {
+        override fun build(): LogicalAndSpec {
             return LogicalAndSpec(
                 left ?: throw IllegalStateException("Left not set"),
                 right ?: throw IllegalStateException("Right not set"),
