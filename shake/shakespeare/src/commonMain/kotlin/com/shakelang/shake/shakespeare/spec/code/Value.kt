@@ -2405,3 +2405,310 @@ open class LessThanOrEqualSpec(
         fun builder() = LessThanOrEqualSpecBuilder()
     }
 }
+
+/**
+ * A ValueSpec that represents a bitwise and
+ */
+open class BitwiseAndSpec(
+
+    /**
+     * The left value of the bitwise and
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the bitwise and
+     */
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the bitwise and
+     * @param ctx The context to generate the bitwise and in
+     * @return The generated bitwise and
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} & ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BitwiseAndSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for BitwiseAndSpec
+     */
+    class BitwiseAndSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the bitwise and
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the bitwise and
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<BitwiseAndSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the BitwiseAndSpec
+         * @return The created BitwiseAndSpec
+         */
+        override fun build(): BitwiseAndSpec {
+            return BitwiseAndSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new BitwiseAndSpecBuilder
+         * @return The created BitwiseAndSpecBuilder
+         */
+        fun builder() = BitwiseAndSpecBuilder()
+    }
+}
+
+/**
+ * A ValueSpec that represents a bitwise or
+ */
+open class BitwiseOrSpec(
+
+    /**
+     * The left value of the bitwise or
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the bitwise or
+     */
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the bitwise or
+     * @param ctx The context to generate the bitwise or in
+     * @return The generated bitwise or
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} | ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BitwiseOrSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for BitwiseOrSpec
+     */
+    class BitwiseOrSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the bitwise or
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the bitwise or
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<BitwiseOrSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the BitwiseOrSpec
+         * @return The created BitwiseOrSpec
+         */
+        override fun build(): BitwiseOrSpec {
+            return BitwiseOrSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new BitwiseOrSpecBuilder
+         * @return The created BitwiseOrSpecBuilder
+         */
+        fun builder() = BitwiseOrSpecBuilder()
+    }
+}
+
+/**
+ * A ValueSpec that represents a bitwise xor
+ */
+open class BitwiseXorSpec(
+
+    /**
+     * The left value of the bitwise xor
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the bitwise xor
+     */
+    right: ValueSpec,
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the bitwise xor
+     * @param ctx The context to generate the bitwise xor in
+     * @return The generated bitwise xor
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} ^ ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BitwiseXorSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for BitwiseXorSpec
+     */
+    class BitwiseXorSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the bitwise xor
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the bitwise xor
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<BitwiseXorSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the BitwiseXorSpec
+         * @return The created BitwiseXorSpec
+         */
+        override fun build(): BitwiseXorSpec {
+            return BitwiseXorSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new BitwiseXorSpecBuilder
+         * @return The created BitwiseXorSpecBuilder
+         */
+        fun builder() = BitwiseXorSpecBuilder()
+    }
+}
+
+/**
+ * A ValueSpec that represents a bitwise not
+ */
+open class BitwiseNotSpec(
+
+    /**
+     * The value to negate
+     */
+    value: ValueSpec,
+
+) : AbstractUnaryOperatorSpec(value) {
+
+    /**
+     * Generate the bitwise not
+     * @param ctx The context to generate the bitwise not in
+     * @return The generated bitwise not
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "~${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BitwiseNotSpec) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
+    /**
+     * Builder for BitwiseNotSpec
+     */
+    class BitwiseNotSpecBuilder
+    internal constructor(
+
+        /**
+         * The value to negate
+         */
+        value: ValueSpec? = null,
+    ) : AbstractUnaryOperatorSpecBuilder<BitwiseNotSpecBuilder>(value) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the BitwiseNotSpec
+         * @return The created BitwiseNotSpec
+         */
+        override fun build(): BitwiseNotSpec {
+            return BitwiseNotSpec(
+                value ?: throw IllegalStateException("Value not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new BitwiseNotSpecBuilder
+         * @return The created BitwiseNotSpecBuilder
+         */
+        fun builder() = BitwiseNotSpecBuilder()
+    }
+}

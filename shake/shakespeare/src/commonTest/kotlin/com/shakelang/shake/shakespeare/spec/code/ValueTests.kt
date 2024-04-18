@@ -1607,6 +1607,81 @@ class ValueTests : FlatTestSpec({
         }
     }
 
+    describe("LogicalXorSpec") {
+        describe("create") {
+            it("should create") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalXorSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
+        }
+
+        describe("generate") {
+            it("should generate") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                val node = LogicalXorSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "true ^^ false"
+            }
+        }
+
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalXorSpec(left, right) shouldBe LogicalXorSpec(left, right)
+            }
+            it("should not be equal to another LogicalXorSpec with different values") {
+                val left = BooleanLiteralSpec(true)
+                val right = BooleanLiteralSpec(false)
+                LogicalXorSpec(left, right) shouldNotBe LogicalXorSpec(right, left)
+            }
+        }
+
+        describe("builder") {
+            it("should create a builder") {
+                val builder = LogicalXorSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(LogicalXorSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the LogicalXorSpec") {
+                    val left = BooleanLiteralSpec(true)
+                    val right = BooleanLiteralSpec(false)
+                    val node = LogicalXorSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = LogicalXorSpec.builder()
+                    builder.right(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = LogicalXorSpec.builder()
+                    builder.left(BooleanLiteralSpec(true))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
+    }
+
     describe("LogicalNotSpec") {
         describe("create") {
             it("should create") {
@@ -2114,6 +2189,231 @@ class ValueTests : FlatTestSpec({
 
                 it("should throw an exception if the right value is not set") {
                     val builder = GreaterThanOrEqualSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
+    }
+
+    describe("BitwiseAndSpec") {
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseAndSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
+        }
+
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseAndSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 & 43"
+            }
+        }
+
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseAndSpec(left, right) shouldBe BitwiseAndSpec(left, right)
+            }
+            it("should not be equal to another BitwiseAndSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseAndSpec(left, right) shouldNotBe BitwiseAndSpec(right, left)
+            }
+        }
+
+        describe("builder") {
+            it("should create a builder") {
+                val builder = BitwiseAndSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(BitwiseAndSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the BitwiseAndSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = BitwiseAndSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = BitwiseAndSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = BitwiseAndSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
+    }
+
+    describe("BitwiseOrSpec") {
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseOrSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
+        }
+
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseOrSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 | 43"
+            }
+        }
+
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseOrSpec(left, right) shouldBe BitwiseOrSpec(left, right)
+            }
+            it("should not be equal to another BitwiseOrSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseOrSpec(left, right) shouldNotBe BitwiseOrSpec(right, left)
+            }
+        }
+
+        describe("builder") {
+            it("should create a builder") {
+                val builder = BitwiseOrSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(BitwiseOrSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the BitwiseOrSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = BitwiseOrSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = BitwiseOrSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = BitwiseOrSpec.builder()
+                    builder.left(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                        builder.build()
+                    }
+                }
+            }
+        }
+    }
+
+    describe("BitwiseXorSpec") {
+        describe("create") {
+            it("should create") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseXorSpec(left, right)
+                node.left shouldBe left
+                node.right shouldBe right
+            }
+        }
+
+        describe("generate") {
+            it("should generate") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                val node = BitwiseXorSpec(left, right)
+                val ctx = GenerationContext()
+                node.generate(ctx) shouldBe "42 ^ 43"
+            }
+        }
+
+        describe("equals") {
+            it("should be equal to same instance") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseXorSpec(left, right) shouldBe BitwiseXorSpec(left, right)
+            }
+            it("should not be equal to another BitwiseXorSpec with different values") {
+                val left = IntLiteralSpec(42)
+                val right = IntLiteralSpec(43)
+                BitwiseXorSpec(left, right) shouldNotBe BitwiseXorSpec(right, left)
+            }
+        }
+
+        describe("builder") {
+            it("should create a builder") {
+                val builder = BitwiseXorSpec.builder()
+                builder shouldNotBe null
+                builder.left shouldBe null
+                builder.right shouldBe null
+            }
+
+            abstractDualOperatorSpecBuilderTests(BitwiseXorSpec::builder)
+
+            describe("builder.build()") {
+                it("should build the BitwiseXorSpec") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = BitwiseXorSpec.builder()
+                        .left(left)
+                        .right(right)
+                        .build()
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+
+                it("should throw an exception if the left value is not set") {
+                    val builder = BitwiseXorSpec.builder()
+                    builder.right(IntLiteralSpec(42))
+                    shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                        builder.build()
+                    }
+                }
+
+                it("should throw an exception if the right value is not set") {
+                    val builder = BitwiseXorSpec.builder()
                     builder.left(IntLiteralSpec(42))
                     shouldThrowWithMessage<IllegalStateException>("Right not set") {
                         builder.build()
