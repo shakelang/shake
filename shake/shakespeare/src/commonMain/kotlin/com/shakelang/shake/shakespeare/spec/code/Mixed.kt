@@ -32,8 +32,8 @@ interface ValuedStatementSpec : StatementSpec, ValueSpec
  * --> [VariableBitwiseXorAssignmentSpec]
  */
 abstract class AbstractAssignmentSpec(
-    val name: NamespaceSpec,
-    val value: ValueSpec,
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
 ) : ValuedStatementSpec {
 
     /**
@@ -178,7 +178,7 @@ abstract class AbstractModificationSpec(
     /**
      * The name of the variable
      */
-    val name: NamespaceSpec,
+    open val name: NamespaceSpec,
 ) : ValuedStatementSpec {
 
     /**
@@ -1423,6 +1423,17 @@ open class FunctionCallSpec(
          */
         fun argument(argument: String): FunctionCallSpecBuilder {
             arguments.add(ValueSpec.of(argument))
+            return this
+        }
+
+        /**
+         * Adds multiple arguments to the function call
+         *
+         * @param arguments The arguments to add
+         * @return The builder
+         */
+        fun arguments(arguments: List<ValueSpec>): FunctionCallSpecBuilder {
+            this.arguments.addAll(arguments)
             return this
         }
 
