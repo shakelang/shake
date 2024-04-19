@@ -26,6 +26,7 @@ interface ValuedStatementNodeSpec : StatementNodeSpec, ValueNodeSpec, ValuedStat
     companion object {
         fun of(spec: ValuedStatementSpec): ValuedStatementNodeSpec {
             return when (spec) {
+                is ValuedStatementNodeSpec -> return spec
                 is VariableAssignmentSpec -> VariableAssignmentNodeSpec.of(spec)
                 is VariableAdditionAssignmentSpec -> VariableAdditionAssignmentNodeSpec.of(spec)
                 is VariableSubtractionAssignmentSpec -> VariableSubtractionAssignmentNodeSpec.of(spec)
@@ -40,6 +41,18 @@ interface ValuedStatementNodeSpec : StatementNodeSpec, ValueNodeSpec, ValuedStat
                 else -> throw IllegalArgumentException("Unknown ValuedStatementSpec: $spec")
             }
         }
+
+        fun of(spec: VariableAssignmentSpec) = VariableAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableAdditionAssignmentSpec) = VariableAdditionAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableSubtractionAssignmentSpec) = VariableSubtractionAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableMultiplicationAssignmentSpec) = VariableMultiplicationAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableDivisionAssignmentSpec) = VariableDivisionAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableModuloAssignmentSpec) = VariableModuloAssignmentNodeSpec.of(spec)
+        fun of(spec: VariablePowerAssignmentSpec) = VariablePowerAssignmentNodeSpec.of(spec)
+        fun of(spec: VariableIncrementBeforeSpec) = VariableIncrementBeforeNodeSpec.of(spec)
+        fun of(spec: VariableIncrementAfterSpec) = VariableIncrementAfterNodeSpec.of(spec)
+        fun of(spec: VariableDecrementBeforeSpec) = VariableDecrementBeforeNodeSpec.of(spec)
+        fun of(spec: VariableDecrementAfterSpec) = VariableDecrementAfterNodeSpec.of(spec)
     }
 }
 
@@ -66,6 +79,7 @@ open class VariableAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableAssignmentSpec): VariableAssignmentNodeSpec {
+            if (spec is VariableAssignmentNodeSpec) return spec
             return VariableAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -97,6 +111,7 @@ open class VariableAdditionAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableAdditionAssignmentSpec): VariableAdditionAssignmentNodeSpec {
+            if (spec is VariableAdditionAssignmentNodeSpec) return spec
             return VariableAdditionAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -128,6 +143,7 @@ open class VariableSubtractionAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableSubtractionAssignmentSpec): VariableSubtractionAssignmentNodeSpec {
+            if (spec is VariableSubtractionAssignmentNodeSpec) return spec
             return VariableSubtractionAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -159,6 +175,7 @@ open class VariableMultiplicationAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableMultiplicationAssignmentSpec): VariableMultiplicationAssignmentNodeSpec {
+            if (spec is VariableMultiplicationAssignmentNodeSpec) return spec
             return VariableMultiplicationAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -190,6 +207,7 @@ open class VariableDivisionAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableDivisionAssignmentSpec): VariableDivisionAssignmentNodeSpec {
+            if (spec is VariableDivisionAssignmentNodeSpec) return spec
             return VariableDivisionAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -221,6 +239,7 @@ open class VariableModuloAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariableModuloAssignmentSpec): VariableModuloAssignmentNodeSpec {
+            if (spec is VariableModuloAssignmentNodeSpec) return spec
             return VariableModuloAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -252,6 +271,7 @@ open class VariablePowerAssignmentNodeSpec(
 
     companion object {
         fun of(spec: VariablePowerAssignmentSpec): VariablePowerAssignmentNodeSpec {
+            if (spec is VariablePowerAssignmentNodeSpec) return spec
             return VariablePowerAssignmentNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 ValueNodeSpec.of(spec.value),
@@ -278,6 +298,7 @@ open class VariableIncrementBeforeNodeSpec(
 
     companion object {
         fun of(spec: VariableIncrementBeforeSpec): VariableIncrementBeforeNodeSpec {
+            if (spec is VariableIncrementBeforeNodeSpec) return spec
             return VariableIncrementBeforeNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
             )
@@ -303,6 +324,7 @@ open class VariableIncrementAfterNodeSpec(
 
     companion object {
         fun of(spec: VariableIncrementAfterSpec): VariableIncrementAfterNodeSpec {
+            if (spec is VariableIncrementAfterNodeSpec) return spec
             return VariableIncrementAfterNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
             )
@@ -328,6 +350,7 @@ open class VariableDecrementBeforeNodeSpec(
 
     companion object {
         fun of(spec: VariableDecrementBeforeSpec): VariableDecrementBeforeNodeSpec {
+            if (spec is VariableDecrementBeforeNodeSpec) return spec
             return VariableDecrementBeforeNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
             )
@@ -353,6 +376,7 @@ open class VariableDecrementAfterNodeSpec(
 
     companion object {
         fun of(spec: VariableDecrementAfterSpec): VariableDecrementAfterNodeSpec {
+            if (spec is VariableDecrementAfterNodeSpec) return spec
             return VariableDecrementAfterNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
             )
@@ -388,6 +412,7 @@ open class FunctionCallNodeSpec(
 
     companion object {
         fun of(spec: FunctionCallSpec): FunctionCallNodeSpec {
+            if (spec is FunctionCallNodeSpec) return spec
             return FunctionCallNodeSpec(
                 NamespaceNodeSpec.of(spec.name),
                 spec.arguments.map { ValueNodeSpec.of(it) },
