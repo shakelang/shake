@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:function-naming", "FunctionName")
+
 package com.shakelang.shake.shakespeare.builder
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
