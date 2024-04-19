@@ -3,11 +3,120 @@ package com.shakelang.shake.shakespeare.spec.code
 import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 import com.shakelang.util.testlib.FlatTestSpec
+import com.shakelang.util.testlib.TestSpecContext
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 class MixedTests : FlatTestSpec({
+
+    fun <T : AbstractAssignmentSpec.AbstractAssignmentSpecBuilder<T>> TestSpecContext.abstractAssignmentSpecBuilderTest(createBuilder: () -> T) {
+        describe("builder.name() [AbstractAssignmentSpec]") {
+            it("should set the name") {
+                val name = NamespaceSpec("variable")
+                val builder = VariableAssignmentSpec.builder()
+                builder.name(name)
+                builder.name shouldBe name
+            }
+
+            it("should set the name (String)") {
+                val name = NamespaceSpec("variable")
+                val builder = createBuilder()
+                builder.name("variable")
+                builder.name shouldBe name
+            }
+        }
+
+        describe("builder.value() [AbstractAssignmentSpec]") {
+            it("should set the value (String)") {
+                val value = ValueSpec.of("42")
+                val builder = createBuilder()
+                builder.value("42")
+                builder.value shouldBe value
+            }
+
+            it("should set the value (ValueSpec)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(value)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (NamespaceSpec)") {
+                val value = VariableReferenceSpec("variable")
+                val builder = createBuilder()
+                builder.value("variable")
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Boolean)") {
+                val value = BooleanLiteralSpec(true)
+                val builder = createBuilder()
+                builder.value(true)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Byte)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42.toByte())
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Short)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42.toShort())
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Int)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Long)") {
+                val value = IntLiteralSpec(42)
+                val builder = createBuilder()
+                builder.value(42L)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Float)") {
+                val value = FloatLiteralSpec(42.0)
+                val builder = createBuilder()
+                builder.value(42.0f)
+                builder.value shouldBe value
+            }
+
+            it("should set the value (Double)") {
+                val value = FloatLiteralSpec(42.0)
+                val builder = createBuilder()
+                builder.value(42.0)
+                builder.value shouldBe value
+            }
+        }
+    }
+
+    fun <T : AbstractModificationSpec.AbstractModificationSpecBuilder<T>> TestSpecContext.abstractModificationSpecBuilderTest(createBuilder: () -> T) {
+        describe("builder.name() [AbstractModificationSpec]") {
+            it("should set the name") {
+                val name = NamespaceSpec("variable")
+                val builder = VariableAssignmentSpec.builder()
+                builder.name(name)
+                builder.name shouldBe name
+            }
+
+            it("should set the name (String)") {
+                val name = NamespaceSpec("variable")
+                val builder = createBuilder()
+                builder.name("variable")
+                builder.name shouldBe name
+            }
+        }
+    }
 
     describe("VariableAssignmentSpec") {
 
@@ -61,23 +170,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableAssignmentSpec") {
@@ -161,23 +254,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableAdditionAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableAdditionAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableAdditionAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableAdditionAssignmentSpec") {
@@ -261,23 +338,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableSubtractionAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableSubtractionAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableSubtractionAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableSubtractionAssignmentSpec") {
@@ -361,23 +422,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableMultiplicationAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableMultiplicationAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableMultiplicationAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableMultiplicationAssignmentSpec") {
@@ -461,23 +506,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableDivisionAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableDivisionAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableDivisionAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableDivisionAssignmentSpec") {
@@ -561,23 +590,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableModuloAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableModuloAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableModuloAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableModuloAssignmentSpec") {
@@ -661,23 +674,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariablePowerAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariablePowerAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariablePowerAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariablePowerAssignmentSpec") {
@@ -761,23 +758,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableBitwiseAndAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableBitwiseAndAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableBitwiseAndAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableBitwiseAndAssignmentSpec") {
@@ -861,23 +842,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableBitwiseOrAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableBitwiseOrAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableBitwiseOrAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableBitwiseOrAssignmentSpec") {
@@ -961,23 +926,7 @@ class MixedTests : FlatTestSpec({
                 builder.value shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableBitwiseXorAssignmentSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
-
-            describe("builder.value()") {
-                it("should set the value") {
-                    val value = ValueSpec.of("test")
-                    val builder = VariableBitwiseXorAssignmentSpec.builder()
-                    builder.value(value)
-                    builder.value shouldBe value
-                }
-            }
+            abstractAssignmentSpecBuilderTest(VariableBitwiseXorAssignmentSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableBitwiseXorAssignmentSpec") {
@@ -1054,14 +1003,7 @@ class MixedTests : FlatTestSpec({
                 builder.name shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableIncrementBeforeSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
+            abstractModificationSpecBuilderTest(VariableIncrementBeforeSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableIncrementBeforeSpec") {
@@ -1126,14 +1068,7 @@ class MixedTests : FlatTestSpec({
                 builder.name shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableIncrementAfterSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
+            abstractModificationSpecBuilderTest(VariableIncrementAfterSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableIncrementAfterSpec") {
@@ -1198,14 +1133,7 @@ class MixedTests : FlatTestSpec({
                 builder.name shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableDecrementBeforeSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
+            abstractModificationSpecBuilderTest(VariableDecrementBeforeSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableDecrementBeforeSpec") {
@@ -1270,14 +1198,7 @@ class MixedTests : FlatTestSpec({
                 builder.name shouldBe null
             }
 
-            describe("builder.name()") {
-                it("should set the name") {
-                    val name = NamespaceSpec("variable")
-                    val builder = VariableDecrementAfterSpec.builder()
-                    builder.name(name)
-                    builder.name shouldBe name
-                }
-            }
+            abstractModificationSpecBuilderTest(VariableDecrementAfterSpec::builder)
 
             describe("builder.build()") {
                 it("should build the VariableDecrementAfterSpec") {
