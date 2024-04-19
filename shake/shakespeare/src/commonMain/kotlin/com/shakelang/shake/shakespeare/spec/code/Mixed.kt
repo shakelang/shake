@@ -112,49 +112,49 @@ abstract class AbstractAssignmentSpec(
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Byte) = value(value.toString())
+        fun value(value: Byte) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Short) = value(value.toString())
+        fun value(value: Short) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Int) = value(value.toString())
+        fun value(value: Int) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Long) = value(value.toString())
+        fun value(value: Long) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Float) = value(value.toString())
+        fun value(value: Float) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Double) = value(value.toString())
+        fun value(value: Double) = value(ValueSpec.literal(value))
 
         /**
          * Sets the value to assign to the variable
          * @param value The value to assign to the variable
          * @return The builder
          */
-        fun value(value: Char) = value(value.toString())
+        fun value(value: Char) = value(ValueSpec.literal(value))
 
         /**
          * Builds the [VariableAssignmentSpec]
