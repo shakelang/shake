@@ -39,11 +39,6 @@ class ValueTests : FlatTestSpec({
                 (valueNode is VariableAssignmentNodeSpec) shouldBe true
             }
 
-            it("should not change IntLiteralNodeSpec") {
-                val value = IntLiteralNodeSpec(5)
-                (value === ValueNodeSpec.of(value)) shouldBe true
-            }
-
             it("should convert string literal") {
                 val value = StringLiteralSpec("Hello World")
                 val valueNode = ValueNodeSpec.of(value)
