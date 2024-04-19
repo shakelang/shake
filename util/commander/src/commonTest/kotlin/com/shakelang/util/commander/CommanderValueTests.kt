@@ -233,7 +233,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDouble() shouldBe 1.0
         }
 
-        "CommanderValue.toDouble() should throw an CommanderValueException if the value is not a doubles" {
+        "CommanderValue.toDouble() should throw an CommanderValueException if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toDouble()
             }
@@ -243,7 +243,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDoubleOrNull() shouldBe 1.0
         }
 
-        "CommanderValue.toDoubleOrNull() should return null if the value is not a doubles" {
+        "CommanderValue.toDoubleOrNull() should return null if the value is not a double" {
             CommanderValue("test").toDoubleOrNull() shouldBe null
         }
 
@@ -251,7 +251,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toDoubleOrDefault(2.0) shouldBe 1.0
         }
 
-        "CommanderValue.toDoubleOrDefault() should return the default value if the value is not a doubles" {
+        "CommanderValue.toDoubleOrDefault() should return the default value if the value is not a double" {
             CommanderValue("test").toDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -641,7 +641,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDouble() shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDouble() should throw an CommanderValueException if the value is not a doubles" {
+        "CommanderValue.toPositiveDouble() should throw an CommanderValueException if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toPositiveDouble()
             }
@@ -657,7 +657,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDoubleOrNull() shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDoubleOrNull() should return null if the value is not a doubles" {
+        "CommanderValue.toPositiveDoubleOrNull() should return null if the value is not a double" {
             CommanderValue("test").toPositiveDoubleOrNull() shouldBe null
         }
 
@@ -669,7 +669,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").toPositiveDoubleOrDefault(2.0) shouldBe 1.0
         }
 
-        "CommanderValue.toPositiveDoubleOrDefault() should return the default value if the value is not a doubles" {
+        "CommanderValue.toPositiveDoubleOrDefault() should return the default value if the value is not a double" {
             CommanderValue("test").toPositiveDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -881,7 +881,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDouble() shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDouble() should throw an CommanderValueException if the value is not a doubles" {
+        "CommanderValue.toNegativeDouble() should throw an CommanderValueException if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").toNegativeDouble()
             }
@@ -897,7 +897,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDoubleOrNull() shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDoubleOrNull() should return null if the value is not a doubles" {
+        "CommanderValue.toNegativeDoubleOrNull() should return null if the value is not a double" {
             CommanderValue("test").toNegativeDoubleOrNull() shouldBe null
         }
 
@@ -909,7 +909,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").toNegativeDoubleOrDefault(2.0) shouldBe -1.0
         }
 
-        "CommanderValue.toNegativeDoubleOrDefault() should return the default value if the value is not a doubles" {
+        "CommanderValue.toNegativeDoubleOrDefault() should return the default value if the value is not a double" {
             CommanderValue("test").toNegativeDoubleOrDefault(2.0) shouldBe 2.0
         }
 
@@ -1139,25 +1139,25 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validateDouble()
         }
 
-        "CommanderValue.validateDouble() should fail if the value is not a doubles" {
+        "CommanderValue.validateDouble() should fail if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateDouble()
             }
         }
 
-        "CommanderValue.isDouble() should return true if the value is a doubles" {
+        "CommanderValue.isDouble() should return true if the value is a double" {
             CommanderValue("1").isDouble() shouldBe true
         }
 
-        "CommanderValue.isDouble() should return false if the value is not a doubles" {
+        "CommanderValue.isDouble() should return false if the value is not a double" {
             CommanderValue("test").isDouble() shouldBe false
         }
 
-        "CommanderValue.isNotDouble() should return false if the value is a doubles" {
+        "CommanderValue.isNotDouble() should return false if the value is a double" {
             CommanderValue("1").isNotDouble() shouldBe false
         }
 
-        "CommanderValue.isNotDouble() should return true if the value is not a doubles" {
+        "CommanderValue.isNotDouble() should return true if the value is not a double" {
             CommanderValue("test").isNotDouble() shouldBe true
         }
 
@@ -1603,7 +1603,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").validatePositiveDouble()
         }
 
-        "CommanderValue.validatePositiveDouble() should fail if the value is not a doubles" {
+        "CommanderValue.validatePositiveDouble() should fail if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validatePositiveDouble()
             }
@@ -1615,11 +1615,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isPositiveDouble() should return true if the value is a doubles" {
+        "CommanderValue.isPositiveDouble() should return true if the value is a double" {
             CommanderValue("1").isPositiveDouble() shouldBe true
         }
 
-        "CommanderValue.isPositiveDouble() should return false if the value is not a doubles" {
+        "CommanderValue.isPositiveDouble() should return false if the value is not a double" {
             CommanderValue("test").isPositiveDouble() shouldBe false
         }
 
@@ -1627,11 +1627,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").isPositiveDouble() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveDouble() should return false if the value is a doubles" {
+        "CommanderValue.isNotPositiveDouble() should return false if the value is a double" {
             CommanderValue("1").isNotPositiveDouble() shouldBe false
         }
 
-        "CommanderValue.isNotPositiveDouble() should return true if the value is not a doubles" {
+        "CommanderValue.isNotPositiveDouble() should return true if the value is not a double" {
             CommanderValue("test").isNotPositiveDouble() shouldBe true
         }
 
@@ -1843,7 +1843,7 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("-1").validateNegativeDouble()
         }
 
-        "CommanderValue.validateNegativeDouble() should fail if the value is not a doubles" {
+        "CommanderValue.validateNegativeDouble() should fail if the value is not a double" {
             shouldThrow<CommanderValueException> {
                 CommanderValue("test").validateNegativeDouble()
             }
@@ -1855,11 +1855,11 @@ class CommanderValueTests : FreeSpec(
             }
         }
 
-        "CommanderValue.isNegativeDouble() should return true if the value is a doubles" {
+        "CommanderValue.isNegativeDouble() should return true if the value is a double" {
             CommanderValue("-1").isNegativeDouble() shouldBe true
         }
 
-        "CommanderValue.isNegativeDouble() should return false if the value is not a doubles" {
+        "CommanderValue.isNegativeDouble() should return false if the value is not a double" {
             CommanderValue("test").isNegativeDouble() shouldBe false
         }
 
@@ -1867,11 +1867,11 @@ class CommanderValueTests : FreeSpec(
             CommanderValue("1").isNegativeDouble() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeDouble() should return false if the value is a doubles" {
+        "CommanderValue.isNotNegativeDouble() should return false if the value is a double" {
             CommanderValue("-1").isNotNegativeDouble() shouldBe false
         }
 
-        "CommanderValue.isNotNegativeDouble() should return true if the value is not a doubles" {
+        "CommanderValue.isNotNegativeDouble() should return true if the value is not a double" {
             CommanderValue("test").isNotNegativeDouble() shouldBe true
         }
 

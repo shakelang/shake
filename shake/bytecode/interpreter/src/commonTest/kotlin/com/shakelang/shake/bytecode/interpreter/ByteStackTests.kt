@@ -87,7 +87,7 @@ class ByteStackTests : FreeSpec(
             stack.pop() shouldBe 1.toByte()
         }
 
-        "push doubles" {
+        "push double" {
 
             val stack = ByteStack()
 
@@ -228,7 +228,7 @@ class ByteStackTests : FreeSpec(
             stack.popFloat() shouldBe Float.fromBits(1)
         }
 
-        "pop doubles" {
+        "pop double" {
 
             val stack = ByteStack()
 

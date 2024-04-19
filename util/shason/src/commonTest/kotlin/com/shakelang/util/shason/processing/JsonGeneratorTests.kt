@@ -37,7 +37,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate((-1.1).toFloat()) shouldBe "-1.1"
         }
 
-        "generate doubles" {
+        "generate double" {
             JsonGenerator.generate(42.1) shouldBe "42.1"
             JsonGenerator.generate(0.1) shouldBe "0.1"
             JsonGenerator.generate(-1.1) shouldBe "-1.1"
@@ -219,7 +219,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(mapOf("hello" to 42.1.toFloat())) shouldBe "{\"hello\":42.1}"
         }
 
-        "generate map with doubles value" {
+        "generate map with double value" {
             JsonGenerator.generate(mapOf("hello" to 42.1)) shouldBe "{\"hello\":42.1}"
         }
 
@@ -296,7 +296,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(arrayOf(42.1.toFloat())) shouldBe "[42.1]"
         }
 
-        "generate array with doubles value" {
+        "generate array with double value" {
             JsonGenerator.generate(arrayOf(42.1)) shouldBe "[42.1]"
         }
 
@@ -387,7 +387,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(listOf(42.1.toFloat())) shouldBe "[42.1]"
         }
 
-        "generate list with doubles value" {
+        "generate list with double value" {
             JsonGenerator.generate(listOf(42.1)) shouldBe "[42.1]"
         }
 
@@ -478,7 +478,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonArray.of(listOf(42.0.toFloat()))) shouldBe "[42]"
         }
 
-        "generate JsonArray with doubles value" {
+        "generate JsonArray with double value" {
             JsonGenerator.generate(JsonArray.of(listOf(42.1))) shouldBe "[42.1]"
         }
 
@@ -573,7 +573,7 @@ class JsonGeneratorTests : FreeSpec(
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toFloat()))) shouldBe "{\"hello\":42}"
         }
 
-        "generate JsonObject with doubles value" {
+        "generate JsonObject with double value" {
             JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.1))) shouldBe "{\"hello\":42.1}"
         }
 

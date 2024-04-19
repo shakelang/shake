@@ -9,12 +9,13 @@
 package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
+import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 
-class ParameterSpecTests : FlatTestSpec(
-    {
+class ParameterSpecTests : FlatTestSpec({
 
+    describe("constructor()") {
         it("should create a parameter") {
             val identifier = "name"
             val type = TypeSpec.of("int")
@@ -23,22 +24,34 @@ class ParameterSpecTests : FlatTestSpec(
             parameter.type shouldBe type
         }
 
+        it("should create a parameter with a default value") {
+            val identifier = "name"
+            val type = TypeSpec.of("int")
+            val defaultValue = ValueSpec.literal(10)
+            val parameter = ParameterSpec(identifier, type, defaultValue)
+            parameter.name shouldBe identifier
+            parameter.type shouldBe type
+            parameter.defaultValue shouldBe defaultValue
+        }
+    }
+
+    describe("generate()") {
         it("should generate a parameter") {
             val identifier = "name"
             val type = TypeSpec.of("int")
             val parameter = ParameterSpec(identifier, type)
             parameter.generate(GenerationContext()) shouldBe "name: int"
         }
+    }
 
-        it("build should create a parameter") {
-            val identifier = "name"
-            val type = TypeSpec.of("int")
-            val parameter = ParameterSpec.builder().name(identifier).type(type).build()
-            parameter.name shouldBe identifier
-            parameter.type shouldBe type
-        }
-    },
-)
+    it("build should create a parameter") {
+        val identifier = "name"
+        val type = TypeSpec.of("int")
+        val parameter = ParameterSpec.builder().name(identifier).type(type).build()
+        parameter.name shouldBe identifier
+        parameter.type shouldBe type
+    }
+})
 
 class MethodSpecTests : FlatTestSpec(
     {

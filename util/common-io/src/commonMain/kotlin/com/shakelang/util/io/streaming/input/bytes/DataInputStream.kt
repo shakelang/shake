@@ -223,9 +223,9 @@ class DataInputStream(private val data: InputStream) : InputStream() {
     }
 
     /**
-     * Reads a single doubles from the InputStream.
+     * Reads a single double from the InputStream.
      *
-     * @return the doubles that was read
+     * @return the double that was read
      * @throws IOException if an I/O error occurs.
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long

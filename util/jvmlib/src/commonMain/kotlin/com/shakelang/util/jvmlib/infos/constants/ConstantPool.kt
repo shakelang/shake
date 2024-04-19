@@ -404,7 +404,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         findLong(value) ?: throw Exception("No long constant found for value: $value")
 
     fun expectDouble(value: Double): ConstantDoubleInfo =
-        findDouble(value) ?: throw Exception("No doubles constant found for value: $value")
+        findDouble(value) ?: throw Exception("No double constant found for value: $value")
 
     fun expectNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo = findNameAndType(name, descriptor)
         ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")

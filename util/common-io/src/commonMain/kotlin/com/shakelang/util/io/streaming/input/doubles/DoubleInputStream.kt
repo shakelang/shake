@@ -1,4 +1,4 @@
-package com.shakelang.util.io.streaming.input.doubles
+package com.shakelang.util.io.streaming.input.double
 
 import com.shakelang.util.io.IOException
 import kotlin.math.min
@@ -11,11 +11,11 @@ import kotlin.math.min
  */
 abstract class DoubleInputStream {
     /**
-     * Returns an estimate of the number of doubles that can be read (or skipped over) from
+     * Returns an estimate of the number of double that can be read (or skipped over) from
      * this input
      * stream without blocking by the next invocation of a method for this input stream.
      *
-     * @return an estimate of the number of doubles that can be read (or skipped over) from
+     * @return an estimate of the number of double that can be read (or skipped over) from
      * this input stream without blocking or 0 when it reaches the end of the input stream.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
@@ -36,7 +36,7 @@ abstract class DoubleInputStream {
     /**
      * Marks the current position in this input stream.
      *
-     * @param readlimit the maximum limit of doubles that can be read before the mark position becomes invalid.
+     * @param readlimit the maximum limit of double that can be read before the mark position becomes invalid.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
      *
@@ -68,10 +68,10 @@ abstract class DoubleInputStream {
     abstract fun read(): Double
 
     /**
-     * Reads some number of doubles from the input stream and stores them into the buffer array b.
+     * Reads some number of double from the input stream and stores them into the buffer array b.
      *
      * @param b the buffer into which the data is read.
-     * @return the total number of doubles read into the buffer, or -1 if there is no more data
+     * @return the total number of double read into the buffer, or -1 if there is no more data
      * because the end of the stream has been reached.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
@@ -82,12 +82,12 @@ abstract class DoubleInputStream {
     open fun read(b: DoubleArray): Int = read(b, 0, b.size)
 
     /**
-     * Reads up to len doubles of data from the input stream into an array of doubles.
+     * Reads up to len double of data from the input stream into an array of double.
      *
      * @param b the buffer into which the data is read.
      * @param off the start offset in array b at which the data is written.
-     * @param len the maximum number of doubles to read.
-     * @return the total number of doubles read into the buffer, or -1 if there is no more data
+     * @param len the maximum number of double to read.
+     * @return the total number of double read into the buffer, or -1 if there is no more data
      * because the end of the stream has been reached.
      *
      * @throws IOException if an I/O error occurs.
@@ -125,10 +125,10 @@ abstract class DoubleInputStream {
     }
 
     /**
-     * Skips over and discards n doubles of data from this input stream.
+     * Skips over and discards n double of data from this input stream.
      *
-     * @param n the number of doubles to be skipped.
-     * @return the actual number of doubles skipped.
+     * @param n the number of double to be skipped.
+     * @return the actual number of double skipped.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
      *
@@ -148,9 +148,9 @@ abstract class DoubleInputStream {
     }
 
     /**
-     * Returns the number of doubles that can be read (or skipped over) from this input stream without
+     * Returns the number of double that can be read (or skipped over) from this input stream without
      *
-     * @return the number of doubles that can be read from this input stream without blocking.
+     * @return the number of double that can be read from this input stream without blocking.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
      *
@@ -161,21 +161,21 @@ abstract class DoubleInputStream {
     open fun readNDoubles(n: Int): DoubleArray {
         val result = DoubleArray(n)
         var offset = 0
-        var doublesRead: Int
+        var doubleRead: Int
         while (offset < n) {
-            doublesRead = read(result, offset, n - offset)
-            if (doublesRead == -1) break
-            offset += doublesRead
+            doubleRead = read(result, offset, n - offset)
+            if (doubleRead == -1) break
+            offset += doubleRead
         }
         if (offset == 0) return DoubleArray(0)
         return result.copyOf(offset)
     }
 
     /**
-     * Returns the number of doubles that can be read (or skipped over) from this input stream without
+     * Returns the number of double that can be read (or skipped over) from this input stream without
      *
      * @param b the buffer into which the data is read.
-     * @return the number of doubles that can be read from this input stream without blocking.
+     * @return the number of double that can be read from this input stream without blocking.
      * @throws IOException if an I/O error occurs.
      * @throws UnsupportedOperationException if this method is not supported.
      *
@@ -185,11 +185,11 @@ abstract class DoubleInputStream {
      */
     open fun readNDoubles(b: DoubleArray, off: Int, len: Int): Int {
         var offset = off
-        var doublesRead: Int
+        var doubleRead: Int
         while (offset < len) {
-            doublesRead = read(b, offset, len - offset)
-            if (doublesRead == -1) break
-            offset += doublesRead
+            doubleRead = read(b, offset, len - offset)
+            if (doubleRead == -1) break
+            offset += doubleRead
         }
         return offset - off
     }

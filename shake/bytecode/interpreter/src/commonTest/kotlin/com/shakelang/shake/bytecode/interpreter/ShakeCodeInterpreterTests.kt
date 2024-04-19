@@ -1670,7 +1670,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.pop() shouldBe 0
         }
 
-        "doubles compare (less)" {
+        "double compare (less)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1687,7 +1687,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 2
         }
-        "doubles compare (equal)" {
+        "double compare (equal)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {
@@ -1704,7 +1704,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 1
             stack.pop() shouldBe 1
         }
-        "doubles compare (greater)" {
+        "double compare (greater)" {
             val interpreter = ShakeInterpreter()
             val code = interpreter.createCodeInterpreter(
                 bytecode {

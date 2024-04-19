@@ -16,7 +16,7 @@ class CreationShakeDoubleLiteral(
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(
-            "type" to "doubles",
+            "type" to "double",
             "value" to value,
         )
     }

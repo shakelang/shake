@@ -6,7 +6,7 @@ import io.kotest.matchers.string.shouldMatch
 class OperationTests : FreeSpec(
     {
         val types = listOf(
-            "byte", "shorts", "int", "long", "float", "doubles",
+            "byte", "shorts", "int", "long", "float", "double",
             "ubyte", "ushort", "uint", "ulong",
         )
 

@@ -210,7 +210,7 @@ object Opcodes {
     const val FADD: Byte = 0x14
 
     /**
-     * Add two doubles on top of the stack (the first 16 bytes)
+     * Add two double on top of the stack (the first 16 bytes)
      *
      * Value: `0x15`
      *
@@ -320,7 +320,7 @@ object Opcodes {
     const val FSUB: Byte = 0x1E
 
     /**
-     * Subtract two doubles on top of the stack (the first 16 bytes)
+     * Subtract two double on top of the stack (the first 16 bytes)
      *
      * Value: `0x1F`
      *
@@ -432,7 +432,7 @@ object Opcodes {
     const val FMUL: Byte = 0x28
 
     /**
-     * Multiply two doubles on top of the stack (the first 16 bytes)
+     * Multiply two double on top of the stack (the first 16 bytes)
      *
      * Value: `0x29`
      *
@@ -544,7 +544,7 @@ object Opcodes {
     const val FDIV: Byte = 0x32
 
     /**
-     * Divide two doubles on top of the stack (the first 16 bytes)
+     * Divide two double on top of the stack (the first 16 bytes)
      *
      * Value: `0x33`
      *
@@ -656,7 +656,7 @@ object Opcodes {
     const val FMOD: Byte = 0x3C
 
     /**
-     * Modulo two doubles on top of the stack (the first 16 bytes)
+     * Modulo two double on top of the stack (the first 16 bytes)
      *
      * Value: `0x3D`
      *
@@ -724,7 +724,7 @@ object Opcodes {
     const val FNEG: Byte = 0x42
 
     /**
-     * Negate the doubles on top of the stack
+     * Negate the double on top of the stack
      *
      * Value: `0x43`
      *
@@ -792,7 +792,7 @@ object Opcodes {
     const val FINC: Byte = 0x48
 
     /**
-     * Increment a doubles
+     * Increment a double
      *
      * Value: `0x49`
      *
@@ -860,7 +860,7 @@ object Opcodes {
     const val FDEC: Byte = 0x4E
 
     /**
-     * Decrement a doubles
+     * Decrement a double
      *
      * Value: `0x4F`
      *
@@ -1275,7 +1275,7 @@ object Opcodes {
     const val FCMP: Byte = 0x74
 
     /**
-     * Compare two doubles
+     * Compare two double
      *
      * Place the result on the stack (as a byte):
      * - 0 (00000000) if the first value is less than the second
