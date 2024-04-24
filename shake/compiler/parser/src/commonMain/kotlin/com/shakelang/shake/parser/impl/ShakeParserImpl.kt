@@ -714,17 +714,19 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      */
     private fun expectInvocation(function: ShakeValuedNode): ShakeInvocationNode {
         val args: MutableList<ShakeValuedNode> = ArrayList()
-        if (!input.hasNext() || input.next().type != ShakeTokenType.LPAREN) throw errorFactory.createErrorAtCurrent("Expecting '('")
-        if (input.peek().type != ShakeTokenType.RPAREN) {
+        val lp = expectToken(ShakeTokenType.LPAREN)
+        val commas = mutableListOf<ShakeToken>()
+        if (!nextToken(ShakeTokenType.RPAREN)) {
             args.add(expectNotNull(expectValue()))
             while (input.hasNext() && input.peek().type == ShakeTokenType.COMMA) {
-                input.skip()
+                commas.add(input.next())
+                if (nextToken(ShakeTokenType.RPAREN)) break
                 val operation = expectValue()
                 args.add(operation)
             }
         }
-        if (!input.hasNext() || input.next().type != ShakeTokenType.RPAREN) throw errorFactory.createErrorAtCurrent("Expecting ')'")
-        return ShakeInvocationNode(map, function, args.toTypedArray())
+        val rp = expectToken(ShakeTokenType.RPAREN)
+        return ShakeInvocationNode(map, function, args.toTypedArray(), lp, rp, commas.toTypedArray())
     }
 
     /**

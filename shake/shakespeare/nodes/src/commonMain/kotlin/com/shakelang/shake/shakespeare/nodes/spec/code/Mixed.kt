@@ -8,6 +8,7 @@
 
 package com.shakelang.shake.shakespeare.nodes.spec.code
 
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeValuedStatementNode
 import com.shakelang.shake.parser.node.mixed.*
@@ -38,6 +39,7 @@ interface ValuedStatementNodeSpec : StatementNodeSpec, ValueNodeSpec, ValuedStat
                 is VariableIncrementAfterSpec -> VariableIncrementAfterNodeSpec.of(spec)
                 is VariableDecrementBeforeSpec -> VariableDecrementBeforeNodeSpec.of(spec)
                 is VariableDecrementAfterSpec -> VariableDecrementAfterNodeSpec.of(spec)
+                is FunctionCallSpec -> FunctionCallNodeSpec.of(spec)
                 else -> throw IllegalArgumentException("Unknown ValuedStatementSpec: $spec")
             }
         }
@@ -53,6 +55,7 @@ interface ValuedStatementNodeSpec : StatementNodeSpec, ValueNodeSpec, ValuedStat
         fun of(spec: VariableIncrementAfterSpec) = VariableIncrementAfterNodeSpec.of(spec)
         fun of(spec: VariableDecrementBeforeSpec) = VariableDecrementBeforeNodeSpec.of(spec)
         fun of(spec: VariableDecrementAfterSpec) = VariableDecrementAfterNodeSpec.of(spec)
+        fun of(spec: FunctionCallSpec) = FunctionCallNodeSpec.of(spec)
     }
 }
 
@@ -102,7 +105,6 @@ open class VariableAdditionAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableAddAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("+=")
         val operator = nctx.createToken(ShakeTokenType.ADD_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -134,7 +136,6 @@ open class VariableSubtractionAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableSubAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("-=")
         val operator = nctx.createToken(ShakeTokenType.SUB_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -166,7 +167,6 @@ open class VariableMultiplicationAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableMulAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("*=")
         val operator = nctx.createToken(ShakeTokenType.MUL_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -198,7 +198,6 @@ open class VariableDivisionAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableDivAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("/=")
         val operator = nctx.createToken(ShakeTokenType.DIV_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -230,7 +229,6 @@ open class VariableModuloAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableModAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("%=")
         val operator = nctx.createToken(ShakeTokenType.MOD_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -262,7 +260,6 @@ open class VariablePowerAssignmentNodeSpec(
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariablePowAssignmentNode {
         val namespace = name.dump(ctx, nctx)
         nctx.space()
-        nctx.print("**=")
         val operator = nctx.createToken(ShakeTokenType.POW_ASSIGN)
         nctx.space()
         val value = value.dump(ctx, nctx)
@@ -289,9 +286,7 @@ open class VariableIncrementBeforeNodeSpec(
     override val name: NamespaceNodeSpec get() = super.name as NamespaceNodeSpec
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableIncrementBeforeNode {
-        nctx.print("++")
         val operator = nctx.createToken(ShakeTokenType.INCR)
-        nctx.space()
         val namespace = name.dump(ctx, nctx)
         return ShakeVariableIncrementBeforeNode(nctx.map, namespace.toValue(), operator)
     }
@@ -316,8 +311,6 @@ open class VariableIncrementAfterNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableIncrementAfterNode {
         val namespace = name.dump(ctx, nctx)
-        nctx.space()
-        nctx.print("++")
         val operator = nctx.createToken(ShakeTokenType.INCR)
         return ShakeVariableIncrementAfterNode(nctx.map, namespace.toValue(), operator)
     }
@@ -341,9 +334,7 @@ open class VariableDecrementBeforeNodeSpec(
     override val name: NamespaceNodeSpec get() = super.name as NamespaceNodeSpec
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableDecrementBeforeNode {
-        nctx.print("--")
         val operator = nctx.createToken(ShakeTokenType.DECR)
-        nctx.space()
         val namespace = name.dump(ctx, nctx)
         return ShakeVariableDecrementBeforeNode(nctx.map, namespace.toValue(), operator)
     }
@@ -368,8 +359,6 @@ open class VariableDecrementAfterNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableDecrementAfterNode {
         val namespace = name.dump(ctx, nctx)
-        nctx.space()
-        nctx.print("--")
         val operator = nctx.createToken(ShakeTokenType.DECR)
         return ShakeVariableDecrementAfterNode(nctx.map, namespace.toValue(), operator)
     }
@@ -397,17 +386,20 @@ open class FunctionCallNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeInvocationNode {
         val namespace = name.dump(ctx, nctx)
-        nctx.print("(")
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
 
+        val commas = mutableListOf<ShakeToken>()
         val args = arguments.mapIndexed { i, it ->
             val d = it.dump(ctx, nctx)
-            if (i != arguments.size - 1) nctx.print(", ")
+            if (i != arguments.size - 1) {
+                commas.add(nctx.createToken(ShakeTokenType.COMMA))
+                nctx.space()
+            }
             d
         }.toTypedArray()
-        nctx.print(")")
+
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        return ShakeInvocationNode(nctx.map, namespace.toValue(), args)
+        return ShakeInvocationNode(nctx.map, namespace.toValue(), args, lp, rp, commas.toTypedArray())
     }
 
     companion object {

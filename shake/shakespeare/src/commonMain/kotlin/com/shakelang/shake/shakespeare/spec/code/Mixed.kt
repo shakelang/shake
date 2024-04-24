@@ -1340,7 +1340,7 @@ open class VariableDecrementAfterSpec(
 open class FunctionCallSpec(
     open val name: NamespaceSpec,
     open val arguments: List<ValueSpec>,
-) : ValueSpec, StatementSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [FunctionCallSpec]
