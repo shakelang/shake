@@ -5,7 +5,6 @@ import conventions.projectGroup
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
 //    id("com.shakelang.util.embed.plugin") version "0.1.0"
 }
 

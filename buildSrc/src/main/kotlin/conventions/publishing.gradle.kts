@@ -10,188 +10,172 @@ plugins {
     id("org.gradle.crypto.checksum")
 }
 
-val publishScopes = PublishScopesConfig(project)
-
-fun publishScopes(block: PublishScopesConfig.() -> Unit) = block(publishScopes)
-
-tasks.register("listDependencies") {
-    group = "info"
-    doLast {
-
-        kotlin.sourceSets.all {
-            println("Source Set: $name, Configuration: $implementationConfigurationName, Dependencies:")
-
-            configurations.getByName(this.implementationConfigurationName).dependencies.forEach {
-                val dep = mutableListOf<String>()
-                if (it.group != null) dep.add(it.group!!)
-                if (it.name != null) dep.add(it.name)
-                if (it.version != null) dep.add(it.version.toString())
-                println("  - ${if (it is NpmDependency) "npm" else "maven"} ${dep.joinToString(":")}")
-            }
-        }
-    }
+if (project.rootProject !== project) {
+    throw IllegalStateException("This plugin must be applied to the root project")
 }
 
-// kotlin {
-//    val publicationsFromMainHost =
-//        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
-// }
+println("Applying publishing conventions")
 
-// tasks.withType(PublishToMavenRepository::class.java) {
-//    println(this.name)
-//
-// }
-signing {
-    val signingKey = System.getenv("GRADLE_SIGNING_KEY")
-    val signingPassword: String? = System.getenv("GRADLE_SIGNING_PASSWORD")
-
-    if (signingKey != null && signingPassword != null) {
-        logger.log(LogLevel.INFO, "Found signing key and password, using in-memory PGP keys, using them")
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-
-    sign(publishing.publications)
+class RootPublishingConfig(
+    val ghUsername: String?,
+    val ghToken: String?,
+    val signingKey: String?,
+    val signingPassword: String?,
+) {
+    val ghConfigured: Boolean = ghUsername != null && ghToken != null
+    val signingConfigured: Boolean = signingKey != null && signingPassword != null
 }
 
-afterEvaluate {
+val ghUsername =
+    System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
+val ghToken = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
 
-//    nexusPublishing {
-//        repositories {
-//            sonatype {  //only for users registered in Sonatype after 24 Feb 2021
-//                nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-//                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-//            }
-//        }
-//    }
+if (ghUsername == null || ghToken == null) {
+    logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
+}
 
-    publishing {
+val signingKey = System.getenv("GRADLE_SIGNING_KEY")
+val signingPassword: String? = System.getenv("GRADLE_SIGNING_PASSWORD")
 
-        repositories {
+if (signingKey == null || signingPassword == null) {
+    logger.log(LogLevel.WARN, "No signing key and password found, skipping signing configuration")
+}
 
-            val sonartype = if (publishScopes.configured) publishScopes.sonartype.get() else true
-            val githubPackages = if (publishScopes.configured) publishScopes.githubPackages.get() else true
-            val mavenLocal = if (publishScopes.configured) publishScopes.mavenLocal.get() else true
-            val gradlePluginPortal = if (publishScopes.configured) publishScopes.gradlePluginPortal.get() else false
+val rootPublishingConfig = RootPublishingConfig(ghUsername, ghToken, signingKey, signingPassword)
+project.extensions.add(RootPublishingConfig::class.java, "rootPublishingConfig", rootPublishingConfig)
 
-//            if(sonartype) maven("Sonatype") {
-//                name = "Sonatype"
-//                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-//
-//                val _username =
-//                    System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
-//                val _password =
-//                    System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
-//
-//                if (_username == null || _password == null) {
-//                    logger.log(
-//                        LogLevel.WARN,
-//                        "No Sonatype credentials found, skipping Sonatype publishing configuration"
-//                    )
-//                    return@maven
-//                }
-//
-//                credentials {
-//                    username = _username
-//                    password = _password
-//                }
-//            }
+allprojects {
 
-            if (githubPackages) {
-                maven("GitHub") {
-                    name = "GitHub"
-                    url = uri("https://maven.pkg.github.com/shakelang/shake")
+    apply(plugin = "maven-publish")
+    apply(plugin = "signing")
+    apply(plugin = "org.gradle.crypto.checksum")
 
-                    val usernameLocal =
-                        System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
-                    val tokenLocal = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
+    val publishScopes = PublishScopesConfig(project)
 
-                    if (usernameLocal == null || tokenLocal == null) {
-                        logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
-                        return@maven
-                    }
+    fun publishScopes(block: PublishScopesConfig.() -> Unit) = block(publishScopes)
 
-                    credentials {
-                        username = usernameLocal
-                        password = tokenLocal
-                    }
-                }
-            }
+    tasks.register("listDependencies") {
+        group = "info"
+        doLast {
+            kotlin.sourceSets.all {
+                println("Source Set: $name, Configuration: $implementationConfigurationName, Dependencies:")
 
-            if (mavenLocal) mavenLocal()
-        }
-
-        publications.withType<MavenPublication> {
-
-            if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false) {
-                artifact(tasks["sourcesJar"])
-            }
-
-            artifact(tasks["dokkaJavadocJar"])
-            artifact(tasks["dokkaHtmlJar"])
-
-            pom {
-                name.set(project.name)
-                description.set(project.description)
-                url.set("https://github.com/${Meta.GITHUB_REPO}")
-                licenses {
-                    license {
-                        name.set(Meta.LICENSE)
-                        url.set("https://github.com/${Meta.GITHUB_REPO}/blob/master/LICENSE")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("shake-developers")
-                        name.set("Shake Developers")
-                        url.set("https://github.com/shakelang")
-                        organization.set("shakelang")
-                        organizationUrl.set("https://shakelang.com/")
-                    }
-                    developer {
-                        id.set("nicolas-schmidt")
-                        name.set("Nicolas Schmidt")
-                        url.set("https://github.com/nsc-de")
-                        organization.set("shakelang")
-                        organizationUrl.set("https://shakelang.com/")
-                    }
-                }
-                scm {
-                    url.set(
-                        "https://github.com/${Meta.GITHUB_REPO}.git",
-                    )
-                    connection.set(
-                        "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
-                    )
-                    developerConnection.set(
-                        "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
-                    )
-                }
-                issueManagement {
-                    url.set("https://github.com/${Meta.GITHUB_REPO}/issues")
+                configurations.getByName(this.implementationConfigurationName).dependencies.forEach {
+                    val dep = mutableListOf<String>()
+                    if (it.group != null) dep.add(it.group!!)
+                    if (it.name != null) dep.add(it.name)
+                    if (it.version != null) dep.add(it.version.toString())
+                    println("  - ${if (it is NpmDependency) "npm" else "maven"} ${dep.joinToString(":")}")
                 }
             }
         }
     }
 
-    tasks.withType<Sign> {
-        group = "signing"
+    signing {
+        if (rootPublishingConfig.signingConfigured) {
+            useInMemoryPgpKeys(rootPublishingConfig.signingKey, rootPublishingConfig.signingPassword)
+        }
+
+        sign(publishing.publications)
     }
 
-    tasks.create("signAllPublications") {
-        group = "signing"
+    afterEvaluate {
+        publishing {
+            repositories {
+                val sonartype = if (publishScopes.configured) publishScopes.sonartype.get() else true
+                val githubPackages = if (publishScopes.configured) publishScopes.githubPackages.get() else true
+                val mavenLocal = if (publishScopes.configured) publishScopes.mavenLocal.get() else true
+                val gradlePluginPortal = if (publishScopes.configured) publishScopes.gradlePluginPortal.get() else false
+
+                if (githubPackages) {
+                    maven("GitHub") {
+                        name = "GitHub"
+                        url = uri("https://maven.pkg.github.com/shakelang/shake")
+
+                        if (!rootPublishingConfig.ghConfigured) return@maven
+
+                        credentials {
+                            username = rootPublishingConfig.ghUsername
+                            password = rootPublishingConfig.ghToken
+                        }
+                    }
+                }
+
+                if (mavenLocal) mavenLocal()
+            }
+
+            publications.withType<MavenPublication> {
+                if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false) {
+                    artifact(tasks["sourcesJar"])
+                }
+
+                artifact(tasks["dokkaJavadocJar"])
+                artifact(tasks["dokkaHtmlJar"])
+
+                pom {
+                    name.set(project.name)
+                    description.set(project.description)
+                    url.set("https://github.com/${Meta.GITHUB_REPO}")
+                    licenses {
+                        license {
+                            name.set(Meta.LICENSE)
+                            url.set("https://github.com/${Meta.GITHUB_REPO}/blob/master/LICENSE")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("shake-developers")
+                            name.set("Shake Developers")
+                            url.set("https://github.com/shakelang")
+                            organization.set("shakelang")
+                            organizationUrl.set("https://shakelang.com/")
+                        }
+                        developer {
+                            id.set("nicolas-schmidt")
+                            name.set("Nicolas Schmidt")
+                            url.set("https://github.com/nsc-de")
+                            organization.set("shakelang")
+                            organizationUrl.set("https://shakelang.com/")
+                        }
+                    }
+                    scm {
+                        url.set(
+                            "https://github.com/${Meta.GITHUB_REPO}.git",
+                        )
+                        connection.set(
+                            "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
+                        )
+                        developerConnection.set(
+                            "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
+                        )
+                    }
+                    issueManagement {
+                        url.set("https://github.com/${Meta.GITHUB_REPO}/issues")
+                    }
+                }
+            }
+        }
+
         tasks.withType<Sign> {
-            this@create.dependsOn(this)
+            group = "signing"
         }
-    }
 
-    tasks.create<Checksum>("createChecksums") {
-        group = "checksums"
-        dependsOn("build", "signAllPublications")
+        tasks.create("signAllPublications") {
+            group = "signing"
+            tasks.withType<Sign> {
+                this@create.dependsOn(this)
+            }
+        }
 
-        val dir = file("build/libs")
-        val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+        tasks.create<Checksum>("createChecksums") {
+            group = "checksums"
+            dependsOn("build", "signAllPublications")
 
-        inputFiles.setFrom(files)
-        outputDirectory.set(file("build/libs"))
+            val dir = file("build/libs")
+            val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+
+            inputFiles.setFrom(files)
+            outputDirectory.set(file("build/libs"))
+        }
     }
 }
