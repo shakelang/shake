@@ -77,7 +77,7 @@ open class VariableDeclarationSpec(
     /**
      * If the variable is a val or a var
      */
-    val isVal: Boolean = true,
+    val isVal: Boolean = false,
 ) : StatementSpec {
 
     /**
@@ -624,7 +624,7 @@ open class ForSpec(
 /**
  * A [IfSpec] is a specification for an if statement in the code
  * @param condition The condition of the if statement
- * @param body The body of the if statement
+ * @param thenBody The body of the if statement
  * @param elseBody The else body of the if statement
  */
 open class IfSpec(
@@ -637,7 +637,7 @@ open class IfSpec(
     /**
      * The body of the if statement
      */
-    open val body: CodeSpec,
+    open val thenBody: CodeSpec,
 
     /**
      * The else body of the if statement
@@ -652,21 +652,21 @@ open class IfSpec(
      */
     override fun generate(ctx: GenerationContext): String {
         val elsePart = if (elseBody != null) " else ${elseBody!!.generate(ctx.indent())}" else ""
-        return "if (${condition.generate(ctx)}) ${body.generate(ctx.indent())}$elsePart"
+        return "if (${condition.generate(ctx)}) ${thenBody.generate(ctx.indent())}$elsePart"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is IfSpec) return false
         if (condition != other.condition) return false
-        if (body != other.body) return false
+        if (thenBody != other.thenBody) return false
         if (elseBody != other.elseBody) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = condition.hashCode()
-        result = 31 * result + body.hashCode()
+        result = 31 * result + thenBody.hashCode()
         result = 31 * result + (elseBody?.hashCode() ?: 0)
         return result
     }
@@ -719,6 +719,16 @@ open class IfSpec(
          * @return The builder
          */
         fun body(body: CodeSpec): IfSpecBuilder {
+            this.body = body
+            return this
+        }
+
+        /**
+         * Set the body of the if statement
+         * @param body The body of the if statement
+         * @return The builder
+         */
+        fun thenBody(body: CodeSpec): IfSpecBuilder {
             this.body = body
             return this
         }

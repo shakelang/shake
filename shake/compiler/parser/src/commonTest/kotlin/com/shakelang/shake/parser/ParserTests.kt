@@ -74,53 +74,53 @@ class ParserTests : FreeSpec(
                 "for(var i = 0; i < 100; i++) { println(); }",
                 ShakeForNode::class,
             )
-            node.declaration shouldNotBe null
+            node.init shouldNotBe null
             node.condition shouldNotBe null
-            node.round shouldNotBe null
+            node.update shouldNotBe null
             node.body shouldNotBe null
-            node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
+            node.init shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
-            node.round shouldBeOfType ShakeVariableIncrementAfterNode::class
+            node.update shouldBeOfType ShakeVariableIncrementAfterNode::class
             node.body shouldBeOfType ShakeBlockNode::class
             node =
                 ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) println();", ShakeForNode::class)
-            node.declaration shouldNotBe null
+            node.init shouldNotBe null
             node.condition shouldNotBe null
-            node.round shouldNotBe null
+            node.update shouldNotBe null
             node.body shouldNotBe null
-            node.declaration shouldBeOfType ShakeLocalDeclarationNode::class
+            node.init shouldBeOfType ShakeLocalDeclarationNode::class
             node.condition shouldBeOfType ShakeLessThanNode::class
-            node.round shouldBeOfType ShakeVariableIncrementAfterNode::class
+            node.update shouldBeOfType ShakeVariableIncrementAfterNode::class
             node.body shouldBeOfType ShakeBlockNode::class
         }
 
         "test if" {
             var node = ParserTestUtil.parseStatement("<IfTest>", "if (true) { println(i) }", ShakeIfNode::class)
             node.condition shouldNotBe null
-            node.body shouldNotBe null
+            node.thenBody shouldNotBe null
             node.elseBody shouldBe null
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
             node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i);", ShakeIfNode::class)
             node.condition shouldNotBe null
-            node.body shouldNotBe null
+            node.thenBody shouldNotBe null
             node.elseBody shouldBe null
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
-            node.body.children.size shouldBe 1
-            node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
+            node.thenBody.children.size shouldBe 1
+            node.thenBody.children[0] shouldBeOfType ShakeInvocationNode::class
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
-            node.body.children.size shouldBe 1
-            node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
+            node.thenBody.children.size shouldBe 1
+            node.thenBody.children[0] shouldBeOfType ShakeInvocationNode::class
             node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i); else println(i);", ShakeIfNode::class)
             node.condition shouldNotBe null
-            node.body shouldNotBe null
+            node.thenBody shouldNotBe null
             node.elseBody shouldNotBe null
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
-            node.body.children.size shouldBe 1
-            node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
+            node.thenBody.children.size shouldBe 1
+            node.thenBody.children[0] shouldBeOfType ShakeInvocationNode::class
             node.elseBody shouldBeOfType ShakeBlockNode::class
             node.elseBody!!.children.size shouldBe 1
             node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class
@@ -131,23 +131,23 @@ class ParserTests : FreeSpec(
                 ShakeIfNode::class,
             )
             node.condition shouldNotBe null
-            node.body shouldNotBe null
+            node.thenBody shouldNotBe null
             node.elseBody shouldNotBe null
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
-            node.body.children.size shouldBe 1
-            node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
+            node.thenBody.children.size shouldBe 1
+            node.thenBody.children[0] shouldBeOfType ShakeInvocationNode::class
             node.elseBody shouldBeOfType ShakeBlockNode::class
             node.elseBody!!.children.size shouldBe 1
             node.elseBody!!.children[0] shouldBeOfType ShakeIfNode::class
             node = node.elseBody!!.children[0] as ShakeIfNode
             node.condition shouldNotBe null
-            node.body shouldNotBe null
+            node.thenBody shouldNotBe null
             node.elseBody shouldNotBe null
             node.condition shouldBeOfType ShakeTrueLiteralNode::class
-            node.body shouldBeOfType ShakeBlockNode::class
-            node.body.children.size shouldBe 1
-            node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+            node.thenBody shouldBeOfType ShakeBlockNode::class
+            node.thenBody.children.size shouldBe 1
+            node.thenBody.children[0] shouldBeOfType ShakeInvocationNode::class
             node.elseBody shouldBeOfType ShakeBlockNode::class
             node.elseBody!!.children.size shouldBe 1
             node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class

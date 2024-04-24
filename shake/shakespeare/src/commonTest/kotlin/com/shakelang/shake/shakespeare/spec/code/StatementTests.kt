@@ -918,7 +918,7 @@ class StatementTests : FlatTestSpec({
                 )
 
                 spec.condition shouldBe ValueSpec.of("condition")
-                spec.body shouldBe CodeSpec.empty()
+                spec.thenBody shouldBe CodeSpec.empty()
                 spec.elseBody shouldBe CodeSpec.empty()
             }
 
@@ -930,7 +930,7 @@ class StatementTests : FlatTestSpec({
                 )
 
                 spec.condition shouldBe ValueSpec.of("condition")
-                spec.body shouldBe CodeSpec.empty()
+                spec.thenBody shouldBe CodeSpec.empty()
                 spec.elseBody shouldBe null
             }
         }
@@ -1082,7 +1082,7 @@ class StatementTests : FlatTestSpec({
                     val spec = builder.build()
 
                     spec.condition shouldBe ValueSpec.of("condition")
-                    spec.body shouldBe CodeSpec.empty()
+                    spec.thenBody shouldBe CodeSpec.empty()
                     spec.elseBody shouldBe CodeSpec.empty()
                 }
 
@@ -1113,7 +1113,7 @@ class StatementTests : FlatTestSpec({
 
                     val spec = builder.build()
                     spec.condition shouldBe ValueSpec.of("condition")
-                    spec.body shouldBe CodeSpec.empty()
+                    spec.thenBody shouldBe CodeSpec.empty()
                     spec.elseBody shouldBe null
                 }
             }

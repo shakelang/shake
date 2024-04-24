@@ -31,7 +31,7 @@ open class CodeNodeSpec(
             for (i in 0 until indented.indentLevel) nctx.print(ctx.indentType)
             nodes.add(statement.dump(indented, nctx))
         }
-        nctx.print("\n")
+        if (statements.isNotEmpty()) nctx.print("\n")
         for (i in 0 until ctx.indentLevel) nctx.print(ctx.indentType)
         val rcurl = nctx.createToken(ShakeTokenType.RCURL)
         return ShakeBlockNode(nctx.map, nodes.toTypedArray(), lcurl, rcurl)
@@ -40,6 +40,10 @@ open class CodeNodeSpec(
     companion object {
         fun of(body: CodeSpec): CodeNodeSpec {
             return CodeNodeSpec(body.statements.map { StatementNodeSpec.of(it) })
+        }
+
+        fun empty(): CodeNodeSpec {
+            return CodeNodeSpec(emptyList())
         }
     }
 }

@@ -17,6 +17,10 @@ interface TypeSpec : AbstractSpec {
         fun shorts() = PrimitiveTypeSpec.SHORT
         fun int() = PrimitiveTypeSpec.INT
         fun long() = PrimitiveTypeSpec.LONG
+        fun unsignedByte() = PrimitiveTypeSpec.UNSIGNED_BYTE
+        fun unsignedShort() = PrimitiveTypeSpec.UNSIGNED_SHORT
+        fun unsignedInt() = PrimitiveTypeSpec.UNSIGNED_INT
+        fun unsignedLong() = PrimitiveTypeSpec.UNSIGNED_LONG
         fun ubyte() = PrimitiveTypeSpec.UNSIGNED_BYTE
         fun ushort() = PrimitiveTypeSpec.UNSIGNED_SHORT
         fun uint() = PrimitiveTypeSpec.UNSIGNED_INT
