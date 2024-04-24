@@ -97,7 +97,7 @@ jobs:
 
       # Convert gradle_output.txt to SARIF format.
       - name: Convert to SARIF
-        run: python3 convert_to_sarif.py gradle_output.txt > compiler_output.sarif
+        run: python3 tools/convert_to_sarif.py gradle_output.txt > compiler_output.sarif
 
       # Upload SARIF to Security tab.
       - name: Upload SARIF to Security tab 🔒
