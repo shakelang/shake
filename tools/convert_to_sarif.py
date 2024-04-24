@@ -41,7 +41,14 @@ def parse_compiler_output(compiler_output_file):
         for line in file:
             if line.startswith("w: "):
                 warning = line[3:]
-                a, url, line_number, rest = warning.split(":", 3)
+                if warning.startswith("file:"):
+                    warning = warning[5:]
+
+                while warning.startswith(" ") or warning.startswith("/"):
+                    warning = warning[1:]
+
+                warning = "/" + warning
+                url, line_number, rest = warning.split(":", 2)
                 column_number, message = rest.split(" ", 1)
                 file_path = relpath(url[1:], getcwd())
                 line_number = int(line_number)
