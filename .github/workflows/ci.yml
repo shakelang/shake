@@ -20,6 +20,11 @@ jobs:
       - name: Setup Gradle 🛠️
         uses: gradle/gradle-build-action@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Set Executable Permission for Gradlew 🔑
         run: chmod +x gradlew
 
@@ -35,9 +40,15 @@ jobs:
 
       - name: Build with Gradle 🏗️
         run: |
-          ./gradlew build allTests
+          python3 ./tools/run_gradlew.py build allTests
         env:
           TEST_CONFIGURATION: full
+
+      - name: Upload gradle_output.txt as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: gradle-output
+          path: gradle_output.txt
 
       - if: success() || failure()
         name: Generate Test Reports 📊
@@ -67,3 +78,29 @@ jobs:
           fail_ci_if_error: true
           flags: unittests
           files: build/reports/kover/report.xml
+
+
+  create-sarif:
+    name: Upload SARIF Results to Security Tab 🔒
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Code 🛎️
+        uses: actions/checkout@v4
+
+      # Download gradle_output.txt artifact from the build job.
+      - name: Download gradle_output.txt artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: gradle-output
+          path: .
+
+      # Convert gradle_output.txt to SARIF format.
+      - name: Convert to SARIF
+        run: python3 convert_to_sarif.py gradle_output.txt > compiler_output.sarif
+
+      # Upload SARIF to Security tab.
+      - name: Upload SARIF to Security tab 🔒
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: compiler_output.sarif

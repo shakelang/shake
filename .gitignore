@@ -14,6 +14,7 @@
 !**/src/**/build/
 Compiler.userlibraries
 .project
+**/gradle_output.txt
 
 *.jar
 *.log
