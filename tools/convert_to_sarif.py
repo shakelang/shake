@@ -40,20 +40,46 @@ def parse_compiler_output(compiler_output_file):
     with open(compiler_output_file, 'r') as file:
         for line in file:
             if line.startswith("w: "):
-                warning = line[3:]
-                if warning.startswith("file:"):
-                    warning = warning[5:]
 
-                while warning.startswith(" ") or warning.startswith("/"):
-                    warning = warning[1:]
+                try:
+                    warning = line[3:]
+                    if warning.startswith("file:"):
+                        warning = warning[5:]
 
-                warning = "/" + warning
-                url, line_number, rest = warning.split(":", 2)
-                column_number, message = rest.split(" ", 1)
-                file_path = relpath(url[1:], getcwd())
-                line_number = int(line_number)
-                column_number = int(column_number)
-                results.append(create_sarif_result(file_path, line_number, column_number, message[:-1]))
+                    while warning.startswith(" ") or warning.startswith("/"):
+                        warning = warning[1:]
+
+                    warning = "/" + warning
+
+                    if len(warning.split(":", 1)) < 2:
+                        continue
+
+                    url, rest = warning.split(":", 1)
+
+                    # Possible formats:
+                    # " (<line>, <col>): <message>"
+                    # "<line>:<col> <message>"
+
+                    # Remove the first space
+                    if rest[0] == " ":
+                        rest = rest[1:]
+
+                    if rest[0] == "(":
+                        line_number, rest = rest[1:].split(", ", 1)
+                        column_number, message = rest.split("): ", 1)
+
+                    else:
+                        line_number, rest = rest.split(":", 1)
+                        column_number, message = rest.split(" ", 1)
+
+                    file_path = relpath(url[1:], getcwd())
+                    line_number = int(line_number)
+                    column_number = int(column_number)
+                    results.append(create_sarif_result(file_path, line_number, column_number, message[:-1]))
+                except Exception as excep:
+                    print("Error parsing line: " + line)
+                    print(excep)
+                    continue
 
     return results
 
