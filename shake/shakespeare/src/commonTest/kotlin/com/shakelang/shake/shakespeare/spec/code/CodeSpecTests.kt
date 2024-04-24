@@ -6,76 +6,105 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 class CodeSpecTests : FlatTestSpec({
-    it("create") {
+    describe("create") {
+        it("simple create") {
 
-        val codeSpec = CodeSpec(
-            listOf(),
-        )
+            val codeSpec = CodeSpec(
+                listOf(),
+            )
 
-        codeSpec.statements shouldBe listOf()
+            codeSpec.statements shouldBe listOf()
+        }
+
+        it("with statements") {
+
+            val codeSpec = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                ),
+            )
+
+            codeSpec.statements shouldBe listOf(
+                StatementSpec.of("statement1"),
+            )
+        }
     }
 
-    it("create with statements") {
+    describe("generate") {
+        it("code") {
+            val codeSpec = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement2"),
+                ),
+            )
 
-        val codeSpec = CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-            ),
-        )
+            codeSpec.generate(GenerationContext()) shouldBe "{\n    statement1\n    statement2\n}"
+        }
 
-        codeSpec.statements shouldBe listOf(
-            StatementSpec.of("statement1"),
-        )
+        it(" with empty statements") {
+            val codeSpec = CodeSpec(
+                listOf(),
+            )
+
+            codeSpec.generate(GenerationContext()) shouldBe "{}"
+        }
     }
 
-    it("generate code") {
-        val codeSpec = CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-                StatementSpec.of("statement2"),
-            ),
-        )
+    describe("equals") {
 
-        codeSpec.generate(GenerationContext()) shouldBe "{\n    statement1\n    statement2\n}"
-    }
+        it("should be equal to same") {
+            val codeSpec = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement2"),
+                ),
+            )
 
-    it("generate with empty statements") {
-        val codeSpec = CodeSpec(
-            listOf(),
-        )
+            codeSpec shouldBe codeSpec
+        }
 
-        codeSpec.generate(GenerationContext()) shouldBe "{}"
-    }
+        it("should not be equal to non-code-spec") {
+            val codeSpec = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement2"),
+                ),
+            )
 
-    it("equals") {
-        val codeSpec = CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-                StatementSpec.of("statement2"),
-            ),
-        )
+            codeSpec shouldNotBe "test"
+        }
 
-        val codeSpec2 = CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-                StatementSpec.of("statement2"),
-            ),
-        )
+        it("should test equality") {
+            val codeSpec = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement2"),
+                ),
+            )
 
-        codeSpec shouldBe codeSpec
-        codeSpec shouldBe codeSpec2
-        codeSpec shouldNotBe CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-            ),
-        )
+            val codeSpec2 = CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement2"),
+                ),
+            )
 
-        codeSpec shouldNotBe CodeSpec(
-            listOf(
-                StatementSpec.of("statement1"),
-                StatementSpec.of("statement3"),
-            ),
-        )
+            codeSpec shouldBe codeSpec
+            codeSpec shouldBe codeSpec2
+            codeSpec shouldNotBe CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                ),
+            )
+
+            codeSpec shouldNotBe CodeSpec(
+                listOf(
+                    StatementSpec.of("statement1"),
+                    StatementSpec.of("statement3"),
+                ),
+            )
+        }
     }
 
     it("build") {

@@ -3,7 +3,7 @@ package com.shakelang.util.shason.elements
 import com.shakelang.util.shason.JSON
 
 /**
- * A json representation of doubles values
+ * A json representation of double values
  * @since 0.1.0
  * @version 0.1.0
  */

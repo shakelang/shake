@@ -22,6 +22,24 @@ interface TypeNodeSpec : AbstractNodeSpec, TypeSpec {
                 else -> throw IllegalArgumentException("Unknown type: $type")
             }
         }
+
+        fun byte() = PrimitiveTypeNodeSpec.BYTE
+        fun short() = PrimitiveTypeNodeSpec.SHORT
+        fun int() = PrimitiveTypeNodeSpec.INT
+        fun long() = PrimitiveTypeNodeSpec.LONG
+        fun unsignedByte() = PrimitiveTypeNodeSpec.UNSIGNED_BYTE
+        fun unsignedShort() = PrimitiveTypeNodeSpec.UNSIGNED_SHORT
+        fun unsignedInt() = PrimitiveTypeNodeSpec.UNSIGNED_INT
+        fun unsignedLong() = PrimitiveTypeNodeSpec.UNSIGNED_LONG
+        fun ubyte() = PrimitiveTypeNodeSpec.UNSIGNED_BYTE
+        fun ushort() = PrimitiveTypeNodeSpec.UNSIGNED_SHORT
+        fun uint() = PrimitiveTypeNodeSpec.UNSIGNED_INT
+        fun ulong() = PrimitiveTypeNodeSpec.UNSIGNED_LONG
+        fun float() = PrimitiveTypeNodeSpec.FLOAT
+        fun double() = PrimitiveTypeNodeSpec.DOUBLE
+        fun char() = PrimitiveTypeNodeSpec.CHAR
+        fun boolean() = PrimitiveTypeNodeSpec.BOOLEAN
+        fun string() = ObjectTypeNodeSpec(NamespaceNodeSpec("String"))
     }
 }
 

@@ -26,8 +26,8 @@ class TypeTests : FlatTestSpec({
             TypeSpec.of("ubyte") shouldBe PrimitiveTypeSpec.UNSIGNED_BYTE
         }
 
-        it("should return UNSIGNED_SHORT for 'ushorts'") {
-            TypeSpec.of("ushorts") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
+        it("should return UNSIGNED_SHORT for 'ushort'") {
+            TypeSpec.of("ushort") shouldBe PrimitiveTypeSpec.UNSIGNED_SHORT
         }
 
         it("should return UNSIGNED_INT for 'uint'") {
@@ -42,8 +42,8 @@ class TypeTests : FlatTestSpec({
             TypeSpec.of("float") shouldBe PrimitiveTypeSpec.FLOAT
         }
 
-        it("should return DOUBLE for 'doubles'") {
-            TypeSpec.of("doubles") shouldBe PrimitiveTypeSpec.DOUBLE
+        it("should return DOUBLE for 'double'") {
+            TypeSpec.of("double") shouldBe PrimitiveTypeSpec.DOUBLE
         }
 
         it("should return CHAR for 'char'") {

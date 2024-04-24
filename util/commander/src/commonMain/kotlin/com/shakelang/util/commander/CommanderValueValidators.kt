@@ -92,7 +92,7 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a doubles
+     * Check if the given [value] is a double
      *
      * Accepts:
      * - All numbers (positive and negative)
@@ -101,13 +101,13 @@ object CommanderValueValidators {
      * - NaN
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a doubles
+     * @throws ValueValidationException If the value is not a double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a doubles")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a double")
     }
 
     /**
@@ -352,21 +352,21 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a positive doubles
+     * Check if the given [value] is a positive double
      *
      * Accepts:
      * - Numbers between 0 and Infinity
      * - E-Notation
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a positive doubles
+     * @throws ValueValidationException If the value is not a positive double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isPositiveDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
-        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
     }
 
     /**
@@ -474,21 +474,21 @@ object CommanderValueValidators {
     }
 
     /**
-     * Check if the given [value] is a negative doubles
+     * Check if the given [value] is a negative double
      *
      * Accepts:
      * - Numbers between -Infinity and 0
      * - E-Notation
      *
      * @param value The value to check
-     * @throws ValueValidationException If the value is not a negative doubles
+     * @throws ValueValidationException If the value is not a negative double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isNegativeDouble(value: String?) {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
-        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
     }
 
     /**
@@ -578,7 +578,7 @@ object CommanderValueValidators {
     val isFloat: CommanderValueValidator = CommanderValueValidator.of(::isFloat)
 
     /**
-     * Check if the given value is a doubles
+     * Check if the given value is a double
      *
      * Accepts:
      * - All numbers (positive and negative)
@@ -586,7 +586,7 @@ object CommanderValueValidators {
      * - Infinity
      * - NaN
      *
-     * @throws ValueValidationException If the value is not a doubles
+     * @throws ValueValidationException If the value is not a double
      * @since 0.1.0
      * @version 0.1.0
      * @see isDouble
@@ -785,13 +785,13 @@ object CommanderValueValidators {
     val isPositiveFloat: CommanderValueValidator = CommanderValueValidator.of(::isPositiveFloat)
 
     /**
-     * Check if the given value is a positive doubles
+     * Check if the given value is a positive double
      *
      * Accepts:
      * - Numbers between zero and positive Infinity
      * - E-Notation
      *
-     * @throws ValueValidationException If the value is not a positive doubles
+     * @throws ValueValidationException If the value is not a positive double
      * @since 0.1.0
      * @version 0.1.0
      * @see isPositiveDouble
@@ -879,13 +879,13 @@ object CommanderValueValidators {
     val isNegativeFloat: CommanderValueValidator = CommanderValueValidator.of(::isNegativeFloat)
 
     /**
-     * Check if the given value is a negative doubles
+     * Check if the given value is a negative double
      *
      * Accepts:
      * - Numbers between negative Infinity and 0
      * - E-Notation
      *
-     * @throws ValueValidationException If the value is not a negative doubles
+     * @throws ValueValidationException If the value is not a negative double
      * @since 0.1.0
      * @version 0.1.0
      * @see isNegativeDouble

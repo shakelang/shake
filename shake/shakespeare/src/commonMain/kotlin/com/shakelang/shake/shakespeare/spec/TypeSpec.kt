@@ -12,6 +12,25 @@ interface TypeSpec : AbstractSpec {
     override fun generate(ctx: GenerationContext): String
 
     companion object {
+
+        fun byte() = PrimitiveTypeSpec.BYTE
+        fun shorts() = PrimitiveTypeSpec.SHORT
+        fun int() = PrimitiveTypeSpec.INT
+        fun long() = PrimitiveTypeSpec.LONG
+        fun unsignedByte() = PrimitiveTypeSpec.UNSIGNED_BYTE
+        fun unsignedShort() = PrimitiveTypeSpec.UNSIGNED_SHORT
+        fun unsignedInt() = PrimitiveTypeSpec.UNSIGNED_INT
+        fun unsignedLong() = PrimitiveTypeSpec.UNSIGNED_LONG
+        fun ubyte() = PrimitiveTypeSpec.UNSIGNED_BYTE
+        fun ushort() = PrimitiveTypeSpec.UNSIGNED_SHORT
+        fun uint() = PrimitiveTypeSpec.UNSIGNED_INT
+        fun ulong() = PrimitiveTypeSpec.UNSIGNED_LONG
+        fun float() = PrimitiveTypeSpec.FLOAT
+        fun double() = PrimitiveTypeSpec.DOUBLE
+        fun char() = PrimitiveTypeSpec.CHAR
+        fun boolean() = PrimitiveTypeSpec.BOOLEAN
+        fun string() = ObjectTypeSpec("String")
+
         fun of(type: String): TypeSpec {
             return when (type) {
                 "byte" -> PrimitiveTypeSpec.BYTE
@@ -19,11 +38,11 @@ interface TypeSpec : AbstractSpec {
                 "int" -> PrimitiveTypeSpec.INT
                 "long" -> PrimitiveTypeSpec.LONG
                 "ubyte" -> PrimitiveTypeSpec.UNSIGNED_BYTE
-                "ushorts" -> PrimitiveTypeSpec.UNSIGNED_SHORT
+                "ushort" -> PrimitiveTypeSpec.UNSIGNED_SHORT
                 "uint" -> PrimitiveTypeSpec.UNSIGNED_INT
                 "ulong" -> PrimitiveTypeSpec.UNSIGNED_LONG
                 "float" -> PrimitiveTypeSpec.FLOAT
-                "doubles" -> PrimitiveTypeSpec.DOUBLE
+                "double" -> PrimitiveTypeSpec.DOUBLE
                 "char" -> PrimitiveTypeSpec.CHAR
                 "boolean" -> PrimitiveTypeSpec.BOOLEAN
                 else -> ObjectTypeSpec(NamespaceSpec(*type.split(".").toTypedArray()))

@@ -11,7 +11,6 @@ public = true
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
 }
 
 kotlin {

@@ -93,14 +93,14 @@ class ShakeCharacterLiteralNode(map: PositionMap, valueToken: ShakeToken) : Shak
 }
 
 /**
- * Node for a doubles literal
+ * Node for a double literal
  */
 class ShakeFloatLiteralNode(map: PositionMap, valueToken: ShakeToken) : ShakeLiteralNode(map, valueToken) {
 
     /**
-     * The value of the doubles literal
+     * The value of the double literal
      */
-    val value: Double = valueToken.value?.toDouble() ?: throw Exception("Value of doubles token is null")
+    val value: Double = valueToken.value?.toDouble() ?: throw Exception("Value of double token is null")
 
     override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value)
 

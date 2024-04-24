@@ -7,7 +7,6 @@ import conventions.useKotest
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
 }
 
 group = projectGroup("util.testlib")

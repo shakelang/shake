@@ -538,16 +538,16 @@ open class ShakeASTProcessor {
     }
 
     private fun visitForNode(scope: CreationShakeScope, n: ShakeForNode): CreationShakeFor {
-        val init = visitStatement(scope, n.declaration)
+        val init = visitStatement(scope, n.init)
         val condition = visitBoolean(scope, n.condition)
-        val update = visitStatement(scope, n.round)
+        val update = visitStatement(scope, n.update)
         val body = visitTree(scope, n.body)
         return CreationShakeFor(init, condition, update, body)
     }
 
     private fun visitIfNode(scope: CreationShakeScope, n: ShakeIfNode): CreationShakeIf {
         val condition = visitBoolean(scope, n.condition)
-        val body = visitTree(scope, n.body)
+        val body = visitTree(scope, n.thenBody)
         if (n.elseBody != null) {
             val elseBody = visitTree(scope, n.elseBody!!)
             return CreationShakeIf(condition, body, elseBody)

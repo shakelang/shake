@@ -679,22 +679,22 @@ sealed class ConstantPoolEntry {
     }
 
     /**
-     * A DoubleConstant is a constant pool entry that contains a doubles
+     * A DoubleConstant is a constant pool entry that contains a double
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#doubles-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double-constant)
      *
-     * @param value the doubles value of the entry
+     * @param value the double value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
      * @version 0.1.0
      *
      * @constructor creates a new DoubleConstant
-     * @param value the doubles value of the entry
+     * @param value the double value of the entry
      */
     class DoubleConstant(
 
         /**
-         * The doubles value of the entry
+         * The double value of the entry
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -703,8 +703,8 @@ sealed class ConstantPoolEntry {
     ) : ConstantPoolEntry() {
 
         /**
-         * Get a string representation of the doubles constant
-         * @return a string representation of the doubles constant
+         * Get a string representation of the double constant
+         * @return a string representation of the double constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -713,8 +713,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Dump the doubles constant to the given [stream]
-         * @param stream the stream to dump the doubles constant to
+         * Dump the double constant to the given [stream]
+         * @param stream the stream to dump the double constant to
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -724,9 +724,9 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Check if the doubles constant is equal to the given [other] object
-         * @param other the object to check if it is equal to the doubles constant
-         * @return true if the doubles constant is equal to the given [other] object
+         * Check if the double constant is equal to the given [other] object
+         * @param other the object to check if it is equal to the double constant
+         * @return true if the double constant is equal to the given [other] object
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -740,8 +740,8 @@ sealed class ConstantPoolEntry {
         }
 
         /**
-         * Get the hash code of the doubles constant
-         * @return the hash code of the doubles constant
+         * Get the hash code of the double constant
+         * @return the hash code of the double constant
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -754,8 +754,8 @@ sealed class ConstantPoolEntry {
             /**
              * Create a new DoubleConstant from the given [stream] without
              * reading the identifier byte
-             * @param stream the stream to create the doubles constant from
-             * @return the created doubles constant
+             * @param stream the stream to create the double constant from
+             * @return the created double constant
              * @since 0.1.0
              * @version 0.1.0
              */
@@ -765,8 +765,8 @@ sealed class ConstantPoolEntry {
 
             /**
              * Create a new DoubleConstant from the given [stream]
-             * @param stream the stream to create the doubles constant from
-             * @return the created doubles constant
+             * @param stream the stream to create the double constant from
+             * @return the created double constant
              * @since 0.1.0
              * @version 0.1.0
              */

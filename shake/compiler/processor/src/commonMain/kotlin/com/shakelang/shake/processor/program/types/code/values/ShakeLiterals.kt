@@ -1,34 +1,34 @@
 package com.shakelang.shake.processor.program.types.code.values
 
 /**
- * This interface describes a doubles literal
+ * This interface describes a double literal
  */
 interface ShakeDoubleLiteral : ShakeValue {
 
     /**
-     * The doubles value of the literal
+     * The double value of the literal
      */
     val value: Double
 
     companion object {
 
         /**
-         * The maximum value of a doubles
+         * The maximum value of a double
          */
         const val MAX_VALUE = Double.MAX_VALUE
 
         /**
-         * The minimum value of a doubles
+         * The minimum value of a double
          */
         const val MIN_VALUE = Double.MIN_VALUE
 
         /**
-         * The positive infinity value of a doubles
+         * The positive infinity value of a double
          */
         const val POSITIVE_INFINITY = Double.POSITIVE_INFINITY
 
         /**
-         * The negative infinity value of a doubles
+         * The negative infinity value of a double
          */
         const val NEGATIVE_INFINITY = Double.NEGATIVE_INFINITY
     }

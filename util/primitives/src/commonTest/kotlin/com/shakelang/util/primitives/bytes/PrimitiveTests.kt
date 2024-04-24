@@ -56,7 +56,7 @@ class PrimitiveTests : FreeSpec(
             bytes[3] shouldBe 0x33u.toByte()
         }
 
-        "doubles to bytes" {
+        "double to bytes" {
             val d = Double.fromBits(0x3ff3333333333333)
             val bytes = d.toBytes()
             bytes.size shouldBe 8

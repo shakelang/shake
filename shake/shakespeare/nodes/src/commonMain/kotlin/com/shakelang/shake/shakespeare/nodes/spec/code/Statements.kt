@@ -38,6 +38,13 @@ interface StatementNodeSpec : AbstractNodeSpec, StatementSpec {
             is IfSpec -> IfNodeSpec.of(spec)
             else -> throw IllegalArgumentException("Unknown statement spec: $spec")
         }
+
+        fun of(spec: VariableDeclarationSpec) = VariableDeclarationNodeSpec.of(spec)
+        fun of(spec: WhileSpec) = WhileNodeSpec.of(spec)
+        fun of(spec: DoWhileSpec) = DoWhileNodeSpec.of(spec)
+        fun of(spec: ForSpec) = ForNodeSpec.of(spec)
+        fun of(spec: IfSpec) = IfNodeSpec.of(spec)
+        fun of(spec: ReturnSpec) = ReturnNodeSpec.of(spec)
     }
 }
 
@@ -52,7 +59,7 @@ open class VariableDeclarationNodeSpec(
     name: String,
     type: TypeNodeSpec?,
     value: ValueNodeSpec?,
-    isVal: Boolean = true,
+    isVal: Boolean = false,
 ) : VariableDeclarationSpec(name, type, value, isVal), StatementNodeSpec {
 
     override val type get() = super.type as TypeNodeSpec?
@@ -78,12 +85,11 @@ open class VariableDeclarationNodeSpec(
             type = this.type!!.dump(ctx, nctx)
         }
 
-        nctx.space()
-
         var assignToken: ShakeToken? = null
         var value: ShakeValuedNode? = null
 
         if (this.value != null) {
+            nctx.space()
             assignToken = nctx.createToken(ShakeTokenType.ASSIGN)
             nctx.space()
             value = this.value!!.dump(ctx, nctx)
@@ -101,15 +107,40 @@ open class VariableDeclarationNodeSpec(
     }
 
     companion object {
-        fun of(spec: VariableDeclarationSpec) = VariableDeclarationNodeSpec(
-            spec.name,
-            if (spec.type != null) TypeNodeSpec.of(spec.type!!) else null,
-            if (spec.value != null) ValueNodeSpec.of(spec.value!!) else null,
-            spec.isVal,
-        )
+        fun of(spec: VariableDeclarationSpec) = if (spec is VariableDeclarationNodeSpec) {
+            spec
+        } else {
+            VariableDeclarationNodeSpec(
+                spec.name,
+                if (spec.type != null) TypeNodeSpec.of(spec.type!!) else null,
+                if (spec.value != null) ValueNodeSpec.of(spec.value!!) else null,
+                spec.isVal,
+            )
+        }
     }
 }
 
+private class Tuple4<A, B, C, D>(val first: A, val second: B, val third: C, val fourth: D) {
+    operator fun component1() = first
+    operator fun component2() = second
+    operator fun component3() = third
+    operator fun component4() = fourth
+}
+
+private fun statementBody(
+    nctx: NodeContext,
+    ctx: GenerationContext,
+    bodySpec: CodeNodeSpec,
+    conditionSpec: ValueNodeSpec,
+): Tuple4<ShakeToken, ShakeValuedNode, ShakeToken, ShakeBlockNode> {
+    nctx.space()
+    val lp = nctx.createToken(ShakeTokenType.LPAREN)
+    val condition = conditionSpec.dump(ctx, nctx)
+    val rp = nctx.createToken(ShakeTokenType.RPAREN)
+    nctx.space()
+    val body = bodySpec.dump(ctx, nctx)
+    return Tuple4(lp, condition, rp, body)
+}
 open class WhileNodeSpec(
     condition: ValueNodeSpec,
     body: CodeNodeSpec,
@@ -120,19 +151,19 @@ open class WhileNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeWhileNode {
         val whileToken = nctx.createToken(ShakeTokenType.KEYWORD_WHILE)
-        val lp = nctx.createToken(ShakeTokenType.LPAREN)
-        val condition = condition.dump(ctx, nctx)
-        val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        nctx.space()
-        val body = body.dump(ctx, nctx)
+        val (lp, condition, rp, body) = statementBody(nctx, ctx, body, condition)
         return ShakeWhileNode(nctx.map, body, condition, whileToken, lp, rp)
     }
 
     companion object {
-        fun of(spec: WhileSpec) = WhileNodeSpec(
-            ValueNodeSpec.of(spec.condition),
-            CodeNodeSpec.of(spec.body),
-        )
+        fun of(spec: WhileSpec) = if (spec is WhileNodeSpec) {
+            spec
+        } else {
+            WhileNodeSpec(
+                ValueNodeSpec.of(spec.condition),
+                CodeNodeSpec.of(spec.body),
+            )
+        }
     }
 }
 
@@ -150,6 +181,7 @@ open class DoWhileNodeSpec(
         val body = body.dump(ctx, nctx)
         nctx.space()
         val whileToken = nctx.createToken(ShakeTokenType.KEYWORD_WHILE, "while")
+        nctx.space()
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
         val condition = condition.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
@@ -157,10 +189,14 @@ open class DoWhileNodeSpec(
     }
 
     companion object {
-        fun of(spec: DoWhileSpec) = DoWhileNodeSpec(
-            CodeNodeSpec.of(spec.body),
-            ValueNodeSpec.of(spec.condition),
-        )
+        fun of(spec: DoWhileSpec) = if (spec is DoWhileNodeSpec) {
+            spec
+        } else {
+            DoWhileNodeSpec(
+                CodeNodeSpec.of(spec.body),
+                ValueNodeSpec.of(spec.condition),
+            )
+        }
     }
 }
 
@@ -178,11 +214,14 @@ open class ForNodeSpec(
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeForNode {
         val forToken = nctx.createToken(ShakeTokenType.KEYWORD_FOR)
+        nctx.space()
         val lp = nctx.createToken(ShakeTokenType.LPAREN)
         val init = init.dump(ctx, nctx)
         val semicolon1 = nctx.createToken(ShakeTokenType.SEMICOLON)
+        nctx.space()
         val condition = condition.dump(ctx, nctx)
         val semicolon2 = nctx.createToken(ShakeTokenType.SEMICOLON)
+        nctx.space()
         val update = update.dump(ctx, nctx)
         val rp = nctx.createToken(ShakeTokenType.RPAREN)
         nctx.space()
@@ -202,12 +241,16 @@ open class ForNodeSpec(
     }
 
     companion object {
-        fun of(spec: ForSpec) = ForNodeSpec(
-            StatementNodeSpec.of(spec.init),
-            ValueNodeSpec.of(spec.condition),
-            StatementNodeSpec.of(spec.update),
-            CodeNodeSpec.of(spec.body),
-        )
+        fun of(spec: ForSpec) = if (spec is ForNodeSpec) {
+            spec
+        } else {
+            ForNodeSpec(
+                StatementNodeSpec.of(spec.init),
+                ValueNodeSpec.of(spec.condition),
+                StatementNodeSpec.of(spec.update),
+                CodeNodeSpec.of(spec.body),
+            )
+        }
     }
 }
 
@@ -218,16 +261,12 @@ open class IfNodeSpec(
 ) : IfSpec(condition, body, elseBody), StatementNodeSpec {
 
     override val condition get() = super.condition as ValueNodeSpec
-    override val body get() = super.body as CodeNodeSpec
+    override val thenBody get() = super.thenBody as CodeNodeSpec
     override val elseBody get() = super.elseBody as CodeNodeSpec?
 
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeIfNode {
         val ifToken = nctx.createToken(ShakeTokenType.KEYWORD_IF)
-        val lp = nctx.createToken(ShakeTokenType.LPAREN)
-        val condition = condition.dump(ctx, nctx)
-        val rp = nctx.createToken(ShakeTokenType.RPAREN)
-        nctx.space()
-        val body = body.dump(ctx, nctx)
+        val (lp, condition, rp, body) = statementBody(nctx, ctx, thenBody, condition)
         if (elseBody != null) {
             nctx.space()
             val elseToken = nctx.createToken(ShakeTokenType.KEYWORD_ELSE)
@@ -239,11 +278,15 @@ open class IfNodeSpec(
     }
 
     companion object {
-        fun of(spec: IfSpec) = IfNodeSpec(
-            ValueNodeSpec.of(spec.condition),
-            CodeNodeSpec.of(spec.body),
-            spec.elseBody?.let { CodeNodeSpec.of(it) },
-        )
+        fun of(spec: IfSpec) = if (spec is IfNodeSpec) {
+            spec
+        } else {
+            IfNodeSpec(
+                ValueNodeSpec.of(spec.condition),
+                CodeNodeSpec.of(spec.thenBody),
+                spec.elseBody?.let { CodeNodeSpec.of(it) },
+            )
+        }
     }
 }
 
@@ -267,7 +310,11 @@ open class ReturnNodeSpec(
     }
 
     companion object {
-        fun of(spec: ReturnSpec) = ReturnNodeSpec(spec.value?.let { ValueNodeSpec.of(it) })
+        fun of(spec: ReturnSpec) = if (spec is ReturnNodeSpec) {
+            spec
+        } else {
+            ReturnNodeSpec(spec.value?.let { ValueNodeSpec.of(it) })
+        }
     }
 }
 

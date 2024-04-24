@@ -78,7 +78,7 @@ class ConstantPoolTests : FreeSpec(
             pool.isFloat(1) shouldBe true
         }
 
-        "is doubles" {
+        "is double" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -197,7 +197,7 @@ class ConstantPoolTests : FreeSpec(
             }
         }
 
-        "get doubles" {
+        "get double" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -315,7 +315,7 @@ class ConstantPoolTests : FreeSpec(
             pool.findFloat(2f) shouldBe null
         }
 
-        "find doubles" {
+        "find double" {
             val pool = ConstantPool(
                 listOf(
                     ConstantPoolEntry.Utf8Constant("test"),

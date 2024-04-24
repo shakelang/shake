@@ -13,7 +13,7 @@ class JsonParserTests : FreeSpec(
             parsed.toJsonPrimitive().toInt().value shouldBe 42
         }
 
-        "parse doubles" {
+        "parse double" {
             val parsed = TestUtilities.parse("JsonParserTests#testParseDouble()", "42.2")
             parsed.isJsonPrimitive() shouldBe true
             parsed.toJsonPrimitive().isDouble() shouldBe true

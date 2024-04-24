@@ -330,10 +330,10 @@ interface TypeDescriptor {
     }
 
     /**
-     * A [DoubleType] represents the primitive type `doubles` in shake
+     * A [DoubleType] represents the primitive type `double` in shake
      * It has the descriptor `D` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#doubles)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -717,7 +717,7 @@ interface TypeDescriptor {
         val FLOAT = FloatType
 
         /**
-         * A [DoubleType] represents the primitive type `doubles` in shake
+         * A [DoubleType] represents the primitive type `double` in shake
          * It has the descriptor `D` and a size of 8
          *
          * This is a shortcut for [TypeDescriptor.DoubleType]
