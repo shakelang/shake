@@ -20,12 +20,18 @@ class NamespaceNodeSpec(
             val dot = nctx.createToken(ShakeTokenType.DOT)
             node = ShakeNamespaceNode(
                 nctx.map,
-                dot,
-                node,
                 nctx.createToken(ShakeTokenType.IDENTIFIER, it),
+                node,
+                dot,
             )
         }
 
         return node
+    }
+
+    companion object {
+        fun of(name: NamespaceSpec): NamespaceNodeSpec {
+            return NamespaceNodeSpec(*name.name)
+        }
     }
 }

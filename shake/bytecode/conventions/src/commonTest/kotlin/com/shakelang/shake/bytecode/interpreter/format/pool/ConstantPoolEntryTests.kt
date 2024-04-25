@@ -225,23 +225,23 @@ class ConstantPoolEntryTests : FreeSpec(
             constant1.hashCode() shouldBe constant4.hashCode()
         }
 
-        "doubles constant to bytes" {
+        "double constant to bytes" {
             val constant = ConstantPoolEntry.DoubleConstant(1.0)
             val bytes = constant.dump()
             bytes shouldBe byteArrayOf(7, *(1.0.toBits().toBytes()))
         }
 
-        "doubles constant from bytes ignore identifier" {
+        "double constant from bytes ignore identifier" {
             val constant = ConstantPoolEntry.DoubleConstant.fromStreamIgnoreIdentifier(byteArrayOf(*(1.0.toBytes())).dataStream())
             constant.value shouldBe 1.0
         }
 
-        "doubles constant from bytes" {
+        "double constant from bytes" {
             val constant = ConstantPoolEntry.DoubleConstant.fromStream(byteArrayOf(7, *(1.0.toBytes())).dataStream())
             constant.value shouldBe 1.0
         }
 
-        "doubles constant equals" {
+        "double constant equals" {
             val constant1 = ConstantPoolEntry.DoubleConstant(1.0)
             val constant2 = ConstantPoolEntry.DoubleConstant(1.0)
             val constant3 = ConstantPoolEntry.DoubleConstant(2.0)
@@ -251,7 +251,7 @@ class ConstantPoolEntryTests : FreeSpec(
             constant1 shouldBe constant4
         }
 
-        "doubles constant hashcode" {
+        "double constant hashcode" {
             val constant1 = ConstantPoolEntry.DoubleConstant(1.0)
             val constant2 = ConstantPoolEntry.DoubleConstant(1.0)
             val constant3 = ConstantPoolEntry.DoubleConstant(2.0)

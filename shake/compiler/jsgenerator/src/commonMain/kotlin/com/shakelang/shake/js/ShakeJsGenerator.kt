@@ -80,7 +80,7 @@ class ShakeJsGenerator {
     }
 
     fun visitVariableDeclaration(n: ShakeVariableDeclaration): JsDeclaration {
-        if (n.isFinal) {
+        if (n.isVal) {
             if (n.initialValue == null) throw IllegalStateException("Final variable must have an assignment")
             return JsConstantDeclaration(n.name, visitValue(n.initialValue!!).toValue())
         }

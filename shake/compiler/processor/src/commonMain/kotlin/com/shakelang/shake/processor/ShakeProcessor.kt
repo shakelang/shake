@@ -110,7 +110,7 @@ open class ShakeASTProcessor {
         return when (value) {
             // Literals
             is ShakeIntegerLiteralNode -> visitIntegerNode(scope, value)
-            is ShakeDoubleLiteralNode -> visitDoubleNode(scope, value)
+            is ShakeFloatLiteralNode -> visitDoubleNode(scope, value)
             is ShakeStringLiteralNode -> visitStringNode(scope, value)
             is ShakeTrueLiteralNode -> visitLogicalTrueNode(scope, value)
             is ShakeFalseLiteralNode -> visitLogicalFalseNode(scope, value)
@@ -193,7 +193,7 @@ open class ShakeASTProcessor {
         }
     }
 
-    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeDoubleLiteralNode): CreationShakeDoubleLiteral {
+    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeFloatLiteralNode): CreationShakeDoubleLiteral {
         return CreationShakeDoubleLiteral(scope.project, n.value)
     }
 
@@ -538,16 +538,16 @@ open class ShakeASTProcessor {
     }
 
     private fun visitForNode(scope: CreationShakeScope, n: ShakeForNode): CreationShakeFor {
-        val init = visitStatement(scope, n.declaration)
+        val init = visitStatement(scope, n.init)
         val condition = visitBoolean(scope, n.condition)
-        val update = visitStatement(scope, n.round)
+        val update = visitStatement(scope, n.update)
         val body = visitTree(scope, n.body)
         return CreationShakeFor(init, condition, update, body)
     }
 
     private fun visitIfNode(scope: CreationShakeScope, n: ShakeIfNode): CreationShakeIf {
         val condition = visitBoolean(scope, n.condition)
-        val body = visitTree(scope, n.body)
+        val body = visitTree(scope, n.thenBody)
         if (n.elseBody != null) {
             val elseBody = visitTree(scope, n.elseBody!!)
             return CreationShakeIf(condition, body, elseBody)
@@ -624,7 +624,7 @@ open class ShakeASTProcessor {
     }
 
     private fun visitReturnNode(scope: CreationShakeScope, n: ShakeReturnNode): CreationShakeReturn {
-        val value = visitValue(scope, n.value)
+        val value = n.value?.let { visitValue(scope, it) }
         return CreationShakeReturn(value)
     }
 }

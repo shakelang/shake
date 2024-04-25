@@ -12,10 +12,224 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
 import com.shakelang.shake.shakespeare.spec.NamespaceSpec
 
 /**
- * A [ValuedAssignmentSpec] is a StatementSpec and a ValueSpec at the same time
+ * A [ValuedStatementSpec] is a StatementSpec and a ValueSpec at the same time
  * @since 0.1.0
  */
-interface ValuedAssignmentSpec : StatementSpec, ValueSpec
+interface ValuedStatementSpec : StatementSpec, ValueSpec
+
+/**
+ * An abstract assignment spec
+ * Superclass for all assignment specs
+ * --> [VariableAssignmentSpec]
+ * --> [VariableAdditionAssignmentSpec]
+ * --> [VariableSubtractionAssignmentSpec]
+ * --> [VariableMultiplicationAssignmentSpec]
+ * --> [VariableDivisionAssignmentSpec]
+ * --> [VariableModuloAssignmentSpec]
+ * --> [VariablePowerAssignmentSpec]
+ * --> [VariableBitwiseAndAssignmentSpec]
+ * --> [VariableBitwiseOrAssignmentSpec]
+ * --> [VariableBitwiseXorAssignmentSpec]
+ */
+abstract class AbstractAssignmentSpec(
+    open val name: NamespaceSpec,
+    open val value: ValueSpec,
+) : ValuedStatementSpec {
+
+    /**
+     * The builder for the [AbstractAssignmentSpec]
+     */
+    abstract class AbstractAssignmentSpecBuilder<THIS : AbstractAssignmentSpecBuilder<THIS>>
+    internal constructor(
+
+        /**
+         * The name of the variable
+         */
+        var name: NamespaceSpec? = null,
+
+        /**
+         * The value to assign to the variable
+         */
+        var value: ValueSpec? = null,
+    ) {
+
+        /**
+         * Gets the instance of the builder
+         * @return this as THIS
+         */
+        abstract fun getThis(): THIS
+
+        /**
+         * Sets the name of the variable
+         * @param name The name of the variable
+         * @return The builder
+         */
+        fun name(name: NamespaceSpec): THIS {
+            this.name = name
+            return getThis()
+        }
+
+        /**
+         * Sets the name of the variable
+         * @param name The name of the variable
+         * @return The builder
+         */
+        fun name(vararg name: String): THIS {
+            this.name = NamespaceSpec(*name)
+            return getThis()
+        }
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: ValueSpec): THIS {
+            this.value = value
+            return getThis()
+        }
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         * @deprecated WARNING: This function interprets the value as code, not as String literal!
+         */
+        fun value(value: String): THIS {
+            this.value = ValueSpec.of(value)
+            return getThis()
+        }
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Boolean) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Byte) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Short) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Int) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Long) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Float) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Double) = value(ValueSpec.literal(value))
+
+        /**
+         * Sets the value to assign to the variable
+         * @param value The value to assign to the variable
+         * @return The builder
+         */
+        fun value(value: Char) = value(ValueSpec.literal(value))
+
+        /**
+         * Builds the [VariableAssignmentSpec]
+         *
+         * @return The [VariableAssignmentSpec]
+         */
+        abstract fun build(): AbstractAssignmentSpec
+    }
+}
+
+/**
+ * An abstract modification spec
+ * Superclass for all modification specs
+ * --> [VariableIncrementBeforeSpec]
+ * --> [VariableIncrementAfterSpec]
+ * --> [VariableDecrementBeforeSpec]
+ * --> [VariableDecrementAfterSpec]
+ */
+abstract class AbstractModificationSpec(
+
+    /**
+     * The name of the variable
+     */
+    open val name: NamespaceSpec,
+) : ValuedStatementSpec {
+
+    /**
+     * The builder for the [AbstractModificationSpec]
+     *
+     * @since 0.1.0
+     * @constructor Creates a [AbstractModificationSpecBuilder]
+     */
+    abstract class AbstractModificationSpecBuilder<THIS : AbstractModificationSpecBuilder<THIS>>
+    internal constructor(
+
+        /**
+         * The name of the variable
+         */
+        var name: NamespaceSpec? = null,
+    ) {
+
+        /**
+         * Gets the instance of the builder
+         * @return this as THIS
+         */
+        abstract fun getThis(): THIS
+
+        /**
+         * Sets the name of the variable
+         * @param name The name of the variable
+         * @return The builder
+         */
+        fun name(name: NamespaceSpec): THIS {
+            this.name = name
+            return getThis()
+        }
+
+        /**
+         * Sets the name of the variable
+         * @param name The name of the variable
+         * @return The builder
+         */
+        fun name(vararg name: String): THIS {
+            this.name = NamespaceSpec(*name)
+            return getThis()
+        }
+
+        /**
+         * Builds the [VariableAssignmentSpec]
+         *
+         * @return The [VariableAssignmentSpec]
+         */
+        abstract fun build(): AbstractModificationSpec
+    }
+}
 
 /**
  * A variable assignment assigns a value to a variable
@@ -29,9 +243,9 @@ interface ValuedAssignmentSpec : StatementSpec, ValueSpec
  * @constructor Creates a [VariableAssignmentSpec]
  */
 open class VariableAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableAssignmentSpec]
@@ -40,7 +254,19 @@ open class VariableAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name = $value"
+        return "${name.generate(ctx)} = ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -54,60 +280,20 @@ open class VariableAssignmentSpec(
      */
     open class VariableAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to assign to the variable
-         *
-         * @param value The value to assign to the variable
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to assign to the variable
-         *
-         * @param value The value to assign to the variable
-         * @return The builder
-         */
-        fun value(value: String): VariableAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableAssignmentSpec]
-         *
          * @return The [VariableAssignmentSpec]
          */
-        fun build(): VariableAssignmentSpec {
+        override fun build(): VariableAssignmentSpec {
             return VariableAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -138,9 +324,9 @@ open class VariableAssignmentSpec(
  * @constructor Creates a [VariableAdditionAssignmentSpec]
  */
 open class VariableAdditionAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableAdditionAssignmentSpec]
@@ -149,7 +335,19 @@ open class VariableAdditionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name += $value"
+        return "${name.generate(ctx)} += ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableAdditionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -163,60 +361,21 @@ open class VariableAdditionAssignmentSpec(
      */
     open class VariableAdditionAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableAdditionAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableAdditionAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableAdditionAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to add to the variable
-         *
-         * @param value The value to add to the variable
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableAdditionAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to add to the variable
-         *
-         * @param value The value to add to the variable
-         * @return The builder
-         */
-        fun value(value: String): VariableAdditionAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableAdditionAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableAdditionAssignmentSpec]
          *
          * @return The [VariableAdditionAssignmentSpec]
          */
-        fun build(): VariableAdditionAssignmentSpec {
+        override fun build(): VariableAdditionAssignmentSpec {
             return VariableAdditionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -247,9 +406,9 @@ open class VariableAdditionAssignmentSpec(
  * @constructor Creates a [VariableSubtractionAssignmentSpec]
  */
 open class VariableSubtractionAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableSubtractionAssignmentSpec]
@@ -258,7 +417,19 @@ open class VariableSubtractionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name -= $value"
+        return "${name.generate(ctx)} -= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableSubtractionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -272,60 +443,21 @@ open class VariableSubtractionAssignmentSpec(
      */
     open class VariableSubtractionAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableSubtractionAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableSubtractionAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableSubtractionAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to subtract from the variable
-         *
-         * @param value The value to subtract from the variable
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableSubtractionAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to subtract from the variable
-         *
-         * @param value The value to subtract from the variable
-         * @return The builder
-         */
-        fun value(value: String): VariableSubtractionAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableSubtractionAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableSubtractionAssignmentSpec]
          *
          * @return The [VariableSubtractionAssignmentSpec]
          */
-        fun build(): VariableSubtractionAssignmentSpec {
+        override fun build(): VariableSubtractionAssignmentSpec {
             return VariableSubtractionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -356,9 +488,9 @@ open class VariableSubtractionAssignmentSpec(
  * @constructor Creates a [VariableMultiplicationAssignmentSpec]
  */
 open class VariableMultiplicationAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableMultiplicationAssignmentSpec]
@@ -367,7 +499,19 @@ open class VariableMultiplicationAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name *= $value"
+        return "${name.generate(ctx)} *= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableMultiplicationAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -381,60 +525,21 @@ open class VariableMultiplicationAssignmentSpec(
      */
     open class VariableMultiplicationAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableMultiplicationAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableMultiplicationAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableMultiplicationAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to multiply the variable with
-         *
-         * @param value The value to multiply the variable with
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableMultiplicationAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to multiply the variable with
-         *
-         * @param value The value to multiply the variable with
-         * @return The builder
-         */
-        fun value(value: String): VariableMultiplicationAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableMultiplicationAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableMultiplicationAssignmentSpec]
          *
          * @return The [VariableMultiplicationAssignmentSpec]
          */
-        fun build(): VariableMultiplicationAssignmentSpec {
+        override fun build(): VariableMultiplicationAssignmentSpec {
             return VariableMultiplicationAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -465,9 +570,9 @@ open class VariableMultiplicationAssignmentSpec(
  * @constructor Creates a [VariableDivisionAssignmentSpec]
  */
 open class VariableDivisionAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableDivisionAssignmentSpec]
@@ -476,7 +581,19 @@ open class VariableDivisionAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name /= $value"
+        return "${name.generate(ctx)} /= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDivisionAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -490,60 +607,21 @@ open class VariableDivisionAssignmentSpec(
      */
     open class VariableDivisionAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableDivisionAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableDivisionAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableDivisionAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to divide the variable by
-         *
-         * @param value The value to divide the variable by
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableDivisionAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to divide the variable by
-         *
-         * @param value The value to divide the variable by
-         * @return The builder
-         */
-        fun value(value: String): VariableDivisionAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableDivisionAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableDivisionAssignmentSpec]
          *
          * @return The [VariableDivisionAssignmentSpec]
          */
-        fun build(): VariableDivisionAssignmentSpec {
+        override fun build(): VariableDivisionAssignmentSpec {
             return VariableDivisionAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -574,9 +652,9 @@ open class VariableDivisionAssignmentSpec(
  * @constructor Creates a [VariableModuloAssignmentSpec]
  */
 open class VariableModuloAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableModuloAssignmentSpec]
@@ -585,7 +663,19 @@ open class VariableModuloAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name %= $value"
+        return "${name.generate(ctx)} %= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableModuloAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -599,60 +689,21 @@ open class VariableModuloAssignmentSpec(
      */
     open class VariableModuloAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableModuloAssignmentSpecBuilder>(
+        name,
+        value,
     ) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableModuloAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableModuloAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to calculate the modulo with
-         *
-         * @param value The value to calculate the modulo with
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableModuloAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to calculate the modulo with
-         *
-         * @param value The value to calculate the modulo with
-         * @return The builder
-         */
-        fun value(value: String): VariableModuloAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableModuloAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableModuloAssignmentSpec]
          *
          * @return The [VariableModuloAssignmentSpec]
          */
-        fun build(): VariableModuloAssignmentSpec {
+        override fun build(): VariableModuloAssignmentSpec {
             return VariableModuloAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -683,9 +734,9 @@ open class VariableModuloAssignmentSpec(
  * @constructor Creates a [VariablePowerAssignmentSpec]
  */
 open class VariablePowerAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariablePowerAssignmentSpec]
@@ -694,7 +745,19 @@ open class VariablePowerAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name **= $value"
+        return "${name.generate(ctx)} **= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariablePowerAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -708,60 +771,18 @@ open class VariablePowerAssignmentSpec(
      */
     class VariablePowerAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariablePowerAssignmentSpecBuilder>(name, value) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariablePowerAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariablePowerAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to calculate the power with
-         *
-         * @param value The value to calculate the power with
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariablePowerAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to calculate the power with
-         *
-         * @param value The value to calculate the power with
-         * @return The builder
-         */
-        fun value(value: String): VariablePowerAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariablePowerAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariablePowerAssignmentSpec]
          *
          * @return The [VariablePowerAssignmentSpec]
          */
-        fun build(): VariablePowerAssignmentSpec {
+        override fun build(): VariablePowerAssignmentSpec {
             return VariablePowerAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -792,9 +813,9 @@ open class VariablePowerAssignmentSpec(
  * @constructor Creates a [VariableBitwiseAndAssignmentSpec]
  */
 open class VariableBitwiseAndAssignmentSpec(
-    open val name: NamespaceSpec,
-    open val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableBitwiseAndAssignmentSpec]
@@ -803,7 +824,19 @@ open class VariableBitwiseAndAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name &= $value"
+        return "${name.generate(ctx)} &= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseAndAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -817,60 +850,18 @@ open class VariableBitwiseAndAssignmentSpec(
      */
     class VariableBitwiseAndAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableBitwiseAndAssignmentSpecBuilder>(name, value) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableBitwiseAndAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableBitwiseAndAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableBitwiseAndAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: String): VariableBitwiseAndAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableBitwiseAndAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableBitwiseAndAssignmentSpec]
          *
          * @return The [VariableBitwiseAndAssignmentSpec]
          */
-        fun build(): VariableBitwiseAndAssignmentSpec {
+        override fun build(): VariableBitwiseAndAssignmentSpec {
             return VariableBitwiseAndAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -901,9 +892,9 @@ open class VariableBitwiseAndAssignmentSpec(
  * @constructor Creates a [VariableBitwiseOrAssignmentSpec]
  */
 open class VariableBitwiseOrAssignmentSpec(
-    val name: NamespaceSpec,
-    val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableBitwiseOrAssignmentSpec]
@@ -912,7 +903,19 @@ open class VariableBitwiseOrAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name |= $value"
+        return "${name.generate(ctx)} |= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseOrAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -926,60 +929,18 @@ open class VariableBitwiseOrAssignmentSpec(
      */
     class VariableBitwiseOrAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableBitwiseOrAssignmentSpecBuilder>(name, value) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableBitwiseOrAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableBitwiseOrAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableBitwiseOrAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: String): VariableBitwiseOrAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableBitwiseOrAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableBitwiseOrAssignmentSpec]
          *
          * @return The [VariableBitwiseOrAssignmentSpec]
          */
-        fun build(): VariableBitwiseOrAssignmentSpec {
+        override fun build(): VariableBitwiseOrAssignmentSpec {
             return VariableBitwiseOrAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -1010,9 +971,9 @@ open class VariableBitwiseOrAssignmentSpec(
  * @constructor Creates a [VariableBitwiseXorAssignmentSpec]
  */
 open class VariableBitwiseXorAssignmentSpec(
-    val name: NamespaceSpec,
-    val value: ValueSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+    value: ValueSpec,
+) : AbstractAssignmentSpec(name, value) {
 
     /**
      * Generates the code for the [VariableBitwiseXorAssignmentSpec]
@@ -1021,7 +982,19 @@ open class VariableBitwiseXorAssignmentSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name ^= $value"
+        return "${name.generate(ctx)} ^= ${value.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableBitwiseXorAssignmentSpec) return false
+        if (name != other.name) return false
+        if (value != other.value) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return 31 * name.hashCode() + value.hashCode()
     }
 
     /**
@@ -1035,60 +1008,18 @@ open class VariableBitwiseXorAssignmentSpec(
      */
     class VariableBitwiseXorAssignmentSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-        var value: ValueSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+        value: ValueSpec? = null,
+    ) : AbstractAssignmentSpecBuilder<VariableBitwiseXorAssignmentSpecBuilder>(name, value) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableBitwiseXorAssignmentSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableBitwiseXorAssignmentSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: ValueSpec): VariableBitwiseXorAssignmentSpecBuilder {
-            this.value = value
-            return this
-        }
-
-        /**
-         * Sets the value to shift the bits to the left
-         *
-         * @param value The value to shift the bits to the left
-         * @return The builder
-         */
-        fun value(value: String): VariableBitwiseXorAssignmentSpecBuilder {
-            this.value = ValueSpec.of(value)
-            return this
-        }
+        override fun getThis(): VariableBitwiseXorAssignmentSpecBuilder = this
 
         /**
          * Builds the [VariableBitwiseXorAssignmentSpec]
          *
          * @return The [VariableBitwiseXorAssignmentSpec]
          */
-        fun build(): VariableBitwiseXorAssignmentSpec {
+        override fun build(): VariableBitwiseXorAssignmentSpec {
             return VariableBitwiseXorAssignmentSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 value ?: throw IllegalStateException("Value not set"),
@@ -1117,8 +1048,8 @@ open class VariableBitwiseXorAssignmentSpec(
  * @constructor Creates a [VariableIncrementBeforeSpec]
  */
 open class VariableIncrementBeforeSpec(
-    open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+) : AbstractModificationSpec(name) {
 
     /**
      * Generates the code for the [VariableIncrementBeforeSpec]
@@ -1127,7 +1058,18 @@ open class VariableIncrementBeforeSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "++$name"
+        return "++${name.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableIncrementBeforeSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1140,37 +1082,17 @@ open class VariableIncrementBeforeSpec(
      */
     open class VariableIncrementBeforeSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+    ) : AbstractModificationSpecBuilder<VariableIncrementBeforeSpecBuilder>(name) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableIncrementBeforeSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableIncrementBeforeSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
+        override fun getThis(): VariableIncrementBeforeSpecBuilder = this
 
         /**
          * Builds the [VariableIncrementBeforeSpec]
          *
          * @return The [VariableIncrementBeforeSpec]
          */
-        fun build(): VariableIncrementBeforeSpec {
+        override fun build(): VariableIncrementBeforeSpec {
             return VariableIncrementBeforeSpec(
                 name ?: throw IllegalStateException("Name not set"),
             )
@@ -1198,8 +1120,8 @@ open class VariableIncrementBeforeSpec(
  * @constructor Creates a [VariableIncrementAfterSpec]
  */
 open class VariableIncrementAfterSpec(
-    open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+) : AbstractModificationSpec(name) {
 
     /**
      * Generates the code for the [VariableIncrementAfterSpec]
@@ -1208,7 +1130,18 @@ open class VariableIncrementAfterSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name++"
+        return "${name.generate(ctx)}++"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableIncrementAfterSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1221,37 +1154,17 @@ open class VariableIncrementAfterSpec(
      */
     open class VariableIncrementAfterSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+    ) : AbstractModificationSpecBuilder<VariableIncrementAfterSpecBuilder>(name) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableIncrementAfterSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableIncrementAfterSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
+        override fun getThis(): VariableIncrementAfterSpecBuilder = this
 
         /**
          * Builds the [VariableIncrementAfterSpec]
          *
          * @return The [VariableIncrementAfterSpec]
          */
-        fun build(): VariableIncrementAfterSpec {
+        override fun build(): VariableIncrementAfterSpec {
             return VariableIncrementAfterSpec(
                 name ?: throw IllegalStateException("Name not set"),
             )
@@ -1279,8 +1192,8 @@ open class VariableIncrementAfterSpec(
  * @constructor Creates a [VariableDecrementBeforeSpec]
  */
 open class VariableDecrementBeforeSpec(
-    open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+) : AbstractModificationSpec(name) {
 
     /**
      * Generates the code for the [VariableDecrementBeforeSpec]
@@ -1289,7 +1202,18 @@ open class VariableDecrementBeforeSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "--$name"
+        return "--${name.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDecrementBeforeSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1302,37 +1226,17 @@ open class VariableDecrementBeforeSpec(
      */
     open class VariableDecrementBeforeSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+    ) : AbstractModificationSpecBuilder<VariableDecrementBeforeSpecBuilder>(name) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableDecrementBeforeSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableDecrementBeforeSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
+        override fun getThis(): VariableDecrementBeforeSpecBuilder = this
 
         /**
          * Builds the [VariableDecrementBeforeSpec]
          *
          * @return The [VariableDecrementBeforeSpec]
          */
-        fun build(): VariableDecrementBeforeSpec {
+        override fun build(): VariableDecrementBeforeSpec {
             return VariableDecrementBeforeSpec(
                 name ?: throw IllegalStateException("Name not set"),
             )
@@ -1360,8 +1264,8 @@ open class VariableDecrementBeforeSpec(
  * @constructor Creates a [VariableDecrementAfterSpec]
  */
 open class VariableDecrementAfterSpec(
-    open val name: NamespaceSpec,
-) : ValuedAssignmentSpec {
+    name: NamespaceSpec,
+) : AbstractModificationSpec(name) {
 
     /**
      * Generates the code for the [VariableDecrementAfterSpec]
@@ -1370,7 +1274,18 @@ open class VariableDecrementAfterSpec(
      * @return The generated code
      */
     override fun generate(ctx: GenerationContext): String {
-        return "$name--"
+        return "${name.generate(ctx)}--"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is VariableDecrementAfterSpec) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
     /**
@@ -1383,37 +1298,17 @@ open class VariableDecrementAfterSpec(
      */
     open class VariableDecrementAfterSpecBuilder
     internal constructor(
-        var name: NamespaceSpec? = null,
-    ) {
+        name: NamespaceSpec? = null,
+    ) : AbstractModificationSpecBuilder<VariableDecrementAfterSpecBuilder>(name) {
 
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: NamespaceSpec): VariableDecrementAfterSpecBuilder {
-            this.name = name
-            return this
-        }
-
-        /**
-         * Sets the name of the variable
-         *
-         * @param name The name of the variable
-         * @return The builder
-         */
-        fun name(name: String): VariableDecrementAfterSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
+        override fun getThis(): VariableDecrementAfterSpecBuilder = this
 
         /**
          * Builds the [VariableDecrementAfterSpec]
          *
          * @return The [VariableDecrementAfterSpec]
          */
-        fun build(): VariableDecrementAfterSpec {
+        override fun build(): VariableDecrementAfterSpec {
             return VariableDecrementAfterSpec(
                 name ?: throw IllegalStateException("Name not set"),
             )
@@ -1445,7 +1340,7 @@ open class VariableDecrementAfterSpec(
 open class FunctionCallSpec(
     open val name: NamespaceSpec,
     open val arguments: List<ValueSpec>,
-) : ValueSpec, StatementSpec {
+) : ValuedStatementSpec {
 
     /**
      * Generates the code for the [FunctionCallSpec]
@@ -1455,7 +1350,21 @@ open class FunctionCallSpec(
      */
     override fun generate(ctx: GenerationContext): String {
         val args = arguments.joinToString(", ") { it.generate(ctx) }
-        return "$name($args)"
+        return "${name.generate(ctx)}($args)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is FunctionCallSpec) return false
+        if (name != other.name) return false
+        if (arguments != other.arguments) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + arguments.hashCode()
+        return result
     }
 
     /**
@@ -1514,6 +1423,17 @@ open class FunctionCallSpec(
          */
         fun argument(argument: String): FunctionCallSpecBuilder {
             arguments.add(ValueSpec.of(argument))
+            return this
+        }
+
+        /**
+         * Adds multiple arguments to the function call
+         *
+         * @param arguments The arguments to add
+         * @return The builder
+         */
+        fun arguments(arguments: List<ValueSpec>): FunctionCallSpecBuilder {
+            this.arguments.addAll(arguments)
             return this
         }
 

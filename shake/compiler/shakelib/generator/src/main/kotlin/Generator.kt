@@ -19,7 +19,7 @@ fun main() {
                 "ulong" to "long",
                 "long" to "long",
                 "float" to "float",
-                "doubles" to "doubles",
+                "double" to "double",
             )
 
             val operations = listOf(
@@ -28,7 +28,7 @@ fun main() {
                 "times" to null,
                 "div" to null,
                 "rem" to null,
-                "pow" to "doubles",
+                "pow" to "double",
                 "band" to null,
                 "bor" to null,
                 "bxor" to null,

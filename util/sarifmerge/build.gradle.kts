@@ -3,7 +3,6 @@ import com.shakelang.util.changelog.resolveVersion
 import conventions.projectGroup
 
 plugins {
-    id("conventions.publishing")
     id("conventions.dokka")
     `kotlin-dsl`
 }

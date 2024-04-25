@@ -7,10 +7,10 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeReturnNode(
     map: PositionMap,
-    val value: ShakeValuedNode,
+    val value: ShakeValuedNode?,
     val returnToken: ShakeToken,
 ) : ShakeStatementNodeImpl(map) {
-    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value.json)
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "value" to value?.json)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true

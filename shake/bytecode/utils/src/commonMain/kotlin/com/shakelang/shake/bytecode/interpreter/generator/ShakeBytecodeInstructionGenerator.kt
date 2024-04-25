@@ -167,11 +167,11 @@ open class ShakeBytecodeInstructionGenerator(
     fun ipush(value: Float) = addBytes(listOf(Opcodes.IPUSH, *value.toRawBits().toBytes().toTypedArray()))
 
     /**
-     * Push a doubles to the stack
+     * Push a double to the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lpush)
      *
-     * @param value The doubles to push
+     * @param value The double to push
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.LPUSH
@@ -486,7 +486,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fadd() = addByte(Opcodes.FADD)
 
     /**
-     * Add the top two doubles on the stack
+     * Add the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dadd)
      *
@@ -645,7 +645,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fsub() = addByte(Opcodes.FSUB)
 
     /**
-     * Subtract the top two doubles on the stack
+     * Subtract the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dsub)
      *
@@ -804,7 +804,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fmul() = addByte(Opcodes.FMUL)
 
     /**
-     * Multiply the top two doubles on the stack
+     * Multiply the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dmul)
      *
@@ -963,7 +963,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fdiv() = addByte(Opcodes.FDIV)
 
     /**
-     * Divide the top two doubles on the stack
+     * Divide the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ddiv)
      *
@@ -1122,7 +1122,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fmod() = addByte(Opcodes.FMOD)
 
     /**
-     * Modulo the top two doubles on the stack
+     * Modulo the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dmod)
      *
@@ -1237,7 +1237,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fneg() = addByte(Opcodes.FNEG)
 
     /**
-     * Negate the top doubles on the stack
+     * Negate the top double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dneg)
      *
@@ -1987,7 +1987,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun finc() = addByte(Opcodes.FINC)
 
     /**
-     * Add the top two doubles on the stack
+     * Add the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dadd)
      *
@@ -2102,7 +2102,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fdec() = addByte(Opcodes.FDEC)
 
     /**
-     * Subtract the top two doubles on the stack
+     * Subtract the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dsub)
      *
@@ -2217,7 +2217,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fcmp() = addByte(Opcodes.FCMP)
 
     /**
-     * Compare the top two doubles on the stack
+     * Compare the top two double on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dcmp)
      *
@@ -3713,7 +3713,7 @@ open class ShakeBytecodeInstructionGenerator(
         /**
          * Set the long at the index
          *
-         * @param double The doubles to set
+         * @param double The double to set
          *
          * @since 0.1.0
          * @version 0.1.0

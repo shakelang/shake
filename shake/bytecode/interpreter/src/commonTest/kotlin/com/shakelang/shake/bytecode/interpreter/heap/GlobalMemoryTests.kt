@@ -164,7 +164,7 @@ class GlobalMemoryTests : FreeSpec(
             val memory = GlobalMemory()
             memory.grow(10)
 
-            val doubles = arrayOf(
+            val double = arrayOf(
                 0.0,
                 10.0,
                 42.0,
@@ -174,7 +174,7 @@ class GlobalMemoryTests : FreeSpec(
                 100000.0,
                 1000000.0,
             )
-            checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 8 - 1), Arb.of(*doubles)) { i, value ->
+            checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 8 - 1), Arb.of(*double)) { i, value ->
                 memory.setDouble(i, value)
                 memory.getDouble(i) shouldBe Double.fromBits(value.toBits())
             }

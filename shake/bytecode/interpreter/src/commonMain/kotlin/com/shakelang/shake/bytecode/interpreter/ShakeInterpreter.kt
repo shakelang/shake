@@ -537,7 +537,7 @@ class ShakeInterpreter {
 
                 // Bitwise AND two values from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-band
                 // https://spec.shakelang.com/bytecode/instructions#instr-sand
@@ -550,7 +550,7 @@ class ShakeInterpreter {
 
                 // Bitwise OR two values from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bor
                 // https://spec.shakelang.com/bytecode/instructions#instr-sor
@@ -563,7 +563,7 @@ class ShakeInterpreter {
 
                 // Bitwise XOR two values from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bxor
                 // https://spec.shakelang.com/bytecode/instructions#instr-sxor
@@ -576,7 +576,7 @@ class ShakeInterpreter {
 
                 // Bitwise NOT a value from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bnot
                 // https://spec.shakelang.com/bytecode/instructions#instr-snot
@@ -589,7 +589,7 @@ class ShakeInterpreter {
 
                 // Shift a value from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bshl
                 // https://spec.shakelang.com/bytecode/instructions#instr-sshl
@@ -621,7 +621,7 @@ class ShakeInterpreter {
 
                 // Shift a value from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bshr
                 // https://spec.shakelang.com/bytecode/instructions#instr-sshr
@@ -653,7 +653,7 @@ class ShakeInterpreter {
 
                 // Shift a value from the stack and push the result to the stack
                 // We refer to byte, shorts, int and long, but the same applies to unsigned
-                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // values, booleans, chars, floats and double, so a byte means any 8-bit
                 // value
                 // https://spec.shakelang.com/bytecode/instructions#instr-bushr
                 // https://spec.shakelang.com/bytecode/instructions#instr-sushr

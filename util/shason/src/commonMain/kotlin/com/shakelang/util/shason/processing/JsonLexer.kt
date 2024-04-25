@@ -180,7 +180,7 @@ class JsonLexer(
         val start = this.input.position
 
         // Boolean if we found a dot. This is important for checking
-        // if we parsed a Integer or a doubles.
+        // if we parsed a Integer or a double.
         var foundDot = false
 
         // The number string
@@ -202,7 +202,7 @@ class JsonLexer(
             number.append(this.input.actual())
         }
 
-        // Create a new doubles-token or integers-token
+        // Create a new double-token or integers-token
         return factory.create(
             if (foundDot) {
                 JsonTokenType.DOUBLE

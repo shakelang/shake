@@ -388,7 +388,7 @@ data class CommanderValue(
     fun toFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toFloatOrNull, default)
 
     /**
-     * Convert the value to a doubles
+     * Convert the value to a double
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -399,7 +399,7 @@ data class CommanderValue(
     fun toDouble() = to(CommanderValueTransformers.toDouble)
 
     /**
-     * Convert the value to a doubles or null
+     * Convert the value to a double or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toDoubleOrNull
@@ -409,7 +409,7 @@ data class CommanderValue(
     fun toDoubleOrNull() = toOrNull(CommanderValueTransformers.toDoubleOrNull)
 
     /**
-     * Convert the value to a doubles or a default value
+     * Convert the value to a double or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -804,7 +804,7 @@ data class CommanderValue(
     fun toPositiveFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toPositiveFloatOrNull, default)
 
     /**
-     * Convert the value to a positive doubles
+     * Convert the value to a positive double
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -815,7 +815,7 @@ data class CommanderValue(
     fun toPositiveDouble() = to(CommanderValueTransformers.toPositiveDouble)
 
     /**
-     * Convert the value to a positive doubles or null
+     * Convert the value to a positive double or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toPositiveDoubleOrNull
@@ -825,7 +825,7 @@ data class CommanderValue(
     fun toPositiveDoubleOrNull() = toOrNull(CommanderValueTransformers.toPositiveDoubleOrNull)
 
     /**
-     * Convert the value to a positive doubles or a default value
+     * Convert the value to a positive double or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -996,7 +996,7 @@ data class CommanderValue(
     fun toNegativeFloatOrDefault(default: Float) = toOrDefault(CommanderValueTransformers.toNegativeFloatOrNull, default)
 
     /**
-     * Convert the value to a negative doubles
+     * Convert the value to a negative double
      * @return the transformed value
      * @throws CommanderValueException if the value could not be transformed
      * @see CommanderValueTransformer
@@ -1007,7 +1007,7 @@ data class CommanderValue(
     fun toNegativeDouble() = to(CommanderValueTransformers.toNegativeDouble)
 
     /**
-     * Convert the value to a negative doubles or null
+     * Convert the value to a negative double or null
      * @return the transformed value or null
      * @see CommanderValueTransformer
      * @see CommanderValueTransformers.toNegativeDoubleOrNull
@@ -1017,7 +1017,7 @@ data class CommanderValue(
     fun toNegativeDoubleOrNull() = toOrNull(CommanderValueTransformers.toNegativeDoubleOrNull)
 
     /**
-     * Convert the value to a negative doubles or a default value
+     * Convert the value to a negative double or a default value
      * @param default the default value
      * @return the transformed value or the default value
      * @see CommanderValueTransformer
@@ -1223,8 +1223,8 @@ data class CommanderValue(
     fun isNotFloat() = isInvalid(CommanderValueValidators.isFloat)
 
     /**
-     * Validate the value to be a doubles
-     * @throws CommanderValueException if the value is not a doubles
+     * Validate the value to be a double
+     * @throws CommanderValueException if the value is not a double
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1232,8 +1232,8 @@ data class CommanderValue(
     fun validateDouble() = validate(CommanderValueValidators.isDouble)
 
     /**
-     * Is the value a doubles?
-     * @return true if the value is a doubles, false otherwise
+     * Is the value a double?
+     * @return true if the value is a double, false otherwise
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1241,8 +1241,8 @@ data class CommanderValue(
     fun isDouble() = isValid(CommanderValueValidators.isDouble)
 
     /**
-     * Is the value not a doubles?
-     * @return true if the value is not a doubles, false otherwise
+     * Is the value not a double?
+     * @return true if the value is not a double, false otherwise
      * @see CommanderValueValidators.isDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1574,8 +1574,8 @@ data class CommanderValue(
     fun isNotPositiveFloat() = isInvalid(CommanderValueValidators.isPositiveFloat)
 
     /**
-     * Validate the value to be a positive doubles
-     * @throws CommanderValueException if the value is not a positive doubles
+     * Validate the value to be a positive double
+     * @throws CommanderValueException if the value is not a positive double
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1583,8 +1583,8 @@ data class CommanderValue(
     fun validatePositiveDouble() = validate(CommanderValueValidators.isPositiveDouble)
 
     /**
-     * Is the value a positive doubles?
-     * @return true if the value is a positive doubles, false otherwise
+     * Is the value a positive double?
+     * @return true if the value is a positive double, false otherwise
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1592,8 +1592,8 @@ data class CommanderValue(
     fun isPositiveDouble() = isValid(CommanderValueValidators.isPositiveDouble)
 
     /**
-     * Is the value not a positive doubles?
-     * @return true if the value is not a positive doubles, false otherwise
+     * Is the value not a positive double?
+     * @return true if the value is not a positive double, false otherwise
      * @see CommanderValueValidators.isPositiveDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1736,8 +1736,8 @@ data class CommanderValue(
     fun isNotNegativeFloat() = isInvalid(CommanderValueValidators.isNegativeFloat)
 
     /**
-     * Validate the value to be a negative doubles
-     * @throws CommanderValueException if the value is not a negative doubles
+     * Validate the value to be a negative double
+     * @throws CommanderValueException if the value is not a negative double
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1745,8 +1745,8 @@ data class CommanderValue(
     fun validateNegativeDouble() = validate(CommanderValueValidators.isNegativeDouble)
 
     /**
-     * Is the value a negative doubles?
-     * @return true if the value is a negative doubles, false otherwise
+     * Is the value a negative double?
+     * @return true if the value is a negative double, false otherwise
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0
@@ -1754,8 +1754,8 @@ data class CommanderValue(
     fun isNegativeDouble() = isValid(CommanderValueValidators.isNegativeDouble)
 
     /**
-     * Is the value not a negative doubles?
-     * @return true if the value is not a negative doubles, false otherwise
+     * Is the value not a negative double?
+     * @return true if the value is not a negative double, false otherwise
      * @see CommanderValueValidators.isNegativeDouble
      * @since 0.1.0
      * @version 0.1.0

@@ -71,6 +71,20 @@ interface PositionMap {
         )
     }
 
+    fun getLineStart(line: Int): Int {
+        return if (line == 1) 0 else lineSeparators[line - 2] + 1
+    }
+
+    fun getLineEnd(line: Int): Int {
+        return if (line == lineSeparators.size + 1) source.length else lineSeparators[line - 1]
+    }
+
+    fun getFullLine(line: Int): String {
+        val start = getLineStart(line)
+        val end = getLineEnd(line)
+        return source[start, end].concatToString()
+    }
+
     /**
      * Get amount of characters after the [Position] in the line
      * @param p the [Position] to get the amount of characters after

@@ -8,38 +8,49 @@
 
 package com.shakelang.shake.shakespeare.spec
 
-import com.shakelang.shake.shakespeare.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
+import com.shakelang.shake.shakespeare.spec.code.ValueSpec
 
 open class ParameterSpec(
-    val name: NamespaceSpec,
-    val type: Type,
+    open val name: String,
+    open val type: TypeSpec,
+    open val defaultValue: ValueSpec? = null,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
-        return "${name.name}: ${type.generate(ctx)}"
+        val builder = StringBuilder()
+        builder.append(name)
+        builder.append(": ")
+        builder.append(type.generate(ctx))
+        if (defaultValue != null) {
+            builder.append(" = ")
+            builder.append(defaultValue!!.generate(ctx))
+        }
+        return builder.toString()
     }
 
     open class ParameterSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
-        var type: Type? = null
-        fun name(name: NamespaceSpec): ParameterSpecBuilder {
+        var name: String? = null
+        var type: TypeSpec? = null
+        var defaultValue: ValueSpec? = null
+
+        fun name(name: String): ParameterSpecBuilder {
             this.name = name
             return this
         }
 
-        fun name(name: String): ParameterSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        fun type(type: Type): ParameterSpecBuilder {
+        fun type(type: TypeSpec): ParameterSpecBuilder {
             this.type = type
             return this
         }
 
         fun type(type: String): ParameterSpecBuilder {
-            this.type = Type.of(type)
+            this.type = TypeSpec.of(type)
+            return this
+        }
+
+        fun defaultValue(defaultValue: ValueSpec): ParameterSpecBuilder {
+            this.defaultValue = defaultValue
             return this
         }
 
@@ -47,6 +58,7 @@ open class ParameterSpec(
             return ParameterSpec(
                 name ?: throw IllegalStateException("Name must be set"),
                 type ?: throw IllegalStateException("Type must be set"),
+                defaultValue,
             )
         }
     }
@@ -59,11 +71,11 @@ open class ParameterSpec(
 }
 
 open class MethodSpec(
-    val name: NamespaceSpec,
-    val returnType: Type,
-    val extending: Type? = null,
-    val parameters: List<ParameterSpec>,
-    val body: CodeSpec?,
+    val name: String,
+    open val returnType: TypeSpec,
+    open val extending: TypeSpec? = null,
+    open val parameters: List<ParameterSpec>,
+    open val body: CodeSpec?,
     val isStatic: Boolean = false,
     val isAbstract: Boolean = false,
     val isFinal: Boolean = false,
@@ -72,6 +84,7 @@ open class MethodSpec(
     val accessModifier: AccessModifier = AccessModifier.PUBLIC,
     val isSynchronized: Boolean = false,
     val isNative: Boolean = false,
+    val isInline: Boolean = false,
 ) : AbstractSpec {
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder()
@@ -88,7 +101,7 @@ open class MethodSpec(
         builder.append("fun ")
 
         if (extending != null) {
-            builder.append(extending.generate(ctx)).append(".")
+            builder.append(extending!!.generate(ctx)).append(".")
         }
 
         builder.append(name)
@@ -98,16 +111,16 @@ open class MethodSpec(
         builder.append(returnType.generate(ctx))
         if (body != null) {
             builder.append(" ")
-            builder.append(body.generate(ctx))
+            builder.append(body!!.generate(ctx))
         }
         return builder.toString()
     }
 
     open class MethodSpecBuilder
     internal constructor() {
-        var name: NamespaceSpec? = null
-        var returnType: Type? = null
-        var extending: Type? = null
+        var name: String? = null
+        var returnType: TypeSpec? = null
+        var extending: TypeSpec? = null
         val parameters: MutableList<ParameterSpec> = ArrayList()
         var body: CodeSpec? = null
         var isStatic = false
@@ -119,33 +132,28 @@ open class MethodSpec(
         var isNative = false
         var isOperator = false
 
-        fun name(name: NamespaceSpec): MethodSpecBuilder {
+        fun name(name: String): MethodSpecBuilder {
             this.name = name
             return this
         }
 
-        fun name(name: String): MethodSpecBuilder {
-            this.name = NamespaceSpec(name)
-            return this
-        }
-
-        fun returnType(returnType: Type): MethodSpecBuilder {
+        fun returnType(returnType: TypeSpec): MethodSpecBuilder {
             this.returnType = returnType
             return this
         }
 
         fun returnType(returnType: String): MethodSpecBuilder {
-            this.returnType = Type.of(returnType)
+            this.returnType = TypeSpec.of(returnType)
             return this
         }
 
-        fun extending(extending: Type): MethodSpecBuilder {
+        fun extending(extending: TypeSpec): MethodSpecBuilder {
             this.extending = extending
             return this
         }
 
         fun extending(extending: String): MethodSpecBuilder {
-            this.extending = Type.of(extending)
+            this.extending = TypeSpec.of(extending)
             return this
         }
 
@@ -213,7 +221,7 @@ open class MethodSpec(
             return MethodSpec(
                 name ?: throw IllegalStateException("Name must be set"),
                 returnType ?: throw IllegalStateException("Return type must be set"),
-                extending ?: throw IllegalStateException("Extending must be set"),
+                extending,
                 parameters,
                 body,
                 isStatic,

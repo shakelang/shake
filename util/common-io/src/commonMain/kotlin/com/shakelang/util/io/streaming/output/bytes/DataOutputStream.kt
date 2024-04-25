@@ -127,9 +127,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a doubles to the [OutputStream]
+     * Writes a double to the [OutputStream]
      *
-     * @param b The doubles to write
+     * @param b The double to write
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -601,9 +601,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a doubles array to the [OutputStream]
+     * Writes a double array to the [OutputStream]
      *
-     * @param b The doubles array to write
+     * @param b The double array to write
      *
      * @throws IndexOutOfBoundsException If the offset or the length is out of bounds
      * @throws IllegalArgumentException If the length is negative
@@ -617,9 +617,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a doubles array to the [OutputStream]
+     * Writes a double array to the [OutputStream]
      *
-     * @param b The doubles array to write
+     * @param b The double array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *
@@ -637,9 +637,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a doubles array to the [OutputStream]
+     * Writes a double array to the [OutputStream]
      *
-     * @param b The doubles array to write
+     * @param b The double array to write
      *
      * @throws IndexOutOfBoundsException If the offset or the length is out of bounds
      * @throws NullPointerException If the array is null
@@ -653,9 +653,9 @@ class DataOutputStream(
     }
 
     /**
-     * Writes a doubles array to the [OutputStream]
+     * Writes a double array to the [OutputStream]
      *
-     * @param b The doubles array to write
+     * @param b The double array to write
      * @param off The offset to start writing
      * @param len The length of the array to write
      *

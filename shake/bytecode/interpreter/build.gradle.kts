@@ -10,7 +10,6 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
 }
 
 kotlin {

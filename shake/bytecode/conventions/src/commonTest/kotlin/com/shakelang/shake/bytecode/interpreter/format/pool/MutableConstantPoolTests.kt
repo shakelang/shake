@@ -78,7 +78,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.isFloat(1) shouldBe true
         }
 
-        "is doubles" {
+        "is double" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -185,7 +185,7 @@ class MutableConstantPoolTests : FreeSpec(
             }
         }
 
-        "get doubles" {
+        "get double" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -289,7 +289,7 @@ class MutableConstantPoolTests : FreeSpec(
             pool.findFloat(2f) shouldBe null
         }
 
-        "find doubles" {
+        "find double" {
             val pool = MutableConstantPool(
                 mutableListOf(
                     ConstantPoolEntry.Utf8Constant("test"),
@@ -534,7 +534,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "create doubles" {
+        "create double" {
             val pool = MutableConstantPool()
             pool.createDouble(0.0) shouldBe 0
             pool.createDouble(0.0) shouldBe 1
@@ -655,7 +655,7 @@ class MutableConstantPoolTests : FreeSpec(
             )
         }
 
-        "resolve doubles" {
+        "resolve double" {
             val pool = MutableConstantPool()
 
             pool.resolveDouble(0.0) shouldBe 0

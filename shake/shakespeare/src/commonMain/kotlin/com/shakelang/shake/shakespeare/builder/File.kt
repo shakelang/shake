@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:function-naming", "unused", "FunctionName", "MemberVisibilityCanBePrivate")
+
 package com.shakelang.shake.shakespeare.builder
 
 import com.shakelang.shake.shakespeare.spec.*
@@ -75,13 +77,6 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
 
     fun Class(init: ClassDeclarationBuilder.() -> Unit, name: String) {
         val builder = ClassDeclarationBuilder(init)
-        builder.name = NamespaceSpec(name)
-        val classSpec = builder.build()
-        contents.add(classSpec.generate(GenerationContext()))
-    }
-
-    fun Class(init: ClassDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
-        val builder = ClassDeclarationBuilder(init)
         builder.name = name
         val classSpec = builder.build()
         contents.add(classSpec.generate(GenerationContext()))
@@ -94,13 +89,6 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
 
     fun Field(init: FieldDeclarationBuilder.() -> Unit, name: String) {
         val builder = FieldDeclarationBuilder(init)
-        builder.name = NamespaceSpec(name)
-        val fieldSpec = builder.build()
-        contents.add(fieldSpec.generate(GenerationContext()))
-    }
-
-    fun Field(init: FieldDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
-        val builder = FieldDeclarationBuilder(init)
         builder.name = name
         val fieldSpec = builder.build()
         contents.add(fieldSpec.generate(GenerationContext()))
@@ -112,13 +100,6 @@ internal constructor(init: ShakeFileBuilder.() -> Unit) : Builder {
     }
 
     fun Method(init: MethodDeclarationBuilder.() -> Unit, name: String) {
-        val builder = MethodDeclarationBuilder(init)
-        builder.name = NamespaceSpec(name)
-        val methodSpec = builder.build()
-        contents.add(methodSpec.generate(GenerationContext()))
-    }
-
-    fun Method(init: MethodDeclarationBuilder.() -> Unit, name: NamespaceSpec) {
         val builder = MethodDeclarationBuilder(init)
         builder.name = name
         val methodSpec = builder.build()

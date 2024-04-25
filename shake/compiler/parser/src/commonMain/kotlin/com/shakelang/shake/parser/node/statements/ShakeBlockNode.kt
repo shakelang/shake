@@ -8,8 +8,8 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 class ShakeBlockNode(
     map: PositionMap,
     val children: Array<ShakeStatementNode>,
-    val lcurly: ShakeToken?,
-    val rcurly: ShakeToken?,
+    val lcurlyToken: ShakeToken?,
+    val rcurlyToken: ShakeToken?,
 ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

@@ -12,10 +12,11 @@ kotlin {
     dependencies {
         common {
             implementation(project(":util:commander"))
+            implementation(project(":util:common-io"))
+            implementation(project(":util:embed:api"))
+            implementation(project(":util:logger"))
             implementation(project(":util:parseutils"))
             implementation(project(":util:shason"))
-            implementation(project(":util:logger"))
-            implementation(project(":util:embed:api"))
 
             implementation(project(":shake:compiler:lexer"))
             implementation(project(":shake:compiler:parser"))
@@ -28,7 +29,7 @@ kotlin {
             implementation(project(":shake:bytecode:interpreter"))
             implementation(project(":shake:bytecode:generator"))
 
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
             testImplementation(kotlin("test"))
         }
     }

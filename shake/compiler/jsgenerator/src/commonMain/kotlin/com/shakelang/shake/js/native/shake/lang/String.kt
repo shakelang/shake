@@ -22,7 +22,7 @@ import kotlin.String
 //     native static String valueOf(int i)
 //     native static String valueOf(long l)
 //     native static String valueOf(float f)
-//     native static String valueOf(doubles d)
+//     native static String valueOf(double d)
 //     native static String valueOf(boolean b)
 //     native static String valueOf(Object obj)
 //
@@ -176,11 +176,11 @@ class String : NativeClass {
         }
     }
 
-    // valueOf(doubles d)
+    // valueOf(double d)
     class FunctionValueOf9 : NativeFunction {
-        override val signature: String = "valueOf(doubles d)"
+        override val signature: String = "valueOf(double d)"
         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
-            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(doubles d) takes exactly 1 argument")
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(double d) takes exactly 1 argument")
             if (invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
             val arg0 = generator.visitValue(invokation.arguments[0])
             return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))

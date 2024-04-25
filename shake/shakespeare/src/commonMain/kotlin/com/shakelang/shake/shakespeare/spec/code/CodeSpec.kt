@@ -8,8 +8,9 @@
 
 package com.shakelang.shake.shakespeare.spec.code
 
-import com.shakelang.shake.shakespeare.AbstractSpec
+import com.shakelang.shake.shakespeare.spec.AbstractSpec
 import com.shakelang.shake.shakespeare.spec.GenerationContext
+import kotlin.math.max
 
 /**
  * Represents a specification of code in the Shake programming language.
@@ -19,6 +20,9 @@ import com.shakelang.shake.shakespeare.spec.GenerationContext
  */
 open class CodeSpec(
 
+    /**
+     * A list of statements included in this code specification.
+     */
     open val statements: List<StatementSpec>,
 
 ) : AbstractSpec {
@@ -32,16 +36,31 @@ open class CodeSpec(
      */
     override fun generate(ctx: GenerationContext): String {
         val builder = StringBuilder("{")
-
-        if (statements.isNotEmpty()) builder.append("\n")
-
         val indented = ctx.indent()
 
         for (statement in statements) {
-            builder.append((1..indented.indentLevel).joinToString("") { indented.indentType })
+            builder.append("\n" + (1..indented.indentLevel).joinToString("") { indented.indentType })
             builder.append(statement.generate(indented))
         }
+
+        if (statements.isNotEmpty()) builder.append("\n")
+
         return builder.append("}").toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CodeSpec) return false
+
+        for (i in 0..max(statements.size, other.statements.size)) {
+            if (statements.getOrNull(i) != other.statements.getOrNull(i)) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return statements.hashCode()
     }
 
     /**

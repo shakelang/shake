@@ -10,7 +10,6 @@ description = "A library for jvm stuff in java"
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
 }
 
 val javaCompilationOutputDir = "src/commonTest/resources/classes/java"

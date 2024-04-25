@@ -138,17 +138,17 @@ object CommanderValueTransformers {
      * Transform a given [value] to a [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a doubles
+     * @throws ValueValidationException If the value is not a double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a doubles")
+        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a double")
     }
 
     /**
-     * Transform a given [value] to a [Double] or return null if the value is not a doubles
+     * Transform a given [value] to a [Double] or return null if the value is not a double
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -333,19 +333,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a positive [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a positive doubles
+     * @throws ValueValidationException If the value is not a positive double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toPositiveDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
-        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive doubles")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
         return value.toDouble()
     }
 
     /**
-     * Transform a given [value] to a positive [Double] or return null if the value is not a positive doubles
+     * Transform a given [value] to a positive [Double] or return null if the value is not a positive double
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -536,19 +536,19 @@ object CommanderValueTransformers {
      * Transform a given [value] to a negative [Double]
      * @param value The value to transform
      * @return The transformed value
-     * @throws ValueValidationException If the value is not a negative doubles
+     * @throws ValueValidationException If the value is not a negative double
      * @since 0.1.0
      * @version 0.1.0
      */
     fun toNegativeDouble(value: String?): Double {
         if (value == null) throw ValueValidationException("CommanderValue is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
-        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative doubles")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
         return value.toDouble()
     }
 
     /**
-     * Transform a given [value] to a negative [Double] or return null if the value is not a negative doubles
+     * Transform a given [value] to a negative [Double] or return null if the value is not a negative double
      * @param value The value to transform
      * @return The transformed value or null
      * @since 0.1.0
@@ -886,7 +886,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not an unsigned doubles
+     * @throws ValueValidationException If the value is not an unsigned double
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -1010,7 +1010,7 @@ object CommanderValueTransformers {
 
     /**
      * Transform a given value to a [String] or return null if the value is null
-     * @throws ValueValidationException If the value is not a positive doubles
+     * @throws ValueValidationException If the value is not a positive double
      * @return The transformed value
      * @since 0.1.0
      * @version 0.1.0
@@ -1020,7 +1020,7 @@ object CommanderValueTransformers {
     /**
      * Transform a given value to a [String] or return null if the value is null
      * @return The transformed value or null
-     * @throws ValueValidationException If the value is not a positive doubles
+     * @throws ValueValidationException If the value is not a positive double
      * @since 0.1.0
      * @version 0.1.0
      */

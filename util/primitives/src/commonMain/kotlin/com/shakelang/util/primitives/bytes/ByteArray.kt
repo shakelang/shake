@@ -73,10 +73,10 @@ fun ByteArray.toFloat(): Float {
 }
 
 /**
- * Convert a byte array to a doubles.
+ * Convert a byte array to a double.
  *
  * @throws IllegalArgumentException if the array is not of size 8
- * @return the doubles
+ * @return the double
  *
  * @since 0.1.0
  * @version 0.1.1
@@ -251,7 +251,7 @@ fun ByteArray.setFloat(index: Int, float: Float): ByteArray {
 }
 
 /**
- * Set specific bytes in a byte array to a doubles
+ * Set specific bytes in a byte array to a double
  *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
@@ -443,10 +443,10 @@ fun ByteArray.getLong(index: Int): Long {
 fun ByteArray.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 
 /**
- * Get specific doubles from a byte array at a given position
+ * Get specific double from a byte array at a given position
  *
  * @throws IllegalArgumentException if the array is not big enough
- * @return the doubles
+ * @return the double
  *
  * @since 0.1.0
  * @version 0.1.1

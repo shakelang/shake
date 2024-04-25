@@ -8,7 +8,6 @@ import conventions.projectGroup
 
 plugins {
     id("conventions.all")
-    id("conventions.publishing")
     id("io.kotest.multiplatform")
     id("com.github.node-gradle.node")
 }

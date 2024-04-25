@@ -109,7 +109,7 @@ enum class JsonTokenType(
     STRING(null), // e.g. "hello world"
 
     /**
-     * A [DOUBLE] [JsonTokenType] represents a doubles (e.g. '0.1') in the source
+     * A [DOUBLE] [JsonTokenType] represents a double (e.g. '0.1') in the source
      * @since 0.1.0
      * @version 0.1.0
      */

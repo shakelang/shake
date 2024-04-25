@@ -18,7 +18,7 @@ description = "Shake"
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:versioning-plugin:1.9.10")
+        classpath("org.jetbrains.dokka:versioning-plugin:1.9.20")
     }
 }
 
@@ -68,8 +68,9 @@ repositories {
 plugins {
     id("org.jetbrains.dokka")
     id("org.jetbrains.kotlinx.kover")
-    id("io.gitlab.arturbosch.detekt") version "1.23.4"
+    id("io.gitlab.arturbosch.detekt") version "1.23.5"
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("conventions.publishing")
 }
 
 apply<Changelog>()
@@ -97,7 +98,7 @@ nexusPublishing {
 val dokkaPlugin by configurations
 tasks.register<org.jetbrains.dokka.gradle.DokkaMultiModuleTask>("dokkaRoot") {
     dependencies {
-        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:1.9.10")
+        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:1.9.20")
     }
     outputDirectory.set(file("$buildDir/docs"))
     addChildTasks(childProjects.values, "dokkaHtmlPartial")

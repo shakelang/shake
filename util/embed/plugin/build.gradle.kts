@@ -3,7 +3,6 @@ import com.shakelang.util.changelog.resolveVersion
 import conventions.projectGroup
 
 plugins {
-    id("conventions.publishing")
     id("conventions.dokka")
     `kotlin-dsl`
 }
@@ -28,7 +27,7 @@ kotlin {
         implementation("com.squareup:kotlinpoet:1.16.0")
 
         // compileOnly kotlin gradle plugins
-        compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
+        compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
     }
 }
 

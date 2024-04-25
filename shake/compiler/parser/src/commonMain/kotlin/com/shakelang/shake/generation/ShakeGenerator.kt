@@ -11,15 +11,15 @@ import com.shakelang.shake.parser.node.statements.*
 import com.shakelang.shake.parser.node.values.ShakeCastNode
 import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
 import com.shakelang.shake.parser.node.values.expression.*
-import com.shakelang.shake.parser.node.values.factor.ShakeDoubleLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeFalseLiteralNode
+import com.shakelang.shake.parser.node.values.factor.ShakeFloatLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeIntegerLiteralNode
 import com.shakelang.shake.parser.node.values.factor.ShakeTrueLiteralNode
 
 abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl): T {
         if (n is ShakeBlockNode) return visitTree(n)
-        if (n is ShakeDoubleLiteralNode) return visitDoubleNode(n)
+        if (n is ShakeFloatLiteralNode) return visitDoubleNode(n)
         if (n is ShakeIntegerLiteralNode) return visitIntegerNode(n)
         if (n is ShakeAddNode) return visitAddNode(n)
         if (n is ShakeSubNode) return visitSubNode(n)
@@ -60,7 +60,7 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
     }
 
     abstract fun visitTree(t: ShakeBlockNode): T
-    abstract fun visitDoubleNode(n: ShakeDoubleLiteralNode): T
+    abstract fun visitDoubleNode(n: ShakeFloatLiteralNode): T
     abstract fun visitIntegerNode(n: ShakeIntegerLiteralNode): T
     abstract fun visitAddNode(n: ShakeAddNode): T
     abstract fun visitSubNode(n: ShakeSubNode): T

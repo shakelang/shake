@@ -325,9 +325,9 @@ object PCast {
     const val FLOAT: UByte = 8u
 
     /**
-     * PCast constant for a doubles
+     * PCast constant for a double
      *
-     * To cast from a doubles:
+     * To cast from a double:
      * ```kotlin
      * val castByte = (PCast.DOUBLE shl 4) or [to]
      * ```
@@ -338,7 +338,7 @@ object PCast {
      * [PCast.UINT_TO_DOUBLE], [PCast.ULONG_TO_DOUBLE], [PCast.FLOAT_TO_DOUBLE],
      * [PCast.DOUBLE_TO_DOUBLE]
      *
-     * To cast from a doubles:
+     * To cast from a double:
      * ```kotlin
      * val castByte = ([from] shl 4) or PCast.DOUBLE
      * ```
@@ -507,7 +507,7 @@ object PCast {
     const val BYTE_TO_FLOAT: UByte = 0x08u
 
     /**
-     * Cast from a byte to a doubles
+     * Cast from a byte to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -663,7 +663,7 @@ object PCast {
     const val SHORT_TO_FLOAT: UByte = 0x18u
 
     /**
-     * Cast from a shorts to a doubles
+     * Cast from a shorts to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -828,7 +828,7 @@ object PCast {
     const val INT_TO_FLOAT: UByte = 0x28u
 
     /**
-     * Cast from an int to a doubles
+     * Cast from an int to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -993,7 +993,7 @@ object PCast {
     const val LONG_TO_FLOAT: UByte = 0x38u
 
     /**
-     * Cast from a long to a doubles
+     * Cast from a long to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1158,7 +1158,7 @@ object PCast {
     const val UBYTE_TO_FLOAT: UByte = 0x48u
 
     /**
-     * Cast from an unsigned byte to a doubles
+     * Cast from an unsigned byte to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1323,7 +1323,7 @@ object PCast {
     const val USHORT_TO_FLOAT: UByte = 0x58u
 
     /**
-     * Cast from an unsigned shorts to a doubles
+     * Cast from an unsigned shorts to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1485,7 +1485,7 @@ object PCast {
     const val UINT_TO_FLOAT: UByte = 0x68u
 
     /**
-     * Cast from an unsigned int to a doubles
+     * Cast from an unsigned int to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1650,7 +1650,7 @@ object PCast {
     const val ULONG_TO_FLOAT: UByte = 0x78u
 
     /**
-     * Cast from an unsigned long to a doubles
+     * Cast from an unsigned long to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1812,7 +1812,7 @@ object PCast {
     const val FLOAT_TO_FLOAT: UByte = 0x88u
 
     /**
-     * Cast from a float to a doubles
+     * Cast from a float to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1828,7 +1828,7 @@ object PCast {
     const val FLOAT_TO_DOUBLE: UByte = 0x89u
 
     /**
-     * Cast from a doubles to a byte
+     * Cast from a double to a byte
      *
      * Shortcut for:
      * ```kotlin
@@ -1844,7 +1844,7 @@ object PCast {
     const val DOUBLE_TO_BYTE: UByte = 0x90u
 
     /**
-     * Cast from a doubles to a shorts
+     * Cast from a double to a shorts
      *
      * Shortcut for:
      * ```kotlin
@@ -1860,7 +1860,7 @@ object PCast {
     const val DOUBLE_TO_SHORT: UByte = 0x91u
 
     /**
-     * Cast from a doubles to an int
+     * Cast from a double to an int
      *
      * Shortcut for:
      * ```kotlin
@@ -1876,7 +1876,7 @@ object PCast {
     const val DOUBLE_TO_INT: UByte = 0x92u
 
     /**
-     * Cast from a doubles to a long
+     * Cast from a double to a long
      *
      * Shortcut for:
      * ```kotlin
@@ -1892,7 +1892,7 @@ object PCast {
     const val DOUBLE_TO_LONG: UByte = 0x93u
 
     /**
-     * Cast from a doubles to an unsigned byte
+     * Cast from a double to an unsigned byte
      *
      * Shortcut for:
      * ```kotlin
@@ -1908,7 +1908,7 @@ object PCast {
     const val DOUBLE_TO_UBYTE: UByte = 0x94u
 
     /**
-     * Cast from a doubles to an unsigned shorts
+     * Cast from a double to an unsigned shorts
      *
      * Shortcut for:
      * ```kotlin
@@ -1924,7 +1924,7 @@ object PCast {
     const val DOUBLE_TO_USHORT: UByte = 0x95u
 
     /**
-     * Cast from a doubles to an unsigned int
+     * Cast from a double to an unsigned int
      *
      * Shortcut for:
      * ```kotlin
@@ -1940,7 +1940,7 @@ object PCast {
     const val DOUBLE_TO_UINT: UByte = 0x96u
 
     /**
-     * Cast from a doubles to an unsigned long
+     * Cast from a double to an unsigned long
      *
      * Shortcut for:
      * ```kotlin
@@ -1956,7 +1956,7 @@ object PCast {
     const val DOUBLE_TO_ULONG: UByte = 0x97u
 
     /**
-     * Cast from a doubles to a float
+     * Cast from a double to a float
      *
      * Shortcut for:
      * ```kotlin
@@ -1972,7 +1972,7 @@ object PCast {
     const val DOUBLE_TO_FLOAT: UByte = 0x98u
 
     /**
-     * Cast from a doubles to a doubles
+     * Cast from a double to a double
      *
      * Shortcut for:
      * ```kotlin
@@ -1982,7 +1982,7 @@ object PCast {
      * Get more information about the cast byte in the
      * [PCast Bytecode Specification](https://spec.shakelang.com/bytcode/instruction84-pcast-0xa0)
      *
-     * @deprecated No use in casting from doubles to doubles. This operation will do nothing.
+     * @deprecated No use in casting from double to double. This operation will do nothing.
      *
      * @since 0.1.0
      * @version 0.1.0
