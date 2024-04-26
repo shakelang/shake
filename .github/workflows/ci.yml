@@ -45,7 +45,7 @@ jobs:
           TEST_CONFIGURATION: full
 
       - name: Upload gradle_output.txt as artifact 📤
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: gradle-output
           path: gradle_output.txt
