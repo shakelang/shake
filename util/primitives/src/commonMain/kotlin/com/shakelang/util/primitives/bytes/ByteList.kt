@@ -4,12 +4,8 @@ package com.shakelang.util.primitives.bytes
 
 /**
  * Convert a byte array to a byte.
- *
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toByte(): Byte {
     if (this.size != 1) throw IllegalArgumentException("ByteArray must be of size 1, but is ${this.size}")
@@ -18,12 +14,8 @@ fun List<Byte>.toByte(): Byte {
 
 /**
  * Convert a byte array to shorts.
- *
  * @throws IllegalArgumentException if the array is not of size 2
  * @return the shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toShort(): Short {
     if (this.size != 2) throw IllegalArgumentException("ByteArray must be of size 2, but is ${this.size}")
@@ -32,12 +24,8 @@ fun List<Byte>.toShort(): Short {
 
 /**
  * Convert a byte array to int.
- *
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toInt(): Int {
     if (this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4, but is ${this.size}")
@@ -46,12 +34,8 @@ fun List<Byte>.toInt(): Int {
 
 /**
  * Convert a byte array to long.
- *
  * @throws IllegalArgumentException if the array is not of size 8
  * @return the long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toLong(): Long {
     if (this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8, but is ${this.size}")
@@ -60,12 +44,8 @@ fun List<Byte>.toLong(): Long {
 
 /**
  * Convert a byte array to a float.
- *
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the float
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toFloat(): Float {
     if (this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4")
@@ -74,12 +54,8 @@ fun List<Byte>.toFloat(): Float {
 
 /**
  * Convert a byte array to a double.
- *
  * @throws IllegalArgumentException if the array is not of size 8
  * @return the double
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toDouble(): Double {
     if (this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8")
@@ -88,56 +64,36 @@ fun List<Byte>.toDouble(): Double {
 
 /**
  * Convert a byte array to an unsigned char
- *
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the unsigned char
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toUnsignedByte(): UByte = this.toByte().toUByte()
 
 /**
  * Convert a byte array to an unsigned shorts
- *
  * @throws IllegalArgumentException if the array is not of size 2
  * @return the unsigned shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toUnsignedShort(): UShort = this.toShort().toUShort()
 
 /**
  * Convert a byte array to an unsigned int
- *
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the unsigned int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toUnsignedInt(): UInt = this.toInt().toUInt()
 
 /**
  * Convert a byte array to an unsigned long
- *
  * @throws IllegalArgumentException if the array is not of size 8
  * @return the unsigned long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toUnsignedLong(): ULong = this.toLong().toULong()
 
 /**
  * Set specific bytes in a byte array to a byte List
- *
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setBytes(startIndex: Int, bytes: ByteArray): MutableList<Byte> {
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
@@ -146,12 +102,8 @@ fun MutableList<Byte>.setBytes(startIndex: Int, bytes: ByteArray): MutableList<B
 
 /**
  * Set specific bytes in a byte array to a byte List
- *
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setBytes(startIndex: Int, bytes: List<Byte>): MutableList<Byte> {
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
@@ -160,12 +112,8 @@ fun MutableList<Byte>.setBytes(startIndex: Int, bytes: List<Byte>): MutableList<
 
 /**
  * Set specific bytes in a byte array to a byte
- *
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setByte(index: Int, byte: Byte): MutableList<Byte> {
     if (this.size < index + 1) {
@@ -179,12 +127,8 @@ fun MutableList<Byte>.setByte(index: Int, byte: Byte): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to a shorts
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setShort(index: Int, short: Short): MutableList<Byte> {
     if (this.size < index + 2) {
@@ -199,12 +143,8 @@ fun MutableList<Byte>.setShort(index: Int, short: Short): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to an int
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setInt(index: Int, int: Int): MutableList<Byte> {
     if (this.size < index + 4) {
@@ -221,12 +161,8 @@ fun MutableList<Byte>.setInt(index: Int, int: Int): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to a long
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setLong(index: Int, long: Long): MutableList<Byte> {
     if (this.size < index + 8) {
@@ -247,12 +183,8 @@ fun MutableList<Byte>.setLong(index: Int, long: Long): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to a float
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setFloat(index: Int, float: Float): MutableList<Byte> {
     if (this.size < index + 4) {
@@ -266,12 +198,8 @@ fun MutableList<Byte>.setFloat(index: Int, float: Float): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to a double
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setDouble(index: Int, double: Double): MutableList<Byte> {
     if (this.size < index + 8) {
@@ -285,12 +213,8 @@ fun MutableList<Byte>.setDouble(index: Int, double: Double): MutableList<Byte> {
 
 /**
  * Set specific bytes in a byte array to an unsigned char
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableList<Byte> {
     if (this.size < index + 1) {
@@ -304,12 +228,8 @@ fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableL
 
 /**
  * Set specific bytes in a byte array to an unsigned shorts
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): MutableList<Byte> {
     if (this.size < index + 2) {
@@ -324,12 +244,8 @@ fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): Mutab
 
 /**
  * Set specific bytes in a byte array to an unsigned int
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList<Byte> {
     if (this.size < index + 4) {
@@ -346,12 +262,8 @@ fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList
 
 /**
  * Set specific bytes in a byte array to an unsigned long
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun MutableList<Byte>.setUnsignedLong(index: Int, unsignedLong: ULong): MutableList<Byte> {
     if (this.size < index + 8) {
@@ -372,12 +284,8 @@ fun MutableList<Byte>.setUnsignedLong(index: Int, unsignedLong: ULong): MutableL
 
 /**
  * Get specific byte from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getByte(index: Int): Byte {
     if (this.size < index + 1) {
@@ -390,12 +298,8 @@ fun List<Byte>.getByte(index: Int): Byte {
 
 /**
  * Get specific shorts from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getShort(index: Int): Short {
     if (this.size < index + 2) {
@@ -408,12 +312,8 @@ fun List<Byte>.getShort(index: Int): Short {
 
 /**
  * Get specific int from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getInt(index: Int): Int {
     if (this.size < index + 4) {
@@ -426,12 +326,8 @@ fun List<Byte>.getInt(index: Int): Int {
 
 /**
  * Get specific long from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getLong(index: Int): Long {
     if (this.size < index + 8) {
@@ -453,68 +349,44 @@ fun List<Byte>.getLong(index: Int): Long {
 
 /**
  * Get specific float from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the float
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 
 /**
  * Get specific double from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the double
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getDouble(index: Int): Double = Double.fromBits(this.getLong(index))
 
 /**
  * Get specific unsigned byte from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the unsigned byte
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getUnsignedByte(index: Int): UByte = this[index].toUByte()
 
 /**
  * Get specific unsigned shorts from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the unsigned shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getUnsignedShort(index: Int): UShort = unsignedShortOf(this[index], this[index + 1])
 
 /**
  * Get specific unsigned int from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the unsigned int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getUnsignedInt(index: Int): UInt =
     unsignedIntOf(this[index], this[index + 1], this[index + 2], this[index + 3])
 
 /**
  * Get specific unsigned long from a byte array at a given position
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the unsigned long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getUnsignedLong(index: Int): ULong = unsignedLongOf(
     this[index],
@@ -529,12 +401,8 @@ fun List<Byte>.getUnsignedLong(index: Int): ULong = unsignedLongOf(
 
 /**
  * Remove the last byte from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last byte
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastByte(): Byte {
     if (this.size < 1) throw IllegalArgumentException("ByteArray must be of size 1, but is ${this.size}")
@@ -543,12 +411,8 @@ inline fun MutableList<Byte>.removeLastByte(): Byte {
 
 /**
  * Remove the last shorts from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastShort(): Short {
     if (this.size < 2) throw IllegalArgumentException("ByteArray must be of size 2, but is ${this.size}")
@@ -558,12 +422,8 @@ inline fun MutableList<Byte>.removeLastShort(): Short {
 
 /**
  * Remove the last int from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastInt(): Int {
     if (this.size < 4) throw IllegalArgumentException("ByteArray must be of size 4, but is ${this.size}")
@@ -573,12 +433,8 @@ inline fun MutableList<Byte>.removeLastInt(): Int {
 
 /**
  * Remove the last long from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastLong(): Long {
     if (this.size < 8) throw IllegalArgumentException("ByteArray must be of size 8, but is ${this.size}")
@@ -588,78 +444,50 @@ inline fun MutableList<Byte>.removeLastLong(): Long {
 
 /**
  * Remove the last float from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last float
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastFloat(): Float = Float.fromBits(this.removeLastInt())
 
 /**
  * Remove the last double from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last double
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastDouble(): Double = Double.fromBits(this.removeLastLong())
 
 /**
  * Remove the last unsigned byte from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last unsigned byte
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastUnsignedByte(): UByte = this.removeLastByte().toUByte()
 
 /**
  * Remove the last unsigned shorts from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last unsigned shorts
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastUnsignedShort(): UShort = this.removeLastShort().toUShort()
 
 /**
  * Remove the last unsigned int from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last unsigned int
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastUnsignedInt(): UInt = this.removeLastInt().toUInt()
 
 /**
  * Remove the last unsigned long from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the last unsigned long
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.removeLastUnsignedLong(): ULong = this.removeLastLong().toULong()
 
 /**
  * Get a byte array from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.getBytes(index: Int, length: Int): ByteArray {
     if (this.size < index + length) {
@@ -672,12 +500,8 @@ fun List<Byte>.getBytes(index: Int, length: Int): ByteArray {
 
 /**
  * Get a byte array from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toHexString(): String {
     val sb = StringBuilder()
@@ -691,12 +515,8 @@ fun List<Byte>.toHexString(): String {
 
 /**
  * Get a byte array from a byte array
- *
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
- *
- * @since 0.1.0
- * @version 0.1.1
  */
 fun List<Byte>.toUtf8String(): String {
     val sb = StringBuilder()
@@ -708,11 +528,7 @@ fun List<Byte>.toUtf8String(): String {
 
 /**
  * Append byte to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
  */
 fun MutableList<Byte>.append(byte: Byte): MutableList<Byte> {
     this.add(byte)
@@ -721,11 +537,7 @@ fun MutableList<Byte>.append(byte: Byte): MutableList<Byte> {
 
 /**
  * Append shorts to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
     val bytes = short.toBytes().toList()
@@ -735,11 +547,7 @@ inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
 
 /**
  * Append int to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
  */
 inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
     val bytes = int.toBytes().toList()
@@ -749,12 +557,7 @@ inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
 
 /**
  * Append long to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [Long.toBytes]
  * @see [MutableList.append]
  */
@@ -766,12 +569,7 @@ inline fun MutableList<Byte>.append(long: Long): MutableList<Byte> {
 
 /**
  * Append float to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [Float.toBytes]
  * @see [MutableList.append]
  */
@@ -783,12 +581,7 @@ inline fun MutableList<Byte>.append(float: Float): MutableList<Byte> {
 
 /**
  * Append double to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [Double.toBytes]
  * @see [MutableList.append]
  */
@@ -800,12 +593,7 @@ inline fun MutableList<Byte>.append(double: Double): MutableList<Byte> {
 
 /**
  * Append unsigned byte to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [UByte.toByte]
  * @see [MutableList.append]
  */
@@ -816,12 +604,7 @@ inline fun MutableList<Byte>.append(unsignedByte: UByte): MutableList<Byte> {
 
 /**
  * Append unsigned shorts to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [UShort.toBytes]
  * @see [MutableList.append]
  */
@@ -829,12 +612,7 @@ inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte> = 
 
 /**
  * Append unsigned int to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [UInt.toBytes]
  * @see [MutableList.append]
  */
@@ -842,12 +620,7 @@ inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte> = this
 
 /**
  * Append unsigned long to a byte List
- *
  * @return the byte array
- *
- * @since 0.1.1
- * @version 0.1.1
- *
  * @see [ULong.toBytes]
  * @see [MutableList.append]
  */
