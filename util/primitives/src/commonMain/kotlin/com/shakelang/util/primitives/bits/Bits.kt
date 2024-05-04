@@ -47,6 +47,8 @@ val Byte.bit7: Boolean get() = (this and -0x80) != 0.toByte()
 
 /**
  * Get n-th bit of a byte
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun Byte.bit(n: Int): Boolean = (this and (1 shl n).toByte()) != 0.toByte()
 
@@ -132,6 +134,8 @@ val Short.bit15: Boolean get() = (this and -0x8000) != 0.toShort()
 
 /**
  * Get n-th bit of a short
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun Short.bit(n: Int): Boolean = (this and (1 shl n).toShort()) != 0.toShort()
 
@@ -297,6 +301,8 @@ val Int.bit31: Boolean get() = (this and -0x80000000) != 0
 
 /**
  * Get n-th bit of an int
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun Int.bit(n: Int): Boolean = (this and (1 shl n)) != 0
 
@@ -622,8 +628,10 @@ val Long.bit63: Boolean get() = (this and 0x8000000000000000uL.toLong()) != 0L
 
 /**
  * Get n-th bit of a long
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
-fun Long.bit(n: Int): Boolean = (this and (1 shl n).toLong()) != 0L
+fun Long.bit(n: Int): Boolean = (this and (1L shl n)) != 0L
 
 /**
  * Get bit with index 0 of a float
@@ -706,7 +714,89 @@ val Float.bit14: Boolean get() = this.toRawBits().bit14
 val Float.bit15: Boolean get() = this.toRawBits().bit15
 
 /**
+ * Get bit with index 16 of a float
+ */
+val Float.bit16: Boolean get() = this.toRawBits().bit16
+
+/**
+ * Get bit with index 17 of a float
+ */
+val Float.bit17: Boolean get() = this.toRawBits().bit17
+
+/**
+ * Get bit with index 18 of a float
+ */
+val Float.bit18: Boolean get() = this.toRawBits().bit18
+
+/**
+ * Get bit with index 19 of a float
+ */
+val Float.bit19: Boolean get() = this.toRawBits().bit19
+
+/**
+ * Get bit with index 20 of a float
+ */
+val Float.bit20: Boolean get() = this.toRawBits().bit20
+
+/**
+ * Get bit with index 21 of a float
+ */
+val Float.bit21: Boolean get() = this.toRawBits().bit21
+
+/**
+ * Get bit with index 22 of a float
+ */
+val Float.bit22: Boolean get() = this.toRawBits().bit22
+
+/**
+ * Get bit with index 23 of a float
+ */
+val Float.bit23: Boolean get() = this.toRawBits().bit23
+
+/**
+ * Get bit with index 24 of a float
+ */
+val Float.bit24: Boolean get() = this.toRawBits().bit24
+
+/**
+ * Get bit with index 25 of a float
+ */
+val Float.bit25: Boolean get() = this.toRawBits().bit25
+
+/**
+ * Get bit with index 26 of a float
+ */
+val Float.bit26: Boolean get() = this.toRawBits().bit26
+
+/**
+ * Get bit with index 27 of a float
+ */
+val Float.bit27: Boolean get() = this.toRawBits().bit27
+
+/**
+ * Get bit with index 28 of a float
+ */
+val Float.bit28: Boolean get() = this.toRawBits().bit28
+
+/**
+ * Get bit with index 29 of a float
+ */
+val Float.bit29: Boolean get() = this.toRawBits().bit29
+
+/**
+ * Get bit with index 30 of a float
+ */
+val Float.bit30: Boolean get() = this.toRawBits().bit30
+
+/**
+ * Get bit with index 31 of a float
+ */
+val Float.bit31: Boolean get() = this.toRawBits().bit31
+
+/**
  * Get n-th bit of a float
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun Float.bit(n: Int): Boolean = this.toRawBits().bit(n)
 
@@ -1033,6 +1123,8 @@ val Double.bit63: Boolean get() = this.toRawBits().bit63
 
 /**
  * Get n-th bit of a double
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun Double.bit(n: Int): Boolean = this.toRawBits().bit(n)
 
@@ -1078,6 +1170,8 @@ val UByte.bit7: Boolean get() = this.toByte().bit7
 
 /**
  * Get n-th bit of an unsigned byte
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun UByte.bit(n: Int): Boolean = this.toByte().bit(n)
 
@@ -1163,6 +1257,8 @@ val UShort.bit15: Boolean get() = this.toShort().bit15
 
 /**
  * Get n-th bit of an unsigned short
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun UShort.bit(n: Int): Boolean = this.toShort().bit(n)
 
@@ -1328,6 +1424,8 @@ val UInt.bit31: Boolean get() = this.toInt().bit31
 
 /**
  * Get n-th bit of an unsigned int
+ * @param n index of the bit to get
+ * @return true if the bit is set, false otherwise
  */
 fun UInt.bit(n: Int): Boolean = this.toInt().bit(n)
 
@@ -1653,8 +1751,97 @@ val ULong.bit63: Boolean get() = this.toLong().bit63
 
 /**
  * Get n-th bit of an unsigned long
+ * @param n The index of the bit to get
+ * @return The value of the bit
  */
 fun ULong.bit(n: Int): Boolean = this.toLong().bit(n)
+
+/**
+ * Get bit with index 0 of a char
+ */
+val Char.bit0: Boolean get() = this.code.bit0
+
+/**
+ * Get bit with index 1 of a char
+ */
+val Char.bit1: Boolean get() = this.code.bit1
+
+/**
+ * Get bit with index 2 of a char
+ */
+val Char.bit2: Boolean get() = this.code.bit2
+
+/**
+ * Get bit with index 3 of a char
+ */
+val Char.bit3: Boolean get() = this.code.bit3
+
+/**
+ * Get bit with index 4 of a char
+ */
+val Char.bit4: Boolean get() = this.code.bit4
+
+/**
+ * Get bit with index 5 of a char
+ */
+val Char.bit5: Boolean get() = this.code.bit5
+
+/**
+ * Get bit with index 6 of a char
+ */
+val Char.bit6: Boolean get() = this.code.bit6
+
+/**
+ * Get bit with index 7 of a char
+ */
+val Char.bit7: Boolean get() = this.code.bit7
+
+/**
+ * Get bit with index 8 of a char
+ */
+val Char.bit8: Boolean get() = this.code.bit8
+
+/**
+ * Get bit with index 9 of a char
+ */
+val Char.bit9: Boolean get() = this.code.bit9
+
+/**
+ * Get bit with index 10 of a char
+ */
+val Char.bit10: Boolean get() = this.code.bit10
+
+/**
+ * Get bit with index 11 of a char
+ */
+val Char.bit11: Boolean get() = this.code.bit11
+
+/**
+ * Get bit with index 12 of a char
+ */
+val Char.bit12: Boolean get() = this.code.bit12
+
+/**
+ * Get bit with index 13 of a char
+ */
+val Char.bit13: Boolean get() = this.code.bit13
+
+/**
+ * Get bit with index 14 of a char
+ */
+val Char.bit14: Boolean get() = this.code.bit14
+
+/**
+ * Get bit with index 15 of a char
+ */
+val Char.bit15: Boolean get() = this.code.bit15
+
+/**
+ * Get n-th bit of a char
+ * @param n The index of the bit to get
+ * @return The value of the bit
+ */
+fun Char.bit(n: Int): Boolean = this.code.bit(n)
 
 /**
  * Change the bit with index 0 of a byte
@@ -3630,7 +3817,7 @@ fun UInt.withBit31(value: Boolean): UInt = if (value) (this or 0x80000000u) else
  * @param value The value to set the bit to
  * @return The unsigned int with the bit changed
  */
-fun UInt.withBit(n: Int, value: Boolean): UInt = this.toUInt().withBit(n, value).toUInt()
+fun UInt.withBit(n: Int, value: Boolean): UInt = this.toInt().withBit(n, value).toUInt()
 
 /**
  * Change the bit with index 0 of an unsigned long
@@ -4087,6 +4274,126 @@ fun ULong.withBit63(value: Boolean): ULong = if (value) (this or 0x8000000000000
  * @return The unsigned long with the bit changed
  */
 fun ULong.withBit(n: Int, value: Boolean): ULong = this.toLong().withBit(n, value).toULong()
+
+/**
+ * Change the bit with index 0 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit0(value: Boolean): Char = this.code.withBit0(value).toChar()
+
+/**
+ * Change the bit with index 1 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit1(value: Boolean): Char = this.code.withBit1(value).toChar()
+
+/**
+ * Change the bit with index 2 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit2(value: Boolean): Char = this.code.withBit2(value).toChar()
+
+/**
+ * Change the bit with index 3 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit3(value: Boolean): Char = this.code.withBit3(value).toChar()
+
+/**
+ * Change the bit with index 4 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit4(value: Boolean): Char = this.code.withBit4(value).toChar()
+
+/**
+ * Change the bit with index 5 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit5(value: Boolean): Char = this.code.withBit5(value).toChar()
+
+/**
+ * Change the bit with index 6 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit6(value: Boolean): Char = this.code.withBit6(value).toChar()
+
+/**
+ * Change the bit with index 7 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit7(value: Boolean): Char = this.code.withBit7(value).toChar()
+
+/**
+ * Change the bit with index 8 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit8(value: Boolean): Char = this.code.withBit8(value).toChar()
+
+/**
+ * Change the bit with index 9 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit9(value: Boolean): Char = this.code.withBit9(value).toChar()
+
+/**
+ * Change the bit with index 10 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit10(value: Boolean): Char = this.code.withBit10(value).toChar()
+
+/**
+ * Change the bit with index 11 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit11(value: Boolean): Char = this.code.withBit11(value).toChar()
+
+/**
+ * Change the bit with index 12 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit12(value: Boolean): Char = this.code.withBit12(value).toChar()
+
+/**
+ * Change the bit with index 13 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit13(value: Boolean): Char = this.code.withBit13(value).toChar()
+
+/**
+ * Change the bit with index 14 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit14(value: Boolean): Char = this.code.withBit14(value).toChar()
+
+/**
+ * Change the bit with index 15 of a char
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit15(value: Boolean): Char = this.code.withBit15(value).toChar()
+
+/**
+ * Change the n-th bit of a char
+ * @param n The index of the bit to change
+ * @param value The value to set the bit to
+ * @return The char with the bit changed
+ */
+fun Char.withBit(n: Int, value: Boolean): Char = this.code.withBit(n, value).toChar()
 
 /**
  * A bit list of a byte
@@ -4568,3 +4875,97 @@ class ULongBits(
 }
 
 val ULong.bits: ULongBits get() = ULongBits(this)
+
+fun byteFromBits(bits: List<Boolean>): Byte {
+    if (bits.size != 8) throw IllegalArgumentException("The list must have 8 elements")
+    var byte = 0.toByte()
+    for (i in 0 until 8) {
+        byte = byte.withBit(i, bits[i])
+    }
+    return byte
+}
+
+fun shortFromBits(bits: List<Boolean>): Short {
+    if (bits.size != 16) throw IllegalArgumentException("The list must have 16 elements")
+    var short = 0.toShort()
+    for (i in 0 until 16) {
+        short = short.withBit(i, bits[i])
+    }
+    return short
+}
+
+fun intFromBits(bits: List<Boolean>): Int {
+    if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
+    var int = 0
+    for (i in 0 until 32) {
+        int = int.withBit(i, bits[i])
+    }
+    return int
+}
+
+fun longFromBits(bits: List<Boolean>): Long {
+    if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
+    var long = 0L
+    for (i in 0 until 64) {
+        long = long.withBit(i, bits[i])
+    }
+    return long
+}
+
+fun floatFromBits(bits: List<Boolean>): Float {
+    if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
+    var float = 0f
+    for (i in 0 until 32) {
+        float = float.withBit(i, bits[i])
+    }
+    return float
+}
+
+fun doubleFromBits(bits: List<Boolean>): Double {
+    if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
+    var double = 0.0
+    for (i in 0 until 64) {
+        double = double.withBit(i, bits[i])
+    }
+    return double
+}
+
+fun ubyteFromBits(bits: List<Boolean>): UByte {
+    if (bits.size != 8) throw IllegalArgumentException("The list must have 8 elements")
+    var byte = 0.toUByte()
+    for (i in 0 until 8) {
+        byte = byte.withBit(i, bits[i])
+    }
+    return byte
+}
+
+fun ushortFromBits(bits: List<Boolean>): UShort {
+    if (bits.size != 16) throw IllegalArgumentException("The list must have 16 elements")
+    var short = 0.toUShort()
+    for (i in 0 until 16) {
+        short = short.withBit(i, bits[i])
+    }
+    return short
+}
+
+fun uintFromBits(bits: List<Boolean>): UInt {
+    if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
+    var int = 0u
+    for (i in 0 until 32) {
+        int = int.withBit(i, bits[i])
+    }
+    return int
+}
+
+fun ulongFromBits(bits: List<Boolean>): ULong {
+    if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
+    var long = 0uL
+    for (i in 0 until 64) {
+        long = long.withBit(i, bits[i])
+    }
+    return long
+}
+
+fun charFromBits(bits: List<Boolean>): Char {
+    return ushortFromBits(bits).toInt().toChar()
+}
