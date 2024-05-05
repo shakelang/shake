@@ -1912,63 +1912,63 @@ fun Byte.withBit(n: Int, value: Boolean): Byte = if (value) (this or (1 shl n).t
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit0(value: Boolean): Short = if (value) (this or 0x01) else (this and 0xFE.toShort())
+fun Short.withBit0(value: Boolean): Short = if (value) (this or 0x0001) else (this and 0xFFFEu.toShort())
 
 /**
  * Change the bit with index 1 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit1(value: Boolean): Short = if (value) (this or 0x02) else (this and 0xFD.toShort())
+fun Short.withBit1(value: Boolean): Short = if (value) (this or 0x0002) else (this and 0xFFFDu.toShort())
 
 /**
  * Change the bit with index 2 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit2(value: Boolean): Short = if (value) (this or 0x04) else (this and 0xFB.toShort())
+fun Short.withBit2(value: Boolean): Short = if (value) (this or 0x0004) else (this and 0xFFFBu.toShort())
 
 /**
  * Change the bit with index 3 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit3(value: Boolean): Short = if (value) (this or 0x08) else (this and 0xF7.toShort())
+fun Short.withBit3(value: Boolean): Short = if (value) (this or 0x0008) else (this and 0xFFF7u.toShort())
 
 /**
  * Change the bit with index 4 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit4(value: Boolean): Short = if (value) (this or 0x10) else (this and 0xEF.toShort())
+fun Short.withBit4(value: Boolean): Short = if (value) (this or 0x0010) else (this and 0xFFEFu.toShort())
 
 /**
  * Change the bit with index 5 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit5(value: Boolean): Short = if (value) (this or 0x20) else (this and 0xDF.toShort())
+fun Short.withBit5(value: Boolean): Short = if (value) (this or 0x0020) else (this and 0xFFDFu.toShort())
 
 /**
  * Change the bit with index 6 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit6(value: Boolean): Short = if (value) (this or 0x40) else (this and 0xBF.toShort())
+fun Short.withBit6(value: Boolean): Short = if (value) (this or 0x0040) else (this and 0xFFBFu.toShort())
 
 /**
  * Change the bit with index 7 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit7(value: Boolean): Short = if (value) (this or -0x80) else (this and 0x7F)
+fun Short.withBit7(value: Boolean): Short = if (value) (this or 0x0080) else (this and 0xFF7Fu.toShort())
 
 /**
  * Change the bit with index 8 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit8(value: Boolean): Short = if (value) (this or 0x100) else (this and 0xFEFF.toShort())
+fun Short.withBit8(value: Boolean): Short = if (value) (this or 0x0100) else (this and 0xFEFF.toShort())
 
 /**
  * Change the bit with index 9 of a short
@@ -1982,14 +1982,14 @@ fun Short.withBit9(value: Boolean): Short = if (value) (this or 0x200) else (thi
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit10(value: Boolean): Short = if (value) (this or 0x400) else (this and 0xFBFF.toShort())
+fun Short.withBit10(value: Boolean): Short = if (value) (this or 0x0400) else (this and 0xFBFF.toShort())
 
 /**
  * Change the bit with index 11 of a short
  * @param value The value to set the bit to
  * @return The short with the bit changed
  */
-fun Short.withBit11(value: Boolean): Short = if (value) (this or 0x800) else (this and 0xF7FF.toShort())
+fun Short.withBit11(value: Boolean): Short = if (value) (this or 0x0800) else (this and 0xF7FF.toShort())
 
 /**
  * Change the bit with index 12 of a short
@@ -2509,7 +2509,7 @@ fun Long.withBit34(value: Boolean): Long = if (value) (this or 0x400000000L) els
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit35(value: Boolean): Long = if (value) (this or 0x800000000L) else (this and 0xFFFFFFF7FFFFFFFuL.toLong())
+fun Long.withBit35(value: Boolean): Long = if (value) (this or 0x800000000L) else (this and 0xFFFFFFF7FFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 36 of a long
@@ -2600,84 +2600,84 @@ fun Long.withBit47(value: Boolean): Long = if (value) (this or 0x800000000000L) 
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit48(value: Boolean): Long = if (value) (this or 0x1000000000000L) else (this and 0xFFFEFFFFFFFFFFFuL.toLong())
+fun Long.withBit48(value: Boolean): Long = if (value) (this or 0x1000000000000L) else (this and 0xFFFEFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 49 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit49(value: Boolean): Long = if (value) (this or 0x2000000000000L) else (this and 0xFFFDFFFFFFFFFFFuL.toLong())
+fun Long.withBit49(value: Boolean): Long = if (value) (this or 0x2000000000000L) else (this and 0xFFFDFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 50 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit50(value: Boolean): Long = if (value) (this or 0x4000000000000L) else (this and 0xFFFBFFFFFFFFFFFuL.toLong())
+fun Long.withBit50(value: Boolean): Long = if (value) (this or 0x4000000000000L) else (this and 0xFFFBFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 51 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit51(value: Boolean): Long = if (value) (this or 0x8000000000000L) else (this and 0xFFF7FFFFFFFFFFFuL.toLong())
+fun Long.withBit51(value: Boolean): Long = if (value) (this or 0x8000000000000L) else (this and 0xFFF7FFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 52 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit52(value: Boolean): Long = if (value) (this or 0x10000000000000L) else (this and 0xFFEFFFFFFFFFFFuL.toLong())
+fun Long.withBit52(value: Boolean): Long = if (value) (this or 0x10000000000000L) else (this and 0xFFEFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 53 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit53(value: Boolean): Long = if (value) (this or 0x20000000000000L) else (this and 0xFFDFFFFFFFFFFFuL.toLong())
+fun Long.withBit53(value: Boolean): Long = if (value) (this or 0x20000000000000L) else (this and 0xFFDFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 54 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit54(value: Boolean): Long = if (value) (this or 0x40000000000000L) else (this and 0xFFBFFFFFFFFFFFuL.toLong())
+fun Long.withBit54(value: Boolean): Long = if (value) (this or 0x40000000000000L) else (this and 0xFFBFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 55 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit55(value: Boolean): Long = if (value) (this or 0x80000000000000L) else (this and 0xFF7FFFFFFFFFFFuL.toLong())
+fun Long.withBit55(value: Boolean): Long = if (value) (this or 0x80000000000000L) else (this and 0xFF7FFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 56 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit56(value: Boolean): Long = if (value) (this or 0x100000000000000L) else (this and 0xFEFFFFFFFFFFFFFuL.toLong())
+fun Long.withBit56(value: Boolean): Long = if (value) (this or 0x100000000000000L) else (this and 0xFEFFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 57 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit57(value: Boolean): Long = if (value) (this or 0x200000000000000L) else (this and 0xFDFFFFFFFFFFFFFuL.toLong())
+fun Long.withBit57(value: Boolean): Long = if (value) (this or 0x200000000000000L) else (this and 0xFDFFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 58 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit58(value: Boolean): Long = if (value) (this or 0x400000000000000L) else (this and 0xFBFFFFFFFFFFFFFuL.toLong())
+fun Long.withBit58(value: Boolean): Long = if (value) (this or 0x400000000000000L) else (this and 0xFBFFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 59 of a long
  * @param value The value to set the bit to
  * @return The long with the bit changed
  */
-fun Long.withBit59(value: Boolean): Long = if (value) (this or 0x800000000000000L) else (this and 0xF7FFFFFFFFFFFFFuL.toLong())
+fun Long.withBit59(value: Boolean): Long = if (value) (this or 0x800000000000000L) else (this and 0xF7FFFFFFFFFFFFFFuL.toLong())
 
 /**
  * Change the bit with index 60 of a long
@@ -2720,224 +2720,224 @@ fun Long.withBit(n: Int, value: Boolean): Long = if (value) (this or (1L shl n))
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit0(value: Boolean): Float = Float.fromBits(this.withBit0(value).toRawBits())
+fun Float.withBit0(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit0(value))
 
 /**
  * Change the bit with index 1 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit1(value: Boolean): Float = Float.fromBits(this.withBit1(value).toRawBits())
+fun Float.withBit1(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit1(value))
 
 /**
  * Change the bit with index 2 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit2(value: Boolean): Float = Float.fromBits(this.withBit2(value).toRawBits())
+fun Float.withBit2(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit2(value))
 
 /**
  * Change the bit with index 3 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit3(value: Boolean): Float = Float.fromBits(this.withBit3(value).toRawBits())
+fun Float.withBit3(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit3(value))
 
 /**
  * Change the bit with index 4 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit4(value: Boolean): Float = Float.fromBits(this.withBit4(value).toRawBits())
+fun Float.withBit4(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit4(value))
 
 /**
  * Change the bit with index 5 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit5(value: Boolean): Float = Float.fromBits(this.withBit5(value).toRawBits())
+fun Float.withBit5(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit5(value))
 
 /**
  * Change the bit with index 6 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit6(value: Boolean): Float = Float.fromBits(this.withBit6(value).toRawBits())
+fun Float.withBit6(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit6(value))
 
 /**
  * Change the bit with index 7 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit7(value: Boolean): Float = Float.fromBits(this.withBit7(value).toRawBits())
+fun Float.withBit7(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit7(value))
 
 /**
  * Change the bit with index 8 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit8(value: Boolean): Float = Float.fromBits(this.withBit8(value).toRawBits())
+fun Float.withBit8(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit8(value))
 
 /**
  * Change the bit with index 9 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit9(value: Boolean): Float = Float.fromBits(this.withBit9(value).toRawBits())
+fun Float.withBit9(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit9(value))
 
 /**
  * Change the bit with index 10 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit10(value: Boolean): Float = Float.fromBits(this.withBit10(value).toRawBits())
+fun Float.withBit10(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit10(value))
 
 /**
  * Change the bit with index 11 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit11(value: Boolean): Float = Float.fromBits(this.withBit11(value).toRawBits())
+fun Float.withBit11(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit11(value))
 
 /**
  * Change the bit with index 12 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit12(value: Boolean): Float = Float.fromBits(this.withBit12(value).toRawBits())
+fun Float.withBit12(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit12(value))
 
 /**
  * Change the bit with index 13 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit13(value: Boolean): Float = Float.fromBits(this.withBit13(value).toRawBits())
+fun Float.withBit13(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit13(value))
 
 /**
  * Change the bit with index 14 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit14(value: Boolean): Float = Float.fromBits(this.withBit14(value).toRawBits())
+fun Float.withBit14(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit14(value))
 
 /**
  * Change the bit with index 15 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit15(value: Boolean): Float = Float.fromBits(this.withBit15(value).toRawBits())
+fun Float.withBit15(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit15(value))
 
 /**
  * Change the bit with index 16 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit16(value: Boolean): Float = Float.fromBits(this.withBit16(value).toRawBits())
+fun Float.withBit16(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit16(value))
 
 /**
  * Change the bit with index 17 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit17(value: Boolean): Float = Float.fromBits(this.withBit17(value).toRawBits())
+fun Float.withBit17(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit17(value))
 
 /**
  * Change the bit with index 18 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit18(value: Boolean): Float = Float.fromBits(this.withBit18(value).toRawBits())
+fun Float.withBit18(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit18(value))
 
 /**
  * Change the bit with index 19 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit19(value: Boolean): Float = Float.fromBits(this.withBit19(value).toRawBits())
+fun Float.withBit19(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit19(value))
 
 /**
  * Change the bit with index 20 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit20(value: Boolean): Float = Float.fromBits(this.withBit20(value).toRawBits())
+fun Float.withBit20(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit20(value))
 
 /**
  * Change the bit with index 21 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit21(value: Boolean): Float = Float.fromBits(this.withBit21(value).toRawBits())
+fun Float.withBit21(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit21(value))
 
 /**
  * Change the bit with index 22 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit22(value: Boolean): Float = Float.fromBits(this.withBit22(value).toRawBits())
+fun Float.withBit22(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit22(value))
 
 /**
  * Change the bit with index 23 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit23(value: Boolean): Float = Float.fromBits(this.withBit23(value).toRawBits())
+fun Float.withBit23(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit23(value))
 
 /**
  * Change the bit with index 24 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit24(value: Boolean): Float = Float.fromBits(this.withBit24(value).toRawBits())
+fun Float.withBit24(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit24(value))
 
 /**
  * Change the bit with index 25 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit25(value: Boolean): Float = Float.fromBits(this.withBit25(value).toRawBits())
+fun Float.withBit25(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit25(value))
 
 /**
  * Change the bit with index 26 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit26(value: Boolean): Float = Float.fromBits(this.withBit26(value).toRawBits())
+fun Float.withBit26(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit26(value))
 
 /**
  * Change the bit with index 27 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit27(value: Boolean): Float = Float.fromBits(this.withBit27(value).toRawBits())
+fun Float.withBit27(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit27(value))
 
 /**
  * Change the bit with index 28 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit28(value: Boolean): Float = Float.fromBits(this.withBit28(value).toRawBits())
+fun Float.withBit28(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit28(value))
 
 /**
  * Change the bit with index 29 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit29(value: Boolean): Float = Float.fromBits(this.withBit29(value).toRawBits())
+fun Float.withBit29(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit29(value))
 
 /**
  * Change the bit with index 30 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit30(value: Boolean): Float = Float.fromBits(this.withBit30(value).toRawBits())
+fun Float.withBit30(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit30(value))
 
 /**
  * Change the bit with index 31 of a Float
  * @param value The value to set the bit to
  * @return The Float with the bit changed
  */
-fun Float.withBit31(value: Boolean): Float = Float.fromBits(this.withBit31(value).toRawBits())
+fun Float.withBit31(value: Boolean): Float = Float.fromBits(this.toRawBits().withBit31(value))
 
 /**
  * Change the n-th bit of a Float
@@ -2952,448 +2952,448 @@ fun Float.withBit(n: Int, value: Boolean): Float = Float.fromBits(this.toRawBits
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit0(value: Boolean): Double = Double.fromBits(this.withBit0(value).toRawBits())
+fun Double.withBit0(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit0(value))
 
 /**
  * Change the bit with index 1 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit1(value: Boolean): Double = Double.fromBits(this.withBit1(value).toRawBits())
+fun Double.withBit1(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit1(value))
 
 /**
  * Change the bit with index 2 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit2(value: Boolean): Double = Double.fromBits(this.withBit2(value).toRawBits())
+fun Double.withBit2(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit2(value))
 
 /**
  * Change the bit with index 3 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit3(value: Boolean): Double = Double.fromBits(this.withBit3(value).toRawBits())
+fun Double.withBit3(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit3(value))
 
 /**
  * Change the bit with index 4 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit4(value: Boolean): Double = Double.fromBits(this.withBit4(value).toRawBits())
+fun Double.withBit4(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit4(value))
 
 /**
  * Change the bit with index 5 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit5(value: Boolean): Double = Double.fromBits(this.withBit5(value).toRawBits())
+fun Double.withBit5(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit5(value))
 
 /**
  * Change the bit with index 6 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit6(value: Boolean): Double = Double.fromBits(this.withBit6(value).toRawBits())
+fun Double.withBit6(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit6(value))
 
 /**
  * Change the bit with index 7 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit7(value: Boolean): Double = Double.fromBits(this.withBit7(value).toRawBits())
+fun Double.withBit7(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit7(value))
 
 /**
  * Change the bit with index 8 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit8(value: Boolean): Double = Double.fromBits(this.withBit8(value).toRawBits())
+fun Double.withBit8(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit8(value))
 
 /**
  * Change the bit with index 9 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit9(value: Boolean): Double = Double.fromBits(this.withBit9(value).toRawBits())
+fun Double.withBit9(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit9(value))
 
 /**
  * Change the bit with index 10 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit10(value: Boolean): Double = Double.fromBits(this.withBit10(value).toRawBits())
+fun Double.withBit10(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit10(value))
 
 /**
  * Change the bit with index 11 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit11(value: Boolean): Double = Double.fromBits(this.withBit11(value).toRawBits())
+fun Double.withBit11(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit11(value))
 
 /**
  * Change the bit with index 12 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit12(value: Boolean): Double = Double.fromBits(this.withBit12(value).toRawBits())
+fun Double.withBit12(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit12(value))
 
 /**
  * Change the bit with index 13 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit13(value: Boolean): Double = Double.fromBits(this.withBit13(value).toRawBits())
+fun Double.withBit13(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit13(value))
 
 /**
  * Change the bit with index 14 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit14(value: Boolean): Double = Double.fromBits(this.withBit14(value).toRawBits())
+fun Double.withBit14(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit14(value))
 
 /**
  * Change the bit with index 15 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit15(value: Boolean): Double = Double.fromBits(this.withBit15(value).toRawBits())
+fun Double.withBit15(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit15(value))
 
 /**
  * Change the bit with index 16 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit16(value: Boolean): Double = Double.fromBits(this.withBit16(value).toRawBits())
+fun Double.withBit16(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit16(value))
 
 /**
  * Change the bit with index 17 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit17(value: Boolean): Double = Double.fromBits(this.withBit17(value).toRawBits())
+fun Double.withBit17(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit17(value))
 
 /**
  * Change the bit with index 18 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit18(value: Boolean): Double = Double.fromBits(this.withBit18(value).toRawBits())
+fun Double.withBit18(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit18(value))
 
 /**
  * Change the bit with index 19 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit19(value: Boolean): Double = Double.fromBits(this.withBit19(value).toRawBits())
+fun Double.withBit19(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit19(value))
 
 /**
  * Change the bit with index 20 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit20(value: Boolean): Double = Double.fromBits(this.withBit20(value).toRawBits())
+fun Double.withBit20(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit20(value))
 
 /**
  * Change the bit with index 21 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit21(value: Boolean): Double = Double.fromBits(this.withBit21(value).toRawBits())
+fun Double.withBit21(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit21(value))
 
 /**
  * Change the bit with index 22 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit22(value: Boolean): Double = Double.fromBits(this.withBit22(value).toRawBits())
+fun Double.withBit22(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit22(value))
 
 /**
  * Change the bit with index 23 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit23(value: Boolean): Double = Double.fromBits(this.withBit23(value).toRawBits())
+fun Double.withBit23(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit23(value))
 
 /**
  * Change the bit with index 24 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit24(value: Boolean): Double = Double.fromBits(this.withBit24(value).toRawBits())
+fun Double.withBit24(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit24(value))
 
 /**
  * Change the bit with index 25 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit25(value: Boolean): Double = Double.fromBits(this.withBit25(value).toRawBits())
+fun Double.withBit25(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit25(value))
 
 /**
  * Change the bit with index 26 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit26(value: Boolean): Double = Double.fromBits(this.withBit26(value).toRawBits())
+fun Double.withBit26(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit26(value))
 
 /**
  * Change the bit with index 27 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit27(value: Boolean): Double = Double.fromBits(this.withBit27(value).toRawBits())
+fun Double.withBit27(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit27(value))
 
 /**
  * Change the bit with index 28 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit28(value: Boolean): Double = Double.fromBits(this.withBit28(value).toRawBits())
+fun Double.withBit28(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit28(value))
 
 /**
  * Change the bit with index 29 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit29(value: Boolean): Double = Double.fromBits(this.withBit29(value).toRawBits())
+fun Double.withBit29(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit29(value))
 
 /**
  * Change the bit with index 30 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit30(value: Boolean): Double = Double.fromBits(this.withBit30(value).toRawBits())
+fun Double.withBit30(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit30(value))
 
 /**
  * Change the bit with index 31 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit31(value: Boolean): Double = Double.fromBits(this.withBit31(value).toRawBits())
+fun Double.withBit31(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit31(value))
 
 /**
  * Change the bit with index 32 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit32(value: Boolean): Double = Double.fromBits(this.withBit32(value).toRawBits())
+fun Double.withBit32(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit32(value))
 
 /**
  * Change the bit with index 33 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit33(value: Boolean): Double = Double.fromBits(this.withBit33(value).toRawBits())
+fun Double.withBit33(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit33(value))
 
 /**
  * Change the bit with index 34 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit34(value: Boolean): Double = Double.fromBits(this.withBit34(value).toRawBits())
+fun Double.withBit34(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit34(value))
 
 /**
  * Change the bit with index 35 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit35(value: Boolean): Double = Double.fromBits(this.withBit35(value).toRawBits())
+fun Double.withBit35(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit35(value))
 
 /**
  * Change the bit with index 36 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit36(value: Boolean): Double = Double.fromBits(this.withBit36(value).toRawBits())
+fun Double.withBit36(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit36(value))
 
 /**
  * Change the bit with index 37 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit37(value: Boolean): Double = Double.fromBits(this.withBit37(value).toRawBits())
+fun Double.withBit37(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit37(value))
 
 /**
  * Change the bit with index 38 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit38(value: Boolean): Double = Double.fromBits(this.withBit38(value).toRawBits())
+fun Double.withBit38(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit38(value))
 
 /**
  * Change the bit with index 39 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit39(value: Boolean): Double = Double.fromBits(this.withBit39(value).toRawBits())
+fun Double.withBit39(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit39(value))
 
 /**
  * Change the bit with index 40 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit40(value: Boolean): Double = Double.fromBits(this.withBit40(value).toRawBits())
+fun Double.withBit40(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit40(value))
 
 /**
  * Change the bit with index 41 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit41(value: Boolean): Double = Double.fromBits(this.withBit41(value).toRawBits())
+fun Double.withBit41(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit41(value))
 
 /**
  * Change the bit with index 42 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit42(value: Boolean): Double = Double.fromBits(this.withBit42(value).toRawBits())
+fun Double.withBit42(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit42(value))
 
 /**
  * Change the bit with index 43 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit43(value: Boolean): Double = Double.fromBits(this.withBit43(value).toRawBits())
+fun Double.withBit43(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit43(value))
 
 /**
  * Change the bit with index 44 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit44(value: Boolean): Double = Double.fromBits(this.withBit44(value).toRawBits())
+fun Double.withBit44(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit44(value))
 
 /**
  * Change the bit with index 45 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit45(value: Boolean): Double = Double.fromBits(this.withBit45(value).toRawBits())
+fun Double.withBit45(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit45(value))
 
 /**
  * Change the bit with index 46 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit46(value: Boolean): Double = Double.fromBits(this.withBit46(value).toRawBits())
+fun Double.withBit46(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit46(value))
 
 /**
  * Change the bit with index 47 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit47(value: Boolean): Double = Double.fromBits(this.withBit47(value).toRawBits())
+fun Double.withBit47(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit47(value))
 
 /**
  * Change the bit with index 48 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit48(value: Boolean): Double = Double.fromBits(this.withBit48(value).toRawBits())
+fun Double.withBit48(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit48(value))
 
 /**
  * Change the bit with index 49 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit49(value: Boolean): Double = Double.fromBits(this.withBit49(value).toRawBits())
+fun Double.withBit49(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit49(value))
 
 /**
  * Change the bit with index 50 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit50(value: Boolean): Double = Double.fromBits(this.withBit50(value).toRawBits())
+fun Double.withBit50(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit50(value))
 
 /**
  * Change the bit with index 51 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit51(value: Boolean): Double = Double.fromBits(this.withBit51(value).toRawBits())
+fun Double.withBit51(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit51(value))
 
 /**
  * Change the bit with index 52 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit52(value: Boolean): Double = Double.fromBits(this.withBit52(value).toRawBits())
+fun Double.withBit52(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit52(value))
 
 /**
  * Change the bit with index 53 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit53(value: Boolean): Double = Double.fromBits(this.withBit53(value).toRawBits())
+fun Double.withBit53(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit53(value))
 
 /**
  * Change the bit with index 54 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit54(value: Boolean): Double = Double.fromBits(this.withBit54(value).toRawBits())
+fun Double.withBit54(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit54(value))
 
 /**
  * Change the bit with index 55 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit55(value: Boolean): Double = Double.fromBits(this.withBit55(value).toRawBits())
+fun Double.withBit55(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit55(value))
 
 /**
  * Change the bit with index 56 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit56(value: Boolean): Double = Double.fromBits(this.withBit56(value).toRawBits())
+fun Double.withBit56(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit56(value))
 
 /**
  * Change the bit with index 57 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit57(value: Boolean): Double = Double.fromBits(this.withBit57(value).toRawBits())
+fun Double.withBit57(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit57(value))
 
 /**
  * Change the bit with index 58 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit58(value: Boolean): Double = Double.fromBits(this.withBit58(value).toRawBits())
+fun Double.withBit58(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit58(value))
 
 /**
  * Change the bit with index 59 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit59(value: Boolean): Double = Double.fromBits(this.withBit59(value).toRawBits())
+fun Double.withBit59(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit59(value))
 
 /**
  * Change the bit with index 60 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit60(value: Boolean): Double = Double.fromBits(this.withBit60(value).toRawBits())
+fun Double.withBit60(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit60(value))
 
 /**
  * Change the bit with index 61 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit61(value: Boolean): Double = Double.fromBits(this.withBit61(value).toRawBits())
+fun Double.withBit61(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit61(value))
 
 /**
  * Change the bit with index 62 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit62(value: Boolean): Double = Double.fromBits(this.withBit62(value).toRawBits())
+fun Double.withBit62(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit62(value))
 
 /**
  * Change the bit with index 63 of a Double
  * @param value The value to set the bit to
  * @return The Double with the bit changed
  */
-fun Double.withBit63(value: Boolean): Double = Double.fromBits(this.withBit63(value).toRawBits())
+fun Double.withBit63(value: Boolean): Double = Double.fromBits(this.toRawBits().withBit63(value))
 
 /**
  * Change the n-th bit of a Double

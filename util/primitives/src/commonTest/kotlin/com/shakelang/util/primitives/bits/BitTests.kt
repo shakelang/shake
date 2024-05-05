@@ -528,4 +528,530 @@ class BitTests : FlatTestSpec({
             }
         }
     }
+
+    fun <T> TestSpecContext.withBitTests(
+        bitAmount: Int,
+        creator: (bits: List<Boolean>) -> T,
+        testLambdas: List<(T, Boolean) -> T>,
+        nthBitLambda: (T, Int, Boolean) -> T,
+    ) {
+        if (testLambdas.size != bitAmount) throw IllegalArgumentException("testLambdas.size != bitAmount")
+
+        for (n in 0 until bitAmount) {
+            val lambda = testLambdas[n]
+
+            // test the n-th bit
+            describe("withBit$n") {
+                it("set to 0") {
+                    // Test with only the n-th bit set to 0
+                    val bits = MutableList(bitAmount) { true }
+                    val target = MutableList(bitAmount) { true }
+                    target[n] = false
+                    val value = creator(bits)
+                    lambda(value, false) shouldBe creator(target)
+                    target[n] = true
+
+                    // Test with one other bit set to 0
+                    for (i in 0 until bitAmount) {
+                        if (i == n) continue
+                        bits[i] = false
+                        target[i] = false
+                        target[n] = false
+                        val v = creator(bits)
+                        lambda(v, false) shouldBe creator(target)
+                        bits[i] = true
+                        target[i] = true
+                        target[n] = true
+                    }
+                }
+
+                it("set to 1") {
+                    // Test with only the n-th bit set to 1
+                    val bits = MutableList(bitAmount) { false }
+                    val target = MutableList(bitAmount) { false }
+                    target[n] = true
+                    val value = creator(bits)
+                    lambda(value, true) shouldBe creator(target)
+                    target[n] = false
+
+                    // Test with one other bit set to 1
+                    for (i in 0 until bitAmount) {
+                        if (i == n) continue
+                        bits[i] = true
+                        target[i] = true
+                        target[n] = true
+                        val v = creator(bits)
+                        lambda(v, true) shouldBe creator(target)
+                        bits[i] = false
+                        target[i] = false
+                        target[n] = false
+                    }
+                }
+            }
+        }
+    }
+
+    describe("With Bit") {
+        describe("Byte") {
+            withBitTests(
+                8,
+                { bits -> byteFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Short") {
+            withBitTests(
+                16,
+                { bits -> shortFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Int") {
+            withBitTests(
+                32,
+                { bits -> intFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Long") {
+            withBitTests(
+                64,
+                { bits -> longFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                    { it, b -> it.withBit32(b) },
+                    { it, b -> it.withBit33(b) },
+                    { it, b -> it.withBit34(b) },
+                    { it, b -> it.withBit35(b) },
+                    { it, b -> it.withBit36(b) },
+                    { it, b -> it.withBit37(b) },
+                    { it, b -> it.withBit38(b) },
+                    { it, b -> it.withBit39(b) },
+                    { it, b -> it.withBit40(b) },
+                    { it, b -> it.withBit41(b) },
+                    { it, b -> it.withBit42(b) },
+                    { it, b -> it.withBit43(b) },
+                    { it, b -> it.withBit44(b) },
+                    { it, b -> it.withBit45(b) },
+                    { it, b -> it.withBit46(b) },
+                    { it, b -> it.withBit47(b) },
+                    { it, b -> it.withBit48(b) },
+                    { it, b -> it.withBit49(b) },
+                    { it, b -> it.withBit50(b) },
+                    { it, b -> it.withBit51(b) },
+                    { it, b -> it.withBit52(b) },
+                    { it, b -> it.withBit53(b) },
+                    { it, b -> it.withBit54(b) },
+                    { it, b -> it.withBit55(b) },
+                    { it, b -> it.withBit56(b) },
+                    { it, b -> it.withBit57(b) },
+                    { it, b -> it.withBit58(b) },
+                    { it, b -> it.withBit59(b) },
+                    { it, b -> it.withBit60(b) },
+                    { it, b -> it.withBit61(b) },
+                    { it, b -> it.withBit62(b) },
+                    { it, b -> it.withBit63(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Float") {
+            withBitTests(
+                32,
+                { bits -> floatFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Double") {
+            withBitTests(
+                64,
+                { bits -> doubleFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                    { it, b -> it.withBit32(b) },
+                    { it, b -> it.withBit33(b) },
+                    { it, b -> it.withBit34(b) },
+                    { it, b -> it.withBit35(b) },
+                    { it, b -> it.withBit36(b) },
+                    { it, b -> it.withBit37(b) },
+                    { it, b -> it.withBit38(b) },
+                    { it, b -> it.withBit39(b) },
+                    { it, b -> it.withBit40(b) },
+                    { it, b -> it.withBit41(b) },
+                    { it, b -> it.withBit42(b) },
+                    { it, b -> it.withBit43(b) },
+                    { it, b -> it.withBit44(b) },
+                    { it, b -> it.withBit45(b) },
+                    { it, b -> it.withBit46(b) },
+                    { it, b -> it.withBit47(b) },
+                    { it, b -> it.withBit48(b) },
+                    { it, b -> it.withBit49(b) },
+                    { it, b -> it.withBit50(b) },
+                    { it, b -> it.withBit51(b) },
+                    { it, b -> it.withBit52(b) },
+                    { it, b -> it.withBit53(b) },
+                    { it, b -> it.withBit54(b) },
+                    { it, b -> it.withBit55(b) },
+                    { it, b -> it.withBit56(b) },
+                    { it, b -> it.withBit57(b) },
+                    { it, b -> it.withBit58(b) },
+                    { it, b -> it.withBit59(b) },
+                    { it, b -> it.withBit60(b) },
+                    { it, b -> it.withBit61(b) },
+                    { it, b -> it.withBit62(b) },
+                    { it, b -> it.withBit63(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("UByte") {
+            withBitTests(
+                8,
+                { bits -> ubyteFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("UShort") {
+            withBitTests(
+                16,
+                { bits -> ushortFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("UInt") {
+            withBitTests(
+                32,
+                { bits -> uintFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("ULong") {
+            withBitTests(
+                64,
+                { bits -> ulongFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                    { it, b -> it.withBit16(b) },
+                    { it, b -> it.withBit17(b) },
+                    { it, b -> it.withBit18(b) },
+                    { it, b -> it.withBit19(b) },
+                    { it, b -> it.withBit20(b) },
+                    { it, b -> it.withBit21(b) },
+                    { it, b -> it.withBit22(b) },
+                    { it, b -> it.withBit23(b) },
+                    { it, b -> it.withBit24(b) },
+                    { it, b -> it.withBit25(b) },
+                    { it, b -> it.withBit26(b) },
+                    { it, b -> it.withBit27(b) },
+                    { it, b -> it.withBit28(b) },
+                    { it, b -> it.withBit29(b) },
+                    { it, b -> it.withBit30(b) },
+                    { it, b -> it.withBit31(b) },
+                    { it, b -> it.withBit32(b) },
+                    { it, b -> it.withBit33(b) },
+                    { it, b -> it.withBit34(b) },
+                    { it, b -> it.withBit35(b) },
+                    { it, b -> it.withBit36(b) },
+                    { it, b -> it.withBit37(b) },
+                    { it, b -> it.withBit38(b) },
+                    { it, b -> it.withBit39(b) },
+                    { it, b -> it.withBit40(b) },
+                    { it, b -> it.withBit41(b) },
+                    { it, b -> it.withBit42(b) },
+                    { it, b -> it.withBit43(b) },
+                    { it, b -> it.withBit44(b) },
+                    { it, b -> it.withBit45(b) },
+                    { it, b -> it.withBit46(b) },
+                    { it, b -> it.withBit47(b) },
+                    { it, b -> it.withBit48(b) },
+                    { it, b -> it.withBit49(b) },
+                    { it, b -> it.withBit50(b) },
+                    { it, b -> it.withBit51(b) },
+                    { it, b -> it.withBit52(b) },
+                    { it, b -> it.withBit53(b) },
+                    { it, b -> it.withBit54(b) },
+                    { it, b -> it.withBit55(b) },
+                    { it, b -> it.withBit56(b) },
+                    { it, b -> it.withBit57(b) },
+                    { it, b -> it.withBit58(b) },
+                    { it, b -> it.withBit59(b) },
+                    { it, b -> it.withBit60(b) },
+                    { it, b -> it.withBit61(b) },
+                    { it, b -> it.withBit62(b) },
+                    { it, b -> it.withBit63(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+
+        describe("Char") {
+            withBitTests(
+                16,
+                { bits -> charFromBits(bits) },
+                listOf(
+                    { it, b -> it.withBit0(b) },
+                    { it, b -> it.withBit1(b) },
+                    { it, b -> it.withBit2(b) },
+                    { it, b -> it.withBit3(b) },
+                    { it, b -> it.withBit4(b) },
+                    { it, b -> it.withBit5(b) },
+                    { it, b -> it.withBit6(b) },
+                    { it, b -> it.withBit7(b) },
+                    { it, b -> it.withBit8(b) },
+                    { it, b -> it.withBit9(b) },
+                    { it, b -> it.withBit10(b) },
+                    { it, b -> it.withBit11(b) },
+                    { it, b -> it.withBit12(b) },
+                    { it, b -> it.withBit13(b) },
+                    { it, b -> it.withBit14(b) },
+                    { it, b -> it.withBit15(b) },
+                ),
+                { value, n, b -> value.withBit(n, b) },
+            )
+        }
+    }
 })
