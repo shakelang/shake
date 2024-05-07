@@ -221,6 +221,76 @@ fun ByteArray.toUnsignedLongBE(): ULong = this.toLongBE().toULong()
 fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
 
 /**
+ * Convert a byte array to an unsigned byte
+ * @throws IllegalArgumentException if the array is not of size 1
+ * @return the unsigned byte
+ */
+fun ByteArray.toUByte(): UByte = this.toByte().toUByte()
+
+/**
+ * Convert a byte array to an unsigned short (left endian)
+ * @throws IllegalArgumentException if the array is not of size 2
+ * @return the unsigned short
+ */
+fun ByteArray.toUShortLE(): UShort = this.toShortLE().toUShort()
+
+/**
+ * Convert a byte array to an unsigned short (big endian)
+ * @throws IllegalArgumentException if the array is not of size 2
+ * @return the unsigned short
+ */
+fun ByteArray.toUShortBE(): UShort = this.toShortBE().toUShort()
+
+/**
+ * Convert a byte array to an unsigned short
+ * @throws IllegalArgumentException if the array is not of size 2
+ * @return the unsigned short
+ */
+fun ByteArray.toUShort(): UShort = this.toShort().toUShort()
+
+/**
+ * Convert a byte array to an unsigned int (left endian)
+ * @throws IllegalArgumentException if the array is not of size 4
+ * @return the unsigned int
+ */
+fun ByteArray.toUIntLE(): UInt = this.toIntLE().toUInt()
+
+/**
+ * Convert a byte array to an unsigned int (big endian)
+ * @throws IllegalArgumentException if the array is not of size 4
+ * @return the unsigned int
+ */
+fun ByteArray.toUIntBE(): UInt = this.toIntBE().toUInt()
+
+/**
+ * Convert a byte array to an unsigned int
+ * @throws IllegalArgumentException if the array is not of size 4
+ * @return the unsigned int
+ */
+fun ByteArray.toUInt(): UInt = this.toInt().toUInt()
+
+/**
+ * Convert a byte array to an unsigned long (left endian)
+ * @throws IllegalArgumentException if the array is not of size 8
+ * @return the unsigned long
+ */
+fun ByteArray.toULongLE(): ULong = this.toLongLE().toULong()
+
+/**
+ * Convert a byte array to an unsigned long (big endian)
+ * @throws IllegalArgumentException if the array is not of size 8
+ * @return the unsigned long
+ */
+fun ByteArray.toULongBE(): ULong = this.toLongBE().toULong()
+
+/**
+ * Convert a byte array to an unsigned long
+ * @throws IllegalArgumentException if the array is not of size 8
+ * @return the unsigned long
+ */
+fun ByteArray.toULong(): ULong = this.toLong().toULong()
+
+/**
  * Set specific bytes in a byte array to a byte array
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte array
@@ -851,6 +921,76 @@ fun ByteArray.getUnsignedLongBE(index: Int): ULong = this.getLongBE(index).toULo
  * @return the unsigned long
  */
 fun ByteArray.getUnsignedLong(index: Int): ULong = this.getUnsignedLongBE(index)
+
+/**
+ * Get specific unsigned byte from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned byte
+ */
+fun ByteArray.getUByte(index: Int): UByte = this.getByte(index).toUByte()
+
+/**
+ * Get specific unsigned short from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned short
+ */
+fun ByteArray.getUShortLE(index: Int): UShort = this.getShortLE(index).toUShort()
+
+/**
+ * Get specific unsigned short from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned short
+ */
+fun ByteArray.getUShortBE(index: Int): UShort = this.getShortBE(index).toUShort()
+
+/**
+ * Get specific unsigned short from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned short
+ */
+fun ByteArray.getUShort(index: Int): UShort = this.getUShortBE(index)
+
+/**
+ * Get specific unsigned int from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned int
+ */
+fun ByteArray.getUIntLE(index: Int): UInt = this.getIntLE(index).toUInt()
+
+/**
+ * Get specific unsigned int from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned int
+ */
+fun ByteArray.getUIntBE(index: Int): UInt = this.getIntBE(index).toUInt()
+
+/**
+ * Get specific unsigned int from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned int
+ */
+fun ByteArray.getUInt(index: Int): UInt = this.getUIntBE(index)
+
+/**
+ * Get specific unsigned long from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned long
+ */
+fun ByteArray.getULongLE(index: Int): ULong = this.getLongLE(index).toULong()
+
+/**
+ * Get specific unsigned long from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned long
+ */
+fun ByteArray.getULongBE(index: Int): ULong = this.getLongBE(index).toULong()
+
+/**
+ * Get specific unsigned long from a byte array at a given position
+ * @throws IllegalArgumentException if the array is not big enough
+ * @return the unsigned long
+ */
+fun ByteArray.getULong(index: Int): ULong = this.getULongBE(index)
 
 /**
  * Get specific bytes from a byte array at a given position [left endian]

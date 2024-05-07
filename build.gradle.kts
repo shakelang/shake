@@ -39,6 +39,7 @@ dependencies {
     kover(project(":util:pointers"))
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
+    kover(project(":util:structs"))
     kover(project(":util:testlib"))
     kover(project(":util:testlib:lexer"))
 

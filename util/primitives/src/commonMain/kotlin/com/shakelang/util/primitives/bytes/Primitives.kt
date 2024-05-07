@@ -3,22 +3,45 @@
 package com.shakelang.util.primitives.bytes
 
 /**
- * Convert Byte to ByteArray
+ * Convert Byte to ByteArray (so 0x12 will be [0x12])
  * @return The ByteArray
  */
 fun Byte.toBytes(): ByteArray = byteArrayOf(this)
 
 /**
- * Convert Short to ByteArray
+ * Convert [Short] to [ByteArray] (Little Endian, so 0x1234 will be [0x34, 0x12])
  * @return The ByteArray
  */
-fun Short.toBytes(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this.toByte())
+fun Short.toBytesLE(): ByteArray = byteArrayOf(this.toByte(), (this.toInt() shr 8).toByte())
 
 /**
- * Convert Int to ByteArray
+ * Convert [Short] to [ByteArray] (Big Endian) (so 0x1234 will be [0x12, 0x34])
  * @return The ByteArray
  */
-fun Int.toBytes(): ByteArray = byteArrayOf(
+fun Short.toBytesBE(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this.toByte())
+
+/**
+ * Convert Short to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun Short.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert Int to ByteArray (Little Endian) (so 0x12345678 will be [0x78, 0x56, 0x34, 0x12])
+ * @return The ByteArray
+ */
+fun Int.toBytesLE(): ByteArray = byteArrayOf(
+    this.toByte(),
+    (this shr 8).toByte(),
+    (this shr 16).toByte(),
+    (this shr 24).toByte(),
+)
+
+/**
+ * Convert Int to ByteArray (Big Endian) (so 0x12345678 will be [0x12, 0x34, 0x56, 0x78])
+ * @return The ByteArray
+ */
+fun Int.toBytesBE(): ByteArray = byteArrayOf(
     (this shr 24).toByte(),
     (this shr 16).toByte(),
     (this shr 8).toByte(),
@@ -26,10 +49,16 @@ fun Int.toBytes(): ByteArray = byteArrayOf(
 )
 
 /**
- * Convert Long to ByteArray
+ * Convert Int to ByteArray (Big Endian)
  * @return The ByteArray
  */
-fun Long.toBytes(): ByteArray = byteArrayOf(
+fun Int.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert Long to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun Long.toBytesLE() = byteArrayOf(
     (this shr 56).toByte(),
     (this shr 48).toByte(),
     (this shr 40).toByte(),
@@ -41,16 +70,61 @@ fun Long.toBytes(): ByteArray = byteArrayOf(
 )
 
 /**
- * Convert Float to ByteArray
+ * Convert a Long to a ByteArray (Big Endian)
  * @return The ByteArray
  */
-fun Float.toBytes(): ByteArray = this.toBits().toBytes()
+fun Long.toBytesBE() = byteArrayOf(
+    (this shr 56).toByte(),
+    (this shr 48).toByte(),
+    (this shr 40).toByte(),
+    (this shr 32).toByte(),
+    (this shr 24).toByte(),
+    (this shr 16).toByte(),
+    (this shr 8).toByte(),
+    this.toByte(),
+)
 
 /**
- * Convert Double to ByteArray
+ * Convert Long to ByteArray (Big Endian)
  * @return The ByteArray
  */
-fun Double.toBytes(): ByteArray = this.toBits().toBytes()
+fun Long.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert Float to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun Float.toBytesLE(): ByteArray = toBits().toBytesLE()
+
+/**
+ * Convert Float to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun Float.toBytesBE(): ByteArray = toBits().toBytesBE()
+
+/**
+ * Convert Float to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun Float.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert Double to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun Double.toBytesLE(): ByteArray = toBits().toBytesLE()
+
+/**
+ * Convert Double to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun Double.toBytesBE(): ByteArray = toBits().toBytesBE()
+
+/**
+ * Convert Double to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun Double.toBytes(): ByteArray = toBytesBE()
 
 /**
  * Convert UByte to ByteArray
@@ -59,22 +133,58 @@ fun Double.toBytes(): ByteArray = this.toBits().toBytes()
 fun UByte.toBytes(): ByteArray = toByte().toBytes()
 
 /**
+ * Convert UShort to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun UShort.toBytesLE(): ByteArray = toShort().toBytesLE()
+
+/**
+ * Convert UShort to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun UShort.toBytesBE(): ByteArray = toShort().toBytesBE()
+
+/**
  * Convert UShort to ByteArray
  * @return The ByteArray
  */
-fun UShort.toBytes(): ByteArray = toShort().toBytes()
+fun UShort.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert UInt to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun UInt.toBytesLE(): ByteArray = toInt().toBytesLE()
+
+/**
+ * Convert UInt to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun UInt.toBytesBE(): ByteArray = toInt().toBytesBE()
 
 /**
  * Convert UInt to ByteArray
  * @return The ByteArray
  */
-fun UInt.toBytes(): ByteArray = toInt().toBytes()
+fun UInt.toBytes(): ByteArray = toBytesBE()
+
+/**
+ * Convert ULong to ByteArray (Little Endian)
+ * @return The ByteArray
+ */
+fun ULong.toBytesLE(): ByteArray = toLong().toBytesLE()
+
+/**
+ * Convert ULong to ByteArray (Big Endian)
+ * @return The ByteArray
+ */
+fun ULong.toBytesBE(): ByteArray = toLong().toBytesBE()
 
 /**
  * Convert ULong to ByteArray
  * @return The ByteArray
  */
-fun ULong.toBytes(): ByteArray = toLong().toBytes()
+fun ULong.toBytes(): ByteArray = toBytesBE()
 
 /**
  * Byte of byte

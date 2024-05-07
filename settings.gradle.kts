@@ -17,6 +17,7 @@ include(":util:parseutils")
 include(":util:pointers")
 include(":util:primitives")
 include(":util:shason")
+include(":util:structs")
 include(":util:testlib")
 include(":util:testlib:lexer")
 
