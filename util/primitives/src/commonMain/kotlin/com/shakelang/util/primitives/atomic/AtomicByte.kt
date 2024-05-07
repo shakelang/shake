@@ -8,6 +8,7 @@ import kotlin.experimental.or
 import kotlin.experimental.xor
 import kotlin.math.pow
 
+// Byte Operations
 @Suppress("MemberVisibilityCanBePrivate")
 object AtomicByteOperationImplementations {
 
@@ -392,7 +393,7 @@ abstract class AtomicByteBase(
     override fun get(): Byte = byteValue
 }
 
-abstract class EditableAtomicByte(
+class EditableAtomicByte(
     initialValue: Byte,
 ) : AtomicByteBase(initialValue) {
 
@@ -400,3 +401,9 @@ abstract class EditableAtomicByte(
         super.update(newValue)
     }
 }
+
+fun atomicByteOf(
+    initialValue: Byte,
+): AtomicByte = EditableAtomicByte(initialValue)
+
+fun Byte.atomic(): AtomicByte = atomicByteOf(this)

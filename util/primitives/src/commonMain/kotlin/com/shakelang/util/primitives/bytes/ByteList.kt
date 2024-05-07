@@ -216,7 +216,7 @@ fun MutableList<Byte>.setDouble(index: Int, double: Double): MutableList<Byte> {
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  */
-fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableList<Byte> {
+fun MutableList<Byte>.setUByte(index: Int, unsignedByte: UByte): MutableList<Byte> {
     if (this.size < index + 1) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 1}, but is ${this.size}")
     }
@@ -231,7 +231,7 @@ fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableL
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  */
-fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): MutableList<Byte> {
+fun MutableList<Byte>.setUShort(index: Int, unsignedShort: UShort): MutableList<Byte> {
     if (this.size < index + 2) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 2}, but is ${this.size}")
     }
@@ -247,7 +247,7 @@ fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): Mutab
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  */
-fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList<Byte> {
+fun MutableList<Byte>.setUInt(index: Int, unsignedInt: UInt): MutableList<Byte> {
     if (this.size < index + 4) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 4}, but is ${this.size}")
     }
@@ -265,7 +265,7 @@ fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  */
-fun MutableList<Byte>.setUnsignedLong(index: Int, unsignedLong: ULong): MutableList<Byte> {
+fun MutableList<Byte>.setULong(index: Int, unsignedLong: ULong): MutableList<Byte> {
     if (this.size < index + 8) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 8}, but is ${this.size}")
     }

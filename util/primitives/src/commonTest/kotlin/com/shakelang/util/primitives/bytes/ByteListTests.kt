@@ -232,66 +232,66 @@ class ByteListTests : FreeSpec(
 
         "setUnsignedByte" {
             val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
-            bytes.setUnsignedByte(0, 0xFFu)
+            bytes.setUByte(0, 0xFFu)
             bytes shouldBe listOf<Byte>(-1, 2, 3, 4, 5, 6, 7, 8)
 
-            bytes.setUnsignedByte(4, 0xFFu)
+            bytes.setUByte(4, 0xFFu)
             bytes shouldBe listOf<Byte>(-1, 2, 3, 4, -1, 6, 7, 8)
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedByte(8, 0xFFu)
+                bytes.setUByte(8, 0xFFu)
             }
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedByte(-1, 0xFFu)
+                bytes.setUByte(-1, 0xFFu)
             }
         }
 
         "setUnsignedShort" {
             val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
-            bytes.setUnsignedShort(0, 0xFFFFu)
+            bytes.setUShort(0, 0xFFFFu)
             bytes shouldBe listOf<Byte>(-1, -1, 3, 4, 5, 6, 7, 8)
 
-            bytes.setUnsignedShort(4, 0xFFFFu)
+            bytes.setUShort(4, 0xFFFFu)
             bytes shouldBe listOf<Byte>(-1, -1, 3, 4, -1, -1, 7, 8)
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedShort(7, 0xFFFFu)
+                bytes.setUShort(7, 0xFFFFu)
             }
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedShort(-1, 0xFFFFu)
+                bytes.setUShort(-1, 0xFFFFu)
             }
         }
 
         "setUnsignedInt" {
             val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
-            bytes.setUnsignedInt(0, 0xFFFFFFFFu)
+            bytes.setUInt(0, 0xFFFFFFFFu)
             bytes shouldBe listOf<Byte>(-1, -1, -1, -1, 5, 6, 7, 8)
 
-            bytes.setUnsignedInt(4, 0xFFFFFFFFu)
+            bytes.setUInt(4, 0xFFFFFFFFu)
             bytes shouldBe listOf<Byte>(-1, -1, -1, -1, -1, -1, -1, -1)
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedInt(7, 0xFFFFFFFFu)
+                bytes.setUInt(7, 0xFFFFFFFFu)
             }
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
+                bytes.setUInt(-1, 0xFFFFFFFFu)
             }
         }
 
         "setUnsignedLong" {
             val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
-            bytes.setUnsignedLong(0, 0xFFFFFFFFFFFFFFFFuL)
+            bytes.setULong(0, 0xFFFFFFFFFFFFFFFFuL)
             bytes shouldBe listOf<Byte>(-1, -1, -1, -1, -1, -1, -1, -1)
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedLong(7, 0xFFFFFFFFFFFFFFFFuL)
+                bytes.setULong(7, 0xFFFFFFFFFFFFFFFFuL)
             }
 
             shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFuL)
+                bytes.setULong(-1, 0xFFFFFFFFFFFFFFFFuL)
             }
         }
 
