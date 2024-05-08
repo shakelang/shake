@@ -1,12 +1,5 @@
 package com.shakelang.util.primitives.atomic
 
-import com.shakelang.util.primitives.calc.shl
-import com.shakelang.util.primitives.calc.shr
-import com.shakelang.util.primitives.calc.ushr
-import kotlin.experimental.and
-import kotlin.experimental.inv
-import kotlin.experimental.or
-import kotlin.experimental.xor
 import kotlin.math.pow
 
 // Int Operations
@@ -14,49 +7,141 @@ import kotlin.math.pow
 object AtomicIntOperationImplementations {
 
     // Int Operations
+    fun plus(source1: AtomicInt, other: Byte): Int = (source1.intValue + other)
+    fun plus(source1: AtomicInt, other: AtomicByte): Int = (source1.intValue + other.byteValue)
+    fun plus(source1: AtomicInt, other: Short): Int = (source1.intValue + other)
+    fun plus(source1: AtomicInt, other: AtomicShort): Int = (source1.intValue + other.shortValue)
     fun plus(source1: AtomicInt, other: Int): Int = (source1.intValue + other)
     fun plus(source1: AtomicInt, source2: AtomicInt): Int = (source1.intValue + source2.intValue)
+    fun plus(source1: AtomicInt, other: Long): Long = (source1.intValue + other)
+    fun plus(source1: AtomicInt, other: AtomicLong): Long = (source1.intValue + other.longValue)
+
+    fun minus(source1: AtomicInt, other: Byte): Int = (source1.intValue - other)
+    fun minus(source1: AtomicInt, other: AtomicByte): Int = (source1.intValue - other.byteValue)
+    fun minus(source1: AtomicInt, other: Short): Int = (source1.intValue - other)
+    fun minus(source1: AtomicInt, other: AtomicShort): Int = (source1.intValue - other.shortValue)
     fun minus(source1: AtomicInt, other: Int): Int = (source1.intValue - other)
     fun minus(source1: AtomicInt, source2: AtomicInt): Int = (source1.intValue - source2.intValue)
+    fun minus(source1: AtomicInt, other: Long): Long = (source1.intValue - other)
+    fun minus(source1: AtomicInt, other: AtomicLong): Long = (source1.intValue - other.longValue)
+
+    fun times(source1: AtomicInt, other: Byte): Int = (source1.intValue * other)
+    fun times(source1: AtomicInt, other: AtomicByte): Int = (source1.intValue * other.byteValue)
+    fun times(source1: AtomicInt, other: Short): Int = (source1.intValue * other)
+    fun times(source1: AtomicInt, other: AtomicShort): Int = (source1.intValue * other.shortValue)
     fun times(source1: AtomicInt, other: Int): Int = (source1.intValue * other)
     fun times(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue * source2.intValue
+    fun times(source1: AtomicInt, other: Long): Long = (source1.intValue * other)
+    fun times(source1: AtomicInt, other: AtomicLong): Long = (source1.intValue * other.longValue)
+
+    fun div(source1: AtomicInt, other: Byte): Int = (source1.intValue / other)
+    fun div(source1: AtomicInt, other: AtomicByte): Int = (source1.intValue / other.byteValue)
+    fun div(source1: AtomicInt, other: Short): Int = (source1.intValue / other)
+    fun div(source1: AtomicInt, other: AtomicShort): Int = (source1.intValue / other.shortValue)
     fun div(source1: AtomicInt, other: Int): Int = (source1.intValue / other)
     fun div(source1: AtomicInt, source2: AtomicInt): Int = (source1.intValue / source2.intValue)
+    fun div(source1: AtomicInt, other: Long): Long = (source1.intValue / other)
+    fun div(source1: AtomicInt, other: AtomicLong): Long = (source1.intValue / other.longValue)
+
+    fun rem(source1: AtomicInt, other: Byte): Int = (source1.intValue % other)
+    fun rem(source1: AtomicInt, other: AtomicByte): Int = (source1.intValue % other.byteValue)
+    fun rem(source1: AtomicInt, other: Short): Int = (source1.intValue % other)
+    fun rem(source1: AtomicInt, other: AtomicShort): Int = (source1.intValue % other.shortValue)
     fun rem(source1: AtomicInt, other: Int): Int = (source1.intValue % other)
     fun rem(source1: AtomicInt, source2: AtomicInt): Int = (source1.intValue % source2.intValue)
+    fun rem(source1: AtomicInt, other: Long): Long = (source1.intValue % other)
+    fun rem(source1: AtomicInt, other: AtomicLong): Long = (source1.intValue % other.longValue)
+
+    fun pow(source1: AtomicInt, other: Byte): Int = source1.intValue.toDouble().pow(other.toDouble()).toInt()
+    fun pow(source1: AtomicInt, other: AtomicByte): Int = source1.intValue.toDouble().pow(other.byteValue.toDouble()).toInt()
+    fun pow(source1: AtomicInt, other: Short): Int = source1.intValue.toDouble().pow(other.toDouble()).toInt()
+    fun pow(source1: AtomicInt, other: AtomicShort): Int = source1.intValue.toDouble().pow(other.shortValue.toDouble()).toInt()
     fun pow(source1: AtomicInt, other: Int): Int = source1.intValue.toDouble().pow(other.toDouble()).toInt()
     fun pow(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue.toDouble().pow(source2.intValue.toDouble()).toInt()
+    fun pow(source1: AtomicInt, other: Long): Long = source1.intValue.toDouble().pow(other.toDouble()).toLong()
+    fun pow(source1: AtomicInt, other: AtomicLong): Long = source1.intValue.toDouble().pow(other.longValue.toDouble()).toLong()
+
     fun and(source1: AtomicInt, other: Int): Int = source1.intValue and other
     fun and(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue and source2.intValue
+
     fun or(source1: AtomicInt, other: Int): Int = source1.intValue or other
     fun or(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue or source2.intValue
+
     fun xor(source1: AtomicInt, other: Int): Int = source1.intValue xor other
     fun xor(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue xor source2.intValue
+
     fun shl(source1: AtomicInt, other: Int): Int = source1.intValue shl other
     fun shl(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue shl source2.intValue
+
     fun shr(source1: AtomicInt, other: Int): Int = source1.intValue shr other
     fun shr(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue shr source2.intValue
+
     fun ushr(source1: AtomicInt, other: Int): Int = source1.intValue ushr other
     fun ushr(source1: AtomicInt, source2: AtomicInt): Int = source1.intValue ushr source2.intValue
+
     fun inv(source1: AtomicInt): Int = source1.intValue.inv()
     fun negate(source1: AtomicInt): Int = (-source1.intValue)
 
+    val intPlusByte: BinaryOperation<AtomicInt, Byte, Int> = ::plus
+    val intPlusAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::plus
+    val intPlusShort: BinaryOperation<AtomicInt, Short, Int> = ::plus
+    val intPlusAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::plus
     val intPlusInt: BinaryOperation<AtomicInt, Int, Int> = ::plus
     val intPlusAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::plus
+    val intPlusLong: BinaryOperation<AtomicInt, Long, Long> = ::plus
+    val intPlusAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::plus
+
+    val intMinusByte: BinaryOperation<AtomicInt, Byte, Int> = ::minus
+    val intMinusAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::minus
+    val intMinusShort: BinaryOperation<AtomicInt, Short, Int> = ::minus
+    val intMinusAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::minus
     val intMinusInt: BinaryOperation<AtomicInt, Int, Int> = ::minus
     val intMinusAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::minus
+    val intMinusLong: BinaryOperation<AtomicInt, Long, Long> = ::minus
+    val intMinusAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::minus
+
+    val intTimesByte: BinaryOperation<AtomicInt, Byte, Int> = ::times
+    val intTimesAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::times
+    val intTimesShort: BinaryOperation<AtomicInt, Short, Int> = ::times
+    val intTimesAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::times
     val intTimesInt: BinaryOperation<AtomicInt, Int, Int> = ::times
     val intTimesAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::times
+    val intTimesLong: BinaryOperation<AtomicInt, Long, Long> = ::times
+    val intTimesAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::times
+
+    val intDivByte: BinaryOperation<AtomicInt, Byte, Int> = ::div
+    val intDivAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::div
+    val intDivShort: BinaryOperation<AtomicInt, Short, Int> = ::div
+    val intDivAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::div
     val intDivInt: BinaryOperation<AtomicInt, Int, Int> = ::div
     val intDivAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::div
+    val intDivLong: BinaryOperation<AtomicInt, Long, Long> = ::div
+    val intDivAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::div
+
+    val intRemByte: BinaryOperation<AtomicInt, Byte, Int> = ::rem
+    val intRemAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::rem
+    val intRemShort: BinaryOperation<AtomicInt, Short, Int> = ::rem
+    val intRemAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::rem
     val intRemInt: BinaryOperation<AtomicInt, Int, Int> = ::rem
     val intRemAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::rem
+    val intRemLong: BinaryOperation<AtomicInt, Long, Long> = ::rem
+    val intRemAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::rem
+
+    val intPowByte: BinaryOperation<AtomicInt, Byte, Int> = ::pow
+    val intPowAtomicByte: BinaryOperation<AtomicInt, AtomicByte, Int> = ::pow
+    val intPowShort: BinaryOperation<AtomicInt, Short, Int> = ::pow
+    val intPowAtomicShort: BinaryOperation<AtomicInt, AtomicShort, Int> = ::pow
     val intPowInt: BinaryOperation<AtomicInt, Int, Int> = ::pow
     val intPowAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::pow
+    val intPowLong: BinaryOperation<AtomicInt, Long, Long> = ::pow
+    val intPowAtomicLong: BinaryOperation<AtomicInt, AtomicLong, Long> = ::pow
+
     val intAndInt: BinaryOperation<AtomicInt, Int, Int> = ::and
     val intAndAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::and
+
     val intOrInt: BinaryOperation<AtomicInt, Int, Int> = ::or
-    val bytOrAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::or
+    val intOrAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::or
+
     val intXorInt: BinaryOperation<AtomicInt, Int, Int> = ::xor
     val intXorAtomicInt: BinaryOperation<AtomicInt, AtomicInt, Int> = ::xor
     val intShlInt: BinaryOperation<AtomicInt, Int, Int> = ::shl
@@ -68,30 +153,78 @@ object AtomicIntOperationImplementations {
     val intInv: UnaryOperation<AtomicInt, Int> = ::inv
     val intNegate: UnaryOperation<AtomicInt, Int> = ::negate
 
+    fun transformPlus(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intPlusByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformPlus(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intPlusAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformPlus(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intPlusShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformPlus(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intPlusAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformPlus(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intPlusInt, AutoUpdateAbleAtomicInt.creator)
     fun transformPlus(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intPlusAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformPlus(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intPlusLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformPlus(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intPlusAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
+    fun transformMinus(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intMinusByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformMinus(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intMinusAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformMinus(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intMinusShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformMinus(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intMinusAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformMinus(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intMinusInt, AutoUpdateAbleAtomicInt.creator)
     fun transformMinus(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intMinusAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformMinus(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intMinusLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformMinus(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intMinusAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
+    fun transformTimes(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intTimesByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformTimes(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intTimesAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformTimes(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intTimesShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformTimes(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intTimesAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformTimes(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intTimesInt, AutoUpdateAbleAtomicInt.creator)
     fun transformTimes(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intTimesAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformTimes(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intTimesLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformTimes(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intTimesAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
+    fun transformDiv(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intDivByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformDiv(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intDivAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformDiv(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intDivShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformDiv(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intDivAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformDiv(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intDivInt, AutoUpdateAbleAtomicInt.creator)
     fun transformDiv(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intDivAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformDiv(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intDivLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformDiv(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intDivAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
+    fun transformRem(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intRemByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformRem(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intRemAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformRem(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intRemShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformRem(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intRemAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformRem(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intRemInt, AutoUpdateAbleAtomicInt.creator)
     fun transformRem(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intRemAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformRem(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intRemLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformRem(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intRemAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
+    fun transformPow(source1: AtomicInt, other: Byte): AtomicInt = transform1(source1, other, intPowByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicInt, other: AtomicByte): AtomicInt = transform1(source1, other, intPowAtomicByte, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicInt, other: Short): AtomicInt = transform1(source1, other, intPowShort, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicInt, other: AtomicShort): AtomicInt = transform1(source1, other, intPowAtomicShort, AutoUpdateAbleAtomicInt.creator)
     fun transformPow(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intPowInt, AutoUpdateAbleAtomicInt.creator)
     fun transformPow(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intPowAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicInt, other: Long): AtomicLong = transform1(source1, other, intPowLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformPow(source1: AtomicInt, other: AtomicLong): AtomicLong = transform1(source1, other, intPowAtomicLong, AutoUpdateAbleAtomicLong.creator)
+
     fun transformAnd(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intAndInt, AutoUpdateAbleAtomicInt.creator)
     fun transformAnd(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intAndAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformOr(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intOrInt, AutoUpdateAbleAtomicInt.creator)
-    fun transformOr(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, bytOrAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformOr(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intOrAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformXor(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intXorInt, AutoUpdateAbleAtomicInt.creator)
     fun transformXor(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intXorAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformShl(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intShlInt, AutoUpdateAbleAtomicInt.creator)
     fun transformShl(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intShlAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformShr(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intShrInt, AutoUpdateAbleAtomicInt.creator)
     fun transformShr(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intShrAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformUshr(source1: AtomicInt, other: Int): AtomicInt = transform1(source1, other, intUshrInt, AutoUpdateAbleAtomicInt.creator)
     fun transformUshr(source1: AtomicInt, other: AtomicInt): AtomicInt = transform2(source1, other, intUshrAtomicInt, AutoUpdateAbleAtomicInt.creator)
+
     fun transformInv(source1: AtomicInt): AtomicInt = transform1(source1, intInv, AutoUpdateAbleAtomicInt.creator)
     fun transformNegate(source1: AtomicInt): AtomicInt = transform1(source1, intNegate, AutoUpdateAbleAtomicInt.creator)
 }
@@ -112,6 +245,34 @@ interface AtomicInt : AtomicValue {
     fun get(): Int
 
     /**
+     * Add another byte to this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to add
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun plus(other: Byte) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another [AtomicByte] to this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to add
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun plus(other: AtomicByte) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another short to this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to add
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun plus(other: Short) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another [AtomicShort] to this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to add
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun plus(other: AtomicShort) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
      * Add another int to this int (returns a new [AtomicInt] that automatically updates)
      * @param other The other int to add
      * @return The new [AtomicInt] that automatically updates
@@ -124,6 +285,48 @@ interface AtomicInt : AtomicValue {
      * @return The new [AtomicInt] that automatically updates
      */
     operator fun plus(other: AtomicInt) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another long to this int (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to add
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun plus(other: Long) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another [AtomicLong] to this int (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to add
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun plus(other: AtomicLong) = AtomicIntOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Subtract another byte from this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to subtract
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun minus(other: Byte) = AtomicIntOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another [AtomicByte] from this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to subtract
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun minus(other: AtomicByte) = AtomicIntOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another short from this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to subtract
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun minus(other: Short) = AtomicIntOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another [AtomicShort] from this int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to subtract
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun minus(other: AtomicShort) = AtomicIntOperationImplementations.transformMinus(this, other)
 
     /**
      * Subtract another int from this int (returns a new [AtomicInt] that automatically updates)
@@ -140,6 +343,48 @@ interface AtomicInt : AtomicValue {
     operator fun minus(other: AtomicInt) = AtomicIntOperationImplementations.transformMinus(this, other)
 
     /**
+     * Subtract another long from this int (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to subtract
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun minus(other: Long) = AtomicIntOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another [AtomicLong] from this int (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to subtract
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun minus(other: AtomicLong) = AtomicIntOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Multiply this int with another byte (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to multiply with
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun times(other: Byte) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this int with another [AtomicByte] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to multiply with
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun times(other: AtomicByte) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this int with another short (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to multiply with
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun times(other: Short) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this int with another [AtomicShort] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to multiply with
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun times(other: AtomicShort) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
      * Multiply this int with another int (returns a new [AtomicInt] that automatically updates)
      * @param other The other int to multiply with
      * @return The new [AtomicInt] that automatically updates
@@ -152,6 +397,34 @@ interface AtomicInt : AtomicValue {
      * @return The new [AtomicInt] that automatically updates
      */
     operator fun times(other: AtomicInt) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Divide this int by another byte (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to divide by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun div(other: Byte) = AtomicIntOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this int by another [AtomicByte] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to divide by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun div(other: AtomicByte) = AtomicIntOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this int by another short (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to divide by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun div(other: Short) = AtomicIntOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this int by another [AtomicShort] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to divide by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun div(other: AtomicShort) = AtomicIntOperationImplementations.transformDiv(this, other)
 
     /**
      * Divide this int by another int (returns a new [AtomicInt] that automatically updates)
@@ -168,6 +441,48 @@ interface AtomicInt : AtomicValue {
     operator fun div(other: AtomicInt) = AtomicIntOperationImplementations.transformDiv(this, other)
 
     /**
+     * Divide this int by another long (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to divide by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun div(other: Long) = AtomicIntOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this int by another [AtomicLong] (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to divide by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun div(other: AtomicLong) = AtomicIntOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Modulo this int by another byte (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to modulo by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun rem(other: Byte) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this int by another [AtomicByte] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to modulo by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun rem(other: AtomicByte) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this int by another short (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to modulo by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun rem(other: Short) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this int by another [AtomicShort] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to modulo by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    operator fun rem(other: AtomicShort) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
      * Modulo this int by another int (returns a new [AtomicInt] that automatically updates)
      * @param other The other int to modulo by
      * @return The new [AtomicInt] that automatically updates
@@ -182,6 +497,48 @@ interface AtomicInt : AtomicValue {
     operator fun rem(other: AtomicInt) = AtomicIntOperationImplementations.transformRem(this, other)
 
     /**
+     * Modulo this int by another long (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to modulo by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun rem(other: Long) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this int by another [AtomicLong] (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to modulo by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun rem(other: AtomicLong) = AtomicIntOperationImplementations.transformRem(this, other)
+
+    /**
+     * Power this int by another byte (returns a new [AtomicInt] that automatically updates)
+     * @param other The other byte to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: Byte) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this int by another [AtomicByte] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicByte] to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: AtomicByte) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this int by another short (returns a new [AtomicInt] that automatically updates)
+     * @param other The other short to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: Short) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this int by another [AtomicShort] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicShort] to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: AtomicShort) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
      * Power this int by another int (returns a new [AtomicInt] that automatically updates)
      * @param other The other int to power by
      * @return The new [AtomicInt] that automatically updates
@@ -194,6 +551,20 @@ interface AtomicInt : AtomicValue {
      * @return The new [AtomicInt] that automatically updates
      */
     infix fun pow(other: AtomicInt) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this int by another long (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to power by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    infix fun pow(other: Long) = AtomicIntOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this int by another [AtomicLong] (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to power by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    infix fun pow(other: AtomicLong) = AtomicIntOperationImplementations.transformPow(this, other)
 
     /**
      * And this int with another int (returns a new [AtomicInt] that automatically updates)

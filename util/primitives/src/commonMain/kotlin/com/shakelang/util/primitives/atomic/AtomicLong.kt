@@ -3,10 +3,6 @@ package com.shakelang.util.primitives.atomic
 import com.shakelang.util.primitives.calc.shl
 import com.shakelang.util.primitives.calc.shr
 import com.shakelang.util.primitives.calc.ushr
-import kotlin.experimental.and
-import kotlin.experimental.inv
-import kotlin.experimental.or
-import kotlin.experimental.xor
 import kotlin.math.pow
 
 // Long Operations
@@ -56,7 +52,7 @@ object AtomicLongOperationImplementations {
     val longAndLong: BinaryOperation<AtomicLong, Long, Long> = ::and
     val longAndAtomicLong: BinaryOperation<AtomicLong, AtomicLong, Long> = ::and
     val longOrLong: BinaryOperation<AtomicLong, Long, Long> = ::or
-    val bytOrAtomicLong: BinaryOperation<AtomicLong, AtomicLong, Long> = ::or
+    val longOrAtomicLong: BinaryOperation<AtomicLong, AtomicLong, Long> = ::or
     val longXorLong: BinaryOperation<AtomicLong, Long, Long> = ::xor
     val longXorAtomicLong: BinaryOperation<AtomicLong, AtomicLong, Long> = ::xor
     val longShlLong: BinaryOperation<AtomicLong, Long, Long> = ::shl
@@ -130,7 +126,7 @@ object AtomicLongOperationImplementations {
     fun transformAnd(source1: AtomicLong, other: Long): AtomicLong = transform1(source1, other, longAndLong)
     fun transformAnd(source1: AtomicLong, other: AtomicLong): AtomicLong = transform2(source1, other, longAndAtomicLong)
     fun transformOr(source1: AtomicLong, other: Long): AtomicLong = transform1(source1, other, longOrLong)
-    fun transformOr(source1: AtomicLong, other: AtomicLong): AtomicLong = transform2(source1, other, bytOrAtomicLong)
+    fun transformOr(source1: AtomicLong, other: AtomicLong): AtomicLong = transform2(source1, other, longOrAtomicLong)
     fun transformXor(source1: AtomicLong, other: Long): AtomicLong = transform1(source1, other, longXorLong)
     fun transformXor(source1: AtomicLong, other: AtomicLong): AtomicLong = transform2(source1, other, longXorAtomicLong)
     fun transformShl(source1: AtomicLong, other: Long): AtomicLong = transform1(source1, other, longShlLong)

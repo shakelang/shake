@@ -1,4 +1,5 @@
-import com.shakelang.util.primitives.atomic.*
+package com.shakelang.util.primitives.atomic
+
 import com.shakelang.util.primitives.calc.shl
 import com.shakelang.util.primitives.calc.shr
 import com.shakelang.util.primitives.calc.ushr
@@ -146,7 +147,7 @@ object AtomicByteOperationImplementations {
     val byteAndAtomicByte: BinaryOperation<AtomicByte, AtomicByte, Byte> = ::and
 
     val byteOrByte: BinaryOperation<AtomicByte, Byte, Byte> = ::or
-    val bytOrAtomicByte: BinaryOperation<AtomicByte, AtomicByte, Byte> = ::or
+    val byteOrAtomicByte: BinaryOperation<AtomicByte, AtomicByte, Byte> = ::or
 
     val byteXorByte: BinaryOperation<AtomicByte, Byte, Byte> = ::xor
     val byteXorAtomicByte: BinaryOperation<AtomicByte, AtomicByte, Byte> = ::xor
@@ -221,7 +222,7 @@ object AtomicByteOperationImplementations {
     fun transformAnd(source1: AtomicByte, other: AtomicByte): AtomicByte = transform2(source1, other, byteAndAtomicByte, AutoUpdateAbleAtomicByte.creator)
 
     fun transformOr(source1: AtomicByte, other: Byte): AtomicByte = transform1(source1, other, byteOrByte, AutoUpdateAbleAtomicByte.creator)
-    fun transformOr(source1: AtomicByte, other: AtomicByte): AtomicByte = transform2(source1, other, bytOrAtomicByte, AutoUpdateAbleAtomicByte.creator)
+    fun transformOr(source1: AtomicByte, other: AtomicByte): AtomicByte = transform2(source1, other, byteOrAtomicByte, AutoUpdateAbleAtomicByte.creator)
 
     fun transformXor(source1: AtomicByte, other: Byte): AtomicByte = transform1(source1, other, byteXorByte, AutoUpdateAbleAtomicByte.creator)
     fun transformXor(source1: AtomicByte, other: AtomicByte): AtomicByte = transform2(source1, other, byteXorAtomicByte, AutoUpdateAbleAtomicByte.creator)
