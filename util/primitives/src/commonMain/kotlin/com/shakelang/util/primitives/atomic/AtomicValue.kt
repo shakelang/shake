@@ -22,7 +22,14 @@ abstract class ListenableItemImpl : ListenableItem {
     }
 }
 
-interface AtomicValue : ListenableItem
+interface AtomicValue : ListenableItem {
+    fun addDestroyListener(listener: () -> Unit): () -> Unit
+    fun removeDestroyListener(listener: () -> Unit)
+}
+
+interface AutoUpdatableAtomicValue<T> : AtomicValue {
+    fun update(value: T)
+}
 
 class AtomicConnection1<T1 : AtomicValue, T : AtomicValue>(
     val source1: T1,
@@ -173,4 +180,47 @@ fun <T : AtomicValue, V : AtomicValue, W : AtomicValue, X : AtomicValue> connect
     update: (AtomicConnection3<T, V, W, X>) -> Unit,
 ): AtomicConnection3<T, V, W, X> {
     return AtomicConnection3(source1, source2, source3, target, update)
+}
+
+fun <S1 : AtomicValue, T, RT : AutoUpdatableAtomicValue<T>> transform1(
+    source1: S1,
+    operation: UnaryOperation<S1, T>,
+    updateAbleCreator: () -> RT,
+): RT {
+    val target = updateAbleCreator.invoke()
+    val connection = connection1(source1, target) {
+        target.update(operation.invoke(it.source1))
+    }
+    target.update(operation.invoke(connection.source1))
+    target.addDestroyListener { connection.destroy() }
+    return target
+}
+
+fun <S1 : AtomicValue, S2, T, RT : AutoUpdatableAtomicValue<T>> transform1(
+    source1: S1,
+    constant: S2,
+    operation: BinaryOperation<S1, S2, T>,
+    updateAbleCreator: () -> RT,
+): RT {
+    val target = updateAbleCreator.invoke()
+    val connection = connection1(source1, target) {
+        target.update(operation.invoke(it.source1, constant))
+    }
+    target.update(operation.invoke(connection.source1, constant))
+    target.addDestroyListener { connection.destroy() }
+    return target
+}
+fun <S1 : AtomicValue, S2 : AtomicValue, T, RT : AutoUpdatableAtomicValue<T>> transform2(
+    source1: S1,
+    source2: S2,
+    operation: BinaryOperation<S1, S2, T>,
+    updateAbleCreator: () -> RT,
+): RT {
+    val target = updateAbleCreator.invoke()
+    val connection = connection2(source1, source2, target) {
+        target.update(operation.invoke(it.source1, it.source2))
+    }
+    target.update(operation.invoke(connection.source1, connection.source2))
+    target.addDestroyListener { connection.destroy() }
+    return target
 }
