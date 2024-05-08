@@ -49,6 +49,23 @@ class ByteArrayTests : FlatTestSpec({
             }
         }
 
+        describe("toUnsignedByte()") {
+            it("should convert a byte of size 1 to a ubyte") {
+                val b = byteArrayOf(1.toByte())
+                b.toUnsignedByte() shouldBe 1.toUByte()
+            }
+
+            it("should throw an exception if the byte array is > 1") {
+                val b = byteArrayOf(1.toByte(), 2.toByte())
+                runCatching { b.toUnsignedByte() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 1") {
+                val b = byteArrayOf()
+                runCatching { b.toUnsignedByte() }.isFailure shouldBe true
+            }
+        }
+
         describe("toShortBE()") {
 
             it("should convert a byte of size 2 to a short") {
@@ -154,6 +171,57 @@ class ByteArrayTests : FlatTestSpec({
             it("should throw an exception if the byte array is < 2") {
                 val b = byteArrayOf(1.toByte())
                 runCatching { b.toUShort() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedShortBE()") {
+            it("should convert a byte of size 2 to a ushort") {
+                val b = byteArrayOf(0x01.toByte(), 0x02)
+                b.toUnsignedShortBE() shouldBe 0x0102.toUShort()
+            }
+
+            it("should throw an exception if the byte array is > 2") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedShortBE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 2") {
+                val b = byteArrayOf(1.toByte())
+                runCatching { b.toUnsignedShortBE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedShortLE()") {
+            it("should convert a byte of size 2 to a ushort") {
+                val b = byteArrayOf(0x02.toByte(), 0x01)
+                b.toUnsignedShortLE() shouldBe 0x0102.toUShort()
+            }
+
+            it("should throw an exception if the byte array is > 2") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedShortLE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 2") {
+                val b = byteArrayOf(1.toByte())
+                runCatching { b.toUnsignedShortLE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedShort()") {
+            it("should convert a byte of size 2 to a ushort") {
+                val b = byteArrayOf(0x01.toByte(), 0x02)
+                b.toUnsignedShort() shouldBe 0x0102.toUShort()
+            }
+
+            it("should throw an exception if the byte array is > 2") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedShort() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 2") {
+                val b = byteArrayOf(1.toByte())
+                runCatching { b.toUnsignedShort() }.isFailure shouldBe true
             }
         }
 
@@ -265,6 +333,57 @@ class ByteArrayTests : FlatTestSpec({
             }
         }
 
+        describe("toUnsignedIntBE()") {
+            it("should convert a byte of size 4 to a uint") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                b.toUnsignedIntBE() shouldBe 0x01020304u
+            }
+
+            it("should throw an exception if the byte array is > 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                runCatching { b.toUnsignedIntBE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedIntBE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedIntLE()") {
+            it("should convert a byte of size 4 to a uint") {
+                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01)
+                b.toUnsignedIntLE() shouldBe 0x01020304u
+            }
+
+            it("should throw an exception if the byte array is > 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                runCatching { b.toUnsignedIntLE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedIntLE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedInt()") {
+            it("should convert a byte of size 4 to a uint") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                b.toUnsignedInt() shouldBe 0x01020304u
+            }
+
+            it("should throw an exception if the byte array is > 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                runCatching { b.toUnsignedInt() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 4") {
+                val b = byteArrayOf(1.toByte(), 2, 3)
+                runCatching { b.toUnsignedInt() }.isFailure shouldBe true
+            }
+        }
+
         describe("toLongBE()") {
 
             it("should convert a byte of size 8 to a long") {
@@ -373,6 +492,57 @@ class ByteArrayTests : FlatTestSpec({
             }
         }
 
+        describe("toUnsignedLongBE()") {
+            it("should convert a byte of size 8 to a ulong") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.toUnsignedLongBE() shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the byte array is > 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                runCatching { b.toUnsignedLongBE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                runCatching { b.toUnsignedLongBE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedLongLE()") {
+            it("should convert a byte of size 8 to a ulong") {
+                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                b.toUnsignedLongLE() shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the byte array is > 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                runCatching { b.toUnsignedLongLE() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                runCatching { b.toUnsignedLongLE() }.isFailure shouldBe true
+            }
+        }
+
+        describe("toUnsignedLong()") {
+            it("should convert a byte of size 8 to a ulong") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.toUnsignedLong() shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the byte array is > 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                runCatching { b.toUnsignedLong() }.isFailure shouldBe true
+            }
+
+            it("should throw an exception if the byte array is < 8") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                runCatching { b.toUnsignedLong() }.isFailure shouldBe true
+            }
+        }
+
         describe("toFloatBE()") {
 
             it("should convert a byte of size 4 to a float") {
@@ -477,6 +647,20 @@ class ByteArrayTests : FlatTestSpec({
                 runCatching { b.toDouble() }.isFailure shouldBe true
             }
         }
+
+        describe("toHexString()") {
+            it("should convert a byte array to a hex string") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x2A.toByte())
+                b.toHexString() shouldBe "01020304050607082a"
+            }
+        }
+
+        describe("toUtf8String()") {
+            it("should convert a byte array to a utf8 string") {
+                val b = "Hello World\u0009".toCharArray().map { it.code.toByte() }.toByteArray()
+                b.toUtf8String() shouldBe "Hello World\u0009"
+            }
+        }
     }
 
     describe("get") {
@@ -517,6 +701,26 @@ class ByteArrayTests : FlatTestSpec({
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 runCatching { b.getUByte(8) }.isFailure shouldBe true
                 runCatching { b.getUByte(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedByte") {
+            it("should get the ubyte at the given index") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                b.getUnsignedByte(0) shouldBe 1.toUByte()
+                b.getUnsignedByte(1) shouldBe 2.toUByte()
+                b.getUnsignedByte(2) shouldBe 3.toUByte()
+                b.getUnsignedByte(3) shouldBe 4.toUByte()
+                b.getUnsignedByte(4) shouldBe 5.toUByte()
+                b.getUnsignedByte(5) shouldBe 6.toUByte()
+                b.getUnsignedByte(6) shouldBe 7.toUByte()
+                b.getUnsignedByte(7) shouldBe 8.toUByte()
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedByte(8) }.isFailure shouldBe true
+                runCatching { b.getUnsignedByte(-1) }.isFailure shouldBe true
             }
         }
 
@@ -616,6 +820,54 @@ class ByteArrayTests : FlatTestSpec({
             }
         }
 
+        describe("getUnsignedShortBE") {
+            it("should get the ushort at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedShortBE(0) shouldBe 0x0102.toUShort()
+                b.getUnsignedShortBE(1) shouldBe 0x0203.toUShort()
+                b.getUnsignedShortBE(4) shouldBe 0x0506.toUShort()
+                b.getUnsignedShortBE(5) shouldBe 0x0607.toUShort()
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedShortBE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedShortBE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedShortLE") {
+            it("should get the ushort at the given index") {
+                val b = byteArrayOf(0x02.toByte(), 0x01, 0x04, 0x03, 0x06, 0x05, 0x08, 0x07)
+                b.getUnsignedShortLE(0) shouldBe 0x0102.toUShort()
+                b.getUnsignedShortLE(1) shouldBe 0x0401.toUShort()
+                b.getUnsignedShortLE(4) shouldBe 0x0506.toUShort()
+                b.getUnsignedShortLE(5) shouldBe 0x0805.toUShort()
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedShortLE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedShortLE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedShort") {
+            it("should get the ushort at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedShort(0) shouldBe 0x0102.toUShort()
+                b.getUnsignedShort(1) shouldBe 0x0203.toUShort()
+                b.getUnsignedShort(4) shouldBe 0x0506.toUShort()
+                b.getUnsignedShort(5) shouldBe 0x0607.toUShort()
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedShort(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedShort(-1) }.isFailure shouldBe true
+            }
+        }
+
         describe("getIntBE") {
             it("should get the int at the given index") {
                 val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
@@ -706,6 +958,51 @@ class ByteArrayTests : FlatTestSpec({
             }
         }
 
+        describe("getUnsignedIntBE") {
+            it("should get the uint at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedIntBE(0) shouldBe 0x01020304u
+                b.getUnsignedIntBE(1) shouldBe 0x02030405u
+                b.getUnsignedIntBE(4) shouldBe 0x05060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedIntBE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedIntBE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedIntLE") {
+            it("should get the uint at the given index") {
+                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x08, 0x07, 0x06, 0x05)
+                b.getUnsignedIntLE(0) shouldBe 0x01020304u
+                b.getUnsignedIntLE(1) shouldBe 0x08010203u
+                b.getUnsignedIntLE(4) shouldBe 0x05060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedIntLE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedIntLE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedInt") {
+            it("should get the uint at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedInt(0) shouldBe 0x01020304u
+                b.getUnsignedInt(1) shouldBe 0x02030405u
+                b.getUnsignedInt(4) shouldBe 0x05060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedInt(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedInt(-1) }.isFailure shouldBe true
+            }
+        }
+
         describe("getLongBE") {
             it("should get the long at the given index") {
                 val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
@@ -781,6 +1078,45 @@ class ByteArrayTests : FlatTestSpec({
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 runCatching { b.getULong(7) }.isFailure shouldBe true
                 runCatching { b.getULong(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedLongBE") {
+            it("should get the ulong at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedLongBE(0) shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedLongBE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedLongBE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedLongLE") {
+            it("should get the ulong at the given index") {
+                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                b.getUnsignedLongLE(0) shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedLongLE(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedLongLE(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getUnsignedLong") {
+            it("should get the ulong at the given index") {
+                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b.getUnsignedLong(0) shouldBe 0x0102030405060708u
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getUnsignedLong(7) }.isFailure shouldBe true
+                runCatching { b.getUnsignedLong(-1) }.isFailure shouldBe true
             }
         }
 
@@ -886,6 +1222,51 @@ class ByteArrayTests : FlatTestSpec({
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 runCatching { b.getDouble(8) }.isFailure shouldBe true
                 runCatching { b.getDouble(-1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getBytesBE") {
+            it("should get the bytes at the given index") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                b.getBytesBE(0, 4) shouldBe byteArrayOf(1.toByte(), 2, 3, 4)
+                b.getBytesBE(1, 4) shouldBe byteArrayOf(2.toByte(), 3, 4, 5)
+                b.getBytesBE(4, 4) shouldBe byteArrayOf(5.toByte(), 6, 7, 8)
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getBytesBE(8, 1) }.isFailure shouldBe true
+                runCatching { b.getBytesBE(-1, 1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getBytesLE") {
+            it("should get the bytes at the given index") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                b.getBytesLE(0, 4) shouldBe byteArrayOf(4.toByte(), 3, 2, 1)
+                b.getBytesLE(1, 4) shouldBe byteArrayOf(5.toByte(), 4, 3, 2)
+                b.getBytesLE(4, 4) shouldBe byteArrayOf(8.toByte(), 7, 6, 5)
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getBytesLE(8, 1) }.isFailure shouldBe true
+                runCatching { b.getBytesLE(-1, 1) }.isFailure shouldBe true
+            }
+        }
+
+        describe("getBytes") {
+            it("should get the bytes at the given index") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                b.getBytes(0, 4) shouldBe byteArrayOf(1.toByte(), 2, 3, 4)
+                b.getBytes(1, 4) shouldBe byteArrayOf(2.toByte(), 3, 4, 5)
+                b.getBytes(4, 4) shouldBe byteArrayOf(5.toByte(), 6, 7, 8)
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.getBytes(8, 1) }.isFailure shouldBe true
+                runCatching { b.getBytes(-1, 1) }.isFailure shouldBe true
             }
         }
     }
@@ -1459,6 +1840,55 @@ class ByteArrayTests : FlatTestSpec({
                 runCatching { b.setDouble(8, 1.0) }.isFailure shouldBe true
                 runCatching { b.setDouble(-1, 1.0) }.isFailure shouldBe true
             }
+        }
+
+        describe("setBytesBE") {
+            it("should set the bytes at the given index") {
+                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytesBE(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
+                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.setBytesBE(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytesBE(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+            }
+        }
+
+        describe("setBytesLE") {
+            it("should set the bytes at the given index") {
+                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytesLE(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
+                b shouldBe byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.setBytesLE(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytesLE(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+            }
+        }
+
+        describe("setBytes") {
+            it("should set the bytes at the given index") {
+                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytes(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
+                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+            }
+
+            it("should throw an exception if the index is out of bounds") {
+                val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                runCatching { b.setBytes(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytes(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+            }
+        }
+    }
+
+    describe("byteArrayOf (ubyte)") {
+        it("should create a byte array") {
+            val b = byteArrayOf(1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 255u)
+            b shouldBe byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, -1)
         }
     }
 })

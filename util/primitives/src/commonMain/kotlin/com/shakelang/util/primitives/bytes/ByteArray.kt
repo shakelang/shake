@@ -13,7 +13,7 @@ fun ByteArray.toByte(): Byte {
 }
 
 /**
- * Convert a byte array to a short (left endian).
+ * Convert a byte array to a short (little endian).
  * @throws IllegalArgumentException if the array is not of size 2
  * @return the short
  */
@@ -40,7 +40,7 @@ fun ByteArray.toShortBE(): Short {
 fun ByteArray.toShort(): Short = this.toShortBE()
 
 /**
- * Convert a byte array to an int (left endian).
+ * Convert a byte array to an int (little endian).
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the int
  */
@@ -67,7 +67,7 @@ fun ByteArray.toIntBE(): Int {
 fun ByteArray.toInt(): Int = this.toIntBE()
 
 /**
- * Convert a byte array to a long (left endian).
+ * Convert a byte array to a long (little endian).
  * @throws IllegalArgumentException if the array is not of size 8
  * @return the long
  */
@@ -94,7 +94,7 @@ fun ByteArray.toLongBE(): Long {
 fun ByteArray.toLong(): Long = this.toLongBE()
 
 /**
- * Convert a byte array to a float (left endian).
+ * Convert a byte array to a float (little endian).
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the float
  */
@@ -228,7 +228,7 @@ fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
 fun ByteArray.toUByte(): UByte = this.toByte().toUByte()
 
 /**
- * Convert a byte array to an unsigned short (left endian)
+ * Convert a byte array to an unsigned short (little endian)
  * @throws IllegalArgumentException if the array is not of size 2
  * @return the unsigned short
  */
@@ -249,7 +249,7 @@ fun ByteArray.toUShortBE(): UShort = this.toShortBE().toUShort()
 fun ByteArray.toUShort(): UShort = this.toShort().toUShort()
 
 /**
- * Convert a byte array to an unsigned int (left endian)
+ * Convert a byte array to an unsigned int (little endian)
  * @throws IllegalArgumentException if the array is not of size 4
  * @return the unsigned int
  */
@@ -270,7 +270,7 @@ fun ByteArray.toUIntBE(): UInt = this.toIntBE().toUInt()
 fun ByteArray.toUInt(): UInt = this.toInt().toUInt()
 
 /**
- * Convert a byte array to an unsigned long (left endian)
+ * Convert a byte array to an unsigned long (little endian)
  * @throws IllegalArgumentException if the array is not of size 8
  * @return the unsigned long
  */
@@ -291,11 +291,11 @@ fun ByteArray.toULongBE(): ULong = this.toLongBE().toULong()
 fun ByteArray.toULong(): ULong = this.toLong().toULong()
 
 /**
- * Set specific bytes in a byte array to a byte array
+ * Set specific bytes in a byte array to a byte array (big endian)
  * @throws IllegalArgumentException if the array is not of size 1
  * @return the byte array
  */
-fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
+fun ByteArray.setBytesBE(startIndex: Int, bytes: ByteArray): ByteArray {
     if (this.size < startIndex + bytes.size) {
         throw IllegalArgumentException("ByteArray must be of size ${startIndex + bytes.size}, but is ${this.size}")
     }
@@ -304,6 +304,28 @@ fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
     return this
 }
+
+/**
+ * Set specific bytes in a byte array to a byte array (little endian)
+ * @throws IllegalArgumentException if the array is not of size 1
+ * @return the byte array
+ */
+fun ByteArray.setBytesLE(startIndex: Int, bytes: ByteArray): ByteArray {
+    if (this.size < startIndex + bytes.size) {
+        throw IllegalArgumentException("ByteArray must be of size ${startIndex + bytes.size}, but is ${this.size}")
+    }
+    if (startIndex < 0) throw IllegalArgumentException("startIndex must be >= 0, but is $startIndex")
+
+    for (i in startIndex until startIndex + bytes.size) this[i] = bytes[bytes.size - 1 - i + startIndex]
+    return this
+}
+
+/**
+ * Set specific bytes in a byte array to a byte array (big endian)
+ * @throws IllegalArgumentException if the array is not of size 1
+ * @return the byte array
+ */
+fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray = this.setBytesBE(startIndex, bytes)
 
 /**
  * Set specific bytes in a byte array to a byte
@@ -767,7 +789,7 @@ fun ByteArray.getByte(index: Int): Byte {
 fun ByteArray.getShort(index: Int): Short = this.getShortBE(index)
 
 /**
- * Get specific shorts from a byte array at a given position [left endian], so 0x01 0x02 will be 0x0201
+ * Get specific shorts from a byte array at a given position [little endian], so 0x01 0x02 will be 0x0201
  * @throws IllegalArgumentException if the array is not big enough
  * @return the shorts
  */
@@ -798,7 +820,7 @@ fun ByteArray.getShortBE(index: Int): Short {
 }
 
 /**
- * Get specific int from a byte array at a given position [left endian], so 0x01 0x02 0x03 0x04 will be 0x04030201
+ * Get specific int from a byte array at a given position [little endian], so 0x01 0x02 0x03 0x04 will be 0x04030201
  * @throws IllegalArgumentException if the array is not big enough
  * @return the int
  */
@@ -843,7 +865,7 @@ fun ByteArray.getIntBE(index: Int): Int {
 fun ByteArray.getInt(index: Int) = getIntBE(index)
 
 /**
- * Get specific long from a byte array at a given position [left endian], so 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 will be 0x0807060504030201
+ * Get specific long from a byte array at a given position [little endian], so 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 will be 0x0807060504030201
  * @throws IllegalArgumentException if the array is not big enough
  * @return the long
  */
@@ -1078,7 +1100,7 @@ fun ByteArray.getULongBE(index: Int): ULong = this.getLongBE(index).toULong()
 fun ByteArray.getULong(index: Int): ULong = this.getULongBE(index)
 
 /**
- * Get specific bytes from a byte array at a given position [left endian]
+ * Get specific bytes from a byte array at a given position [little endian]
  * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  */
@@ -1149,4 +1171,12 @@ fun byteArrayOf(vararg bytes: UByte): ByteArray {
         array[i] = bytes[i].toByte()
     }
     return array
+}
+
+fun byteArrayOf(vararg bytes: Byte): ByteArray {
+    return bytes.toTypedArray().toByteArray()
+}
+
+fun byteArrayOf(): ByteArray {
+    return ByteArray(0)
 }
