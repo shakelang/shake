@@ -69,7 +69,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toShortBE()") {
 
             it("should convert a byte of size 2 to a short") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toShortBE() shouldBe 0x0102.toShort()
             }
 
@@ -87,7 +87,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toShortLE()") {
 
             it("should convert a byte of size 2 to a short") {
-                val b = byteArrayOf(0x02.toByte(), 0x01)
+                val b = byteArrayOf(0x02.toByte(), 1)
                 b.toShortLE() shouldBe 0x0102.toShort()
             }
 
@@ -105,7 +105,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toShort()") {
 
             it("should convert a byte of size 2 to a short") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toShort() shouldBe 0x0102.toShort()
             }
 
@@ -123,7 +123,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUShortBE()") {
 
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toUShortBE() shouldBe 0x0102.toUShort()
             }
 
@@ -141,7 +141,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUShortLE()") {
 
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x02.toByte(), 0x01)
+                val b = byteArrayOf(0x02.toByte(), 1)
                 b.toUShortLE() shouldBe 0x0102.toUShort()
             }
 
@@ -159,7 +159,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUShort()") {
 
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toUShort() shouldBe 0x0102.toUShort()
             }
 
@@ -176,7 +176,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedShortBE()") {
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toUnsignedShortBE() shouldBe 0x0102.toUShort()
             }
 
@@ -193,7 +193,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedShortLE()") {
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x02.toByte(), 0x01)
+                val b = byteArrayOf(0x02.toByte(), 1)
                 b.toUnsignedShortLE() shouldBe 0x0102.toUShort()
             }
 
@@ -210,7 +210,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedShort()") {
             it("should convert a byte of size 2 to a ushort") {
-                val b = byteArrayOf(0x01.toByte(), 0x02)
+                val b = byteArrayOf(0x01.toByte(), 2)
                 b.toUnsignedShort() shouldBe 0x0102.toUShort()
             }
 
@@ -228,7 +228,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toIntBE()") {
 
             it("should convert a byte of size 4 to a int") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toIntBE() shouldBe 0x01020304
             }
 
@@ -246,7 +246,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toIntLE()") {
 
             it("should convert a byte of size 4 to a int") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
                 b.toIntLE() shouldBe 0x01020304
             }
 
@@ -264,7 +264,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toInt()") {
 
             it("should convert a byte of size 4 to a int") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toInt() shouldBe 0x01020304
             }
 
@@ -282,7 +282,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUIntBE()") {
 
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toUIntBE() shouldBe 0x01020304u
             }
 
@@ -300,7 +300,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUIntLE()") {
 
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
                 b.toUIntLE() shouldBe 0x01020304u
             }
 
@@ -318,7 +318,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toUInt()") {
 
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toUInt() shouldBe 0x01020304u
             }
 
@@ -335,7 +335,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedIntBE()") {
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toUnsignedIntBE() shouldBe 0x01020304u
             }
 
@@ -352,7 +352,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedIntLE()") {
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
                 b.toUnsignedIntLE() shouldBe 0x01020304u
             }
 
@@ -369,7 +369,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedInt()") {
             it("should convert a byte of size 4 to a uint") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
                 b.toUnsignedInt() shouldBe 0x01020304u
             }
 
@@ -387,7 +387,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toLongBE()") {
 
             it("should convert a byte of size 8 to a long") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toLongBE() shouldBe 0x0102030405060708
             }
 
@@ -405,7 +405,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toLongLE()") {
 
             it("should convert a byte of size 8 to a long") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.toLongLE() shouldBe 0x0102030405060708
             }
 
@@ -423,7 +423,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toLong()") {
 
             it("should convert a byte of size 8 to a long") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toLong() shouldBe 0x0102030405060708
             }
 
@@ -441,7 +441,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toULongBE()") {
 
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toULongBE() shouldBe 0x0102030405060708u
             }
 
@@ -459,7 +459,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toULongLE()") {
 
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.toULongLE() shouldBe 0x0102030405060708u
             }
 
@@ -477,7 +477,7 @@ class ByteArrayTests : FlatTestSpec({
         describe("toULong()") {
 
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toULong() shouldBe 0x0102030405060708u
             }
 
@@ -494,7 +494,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedLongBE()") {
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toUnsignedLongBE() shouldBe 0x0102030405060708u
             }
 
@@ -511,7 +511,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedLongLE()") {
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.toUnsignedLongLE() shouldBe 0x0102030405060708u
             }
 
@@ -528,7 +528,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toUnsignedLong()") {
             it("should convert a byte of size 8 to a ulong") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.toUnsignedLong() shouldBe 0x0102030405060708u
             }
 
@@ -616,7 +616,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toDoubleLE()") {
             it("should convert a byte of size 8 to a double") {
-                val b = byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0, 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
                 assertCompare(1.0, b.toDoubleLE())
             }
 
@@ -650,7 +650,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("toHexString()") {
             it("should convert a byte array to a hex string") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x2A.toByte())
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8, 0x2A.toByte())
                 b.toHexString() shouldBe "01020304050607082a"
             }
         }
@@ -726,7 +726,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getShortBE") {
             it("should get the short at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getShortBE(0) shouldBe 0x0102.toShort()
                 b.getShortBE(1) shouldBe 0x0203.toShort()
                 b.getShortBE(4) shouldBe 0x0506.toShort()
@@ -742,7 +742,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getShortLE") {
             it("should get the short at the given index") {
-                val b = byteArrayOf(0x02.toByte(), 0x01, 0x04, 0x03, 0x06, 0x05, 0x08, 0x07)
+                val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
                 b.getShortLE(0) shouldBe 0x0102.toShort()
                 b.getShortLE(1) shouldBe 0x0401.toShort()
                 b.getShortLE(4) shouldBe 0x0506.toShort()
@@ -758,7 +758,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getShort") {
             it("should get the short at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getShort(0) shouldBe 0x0102.toShort()
                 b.getShort(1) shouldBe 0x0203.toShort()
                 b.getShort(4) shouldBe 0x0506.toShort()
@@ -774,7 +774,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUShortBE") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUShortBE(0) shouldBe 0x0102.toUShort()
                 b.getUShortBE(1) shouldBe 0x0203.toUShort()
                 b.getUShortBE(4) shouldBe 0x0506.toUShort()
@@ -790,7 +790,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUShortLE") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x02.toByte(), 0x01, 0x04, 0x03, 0x06, 0x05, 0x08, 0x07)
+                val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
                 b.getUShortLE(0) shouldBe 0x0102.toUShort()
                 b.getUShortLE(1) shouldBe 0x0401.toUShort()
                 b.getUShortLE(4) shouldBe 0x0506.toUShort()
@@ -806,7 +806,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUShort") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUShort(0) shouldBe 0x0102.toUShort()
                 b.getUShort(1) shouldBe 0x0203.toUShort()
                 b.getUShort(4) shouldBe 0x0506.toUShort()
@@ -822,7 +822,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedShortBE") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedShortBE(0) shouldBe 0x0102.toUShort()
                 b.getUnsignedShortBE(1) shouldBe 0x0203.toUShort()
                 b.getUnsignedShortBE(4) shouldBe 0x0506.toUShort()
@@ -838,7 +838,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedShortLE") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x02.toByte(), 0x01, 0x04, 0x03, 0x06, 0x05, 0x08, 0x07)
+                val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
                 b.getUnsignedShortLE(0) shouldBe 0x0102.toUShort()
                 b.getUnsignedShortLE(1) shouldBe 0x0401.toUShort()
                 b.getUnsignedShortLE(4) shouldBe 0x0506.toUShort()
@@ -854,7 +854,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedShort") {
             it("should get the ushort at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedShort(0) shouldBe 0x0102.toUShort()
                 b.getUnsignedShort(1) shouldBe 0x0203.toUShort()
                 b.getUnsignedShort(4) shouldBe 0x0506.toUShort()
@@ -870,7 +870,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getIntBE") {
             it("should get the int at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getIntBE(0) shouldBe 0x01020304
                 b.getIntBE(1) shouldBe 0x02030405
                 b.getIntBE(4) shouldBe 0x05060708
@@ -885,7 +885,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getIntLE") {
             it("should get the int at the given index") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x08, 0x07, 0x06, 0x05)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
                 b.getIntLE(0) shouldBe 0x01020304
                 b.getIntLE(1) shouldBe 0x08010203
                 b.getIntLE(4) shouldBe 0x05060708
@@ -900,7 +900,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getInt") {
             it("should get the int at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getInt(0) shouldBe 0x01020304
                 b.getInt(1) shouldBe 0x02030405
                 b.getInt(4) shouldBe 0x05060708
@@ -915,7 +915,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUIntBE") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUIntBE(0) shouldBe 0x01020304u
                 b.getUIntBE(1) shouldBe 0x02030405u
                 b.getUIntBE(4) shouldBe 0x05060708u
@@ -930,7 +930,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUIntLE") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x08, 0x07, 0x06, 0x05)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
                 b.getUIntLE(0) shouldBe 0x01020304u
                 b.getUIntLE(1) shouldBe 0x08010203u
                 b.getUIntLE(4) shouldBe 0x05060708u
@@ -945,7 +945,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUInt") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUInt(0) shouldBe 0x01020304u
                 b.getUInt(1) shouldBe 0x02030405u
                 b.getUInt(4) shouldBe 0x05060708u
@@ -960,7 +960,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedIntBE") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedIntBE(0) shouldBe 0x01020304u
                 b.getUnsignedIntBE(1) shouldBe 0x02030405u
                 b.getUnsignedIntBE(4) shouldBe 0x05060708u
@@ -975,7 +975,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedIntLE") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x08, 0x07, 0x06, 0x05)
+                val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
                 b.getUnsignedIntLE(0) shouldBe 0x01020304u
                 b.getUnsignedIntLE(1) shouldBe 0x08010203u
                 b.getUnsignedIntLE(4) shouldBe 0x05060708u
@@ -990,7 +990,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedInt") {
             it("should get the uint at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedInt(0) shouldBe 0x01020304u
                 b.getUnsignedInt(1) shouldBe 0x02030405u
                 b.getUnsignedInt(4) shouldBe 0x05060708u
@@ -1005,7 +1005,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getLongBE") {
             it("should get the long at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getLongBE(0) shouldBe 0x0102030405060708
             }
 
@@ -1018,7 +1018,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getLongLE") {
             it("should get the long at the given index") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.getLongLE(0) shouldBe 0x0102030405060708
             }
 
@@ -1031,7 +1031,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getLong") {
             it("should get the long at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getLong(0) shouldBe 0x0102030405060708
             }
 
@@ -1044,7 +1044,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getULongBE") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getULongBE(0) shouldBe 0x0102030405060708u
             }
 
@@ -1057,7 +1057,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getULongLE") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.getULongLE(0) shouldBe 0x0102030405060708u
             }
 
@@ -1070,7 +1070,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getULong") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getULong(0) shouldBe 0x0102030405060708u
             }
 
@@ -1083,7 +1083,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedLongBE") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedLongBE(0) shouldBe 0x0102030405060708u
             }
 
@@ -1096,7 +1096,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedLongLE") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
                 b.getUnsignedLongLE(0) shouldBe 0x0102030405060708u
             }
 
@@ -1109,7 +1109,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("getUnsignedLong") {
             it("should get the ulong at the given index") {
-                val b = byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
                 b.getUnsignedLong(0) shouldBe 0x0102030405060708u
             }
 
@@ -1342,7 +1342,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setShortBE(1, 0x0203.toShort())
                 b.setShortBE(4, 0x0506.toShort())
                 b.setShortBE(5, 0x0607.toShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1359,7 +1359,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setShortLE(1, 0x0203.toShort())
                 b.setShortLE(4, 0x0506.toShort())
                 b.setShortLE(5, 0x0607.toShort())
-                b shouldBe byteArrayOf(0x02.toByte(), 0x03, 0x02, 0x00, 0x06, 0x07, 0x06, 0x00)
+                b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1376,7 +1376,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setShort(1, 0x0203.toShort())
                 b.setShort(4, 0x0506.toShort())
                 b.setShort(5, 0x0607.toShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1393,7 +1393,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUShortBE(1, 0x0203.toUShort())
                 b.setUShortBE(4, 0x0506.toUShort())
                 b.setUShortBE(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1410,7 +1410,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUShortLE(1, 0x0203.toUShort())
                 b.setUShortLE(4, 0x0506.toUShort())
                 b.setUShortLE(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x02.toByte(), 0x03, 0x02, 0x00, 0x06, 0x07, 0x06, 0x00)
+                b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1427,7 +1427,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUShort(1, 0x0203.toUShort())
                 b.setUShort(4, 0x0506.toUShort())
                 b.setUShort(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1444,7 +1444,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedShortBE(1, 0x0203.toUShort())
                 b.setUnsignedShortBE(4, 0x0506.toUShort())
                 b.setUnsignedShortBE(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1461,7 +1461,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedShortLE(1, 0x0203.toUShort())
                 b.setUnsignedShortLE(4, 0x0506.toUShort())
                 b.setUnsignedShortLE(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x02.toByte(), 0x03, 0x02, 0x00, 0x06, 0x07, 0x06, 0x00)
+                b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1478,7 +1478,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedShort(1, 0x0203.toUShort())
                 b.setUnsignedShort(4, 0x0506.toUShort())
                 b.setUnsignedShort(5, 0x0607.toUShort())
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x00, 0x05, 0x06, 0x07, 0x00)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1494,7 +1494,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setIntBE(0, 0x01020304)
                 b.setIntBE(1, 0x02030405)
                 b.setIntBE(4, 0x05060708)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1510,7 +1510,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setIntLE(0, 0x01020304)
                 b.setIntLE(1, 0x02030405)
                 b.setIntLE(4, 0x05060708)
-                b shouldBe byteArrayOf(0x04.toByte(), 0x05, 0x04, 0x03, 0x08, 0x07, 0x06, 0x05)
+                b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1526,7 +1526,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setInt(0, 0x01020304)
                 b.setInt(1, 0x02030405)
                 b.setInt(4, 0x05060708)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1542,7 +1542,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUIntBE(0, 0x01020304u)
                 b.setUIntBE(1, 0x02030405u)
                 b.setUIntBE(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1558,7 +1558,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUIntLE(0, 0x01020304u)
                 b.setUIntLE(1, 0x02030405u)
                 b.setUIntLE(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x04.toByte(), 0x05, 0x04, 0x03, 0x08, 0x07, 0x06, 0x05)
+                b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1574,7 +1574,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUInt(0, 0x01020304u)
                 b.setUInt(1, 0x02030405u)
                 b.setUInt(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1590,7 +1590,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedIntBE(0, 0x01020304u)
                 b.setUnsignedIntBE(1, 0x02030405u)
                 b.setUnsignedIntBE(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1606,7 +1606,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedIntLE(0, 0x01020304u)
                 b.setUnsignedIntLE(1, 0x02030405u)
                 b.setUnsignedIntLE(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x04.toByte(), 0x05, 0x04, 0x03, 0x08, 0x07, 0x06, 0x05)
+                b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1622,7 +1622,7 @@ class ByteArrayTests : FlatTestSpec({
                 b.setUnsignedInt(0, 0x01020304u)
                 b.setUnsignedInt(1, 0x02030405u)
                 b.setUnsignedInt(4, 0x05060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1636,7 +1636,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the long at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setLongBE(0, 0x0102030405060708)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1650,7 +1650,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the long at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setLongLE(0, 0x0102030405060708)
-                b shouldBe byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1664,7 +1664,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the long at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setLong(0, 0x0102030405060708)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1678,7 +1678,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setULongBE(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1692,7 +1692,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setULongLE(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1706,7 +1706,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setULong(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1720,7 +1720,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setUnsignedLongBE(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1734,7 +1734,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setUnsignedLongLE(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x08.toByte(), 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01)
+                b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1748,7 +1748,7 @@ class ByteArrayTests : FlatTestSpec({
             it("should set the ulong at the given index") {
                 val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
                 b.setUnsignedLong(0, 0x0102030405060708u)
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08)
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
             }
 
             it("should throw an exception if the index is out of bounds") {
@@ -1760,7 +1760,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setFloatBE") {
             it("should set the float at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x80.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0x80.toByte(), 0x3F.toByte())
                 b.setFloatBE(0, 1.0f)
                 assertCompare(1.0f, b.getFloatBE(0))
             }
@@ -1774,7 +1774,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setFloatLE") {
             it("should set the float at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x3F.toByte(), 0x80.toByte(), 0x00, 0x00)
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0x3F.toByte(), 0x80.toByte(), 0, 0)
                 b.setFloatLE(0, 1.0f)
                 assertCompare(1.0f, b.getFloatLE(0))
             }
@@ -1788,7 +1788,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setFloat") {
             it("should set the float at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x80.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0x80.toByte(), 0x3F.toByte())
                 b.setFloat(0, 1.0f)
                 assertCompare(1.0f, b.getFloat(0))
             }
@@ -1802,7 +1802,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setDoubleBE") {
             it("should set the double at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
                 b.setDoubleBE(0, 1.0)
                 assertCompare(1.0, b.getDoubleBE(0))
             }
@@ -1816,7 +1816,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setDoubleLE") {
             it("should set the double at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
                 b.setDoubleLE(0, 1.0)
                 assertCompare(1.0, b.getDoubleLE(0))
             }
@@ -1830,7 +1830,7 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setDouble") {
             it("should set the double at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
                 b.setDouble(0, 1.0)
                 assertCompare(1.0, b.getDouble(0))
             }
@@ -1844,43 +1844,43 @@ class ByteArrayTests : FlatTestSpec({
 
         describe("setBytesBE") {
             it("should set the bytes at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
-                b.setBytesBE(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytesBE(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 0, 0, 0xF0.toByte(), 0x3F.toByte())
             }
 
             it("should throw an exception if the index is out of bounds") {
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
-                runCatching { b.setBytesBE(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
-                runCatching { b.setBytesBE(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytesBE(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                runCatching { b.setBytesBE(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
             }
         }
 
         describe("setBytesLE") {
             it("should set the bytes at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
-                b.setBytesLE(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
-                b shouldBe byteArrayOf(0x04.toByte(), 0x03, 0x02, 0x01, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytesLE(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                b shouldBe byteArrayOf(0x04.toByte(), 3, 2, 1, 0, 0, 0xF0.toByte(), 0x3F.toByte())
             }
 
             it("should throw an exception if the index is out of bounds") {
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
-                runCatching { b.setBytesLE(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
-                runCatching { b.setBytesLE(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytesLE(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                runCatching { b.setBytesLE(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
             }
         }
 
         describe("setBytes") {
             it("should set the bytes at the given index") {
-                val b = byteArrayOf(0x00.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
-                b.setBytes(0, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04))
-                b shouldBe byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04, 0x00, 0x00, 0xF0.toByte(), 0x3F.toByte())
+                val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                b.setBytes(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 0, 0, 0xF0.toByte(), 0x3F.toByte())
             }
 
             it("should throw an exception if the index is out of bounds") {
                 val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
-                runCatching { b.setBytes(8, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
-                runCatching { b.setBytes(-1, byteArrayOf(0x01.toByte(), 0x02, 0x03, 0x04)) }.isFailure shouldBe true
+                runCatching { b.setBytes(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                runCatching { b.setBytes(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
             }
         }
     }
