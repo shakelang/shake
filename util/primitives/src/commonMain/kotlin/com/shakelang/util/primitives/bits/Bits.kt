@@ -2,6 +2,7 @@
 
 package com.shakelang.util.primitives.bits
 
+import com.shakelang.util.primitives.calc.shl
 import kotlin.experimental.and
 import kotlin.experimental.or
 
@@ -4408,7 +4409,7 @@ class ByteBits(
 ) : List<Boolean> {
     override val size: Int get() = 8
 
-    override operator fun get(index: Int) = byte and (1 shl index).toByte() != 0.toByte()
+    override operator fun get(index: Int) = byte.bit(index)
 
     override fun containsAll(elements: Collection<Boolean>): Boolean {
         for (element in elements) {
@@ -4455,7 +4456,7 @@ class ShortBits(
     val short: Short,
 
 ) : List<Boolean> {
-    override operator fun get(index: Int) = short and (1 shl index).toShort() != 0.toShort()
+    override operator fun get(index: Int) = short.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(16) { get(it) }.toList()
 
@@ -4503,7 +4504,7 @@ class IntBits(
     val int: Int,
 
 ) : List<Boolean> {
-    override operator fun get(index: Int) = int and (1 shl index) != 0
+    override operator fun get(index: Int) = int.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(32) { get(it) }.toList()
 
@@ -4545,7 +4546,7 @@ class LongBits(
     val long: Long,
 
 ) : List<Boolean> {
-    override operator fun get(index: Int) = long and (1 shl index).toLong() != 0L
+    override operator fun get(index: Int) = long.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(64) { get(it) }.toList()
 
@@ -4594,7 +4595,7 @@ class FloatBits(
 
 ) : List<Boolean> {
 
-    override operator fun get(index: Int) = float.toRawBits().bit(index)
+    override operator fun get(index: Int) = float.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(32) { get(it) }.toList()
 
@@ -4643,7 +4644,7 @@ class DoubleBits(
 
 ) : List<Boolean> {
 
-    override operator fun get(index: Int) = double.toRawBits().bit(index)
+    override operator fun get(index: Int) = double.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(64) { get(it) }.toList()
 
@@ -4692,7 +4693,7 @@ class UByteBits(
 
 ) : List<Boolean> {
 
-    override operator fun get(index: Int) = byte and (1u shl index).toUByte() != 0u.toUByte()
+    override operator fun get(index: Int) = byte.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(8) { get(it) }.toList()
 
@@ -4741,7 +4742,7 @@ class UShortBits(
 
 ) : List<Boolean> {
 
-    override operator fun get(index: Int) = short and (1u shl index).toUShort() != 0u.toUShort()
+    override operator fun get(index: Int) = short.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(16) { get(it) }.toList()
 
@@ -4790,7 +4791,7 @@ class UIntBits(
 
 ) : List<Boolean> {
 
-    override operator fun get(index: Int) = int and (1u shl index) != 0u
+    override operator fun get(index: Int) = int.bit(index)
 
     fun toList(): List<Boolean> = BooleanArray(32) { get(it) }.toList()
 
@@ -4876,11 +4877,60 @@ class ULongBits(
 
 val ULong.bits: ULongBits get() = ULongBits(this)
 
+/**
+ * A bit list of a char
+ */
+class CharBits(
+
+    /**
+     * The char to get the bits from
+     */
+    val char: Char,
+
+) : List<Boolean> {
+
+    override operator fun get(index: Int) = char.code and (1 shl index) != 0
+
+    fun toList(): List<Boolean> = BooleanArray(16) { get(it) }.toList()
+
+    override val size: Int get() = 16
+
+    override fun contains(element: Boolean): Boolean {
+        for (i in 0 until size) {
+            if (get(i) == element) return true
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection<Boolean>): Boolean {
+        for (element in elements) {
+            if (!contains(element)) return false
+        }
+        return true
+    }
+
+    override fun isEmpty(): Boolean = false
+
+    override fun iterator(): Iterator<Boolean> = toList().iterator()
+
+    override fun listIterator(): ListIterator<Boolean> = toList().listIterator()
+
+    override fun listIterator(index: Int): ListIterator<Boolean> = toList().listIterator(index)
+
+    override fun subList(fromIndex: Int, toIndex: Int): List<Boolean> = toList().subList(fromIndex, toIndex)
+
+    override fun lastIndexOf(element: Boolean): Int = toList().lastIndexOf(element)
+
+    override fun indexOf(element: Boolean): Int = toList().indexOf(element)
+}
+
+val Char.bits: CharBits get() = CharBits(this)
+
 fun byteFromBits(bits: List<Boolean>): Byte {
     if (bits.size != 8) throw IllegalArgumentException("The list must have 8 elements")
     var byte = 0.toByte()
-    for (i in 0 until 8) {
-        byte = byte.withBit(i, bits[i])
+    for (i in 7 downTo 0) {
+        byte = (byte shl 1).or(if (bits[i]) 1 else 0)
     }
     return byte
 }
@@ -4888,8 +4938,8 @@ fun byteFromBits(bits: List<Boolean>): Byte {
 fun shortFromBits(bits: List<Boolean>): Short {
     if (bits.size != 16) throw IllegalArgumentException("The list must have 16 elements")
     var short = 0.toShort()
-    for (i in 0 until 16) {
-        short = short.withBit(i, bits[i])
+    for (i in 15 downTo 0) {
+        short = (short shl 1).or(if (bits[i]) 1 else 0)
     }
     return short
 }
@@ -4897,8 +4947,8 @@ fun shortFromBits(bits: List<Boolean>): Short {
 fun intFromBits(bits: List<Boolean>): Int {
     if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
     var int = 0
-    for (i in 0 until 32) {
-        int = int.withBit(i, bits[i])
+    for (i in 31 downTo 0) {
+        int = (int shl 1).or(if (bits[i]) 1 else 0)
     }
     return int
 }
@@ -4906,65 +4956,23 @@ fun intFromBits(bits: List<Boolean>): Int {
 fun longFromBits(bits: List<Boolean>): Long {
     if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
     var long = 0L
-    for (i in 0 until 64) {
-        long = long.withBit(i, bits[i])
+    for (i in 63 downTo 0) {
+        long = (long shl 1).or(if (bits[i]) 1 else 0)
     }
     return long
 }
 
-fun floatFromBits(bits: List<Boolean>): Float {
-    if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
-    var float = 0f
-    for (i in 0 until 32) {
-        float = float.withBit(i, bits[i])
-    }
-    return float
-}
+fun floatFromBits(bits: List<Boolean>) = Float.fromBits(intFromBits(bits))
 
-fun doubleFromBits(bits: List<Boolean>): Double {
-    if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
-    var double = 0.0
-    for (i in 0 until 64) {
-        double = double.withBit(i, bits[i])
-    }
-    return double
-}
+fun doubleFromBits(bits: List<Boolean>): Double = Double.fromBits(longFromBits(bits))
 
-fun ubyteFromBits(bits: List<Boolean>): UByte {
-    if (bits.size != 8) throw IllegalArgumentException("The list must have 8 elements")
-    var byte = 0.toUByte()
-    for (i in 0 until 8) {
-        byte = byte.withBit(i, bits[i])
-    }
-    return byte
-}
+fun ubyteFromBits(bits: List<Boolean>): UByte = byteFromBits(bits).toUByte()
 
-fun ushortFromBits(bits: List<Boolean>): UShort {
-    if (bits.size != 16) throw IllegalArgumentException("The list must have 16 elements")
-    var short = 0.toUShort()
-    for (i in 0 until 16) {
-        short = short.withBit(i, bits[i])
-    }
-    return short
-}
+fun ushortFromBits(bits: List<Boolean>): UShort = shortFromBits(bits).toUShort()
 
-fun uintFromBits(bits: List<Boolean>): UInt {
-    if (bits.size != 32) throw IllegalArgumentException("The list must have 32 elements")
-    var int = 0u
-    for (i in 0 until 32) {
-        int = int.withBit(i, bits[i])
-    }
-    return int
-}
+fun uintFromBits(bits: List<Boolean>): UInt = intFromBits(bits).toUInt()
 
-fun ulongFromBits(bits: List<Boolean>): ULong {
-    if (bits.size != 64) throw IllegalArgumentException("The list must have 64 elements")
-    var long = 0uL
-    for (i in 0 until 64) {
-        long = long.withBit(i, bits[i])
-    }
-    return long
-}
+fun ulongFromBits(bits: List<Boolean>): ULong = longFromBits(bits).toULong()
 
 fun charFromBits(bits: List<Boolean>): Char {
     return ushortFromBits(bits).toInt().toChar()
