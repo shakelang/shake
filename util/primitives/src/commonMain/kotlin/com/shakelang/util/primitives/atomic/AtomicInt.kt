@@ -399,6 +399,20 @@ interface AtomicInt : AtomicValue {
     operator fun times(other: AtomicInt) = AtomicIntOperationImplementations.transformTimes(this, other)
 
     /**
+     * Multiply this int with another long (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to multiply with
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun times(other: Long) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this int with another [AtomicLong] (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to multiply with
+     * @return The new [AtomicLong] that automatically updates
+     */
+    operator fun times(other: AtomicLong) = AtomicIntOperationImplementations.transformTimes(this, other)
+
+    /**
      * Divide this int by another byte (returns a new [AtomicInt] that automatically updates)
      * @param other The other byte to divide by
      * @return The new [AtomicInt] that automatically updates

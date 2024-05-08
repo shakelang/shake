@@ -209,8 +209,14 @@ object AtomicShortOperationImplementations {
     fun transformRem(source1: AtomicShort, other: Long): AtomicLong = transform1(source1, other, shortRemLong, AutoUpdateAbleAtomicLong.creator)
     fun transformRem(source1: AtomicShort, other: AtomicLong): AtomicLong = transform2(source1, other, shortRemAtomicLong, AutoUpdateAbleAtomicLong.creator)
 
+    fun transformPow(source1: AtomicShort, other: Byte): AtomicShort = transform1(source1, other, shortPowByte, AutoUpdateAbleAtomicShort.creator)
+    fun transformPow(source1: AtomicShort, other: AtomicByte): AtomicShort = transform2(source1, other, shortPowAtomicByte, AutoUpdateAbleAtomicShort.creator)
     fun transformPow(source1: AtomicShort, other: Short): AtomicShort = transform1(source1, other, shortPowShort, AutoUpdateAbleAtomicShort.creator)
     fun transformPow(source1: AtomicShort, other: AtomicShort): AtomicShort = transform2(source1, other, shortPowAtomicShort, AutoUpdateAbleAtomicShort.creator)
+    fun transformPow(source1: AtomicShort, other: Int): AtomicInt = transform1(source1, other, shortPowInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicShort, other: AtomicInt): AtomicInt = transform2(source1, other, shortPowAtomicInt, AutoUpdateAbleAtomicInt.creator)
+    fun transformPow(source1: AtomicShort, other: Long): AtomicLong = transform1(source1, other, shortPowLong, AutoUpdateAbleAtomicLong.creator)
+    fun transformPow(source1: AtomicShort, other: AtomicLong): AtomicLong = transform2(source1, other, shortPowAtomicLong, AutoUpdateAbleAtomicLong.creator)
 
     fun transformAnd(source1: AtomicShort, other: Short): AtomicShort = transform1(source1, other, shortAndShort, AutoUpdateAbleAtomicShort.creator)
     fun transformAnd(source1: AtomicShort, other: AtomicShort): AtomicShort = transform2(source1, other, shortAndAtomicShort, AutoUpdateAbleAtomicShort.creator)
@@ -530,6 +536,20 @@ interface AtomicShort : AtomicValue {
     operator fun rem(other: AtomicLong) = AtomicShortOperationImplementations.transformRem(this, other)
 
     /**
+     * Power this short by another byte (returns a new [AtomicShort] that automatically updates)
+     * @param other The other byte to power by
+     * @return The new [AtomicShort] that automatically updates
+     */
+    infix fun pow(other: Byte) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this short by another [AtomicByte] (returns a new [AtomicShort] that automatically updates)
+     * @param other The other [AtomicByte] to power by
+     * @return The new [AtomicShort] that automatically updates
+     */
+    infix fun pow(other: AtomicByte) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
      * Power this short by another short (returns a new [AtomicShort] that automatically updates)
      * @param other The other short to power by
      * @return The new [AtomicShort] that automatically updates
@@ -542,6 +562,34 @@ interface AtomicShort : AtomicValue {
      * @return The new [AtomicShort] that automatically updates
      */
     infix fun pow(other: AtomicShort) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this short by another int (returns a new [AtomicInt] that automatically updates)
+     * @param other The other int to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: Int) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this short by another [AtomicInt] (returns a new [AtomicInt] that automatically updates)
+     * @param other The other [AtomicInt] to power by
+     * @return The new [AtomicInt] that automatically updates
+     */
+    infix fun pow(other: AtomicInt) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this short by another long (returns a new [AtomicLong] that automatically updates)
+     * @param other The other long to power by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    infix fun pow(other: Long) = AtomicShortOperationImplementations.transformPow(this, other)
+
+    /**
+     * Power this short by another [AtomicLong] (returns a new [AtomicLong] that automatically updates)
+     * @param other The other [AtomicLong] to power by
+     * @return The new [AtomicLong] that automatically updates
+     */
+    infix fun pow(other: AtomicLong) = AtomicShortOperationImplementations.transformPow(this, other)
 
     /**
      * And this short with another short (returns a new [AtomicShort] that automatically updates)
