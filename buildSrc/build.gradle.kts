@@ -16,7 +16,7 @@ dependencies {
     implementation("com.github.node-gradle:gradle-node-plugin:7.0.2")
     implementation("gradle.plugin.org.gradle.crypto:checksum:1.4.0")
     implementation("gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:0.16.1")
-    implementation("com.shakelang.util.changelog:plugin:0.7.7")
+    implementation("com.shakelang.util.changelog:plugin:0.7.8")
     implementation("com.shakelang.util:sarifmerge:0.2.4")
     implementation("com.shakelang.util.embed:plugin:0.2.3")
     implementation("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0")

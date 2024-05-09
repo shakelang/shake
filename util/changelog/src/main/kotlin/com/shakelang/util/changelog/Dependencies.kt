@@ -170,6 +170,10 @@ open class DependencyResolveTreeTask : DefaultTask() {
             // Check if it is a project dependency
 
             if (dep is org.gradle.api.artifacts.ProjectDependency) {
+                if (!dep.dependencyProject.extensions.extraProperties.has("dependencies")) {
+                    return@forEach
+                }
+
                 deps.add(
                     ProjectDependency(
                         dep.dependencyProject.path,

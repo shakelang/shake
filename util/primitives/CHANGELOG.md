@@ -21,3 +21,13 @@ Utility for working with colors in console applications (Kotlin Multiplatform)
 ### 0.5.0
 
 * Move `com.shakelang.shake.util` to `com.shakelang.util`
+
+### 0.6.0
+
+* Enhance ByteList lib
+
+* Enhance ByteArray api
+
+* Enhance Bits api
+
+* Introduce Array<Byte> api

@@ -149,3 +149,15 @@ Changelog generation plugin for Shake
 * Update com.shakelang.util:parseutils to 0.5.0
 
 * Update com.shakelang.util:shason to 0.4.4
+
+### 0.7.9
+
+* Patch resolve dependencies bug
+
+* Update com.shakelang.util:primitives to 0.6.0
+
+* Update com.shakelang.util:common-io to 0.6.1
+
+* Update com.shakelang.util:parseutils to 0.5.1
+
+* Update com.shakelang.util:shason to 0.4.5
