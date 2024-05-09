@@ -2,6 +2,7 @@ rootProject.name = "shake"
 // include("cli")
 // include("jvm")
 include(":util:algo")
+include(":util:atomics")
 include(":util:colorlib")
 include(":util:common-io")
 include(":util:commander")
