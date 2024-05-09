@@ -1,6 +1,7 @@
 import subprocess
 import sys
 
+
 # This script is a wrapper around gradlew that captures the output of gradlew and saves
 # it to a file while also piping the output to the console. The exit code of gradlew is
 # returned as the exit code of this script.
@@ -19,7 +20,8 @@ def run_gradlew(arguments):
         # Open a file to save the output
         with open('gradle_output.txt', 'w') as output_file:
             # Run the command and capture the output
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                       universal_newlines=True)
 
             # Print output to console and save it to the file simultaneously
             for line in process.stdout:

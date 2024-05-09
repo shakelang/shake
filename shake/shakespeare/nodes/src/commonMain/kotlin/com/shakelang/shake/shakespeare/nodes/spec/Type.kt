@@ -9,7 +9,10 @@
 package com.shakelang.shake.shakespeare.nodes.spec
 
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
-import com.shakelang.shake.shakespeare.spec.*
+import com.shakelang.shake.shakespeare.spec.GenerationContext
+import com.shakelang.shake.shakespeare.spec.ObjectTypeSpec
+import com.shakelang.shake.shakespeare.spec.PrimitiveTypeSpec
+import com.shakelang.shake.shakespeare.spec.TypeSpec
 
 interface TypeNodeSpec : AbstractNodeSpec, TypeSpec {
     override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeVariableType

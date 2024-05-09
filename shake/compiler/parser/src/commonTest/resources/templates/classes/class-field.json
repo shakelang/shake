@@ -16,8 +16,14 @@
           },
           "access": "%access%",
           "assignment": null,
-          "is_static": %static%,
-          "is_final": %final%,
+          "is_static":
+          %
+          static
+          %,
+          "is_final":
+          %
+          final
+          %,
           "is_native": false,
           "is_const": false,
           "is_override": false,

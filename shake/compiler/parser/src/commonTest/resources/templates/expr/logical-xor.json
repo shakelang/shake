@@ -1,5 +1,11 @@
 {
-    "name": "ShakeLogicalXOrNode",
-    "left": %left_json%,
-    "right": %right_json%
+  "name": "ShakeLogicalXOrNode",
+  "left":
+  %
+  left_json
+  %,
+  "right":
+  %
+  right_json
+  %
 }

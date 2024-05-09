@@ -88,10 +88,12 @@ abstract class AbstractLexer<
      * @since 0.5.0
      * @version 0.5.0
      */
-    open val errorFactory = LexerErrorFactory({
-            message, start, end ->
-        LexerError(message, start, end)
-    }, input)
+    open val errorFactory = LexerErrorFactory(
+        { message, start, end ->
+            LexerError(message, start, end)
+        },
+        input,
+    )
 
     /**
      * A [CompilerError] thrown by the lexer

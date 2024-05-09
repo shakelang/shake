@@ -1,6 +1,5 @@
 package com.shakelang.util.parseutils
 
-import com.shakelang.util.colorlib.functional.invert
 import com.shakelang.util.colorlib.functional.red
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.position.PositionMap

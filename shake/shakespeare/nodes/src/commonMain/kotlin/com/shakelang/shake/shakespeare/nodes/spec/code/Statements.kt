@@ -141,6 +141,7 @@ private fun statementBody(
     val body = bodySpec.dump(ctx, nctx)
     return Tuple4(lp, condition, rp, body)
 }
+
 open class WhileNodeSpec(
     condition: ValueNodeSpec,
     body: CodeNodeSpec,

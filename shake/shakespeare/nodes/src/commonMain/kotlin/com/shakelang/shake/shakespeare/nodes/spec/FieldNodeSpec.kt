@@ -105,12 +105,15 @@ fun createAccessModifier(accessModifier: AccessModifier, nctx: NodeContext): Sha
         AccessModifier.PUBLIC -> {
             ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PUBLIC))
         }
+
         AccessModifier.PRIVATE -> {
             ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PRIVATE))
         }
+
         AccessModifier.PROTECTED -> {
             ShakeAccessDescriber(nctx.createToken(ShakeTokenType.KEYWORD_PROTECTED))
         }
+
         AccessModifier.PACKAGE_PRIVATE -> {
             ShakeAccessDescriber.PACKAGE
         }

@@ -119,6 +119,7 @@ open class EmbedFolder(
                     }
                     regex.append(c)
                 }
+
                 '*' -> {
                     if (escaping) {
                         regex.append("\\*")
@@ -127,6 +128,7 @@ open class EmbedFolder(
                         regex.append(".*")
                     }
                 }
+
                 '?' -> {
                     if (escaping) {
                         regex.append("\\?")
@@ -135,6 +137,7 @@ open class EmbedFolder(
                         regex.append('.')
                     }
                 }
+
                 '}' -> {
                     if (escaping) {
                         regex.append('}')
@@ -143,6 +146,7 @@ open class EmbedFolder(
                         regex.append("\\}")
                     }
                 }
+
                 ',' -> {
                     if (escaping) {
                         regex.append(',')
@@ -151,6 +155,7 @@ open class EmbedFolder(
                         regex.append('|')
                     }
                 }
+
                 else -> {
                     regex.append(c)
                     escaping = false

@@ -11,85 +11,96 @@ abstract class TestSpec(
     body: TestSpecContext.() -> Unit,
     flatten: Boolean = false,
 
-) : DescribeSpec({
-    fun createTestSpecContext(
-        prefix: String?,
-        flatten: Boolean,
-        describe: (name: String, test: suspend DescribeSpecContainerScope.() -> Unit) -> Unit,
-        it: (name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) -> Unit,
-        allContentsDisabled: Boolean,
-    ): TestSpecContext {
-        if (flatten) {
-            return object : TestSpecContext {
-                override fun describe(name: String, init: TestSpecContext.() -> Unit) {
-                    createTestSpecContext(
-                        "${prefix?.plus(" - ") ?: ""}$name",
-                        true,
-                        describe,
-                        it,
-                        allContentsDisabled,
-                    ).init()
-                }
-                override fun it(name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) {
-                    it(prefix?.plus(" - $name") ?: name, test, enabled && !allContentsDisabled)
-                }
-                override fun xcontents(cond: Boolean, init: TestSpecContext.() -> Unit) {
-                    if (!cond) {
+) : DescribeSpec(
+    {
+        fun createTestSpecContext(
+            prefix: String?,
+            flatten: Boolean,
+            describe: (name: String, test: suspend DescribeSpecContainerScope.() -> Unit) -> Unit,
+            it: (name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) -> Unit,
+            allContentsDisabled: Boolean,
+        ): TestSpecContext {
+            if (flatten) {
+                return object : TestSpecContext {
+                    override fun describe(name: String, init: TestSpecContext.() -> Unit) {
                         createTestSpecContext(
-                            prefix,
-                            flatten,
-                            describe,
-                            it,
+                            "${prefix?.plus(" - ") ?: ""}$name",
                             true,
-                        ).init()
-                    } else {
-                        init()
-                    }
-                }
-            }
-        } else {
-            return object : TestSpecContext {
-                override fun describe(name: String, init: TestSpecContext.() -> Unit) {
-                    describe("${prefix?.plus(" - ") ?: ""}$name") {
-                        createTestSpecContext(
-                            null,
-                            false,
                             describe,
                             it,
                             allContentsDisabled,
                         ).init()
                     }
+
+                    override fun it(name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) {
+                        it(prefix?.plus(" - $name") ?: name, test, enabled && !allContentsDisabled)
+                    }
+
+                    override fun xcontents(cond: Boolean, init: TestSpecContext.() -> Unit) {
+                        if (!cond) {
+                            createTestSpecContext(
+                                prefix,
+                                flatten,
+                                describe,
+                                it,
+                                true,
+                            ).init()
+                        } else {
+                            init()
+                        }
+                    }
                 }
-                override fun it(name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) {
-                    it("${prefix?.plus(" - ") ?: ""}$name", test, enabled && allContentsDisabled)
-                }
-                override fun xcontents(cond: Boolean, init: TestSpecContext.() -> Unit) {
-                    if (!cond) {
-                        createTestSpecContext(
-                            prefix,
-                            flatten,
-                            describe,
-                            it,
-                            true,
-                        ).init()
-                    } else {
-                        init()
+            } else {
+                return object : TestSpecContext {
+                    override fun describe(name: String, init: TestSpecContext.() -> Unit) {
+                        describe("${prefix?.plus(" - ") ?: ""}$name") {
+                            createTestSpecContext(
+                                null,
+                                false,
+                                describe,
+                                it,
+                                allContentsDisabled,
+                            ).init()
+                        }
+                    }
+
+                    override fun it(name: String, test: suspend TestScope.() -> Unit, enabled: Boolean) {
+                        it("${prefix?.plus(" - ") ?: ""}$name", test, enabled && allContentsDisabled)
+                    }
+
+                    override fun xcontents(cond: Boolean, init: TestSpecContext.() -> Unit) {
+                        if (!cond) {
+                            createTestSpecContext(
+                                prefix,
+                                flatten,
+                                describe,
+                                it,
+                                true,
+                            ).init()
+                        } else {
+                            init()
+                        }
                     }
                 }
             }
         }
-    }
 
-    val context = createTestSpecContext(null, flatten, ::describe, {
-            name, test, enabled ->
-        if (enabled) {
-            it(name, test)
-        } else {
-            xit(name, test)
-        }
-    }, false)
-    context.body()
-})
+        val context = createTestSpecContext(
+            null,
+            flatten,
+            ::describe,
+            { name, test, enabled ->
+                if (enabled) {
+                    it(name, test)
+                } else {
+                    xit(name, test)
+                }
+            },
+            false,
+        )
+        context.body()
+    },
+)
 
 abstract class FlatTestSpec(
     body: TestSpecContext.() -> Unit,

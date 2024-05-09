@@ -1,4 +1,7 @@
 {
-    "name": "ShakeBitwiseNotNode", 
-    "value": %value_json%
+  "name": "ShakeBitwiseNotNode",
+  "value":
+  %
+  value_json
+  %
 }

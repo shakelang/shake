@@ -16,7 +16,10 @@ import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeParameterNode
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
 import com.shakelang.shake.shakespeare.nodes.spec.code.ValueNodeSpec
-import com.shakelang.shake.shakespeare.spec.*
+import com.shakelang.shake.shakespeare.spec.AccessModifier
+import com.shakelang.shake.shakespeare.spec.GenerationContext
+import com.shakelang.shake.shakespeare.spec.MethodSpec
+import com.shakelang.shake.shakespeare.spec.ParameterSpec
 
 class ParameterNodeSpec(
     name: String,

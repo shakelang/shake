@@ -1,4 +1,7 @@
 {
-    "name": "ShakePriorityNode", 
-    "value": %value_json%
+  "name": "ShakePriorityNode",
+  "value":
+  %
+  value_json
+  %
 }

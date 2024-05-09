@@ -18,15 +18,17 @@ open class FactoryTokenInputStream<
     override val map: PositionMap,
     val eof: TT,
 ) :
-    PeekableStreamImpl<T>(object : Stream<T> {
-        override fun read(): T {
-            return factory.createToken()
-        }
+    PeekableStreamImpl<T>(
+        object : Stream<T> {
+            override fun read(): T {
+                return factory.createToken()
+            }
 
-        override fun hasNext(): Boolean {
-            return true
-        }
-    }),
+            override fun hasNext(): Boolean {
+                return true
+            }
+        },
+    ),
     TokenInputStream<Self, TT, T, CTX> {
 
     final override var actual: T? = null

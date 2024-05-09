@@ -2240,7 +2240,7 @@ open class GreaterThanOrEqualSpec(
      */
     left: ValueSpec,
 
-/**
+    /**
      * The right value of the greater than or equal comparison
      */
     right: ValueSpec,

@@ -2,7 +2,6 @@ package com.shakelang.shake.shakespeare.spec
 
 import com.shakelang.shake.shakespeare.spec.code.CodeSpec
 import com.shakelang.util.testlib.FlatTestSpec
-import com.shakelang.util.testlib.describe
 import io.kotest.matchers.shouldBe
 
 class ConstructorSpecTests : FlatTestSpec(
@@ -76,33 +75,35 @@ class ConstructorSpecTests : FlatTestSpec(
     },
 )
 
-class ClassSpecTests : FlatTestSpec({
+class ClassSpecTests : FlatTestSpec(
+    {
 
-    describe("create") {
+        describe("create") {
 
-        val it = ClassSpec(
-            "ClassName",
-            listOf(),
-            listOf(),
-            listOf(),
-            listOf(),
-            isAbstract = false,
-            isFinal = false,
-            isStatic = false,
-            isNative = false,
-            AccessModifier.PUBLIC,
-        )
+            val it = ClassSpec(
+                "ClassName",
+                listOf(),
+                listOf(),
+                listOf(),
+                listOf(),
+                isAbstract = false,
+                isFinal = false,
+                isStatic = false,
+                isNative = false,
+                AccessModifier.PUBLIC,
+            )
 
-        it.name shouldBe "ClassName"
-        it.methods shouldBe listOf()
-        it.fields shouldBe listOf()
-        it.constructors shouldBe listOf()
-        it.classes shouldBe listOf()
+            it.name shouldBe "ClassName"
+            it.methods shouldBe listOf()
+            it.fields shouldBe listOf()
+            it.constructors shouldBe listOf()
+            it.classes shouldBe listOf()
 
-        it.isAbstract shouldBe false
-        it.isFinal shouldBe false
-        it.isStatic shouldBe false
-        it.isNative shouldBe false
-        it.accessModifier shouldBe AccessModifier.PUBLIC
-    }
-})
+            it.isAbstract shouldBe false
+            it.isFinal shouldBe false
+            it.isStatic shouldBe false
+            it.isNative shouldBe false
+            it.accessModifier shouldBe AccessModifier.PUBLIC
+        }
+    },
+)

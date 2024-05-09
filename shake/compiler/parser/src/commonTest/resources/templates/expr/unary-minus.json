@@ -1,4 +1,7 @@
 {
-    "name": "ShakeUnaryMinusNode", 
-    "value": %value_json%
+  "name": "ShakeUnaryMinusNode",
+  "value":
+  %
+  value_json
+  %
 }

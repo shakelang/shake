@@ -1,5 +1,11 @@
 {
-    "name": "ShakeDivNode",
-    "left": %left_json%,
-    "right": %right_json%
+  "name": "ShakeDivNode",
+  "left":
+  %
+  left_json
+  %,
+  "right":
+  %
+  right_json
+  %
 }

@@ -1,6 +1,7 @@
 @file:Suppress("unused")
 
 package com.shakelang.util.primitives.bytes
+
 /**
  * Convert a byte list to a byte.
  * @throws IllegalArgumentException if the array is not of size 1

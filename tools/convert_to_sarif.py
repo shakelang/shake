@@ -9,9 +9,10 @@
 # ./python3 run_gradlew.py <task / gradle arguments>
 #
 import json
-from os.path import relpath
-from os import getcwd
 import sys
+from os import getcwd
+from os.path import relpath
+
 
 def create_sarif_result(file_path, line_number, column_number, message):
     return {

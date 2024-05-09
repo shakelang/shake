@@ -157,6 +157,7 @@ class TestProviderInit(
     fun provider(init: TestProviderInit.() -> Unit) = TestProviderInit(this).apply(init).stream().forEach {
         tests.append(it)
     }
+
     fun replaceTemplate(vararg entries: Pair<String, String>) = ReplaceTemplate(entries.toMap())
 
     fun stream(): Stream<TestGenerator> = tests

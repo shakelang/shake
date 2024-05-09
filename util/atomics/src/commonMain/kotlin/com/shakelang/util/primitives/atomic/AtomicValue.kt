@@ -210,6 +210,7 @@ fun <S1 : AtomicValue, S2, T, RT : AutoUpdatableAtomicValue<T>> transform1(
     target.addDestroyListener { connection.destroy() }
     return target
 }
+
 fun <S1 : AtomicValue, S2 : AtomicValue, T, RT : AutoUpdatableAtomicValue<T>> transform2(
     source1: S1,
     source2: S2,

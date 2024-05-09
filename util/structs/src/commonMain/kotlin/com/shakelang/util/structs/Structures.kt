@@ -75,6 +75,7 @@ object Structures {
     open class Struct(val elements: List<Pair<String, DataStructureElement<*>>>) : DataStructureElement<Struct.ParseResult> {
 
         val map: Map<String, DataStructureElement<*>> = elements.toMap()
+
         open class ParseResult(val map: Map<String, *>)
 
         override val byteLength: Int = if (elements.any { it.second.byteLength < 0 }) -1 else elements.sumOf { it.second.byteLength }
