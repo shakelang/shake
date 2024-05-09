@@ -13,8 +13,12 @@ object AtomicFloatOperationImplementations {
     fun plus(source1: AtomicFloat, other: AtomicShort): Float = (source1.floatValue + other.shortValue)
     fun plus(source1: AtomicFloat, other: Int): Float = (source1.floatValue + other)
     fun plus(source1: AtomicFloat, other: AtomicInt): Float = (source1.floatValue + other.intValue)
+    fun plus(source1: AtomicFloat, other: Long): Float = (source1.floatValue + other)
+    fun plus(source1: AtomicFloat, other: AtomicLong): Float = (source1.floatValue + other.longValue)
     fun plus(source1: AtomicFloat, other: Float): Float = (source1.floatValue + other)
     fun plus(source1: AtomicFloat, source2: AtomicFloat): Float = (source1.floatValue + source2.floatValue)
+    fun plus(source1: AtomicFloat, other: Double): Double = (source1.floatValue + other)
+    fun plus(source1: AtomicFloat, other: AtomicDouble): Double = (source1.floatValue + other.doubleValue)
 
     fun minus(source1: AtomicFloat, other: Byte): Float = (source1.floatValue - other)
     fun minus(source1: AtomicFloat, other: AtomicByte): Float = (source1.floatValue - other.byteValue)
@@ -22,8 +26,12 @@ object AtomicFloatOperationImplementations {
     fun minus(source1: AtomicFloat, other: AtomicShort): Float = (source1.floatValue - other.shortValue)
     fun minus(source1: AtomicFloat, other: Int): Float = (source1.floatValue - other)
     fun minus(source1: AtomicFloat, other: AtomicInt): Float = (source1.floatValue - other.intValue)
+    fun minus(source1: AtomicFloat, other: Long): Float = (source1.floatValue - other)
+    fun minus(source1: AtomicFloat, other: AtomicLong): Float = (source1.floatValue - other.longValue)
     fun minus(source1: AtomicFloat, other: Float): Float = (source1.floatValue - other)
     fun minus(source1: AtomicFloat, source2: AtomicFloat): Float = (source1.floatValue - source2.floatValue)
+    fun minus(source1: AtomicFloat, other: Double): Double = (source1.floatValue - other)
+    fun minus(source1: AtomicFloat, other: AtomicDouble): Double = (source1.floatValue - other.doubleValue)
 
     fun times(source1: AtomicFloat, other: Byte): Float = (source1.floatValue * other)
     fun times(source1: AtomicFloat, other: AtomicByte): Float = (source1.floatValue * other.byteValue)
@@ -31,8 +39,12 @@ object AtomicFloatOperationImplementations {
     fun times(source1: AtomicFloat, other: AtomicShort): Float = (source1.floatValue * other.shortValue)
     fun times(source1: AtomicFloat, other: Int): Float = (source1.floatValue * other)
     fun times(source1: AtomicFloat, other: AtomicInt): Float = (source1.floatValue * other.intValue)
+    fun times(source1: AtomicFloat, other: Long): Float = (source1.floatValue * other)
+    fun times(source1: AtomicFloat, other: AtomicLong): Float = (source1.floatValue * other.longValue)
     fun times(source1: AtomicFloat, other: Float): Float = (source1.floatValue * other)
     fun times(source1: AtomicFloat, source2: AtomicFloat): Float = (source1.floatValue * source2.floatValue)
+    fun times(source1: AtomicFloat, other: Double): Double = (source1.floatValue * other)
+    fun times(source1: AtomicFloat, other: AtomicDouble): Double = (source1.floatValue * other.doubleValue)
 
     fun div(source1: AtomicFloat, other: Byte): Float = (source1.floatValue / other)
     fun div(source1: AtomicFloat, other: AtomicByte): Float = (source1.floatValue / other.byteValue)
@@ -40,8 +52,12 @@ object AtomicFloatOperationImplementations {
     fun div(source1: AtomicFloat, other: AtomicShort): Float = (source1.floatValue / other.shortValue)
     fun div(source1: AtomicFloat, other: Int): Float = (source1.floatValue / other)
     fun div(source1: AtomicFloat, other: AtomicInt): Float = (source1.floatValue / other.intValue)
+    fun div(source1: AtomicFloat, other: Long): Float = (source1.floatValue / other)
+    fun div(source1: AtomicFloat, other: AtomicLong): Float = (source1.floatValue / other.longValue)
     fun div(source1: AtomicFloat, other: Float): Float = (source1.floatValue / other)
     fun div(source1: AtomicFloat, source2: AtomicFloat): Float = (source1.floatValue / source2.floatValue)
+    fun div(source1: AtomicFloat, other: Double): Double = (source1.floatValue / other)
+    fun div(source1: AtomicFloat, other: AtomicDouble): Double = (source1.floatValue / other.doubleValue)
 
     fun rem(source1: AtomicFloat, other: Byte): Float = (source1.floatValue % other)
     fun rem(source1: AtomicFloat, other: AtomicByte): Float = (source1.floatValue % other.byteValue)
@@ -49,8 +65,12 @@ object AtomicFloatOperationImplementations {
     fun rem(source1: AtomicFloat, other: AtomicShort): Float = (source1.floatValue % other.shortValue)
     fun rem(source1: AtomicFloat, other: Int): Float = (source1.floatValue % other)
     fun rem(source1: AtomicFloat, other: AtomicInt): Float = (source1.floatValue % other.intValue)
+    fun rem(source1: AtomicFloat, other: Long): Float = (source1.floatValue % other)
+    fun rem(source1: AtomicFloat, other: AtomicLong): Float = (source1.floatValue % other.longValue)
     fun rem(source1: AtomicFloat, other: Float): Float = (source1.floatValue % other)
     fun rem(source1: AtomicFloat, source2: AtomicFloat): Float = (source1.floatValue % source2.floatValue)
+    fun rem(source1: AtomicFloat, other: Double): Double = (source1.floatValue % other)
+    fun rem(source1: AtomicFloat, other: AtomicDouble): Double = (source1.floatValue % other.doubleValue)
 
     fun pow(source1: AtomicFloat, other: Byte): Float = source1.floatValue.toDouble().pow(other.toDouble()).toFloat()
     fun pow(source1: AtomicFloat, other: AtomicByte): Float = source1.floatValue.toDouble().pow(other.byteValue.toDouble()).toFloat()
@@ -58,8 +78,12 @@ object AtomicFloatOperationImplementations {
     fun pow(source1: AtomicFloat, other: AtomicShort): Float = source1.floatValue.toDouble().pow(other.shortValue.toDouble()).toFloat()
     fun pow(source1: AtomicFloat, other: Int): Float = source1.floatValue.toDouble().pow(other.toDouble()).toFloat()
     fun pow(source1: AtomicFloat, other: AtomicInt): Float = source1.floatValue.toDouble().pow(other.intValue.toDouble()).toFloat()
+    fun pow(source1: AtomicFloat, other: Long): Float = source1.floatValue.toDouble().pow(other.toDouble()).toFloat()
+    fun pow(source1: AtomicFloat, other: AtomicLong): Float = source1.floatValue.toDouble().pow(other.longValue.toDouble()).toFloat()
     fun pow(source1: AtomicFloat, other: Float): Float = source1.floatValue.toDouble().pow(other.toDouble()).toFloat()
     fun pow(source1: AtomicFloat, source2: AtomicFloat): Float = source1.floatValue.toDouble().pow(source2.floatValue.toDouble()).toFloat()
+    fun pow(source1: AtomicFloat, other: Double): Double = source1.floatValue.toDouble().pow(other)
+    fun pow(source1: AtomicFloat, other: AtomicDouble): Double = source1.floatValue.toDouble().pow(other.doubleValue)
 
     fun negate(source1: AtomicFloat): Float = (-source1.floatValue)
 
@@ -69,8 +93,12 @@ object AtomicFloatOperationImplementations {
     val floatPlusAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::plus
     val floatPlusInt: BinaryOperation<AtomicFloat, Int, Float> = ::plus
     val floatPlusAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::plus
+    val floatPlusLong: BinaryOperation<AtomicFloat, Long, Float> = ::plus
+    val floatPlusAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::plus
     val floatPlusFloat: BinaryOperation<AtomicFloat, Float, Float> = ::plus
     val floatPlusAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::plus
+    val floatPlusDouble: BinaryOperation<AtomicFloat, Double, Double> = ::plus
+    val floatPlusAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::plus
 
     val floatMinusByte: BinaryOperation<AtomicFloat, Byte, Float> = ::minus
     val floatMinusAtomicByte: BinaryOperation<AtomicFloat, AtomicByte, Float> = ::minus
@@ -78,8 +106,12 @@ object AtomicFloatOperationImplementations {
     val floatMinusAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::minus
     val floatMinusInt: BinaryOperation<AtomicFloat, Int, Float> = ::minus
     val floatMinusAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::minus
+    val floatMinusLong: BinaryOperation<AtomicFloat, Long, Float> = ::minus
+    val floatMinusAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::minus
     val floatMinusFloat: BinaryOperation<AtomicFloat, Float, Float> = ::minus
     val floatMinusAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::minus
+    val floatMinusDouble: BinaryOperation<AtomicFloat, Double, Double> = ::minus
+    val floatMinusAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::minus
 
     val floatTimesByte: BinaryOperation<AtomicFloat, Byte, Float> = ::times
     val floatTimesAtomicByte: BinaryOperation<AtomicFloat, AtomicByte, Float> = ::times
@@ -87,8 +119,12 @@ object AtomicFloatOperationImplementations {
     val floatTimesAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::times
     val floatTimesInt: BinaryOperation<AtomicFloat, Int, Float> = ::times
     val floatTimesAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::times
+    val floatTimesLong: BinaryOperation<AtomicFloat, Long, Float> = ::times
+    val floatTimesAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::times
     val floatTimesFloat: BinaryOperation<AtomicFloat, Float, Float> = ::times
     val floatTimesAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::times
+    val floatTimesDouble: BinaryOperation<AtomicFloat, Double, Double> = ::times
+    val floatTimesAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::times
 
     val floatDivByte: BinaryOperation<AtomicFloat, Byte, Float> = ::div
     val floatDivAtomicByte: BinaryOperation<AtomicFloat, AtomicByte, Float> = ::div
@@ -96,8 +132,12 @@ object AtomicFloatOperationImplementations {
     val floatDivAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::div
     val floatDivInt: BinaryOperation<AtomicFloat, Int, Float> = ::div
     val floatDivAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::div
+    val floatDivLong: BinaryOperation<AtomicFloat, Long, Float> = ::div
+    val floatDivAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::div
     val floatDivFloat: BinaryOperation<AtomicFloat, Float, Float> = ::div
     val floatDivAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::div
+    val floatDivDouble: BinaryOperation<AtomicFloat, Double, Double> = ::div
+    val floatDivAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::div
 
     val floatRemByte: BinaryOperation<AtomicFloat, Byte, Float> = ::rem
     val floatRemAtomicByte: BinaryOperation<AtomicFloat, AtomicByte, Float> = ::rem
@@ -105,8 +145,12 @@ object AtomicFloatOperationImplementations {
     val floatRemAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::rem
     val floatRemInt: BinaryOperation<AtomicFloat, Int, Float> = ::rem
     val floatRemAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::rem
+    val floatRemLong: BinaryOperation<AtomicFloat, Long, Float> = ::rem
+    val floatRemAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::rem
     val floatRemFloat: BinaryOperation<AtomicFloat, Float, Float> = ::rem
     val floatRemAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::rem
+    val floatRemDouble: BinaryOperation<AtomicFloat, Double, Double> = ::rem
+    val floatRemAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::rem
 
     val floatPowByte: BinaryOperation<AtomicFloat, Byte, Float> = ::pow
     val floatPowAtomicByte: BinaryOperation<AtomicFloat, AtomicByte, Float> = ::pow
@@ -114,8 +158,12 @@ object AtomicFloatOperationImplementations {
     val floatPowAtomicShort: BinaryOperation<AtomicFloat, AtomicShort, Float> = ::pow
     val floatPowInt: BinaryOperation<AtomicFloat, Int, Float> = ::pow
     val floatPowAtomicInt: BinaryOperation<AtomicFloat, AtomicInt, Float> = ::pow
+    val floatPowLong: BinaryOperation<AtomicFloat, Long, Float> = ::pow
+    val floatPowAtomicLong: BinaryOperation<AtomicFloat, AtomicLong, Float> = ::pow
     val floatPowFloat: BinaryOperation<AtomicFloat, Float, Float> = ::pow
     val floatPowAtomicFloat: BinaryOperation<AtomicFloat, AtomicFloat, Float> = ::pow
+    val floatPowDouble: BinaryOperation<AtomicFloat, Double, Double> = ::pow
+    val floatPowAtomicDouble: BinaryOperation<AtomicFloat, AtomicDouble, Double> = ::pow
 
     val floatNegate: UnaryOperation<AtomicFloat, Float> = ::negate
 
@@ -125,8 +173,12 @@ object AtomicFloatOperationImplementations {
     fun transformPlus(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatPlusAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformPlus(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatPlusInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformPlus(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatPlusAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPlus(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatPlusLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPlus(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatPlusAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformPlus(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatPlusFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformPlus(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatPlusAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPlus(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatPlusDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformPlus(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatPlusAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformMinus(source1: AtomicFloat, other: Byte): AtomicFloat = transform1(source1, other, floatMinusByte, AutoUpdateAbleAtomicFloat.creator)
     fun transformMinus(source1: AtomicFloat, other: AtomicByte): AtomicFloat = transform1(source1, other, floatMinusAtomicByte, AutoUpdateAbleAtomicFloat.creator)
@@ -134,8 +186,12 @@ object AtomicFloatOperationImplementations {
     fun transformMinus(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatMinusAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformMinus(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatMinusInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformMinus(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatMinusAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformMinus(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatMinusLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformMinus(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatMinusAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformMinus(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatMinusFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformMinus(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatMinusAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformMinus(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatMinusDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformMinus(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatMinusAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformTimes(source1: AtomicFloat, other: Byte): AtomicFloat = transform1(source1, other, floatTimesByte, AutoUpdateAbleAtomicFloat.creator)
     fun transformTimes(source1: AtomicFloat, other: AtomicByte): AtomicFloat = transform1(source1, other, floatTimesAtomicByte, AutoUpdateAbleAtomicFloat.creator)
@@ -143,8 +199,12 @@ object AtomicFloatOperationImplementations {
     fun transformTimes(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatTimesAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformTimes(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatTimesInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformTimes(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatTimesAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformTimes(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatTimesLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformTimes(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatTimesAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformTimes(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatTimesFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformTimes(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatTimesAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformTimes(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatTimesDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformTimes(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatTimesAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformDiv(source1: AtomicFloat, other: Byte): AtomicFloat = transform1(source1, other, floatDivByte, AutoUpdateAbleAtomicFloat.creator)
     fun transformDiv(source1: AtomicFloat, other: AtomicByte): AtomicFloat = transform1(source1, other, floatDivAtomicByte, AutoUpdateAbleAtomicFloat.creator)
@@ -152,8 +212,12 @@ object AtomicFloatOperationImplementations {
     fun transformDiv(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatDivAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformDiv(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatDivInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformDiv(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatDivAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformDiv(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatDivLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformDiv(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatDivAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformDiv(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatDivFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformDiv(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatDivAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformDiv(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatDivDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformDiv(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatDivAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformRem(source1: AtomicFloat, other: Byte): AtomicFloat = transform1(source1, other, floatRemByte, AutoUpdateAbleAtomicFloat.creator)
     fun transformRem(source1: AtomicFloat, other: AtomicByte): AtomicFloat = transform1(source1, other, floatRemAtomicByte, AutoUpdateAbleAtomicFloat.creator)
@@ -161,8 +225,12 @@ object AtomicFloatOperationImplementations {
     fun transformRem(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatRemAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformRem(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatRemInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformRem(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatRemAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformRem(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatRemLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformRem(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatRemAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformRem(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatRemFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformRem(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatRemAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformRem(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatRemDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformRem(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatRemAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformPow(source1: AtomicFloat, other: Byte): AtomicFloat = transform1(source1, other, floatPowByte, AutoUpdateAbleAtomicFloat.creator)
     fun transformPow(source1: AtomicFloat, other: AtomicByte): AtomicFloat = transform1(source1, other, floatPowAtomicByte, AutoUpdateAbleAtomicFloat.creator)
@@ -170,8 +238,12 @@ object AtomicFloatOperationImplementations {
     fun transformPow(source1: AtomicFloat, other: AtomicShort): AtomicFloat = transform1(source1, other, floatPowAtomicShort, AutoUpdateAbleAtomicFloat.creator)
     fun transformPow(source1: AtomicFloat, other: Int): AtomicFloat = transform1(source1, other, floatPowInt, AutoUpdateAbleAtomicFloat.creator)
     fun transformPow(source1: AtomicFloat, other: AtomicInt): AtomicFloat = transform1(source1, other, floatPowAtomicInt, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPow(source1: AtomicFloat, other: Long): AtomicFloat = transform1(source1, other, floatPowLong, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPow(source1: AtomicFloat, other: AtomicLong): AtomicFloat = transform1(source1, other, floatPowAtomicLong, AutoUpdateAbleAtomicFloat.creator)
     fun transformPow(source1: AtomicFloat, other: Float): AtomicFloat = transform1(source1, other, floatPowFloat, AutoUpdateAbleAtomicFloat.creator)
     fun transformPow(source1: AtomicFloat, other: AtomicFloat): AtomicFloat = transform2(source1, other, floatPowAtomicFloat, AutoUpdateAbleAtomicFloat.creator)
+    fun transformPow(source1: AtomicFloat, other: Double): AtomicDouble = transform1(source1, other, floatPowDouble, AutoUpdateAbleAtomicDouble.creator)
+    fun transformPow(source1: AtomicFloat, other: AtomicDouble): AtomicDouble = transform1(source1, other, floatPowAtomicDouble, AutoUpdateAbleAtomicDouble.creator)
 
     fun transformNegate(source1: AtomicFloat): AtomicFloat = transform1(source1, floatNegate, AutoUpdateAbleAtomicFloat.creator)
 }
@@ -234,6 +306,20 @@ interface AtomicFloat : AtomicValue {
     operator fun plus(other: AtomicInt) = AtomicFloatOperationImplementations.transformPlus(this, other)
 
     /**
+     * Add another long to this float (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other long to add
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun plus(other: Long) = AtomicFloatOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another [AtomicLong] to this float (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other [AtomicLong] to add
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun plus(other: AtomicLong) = AtomicFloatOperationImplementations.transformPlus(this, other)
+
+    /**
      * Add another float to this float (returns a new [AtomicFloat] that automatically updates)
      * @param other The other float to add
      * @return The new [AtomicFloat] that automatically updates
@@ -246,6 +332,20 @@ interface AtomicFloat : AtomicValue {
      * @return The new [AtomicFloat] that automatically updates
      */
     operator fun plus(other: AtomicFloat) = AtomicFloatOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another double to this float (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other double to add
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun plus(other: Double) = AtomicFloatOperationImplementations.transformPlus(this, other)
+
+    /**
+     * Add another [AtomicDouble] to this float (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other [AtomicDouble] to add
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun plus(other: AtomicDouble) = AtomicFloatOperationImplementations.transformPlus(this, other)
 
     /**
      * Subtract another byte from this float (returns a new [AtomicFloat] that automatically updates)
@@ -290,6 +390,20 @@ interface AtomicFloat : AtomicValue {
     operator fun minus(other: AtomicInt) = AtomicFloatOperationImplementations.transformMinus(this, other)
 
     /**
+     * Subtract another long from this float (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other long to subtract
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun minus(other: Long) = AtomicFloatOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another [AtomicLong] from this float (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other [AtomicLong] to subtract
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun minus(other: AtomicLong) = AtomicFloatOperationImplementations.transformMinus(this, other)
+
+    /**
      * Subtract another float from this float (returns a new [AtomicFloat] that automatically updates)
      * @param other The other float to subtract
      * @return The new [AtomicFloat] that automatically updates
@@ -302,6 +416,20 @@ interface AtomicFloat : AtomicValue {
      * @return The new [AtomicFloat] that automatically updates
      */
     operator fun minus(other: AtomicFloat) = AtomicFloatOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another double from this float (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other double to subtract
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun minus(other: Double) = AtomicFloatOperationImplementations.transformMinus(this, other)
+
+    /**
+     * Subtract another [AtomicDouble] from this float (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other [AtomicDouble] to subtract
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun minus(other: AtomicDouble) = AtomicFloatOperationImplementations.transformMinus(this, other)
 
     /**
      * Multiply this float with another byte (returns a new [AtomicFloat] that automatically updates)
@@ -346,6 +474,20 @@ interface AtomicFloat : AtomicValue {
     operator fun times(other: AtomicInt) = AtomicFloatOperationImplementations.transformTimes(this, other)
 
     /**
+     * Multiply this float with another long (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other long to multiply with
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun times(other: Long) = AtomicFloatOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this float with another [AtomicLong] (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other [AtomicLong] to multiply with
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun times(other: AtomicLong) = AtomicFloatOperationImplementations.transformTimes(this, other)
+
+    /**
      * Multiply this float with another float (returns a new [AtomicFloat] that automatically updates)
      * @param other The other float to multiply with
      * @return The new [AtomicFloat] that automatically updates
@@ -358,6 +500,20 @@ interface AtomicFloat : AtomicValue {
      * @return The new [AtomicFloat] that automatically updates
      */
     operator fun times(other: AtomicFloat) = AtomicFloatOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this float with another double (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other double to multiply with
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun times(other: Double) = AtomicFloatOperationImplementations.transformTimes(this, other)
+
+    /**
+     * Multiply this float with another [AtomicDouble] (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other [AtomicDouble] to multiply with
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun times(other: AtomicDouble) = AtomicFloatOperationImplementations.transformTimes(this, other)
 
     /**
      * Divide this float by another byte (returns a new [AtomicFloat] that automatically updates)
@@ -402,6 +558,20 @@ interface AtomicFloat : AtomicValue {
     operator fun div(other: AtomicInt) = AtomicFloatOperationImplementations.transformDiv(this, other)
 
     /**
+     * Divide this float by another long (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other long to divide by
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun div(other: Long) = AtomicFloatOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this float by another [AtomicLong] (returns a new [AtomicFloat] that automatically updates)
+     * @param other The other [AtomicLong] to divide by
+     * @return The new [AtomicFloat] that automatically updates
+     */
+    operator fun div(other: AtomicLong) = AtomicFloatOperationImplementations.transformDiv(this, other)
+
+    /**
      * Divide this float by another float (returns a new [AtomicFloat] that automatically updates)
      * @param other The other float to divide by
      * @return The new [AtomicFloat] that automatically updates
@@ -414,6 +584,20 @@ interface AtomicFloat : AtomicValue {
      * @return The new [AtomicFloat] that automatically updates
      */
     operator fun div(other: AtomicFloat) = AtomicFloatOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this float by another double (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other double to divide by
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun div(other: Double) = AtomicFloatOperationImplementations.transformDiv(this, other)
+
+    /**
+     * Divide this float by another [AtomicDouble] (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other [AtomicDouble] to divide by
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun div(other: AtomicDouble) = AtomicFloatOperationImplementations.transformDiv(this, other)
 
     /**
      * Modulo this float by another byte (returns a new [AtomicFloat] that automatically updates)
@@ -456,6 +640,20 @@ interface AtomicFloat : AtomicValue {
      * @return The new [AtomicFloat] that automatically updates
      */
     operator fun rem(other: AtomicInt) = AtomicFloatOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this float by another double (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other double to modulo by
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun rem(other: Double) = AtomicFloatOperationImplementations.transformRem(this, other)
+
+    /**
+     * Modulo this float by another [AtomicDouble] (returns a new [AtomicDouble] that automatically updates)
+     * @param other The other [AtomicDouble] to modulo by
+     * @return The new [AtomicDouble] that automatically updates
+     */
+    operator fun rem(other: AtomicDouble) = AtomicFloatOperationImplementations.transformRem(this, other)
 
     /**
      * Modulo this float by another float (returns a new [AtomicFloat] that automatically updates)
