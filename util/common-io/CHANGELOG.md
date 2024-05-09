@@ -41,3 +41,7 @@ Utility for working with colors in console applications (Kotlin Multiplatform)
 ### 0.6.0
 
 * Enhance builtin stream (datastructure) api
+
+### 0.6.1
+
+* Update com.shakelang.util:primitives to 0.6.0

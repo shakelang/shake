@@ -91,3 +91,11 @@ A json parser implemented in kotlin (mpp)
 * Update com.shakelang.util:common-io to 0.6.0
 
 * Update com.shakelang.util:parseutils to 0.5.0
+
+### 0.4.5
+
+* Update com.shakelang.util:primitives to 0.6.0
+
+* Update com.shakelang.util:common-io to 0.6.1
+
+* Update com.shakelang.util:parseutils to 0.5.1

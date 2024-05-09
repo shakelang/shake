@@ -11,3 +11,11 @@ Prints the current version
 * Update com.shakelang.util:common-io to 0.6.0
 
 * Update com.shakelang.util:parseutils to 0.5.0
+
+### 0.1.2
+
+* Update com.shakelang.util:primitives to 0.6.0
+
+* Update com.shakelang.util:common-io to 0.6.1
+
+* Update com.shakelang.util:parseutils to 0.5.1

@@ -30,15 +30,15 @@ class AttributeCodeInfo(
         get() {
             val attributes = this.attributes.map { it.toBytes().toList() }.flatten().toByteArray()
             val b = ByteArray(12 + code.size + exceptionTable.size * 8 + attributes.size)
-            b.setUnsignedShort(0, maxStack) // 2
-            b.setUnsignedShort(2, maxLocals) // 2
+            b.setUShort(0, maxStack) // 2
+            b.setUShort(2, maxLocals) // 2
             b.setInt(4, code.size) // 2
             b.setBytes(8, code) // code.size
-            b.setUnsignedShort(8 + code.size, exceptionTable.size.toUShort()) // 2
+            b.setUShort(8 + code.size, exceptionTable.size.toUShort()) // 2
             for (i in exceptionTable.indices) { // 8 * exception_table.size
                 b.setBytes(10 + code.size + i * 8, exceptionTable[i].toBytes())
             }
-            b.setUnsignedShort(10 + code.size + exceptionTable.size * 8, this.attributes.size.toUShort()) // 2
+            b.setUShort(10 + code.size + exceptionTable.size * 8, this.attributes.size.toUShort()) // 2
             b.setBytes(12 + code.size + exceptionTable.size * 8, attributes) // attributes.size
             return b
         }
@@ -109,10 +109,10 @@ class AttributeCodeInfo(
         val bytes: ByteArray
             get() {
                 val b = ByteArray(8)
-                b.setUnsignedShort(0, startPc)
-                b.setUnsignedShort(2, endPc)
-                b.setUnsignedShort(4, handlerPc)
-                b.setUnsignedShort(6, catchType)
+                b.setUShort(0, startPc)
+                b.setUShort(2, endPc)
+                b.setUShort(4, handlerPc)
+                b.setUShort(6, catchType)
                 return b
             }
 

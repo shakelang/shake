@@ -73,7 +73,7 @@ class AttributeStackMapTableInfo(
             get() {
                 val cbytes = frames.map { it.bytes }
                 val bytes = ByteArray(2 + cbytes.sumOf { it.size })
-                bytes.setUnsignedShort(0, cbytes.size.toUShort())
+                bytes.setUShort(0, cbytes.size.toUShort())
                 var offset = 2
                 for (c in cbytes) {
                     c.copyInto(bytes, offset)

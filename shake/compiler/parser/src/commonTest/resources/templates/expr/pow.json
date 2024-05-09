@@ -1,5 +1,11 @@
 {
-    "name": "ShakePowNode",
-    "left": %left_json%,
-    "right": %right_json%
+  "name": "ShakePowNode",
+  "left":
+  %
+  left_json
+  %,
+  "right":
+  %
+  right_json
+  %
 }

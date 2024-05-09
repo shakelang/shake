@@ -21,6 +21,7 @@ kotlin {
         implementation("io.kotest:kotest-framework-engine:$KOTEST_VERSION")
         implementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")
         implementation("io.kotest:kotest-property:$KOTEST_VERSION")
+        implementation(project(":util:environment"))
     }
 }
 useKotest()

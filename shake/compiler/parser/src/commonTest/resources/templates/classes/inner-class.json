@@ -11,8 +11,14 @@
       "classes": [
         {
           "name": "ShakeClassDeclarationNode",
-          "is_static": %static%,
-          "is_final": %final%,
+          "is_static":
+          %
+          static
+          %,
+          "is_final":
+          %
+          final
+          %,
           "access": "%access%",
           "fields": [],
           "methods": [],

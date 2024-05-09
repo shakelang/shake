@@ -9,7 +9,10 @@
         "type": "integer"
       },
       "access": "package",
-      "assignment": %expr_json%,
+      "assignment":
+      %
+      expr_json
+      %,
       "is_static": false,
       "is_final": false,
       "is_native": false,

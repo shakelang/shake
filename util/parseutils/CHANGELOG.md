@@ -59,3 +59,9 @@ Utilities for parsing stuff with kotlin
 * Update TokenStream api to be built on top of common-io streaming api
 
 * Update com.shakelang.util:common-io to 0.6.0
+
+### 0.5.1
+
+* Update com.shakelang.util:primitives to 0.6.0
+
+* Update com.shakelang.util:common-io to 0.6.1

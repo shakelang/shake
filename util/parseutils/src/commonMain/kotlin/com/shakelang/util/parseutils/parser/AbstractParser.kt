@@ -31,10 +31,12 @@ abstract class AbstractParser<
      * @since 0.5.0
      * @version 0.5.0
      */
-    open val errorFactory = ParserErrorFactory({
-            message, start, end ->
-        ParserError(message, start, end)
-    }, input)
+    open val errorFactory = ParserErrorFactory(
+        { message, start, end ->
+            ParserError(message, start, end)
+        },
+        input,
+    )
 
     /**
      * A [CompilerError] thrown by the parser

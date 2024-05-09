@@ -83,7 +83,7 @@ abstract class ShakeParserHelper(
      * @throws com.shakelang.util.parseutils.parser.AbstractParser.ParserError If the next token is not of the given type
      */
     protected fun expectToken(types: List<ShakeTokenType>, skipIgnorable: Boolean = true): ShakeToken {
-        return expectToken(types, "Expecting one of [${types.joinToString(", "){ json.stringify(it) }}]", skipIgnorable)
+        return expectToken(types, "Expecting one of [${types.joinToString(", ") { json.stringify(it) }}]", skipIgnorable)
     }
 
     /**

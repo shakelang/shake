@@ -8,7 +8,7 @@ import com.shakelang.util.jvmlib.infos.constants.ConstantUser
 import com.shakelang.util.jvmlib.infos.constants.ConstantUtf8Info
 import com.shakelang.util.primitives.bytes.setBytes
 import com.shakelang.util.primitives.bytes.setInt
-import com.shakelang.util.primitives.bytes.setUnsignedShort
+import com.shakelang.util.primitives.bytes.setUShort
 
 abstract class AttributeInfo(val name: ConstantUtf8Info) : ConstantUser {
 
@@ -20,7 +20,7 @@ abstract class AttributeInfo(val name: ConstantUtf8Info) : ConstantUser {
     fun toBytes(): ByteArray {
         val bb = this.bytes
         val bytes = ByteArray(6 + bb.size)
-        bytes.setUnsignedShort(0, nameIndex)
+        bytes.setUShort(0, nameIndex)
         bytes.setInt(2, bb.size)
         bytes.setBytes(6, bb)
         return bytes

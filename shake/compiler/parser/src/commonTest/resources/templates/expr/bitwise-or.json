@@ -1,5 +1,11 @@
 {
-    "name": "ShakeBitwiseOrNode",
-    "left": %left_json%,
-    "right": %right_json%
+  "name": "ShakeBitwiseOrNode",
+  "left":
+  %
+  left_json
+  %,
+  "right":
+  %
+  right_json
+  %
 }

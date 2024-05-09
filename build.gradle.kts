@@ -24,6 +24,7 @@ buildscript {
 
 dependencies {
     kover(project(":util:algo"))
+    kover(project(":util:atomics"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:commander"))
@@ -39,6 +40,7 @@ dependencies {
     kover(project(":util:pointers"))
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
+    kover(project(":util:structs"))
     kover(project(":util:testlib"))
     kover(project(":util:testlib:lexer"))
 

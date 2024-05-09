@@ -17,6 +17,7 @@ val projectName = name
 
 kotlin {
     dependencies {
+        testImplementation(project(":util:testlib"))
     }
 }
 

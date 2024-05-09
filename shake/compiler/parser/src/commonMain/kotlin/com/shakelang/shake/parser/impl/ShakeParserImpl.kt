@@ -663,6 +663,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         operator fun component3() = rparen
         operator fun component4() = commas
     }
+
     private fun expectFunctionArguments(): ParametersResult {
         val args = mutableListOf<ShakeParameterNode>()
         val commas = mutableListOf<ShakeToken>()

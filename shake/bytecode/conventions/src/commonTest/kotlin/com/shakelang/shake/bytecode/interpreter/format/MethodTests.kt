@@ -219,7 +219,9 @@ class MethodTests : FreeSpec(
                 // attribute data size
                 *3.toBytes(),
                 // attribute data
-                1, 2, 3,
+                1,
+                2,
+                3,
             )
         }
 
@@ -244,7 +246,9 @@ class MethodTests : FreeSpec(
                 // attribute data size
                 *3.toBytes(),
                 // attribute data
-                1, 2, 3,
+                1,
+                2,
+                3,
             )
         }
 
@@ -630,7 +634,9 @@ class MutableMethodTests : FreeSpec(
                 // attribute data size
                 *3.toBytes(),
                 // attribute data
-                1, 2, 3,
+                1,
+                2,
+                3,
             )
         }
 
@@ -655,7 +661,9 @@ class MutableMethodTests : FreeSpec(
                 // attribute data size
                 *3.toBytes(),
                 // attribute data
-                1, 2, 3,
+                1,
+                2,
+                3,
             )
         }
 

@@ -2,946 +2,1895 @@
 
 package com.shakelang.util.primitives.bytes
 
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FreeSpec
+import com.shakelang.util.testlib.FlatTestSpec
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
 import kotlin.math.max
 
 @Suppress("unused")
 @OptIn(ExperimentalUnsignedTypes::class)
-class ByteArrayTests : FreeSpec(
+class ByteArrayTests : FlatTestSpec(
     {
 
-        "toByte" {
-            byteArrayOf(0x00u).toByte() shouldBe 0x00u.toByte()
-            byteArrayOf(0x01u).toByte() shouldBe 0x01u.toByte()
-            byteArrayOf(0x7Fu).toByte() shouldBe 0x7Fu.toByte()
-            byteArrayOf(0x80u).toByte() shouldBe 0x80u.toByte()
-            byteArrayOf(0xFFu).toByte() shouldBe 0xFFu.toByte()
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x01u).toByte()
+        describe("to") {
+
+            describe("toByte()") {
+
+                it("should convert a byte of size 1 to a byte") {
+                    val b = byteArrayOf(1.toByte())
+                    b.toByte() shouldBe 1.toByte()
+                }
+
+                it("should throw an exception if the byte array is > 1") {
+                    val b = byteArrayOf(1.toByte(), 2.toByte())
+                    runCatching { b.toByte() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 1") {
+                    val b = byteArrayOf()
+                    runCatching { b.toByte() }.isFailure shouldBe true
+                }
             }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf().toByte()
+
+            describe("toUByte()") {
+
+                it("should convert a byte of size 1 to a ubyte") {
+                    val b = byteArrayOf(1.toByte())
+                    b.toUByte() shouldBe 1.toUByte()
+                }
+
+                it("should throw an exception if the byte array is > 1") {
+                    val b = byteArrayOf(1.toByte(), 2.toByte())
+                    runCatching { b.toUByte() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 1") {
+                    val b = byteArrayOf()
+                    runCatching { b.toUByte() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedByte()") {
+                it("should convert a byte of size 1 to a ubyte") {
+                    val b = byteArrayOf(1.toByte())
+                    b.toUnsignedByte() shouldBe 1.toUByte()
+                }
+
+                it("should throw an exception if the byte array is > 1") {
+                    val b = byteArrayOf(1.toByte(), 2.toByte())
+                    runCatching { b.toUnsignedByte() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 1") {
+                    val b = byteArrayOf()
+                    runCatching { b.toUnsignedByte() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toShortBE()") {
+
+                it("should convert a byte of size 2 to a short") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toShortBE() shouldBe 0x0102.toShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toShortBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toShortBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toShortLE()") {
+
+                it("should convert a byte of size 2 to a short") {
+                    val b = byteArrayOf(0x02.toByte(), 1)
+                    b.toShortLE() shouldBe 0x0102.toShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toShortLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toShortLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toShort()") {
+
+                it("should convert a byte of size 2 to a short") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toShort() shouldBe 0x0102.toShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toShort() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toShort() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUShortBE()") {
+
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toUShortBE() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUShortBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUShortBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUShortLE()") {
+
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x02.toByte(), 1)
+                    b.toUShortLE() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUShortLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUShortLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUShort()") {
+
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toUShort() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUShort() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUShort() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedShortBE()") {
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toUnsignedShortBE() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedShortBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUnsignedShortBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedShortLE()") {
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x02.toByte(), 1)
+                    b.toUnsignedShortLE() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedShortLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUnsignedShortLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedShort()") {
+                it("should convert a byte of size 2 to a ushort") {
+                    val b = byteArrayOf(0x01.toByte(), 2)
+                    b.toUnsignedShort() shouldBe 0x0102.toUShort()
+                }
+
+                it("should throw an exception if the byte array is > 2") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedShort() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 2") {
+                    val b = byteArrayOf(1.toByte())
+                    runCatching { b.toUnsignedShort() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toIntBE()") {
+
+                it("should convert a byte of size 4 to a int") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toIntBE() shouldBe 0x01020304
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toIntBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toIntBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toIntLE()") {
+
+                it("should convert a byte of size 4 to a int") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
+                    b.toIntLE() shouldBe 0x01020304
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toIntLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toIntLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toInt()") {
+
+                it("should convert a byte of size 4 to a int") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toInt() shouldBe 0x01020304
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toInt() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toInt() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUIntBE()") {
+
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toUIntBE() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUIntBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUIntBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUIntLE()") {
+
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
+                    b.toUIntLE() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUIntLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUIntLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUInt()") {
+
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toUInt() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUInt() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUInt() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedIntBE()") {
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toUnsignedIntBE() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUnsignedIntBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedIntBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedIntLE()") {
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1)
+                    b.toUnsignedIntLE() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUnsignedIntLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedIntLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedInt()") {
+                it("should convert a byte of size 4 to a uint") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4)
+                    b.toUnsignedInt() shouldBe 0x01020304u
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toUnsignedInt() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toUnsignedInt() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toLongBE()") {
+
+                it("should convert a byte of size 8 to a long") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toLongBE() shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toLongBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toLongBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toLongLE()") {
+
+                it("should convert a byte of size 8 to a long") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.toLongLE() shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toLongLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toLongLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toLong()") {
+
+                it("should convert a byte of size 8 to a long") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toLong() shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toLong() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toLong() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toULongBE()") {
+
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toULongBE() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toULongBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toULongBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toULongLE()") {
+
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.toULongLE() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toULongLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toULongLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toULong()") {
+
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toULong() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toULong() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toULong() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedLongBE()") {
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toUnsignedLongBE() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toUnsignedLongBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toUnsignedLongBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedLongLE()") {
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.toUnsignedLongLE() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toUnsignedLongLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toUnsignedLongLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toUnsignedLong()") {
+                it("should convert a byte of size 8 to a ulong") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.toUnsignedLong() shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toUnsignedLong() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toUnsignedLong() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toFloatBE()") {
+
+                it("should convert a byte of size 4 to a float") {
+                    val b = byteArrayOf(0x3F.toByte(), 0x80.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0f, b.toFloatBE())
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toFloatBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toFloatBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toFloatLE()") {
+
+                it("should convert a byte of size 4 to a float") {
+                    val b = byteArrayOf(0x00.toByte(), 0x00.toByte(), 0x80.toByte(), 0x3F.toByte())
+                    assertCompare(1.0f, b.toFloatLE())
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toFloatLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toFloatLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toFloat()") {
+
+                it("should convert a byte of size 4 to a float") {
+                    val b = byteArrayOf(0x3F.toByte(), 0x80.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0f, b.toFloat())
+                }
+
+                it("should throw an exception if the byte array is > 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5)
+                    runCatching { b.toFloat() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 4") {
+                    val b = byteArrayOf(1.toByte(), 2, 3)
+                    runCatching { b.toFloat() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toDoubleBE()") {
+                it("should convert a byte of size 8 to a double") {
+                    val b = byteArrayOf(0x3F.toByte(), 0xF0.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0, b.toDoubleBE())
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toDoubleBE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toDoubleBE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toDoubleLE()") {
+                it("should convert a byte of size 8 to a double") {
+                    val b = byteArrayOf(0, 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    assertCompare(1.0, b.toDoubleLE())
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toDoubleLE() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toDoubleLE() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toDouble()") {
+                it("should convert a byte of size 8 to a double") {
+                    val b = byteArrayOf(0x3F.toByte(), 0xF0.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0, b.toDouble())
+                }
+
+                it("should throw an exception if the byte array is > 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, 9)
+                    runCatching { b.toDouble() }.isFailure shouldBe true
+                }
+
+                it("should throw an exception if the byte array is < 8") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7)
+                    runCatching { b.toDouble() }.isFailure shouldBe true
+                }
+            }
+
+            describe("toHexString()") {
+                it("should convert a byte array to a hex string") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8, 0x2A.toByte())
+                    b.toHexString() shouldBe "01020304050607082a"
+                }
+            }
+
+            describe("toUtf8String()") {
+                it("should convert a byte array to a utf8 string") {
+                    val b = "Hello World\u0009".toCharArray().map { it.code.toByte() }.toByteArray()
+                    b.toUtf8String() shouldBe "Hello World\u0009"
+                }
             }
         }
 
-        "toShort" {
-            byteArrayOf(0x00u, 0x00u).toShort() shouldBe 0x0000u.toShort()
-            byteArrayOf(0x00u, 0x01u).toShort() shouldBe 0x0001u.toShort()
-            byteArrayOf(0x00u, 0x7Fu).toShort() shouldBe 0x007Fu.toShort()
-            byteArrayOf(0x00u, 0x80u).toShort() shouldBe 0x0080u.toShort()
-            byteArrayOf(0x00u, 0xFFu).toShort() shouldBe 0x00FFu.toShort()
-            byteArrayOf(0x01u, 0x00u).toShort() shouldBe 0x0100u.toShort()
-            byteArrayOf(0x7Fu, 0xFFu).toShort() shouldBe 0x7FFFu.toShort()
-            byteArrayOf(0x80u, 0x00u).toShort() shouldBe 0x8000u.toShort()
-            byteArrayOf(0xFFu, 0xFFu).toShort() shouldBe 0xFFFFu.toShort()
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u).toShort()
+        describe("get") {
+            describe("getByte") {
+                it("should get the byte at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getByte(0) shouldBe 1.toByte()
+                    b.getByte(1) shouldBe 2.toByte()
+                    b.getByte(2) shouldBe 3.toByte()
+                    b.getByte(3) shouldBe 4.toByte()
+                    b.getByte(4) shouldBe 5.toByte()
+                    b.getByte(5) shouldBe 6.toByte()
+                    b.getByte(6) shouldBe 7.toByte()
+                    b.getByte(7) shouldBe 8.toByte()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getByte(8) }.isFailure shouldBe true
+                    runCatching { b.getByte(-1) }.isFailure shouldBe true
+                }
             }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x01u).toShort()
+
+            describe("getUByte") {
+                it("should get the ubyte at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUByte(0) shouldBe 1.toUByte()
+                    b.getUByte(1) shouldBe 2.toUByte()
+                    b.getUByte(2) shouldBe 3.toUByte()
+                    b.getUByte(3) shouldBe 4.toUByte()
+                    b.getUByte(4) shouldBe 5.toUByte()
+                    b.getUByte(5) shouldBe 6.toUByte()
+                    b.getUByte(6) shouldBe 7.toUByte()
+                    b.getUByte(7) shouldBe 8.toUByte()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUByte(8) }.isFailure shouldBe true
+                    runCatching { b.getUByte(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedByte") {
+                it("should get the ubyte at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedByte(0) shouldBe 1.toUByte()
+                    b.getUnsignedByte(1) shouldBe 2.toUByte()
+                    b.getUnsignedByte(2) shouldBe 3.toUByte()
+                    b.getUnsignedByte(3) shouldBe 4.toUByte()
+                    b.getUnsignedByte(4) shouldBe 5.toUByte()
+                    b.getUnsignedByte(5) shouldBe 6.toUByte()
+                    b.getUnsignedByte(6) shouldBe 7.toUByte()
+                    b.getUnsignedByte(7) shouldBe 8.toUByte()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedByte(8) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedByte(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getShortBE") {
+                it("should get the short at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getShortBE(0) shouldBe 0x0102.toShort()
+                    b.getShortBE(1) shouldBe 0x0203.toShort()
+                    b.getShortBE(4) shouldBe 0x0506.toShort()
+                    b.getShortBE(5) shouldBe 0x0607.toShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getShortBE(7) }.isFailure shouldBe true
+                    runCatching { b.getShortBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getShortLE") {
+                it("should get the short at the given index") {
+                    val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
+                    b.getShortLE(0) shouldBe 0x0102.toShort()
+                    b.getShortLE(1) shouldBe 0x0401.toShort()
+                    b.getShortLE(4) shouldBe 0x0506.toShort()
+                    b.getShortLE(5) shouldBe 0x0805.toShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getShortLE(7) }.isFailure shouldBe true
+                    runCatching { b.getShortLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getShort") {
+                it("should get the short at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getShort(0) shouldBe 0x0102.toShort()
+                    b.getShort(1) shouldBe 0x0203.toShort()
+                    b.getShort(4) shouldBe 0x0506.toShort()
+                    b.getShort(5) shouldBe 0x0607.toShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getShort(7) }.isFailure shouldBe true
+                    runCatching { b.getShort(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUShortBE") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUShortBE(0) shouldBe 0x0102.toUShort()
+                    b.getUShortBE(1) shouldBe 0x0203.toUShort()
+                    b.getUShortBE(4) shouldBe 0x0506.toUShort()
+                    b.getUShortBE(5) shouldBe 0x0607.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUShortBE(7) }.isFailure shouldBe true
+                    runCatching { b.getUShortBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUShortLE") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
+                    b.getUShortLE(0) shouldBe 0x0102.toUShort()
+                    b.getUShortLE(1) shouldBe 0x0401.toUShort()
+                    b.getUShortLE(4) shouldBe 0x0506.toUShort()
+                    b.getUShortLE(5) shouldBe 0x0805.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUShortLE(7) }.isFailure shouldBe true
+                    runCatching { b.getUShortLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUShort") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUShort(0) shouldBe 0x0102.toUShort()
+                    b.getUShort(1) shouldBe 0x0203.toUShort()
+                    b.getUShort(4) shouldBe 0x0506.toUShort()
+                    b.getUShort(5) shouldBe 0x0607.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUShort(7) }.isFailure shouldBe true
+                    runCatching { b.getUShort(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedShortBE") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedShortBE(0) shouldBe 0x0102.toUShort()
+                    b.getUnsignedShortBE(1) shouldBe 0x0203.toUShort()
+                    b.getUnsignedShortBE(4) shouldBe 0x0506.toUShort()
+                    b.getUnsignedShortBE(5) shouldBe 0x0607.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedShortBE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedShortBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedShortLE") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x02.toByte(), 1, 4, 3, 6, 5, 8, 7)
+                    b.getUnsignedShortLE(0) shouldBe 0x0102.toUShort()
+                    b.getUnsignedShortLE(1) shouldBe 0x0401.toUShort()
+                    b.getUnsignedShortLE(4) shouldBe 0x0506.toUShort()
+                    b.getUnsignedShortLE(5) shouldBe 0x0805.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedShortLE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedShortLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedShort") {
+                it("should get the ushort at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedShort(0) shouldBe 0x0102.toUShort()
+                    b.getUnsignedShort(1) shouldBe 0x0203.toUShort()
+                    b.getUnsignedShort(4) shouldBe 0x0506.toUShort()
+                    b.getUnsignedShort(5) shouldBe 0x0607.toUShort()
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedShort(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedShort(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getIntBE") {
+                it("should get the int at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getIntBE(0) shouldBe 0x01020304
+                    b.getIntBE(1) shouldBe 0x02030405
+                    b.getIntBE(4) shouldBe 0x05060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getIntBE(7) }.isFailure shouldBe true
+                    runCatching { b.getIntBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getIntLE") {
+                it("should get the int at the given index") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
+                    b.getIntLE(0) shouldBe 0x01020304
+                    b.getIntLE(1) shouldBe 0x08010203
+                    b.getIntLE(4) shouldBe 0x05060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getIntLE(7) }.isFailure shouldBe true
+                    runCatching { b.getIntLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getInt") {
+                it("should get the int at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getInt(0) shouldBe 0x01020304
+                    b.getInt(1) shouldBe 0x02030405
+                    b.getInt(4) shouldBe 0x05060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getInt(7) }.isFailure shouldBe true
+                    runCatching { b.getInt(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUIntBE") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUIntBE(0) shouldBe 0x01020304u
+                    b.getUIntBE(1) shouldBe 0x02030405u
+                    b.getUIntBE(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUIntBE(7) }.isFailure shouldBe true
+                    runCatching { b.getUIntBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUIntLE") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
+                    b.getUIntLE(0) shouldBe 0x01020304u
+                    b.getUIntLE(1) shouldBe 0x08010203u
+                    b.getUIntLE(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUIntLE(7) }.isFailure shouldBe true
+                    runCatching { b.getUIntLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUInt") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUInt(0) shouldBe 0x01020304u
+                    b.getUInt(1) shouldBe 0x02030405u
+                    b.getUInt(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUInt(7) }.isFailure shouldBe true
+                    runCatching { b.getUInt(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedIntBE") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedIntBE(0) shouldBe 0x01020304u
+                    b.getUnsignedIntBE(1) shouldBe 0x02030405u
+                    b.getUnsignedIntBE(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedIntBE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedIntBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedIntLE") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x04.toByte(), 3, 2, 1, 8, 7, 6, 5)
+                    b.getUnsignedIntLE(0) shouldBe 0x01020304u
+                    b.getUnsignedIntLE(1) shouldBe 0x08010203u
+                    b.getUnsignedIntLE(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedIntLE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedIntLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedInt") {
+                it("should get the uint at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedInt(0) shouldBe 0x01020304u
+                    b.getUnsignedInt(1) shouldBe 0x02030405u
+                    b.getUnsignedInt(4) shouldBe 0x05060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedInt(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedInt(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getLongBE") {
+                it("should get the long at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getLongBE(0) shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getLongBE(7) }.isFailure shouldBe true
+                    runCatching { b.getLongBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getLongLE") {
+                it("should get the long at the given index") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.getLongLE(0) shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getLongLE(7) }.isFailure shouldBe true
+                    runCatching { b.getLongLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getLong") {
+                it("should get the long at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getLong(0) shouldBe 0x0102030405060708
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getLong(7) }.isFailure shouldBe true
+                    runCatching { b.getLong(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getULongBE") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getULongBE(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getULongBE(7) }.isFailure shouldBe true
+                    runCatching { b.getULongBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getULongLE") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.getULongLE(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getULongLE(7) }.isFailure shouldBe true
+                    runCatching { b.getULongLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getULong") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getULong(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getULong(7) }.isFailure shouldBe true
+                    runCatching { b.getULong(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedLongBE") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedLongBE(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedLongBE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedLongBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedLongLE") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                    b.getUnsignedLongLE(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedLongLE(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedLongLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getUnsignedLong") {
+                it("should get the ulong at the given index") {
+                    val b = byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getUnsignedLong(0) shouldBe 0x0102030405060708u
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getUnsignedLong(7) }.isFailure shouldBe true
+                    runCatching { b.getUnsignedLong(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getFloatBE") {
+                it("should get the float at the given index") {
+                    val b = byteArrayOf(0x3F.toByte(), 0x80.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0f, b.getFloatBE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4)
+                    runCatching { b.getFloatBE(4) }.isFailure shouldBe true
+                    runCatching { b.getFloatBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getFloatLE") {
+                it("should get the float at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0x00.toByte(), 0x80.toByte(), 0x3F.toByte())
+                    assertCompare(1.0f, b.getFloatLE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4)
+                    runCatching { b.getFloatLE(4) }.isFailure shouldBe true
+                    runCatching { b.getFloatLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getFloat") {
+                it("should get the float at the given index") {
+                    val b = byteArrayOf(0x3F.toByte(), 0x80.toByte(), 0x00.toByte(), 0x00.toByte())
+                    assertCompare(1.0f, b.getFloat(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4)
+                    runCatching { b.getFloat(4) }.isFailure shouldBe true
+                    runCatching { b.getFloat(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getDoubleBE") {
+                it("should get the double at the given index") {
+                    val b = byteArrayOf(
+                        0x3F.toByte(),
+                        0xF0.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                    )
+                    assertCompare(1.0, b.getDoubleBE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getDoubleBE(8) }.isFailure shouldBe true
+                    runCatching { b.getDoubleBE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getDoubleLE") {
+                it("should get the double at the given index") {
+                    val b = byteArrayOf(
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0xF0.toByte(),
+                        0x3F.toByte(),
+                    )
+                    assertCompare(1.0, b.getDoubleLE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getDoubleLE(8) }.isFailure shouldBe true
+                    runCatching { b.getDoubleLE(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getDouble") {
+                it("should get the double at the given index") {
+                    val b = byteArrayOf(
+                        0x3F.toByte(),
+                        0xF0.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                        0x00.toByte(),
+                    )
+                    assertCompare(1.0, b.getDouble(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getDouble(8) }.isFailure shouldBe true
+                    runCatching { b.getDouble(-1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getBytesBE") {
+                it("should get the bytes at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getBytesBE(0, 4) shouldBe byteArrayOf(1.toByte(), 2, 3, 4)
+                    b.getBytesBE(1, 4) shouldBe byteArrayOf(2.toByte(), 3, 4, 5)
+                    b.getBytesBE(4, 4) shouldBe byteArrayOf(5.toByte(), 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getBytesBE(8, 1) }.isFailure shouldBe true
+                    runCatching { b.getBytesBE(-1, 1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getBytesLE") {
+                it("should get the bytes at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getBytesLE(0, 4) shouldBe byteArrayOf(4.toByte(), 3, 2, 1)
+                    b.getBytesLE(1, 4) shouldBe byteArrayOf(5.toByte(), 4, 3, 2)
+                    b.getBytesLE(4, 4) shouldBe byteArrayOf(8.toByte(), 7, 6, 5)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getBytesLE(8, 1) }.isFailure shouldBe true
+                    runCatching { b.getBytesLE(-1, 1) }.isFailure shouldBe true
+                }
+            }
+
+            describe("getBytes") {
+                it("should get the bytes at the given index") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    b.getBytes(0, 4) shouldBe byteArrayOf(1.toByte(), 2, 3, 4)
+                    b.getBytes(1, 4) shouldBe byteArrayOf(2.toByte(), 3, 4, 5)
+                    b.getBytes(4, 4) shouldBe byteArrayOf(5.toByte(), 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.getBytes(8, 1) }.isFailure shouldBe true
+                    runCatching { b.getBytes(-1, 1) }.isFailure shouldBe true
+                }
             }
         }
 
-        "toInt" {
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x00000000u.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toInt() shouldBe 0x00000001u.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x7Fu).toInt() shouldBe 0x0000007Fu.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x80u).toInt() shouldBe 0x00000080u.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0xFFu).toInt() shouldBe 0x000000FFu.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x01u, 0x00u).toInt() shouldBe 0x00000100u.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x7Fu, 0xFFu).toInt() shouldBe 0x00007FFFu.toInt()
-            byteArrayOf(0x00u, 0x00u, 0x80u, 0x00u).toInt() shouldBe 0x00008000u.toInt()
-            byteArrayOf(0x00u, 0x00u, 0xFFu, 0xFFu).toInt() shouldBe 0x0000FFFFu.toInt()
-            byteArrayOf(0x00u, 0x01u, 0x00u, 0x00u).toInt() shouldBe 0x00010000u.toInt()
-            byteArrayOf(0x00u, 0x7Fu, 0xFFu, 0xFFu).toInt() shouldBe 0x007FFFFFu.toInt()
-            byteArrayOf(0x00u, 0x80u, 0x00u, 0x00u).toInt() shouldBe 0x00800000u.toInt()
-            byteArrayOf(0x00u, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x00FFFFFFu.toInt()
-            byteArrayOf(0x01u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x01000000u.toInt()
-            byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x7FFFFFFFu.toInt()
-            byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x80000000u.toInt()
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0xFFFFFFFFu.toInt()
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u).toInt()
+        describe("set") {
+            describe("setByte") {
+                it("should set the byte at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setByte(0, 1.toByte())
+                    b.setByte(1, 2.toByte())
+                    b.setByte(2, 3.toByte())
+                    b.setByte(3, 4.toByte())
+                    b.setByte(4, 5.toByte())
+                    b.setByte(5, 6.toByte())
+                    b.setByte(6, 7.toByte())
+                    b.setByte(7, 8.toByte())
+                    b shouldBe byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setByte(8, 1.toByte()) }.isFailure shouldBe true
+                    runCatching { b.setByte(-1, 1.toByte()) }.isFailure shouldBe true
+                }
             }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toInt()
+
+            describe("setUByte") {
+                it("should set the ubyte at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUByte(0, 1.toUByte())
+                    b.setUByte(1, 2.toUByte())
+                    b.setUByte(2, 3.toUByte())
+                    b.setUByte(3, 4.toUByte())
+                    b.setUByte(4, 5.toUByte())
+                    b.setUByte(5, 6.toUByte())
+                    b.setUByte(6, 7.toUByte())
+                    b.setUByte(7, 8.toUByte())
+                    b shouldBe byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUByte(8, 1.toUByte()) }.isFailure shouldBe true
+                    runCatching { b.setUByte(-1, 1.toUByte()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedByte") {
+                it("should set the ubyte at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedByte(0, 1.toUByte())
+                    b.setUnsignedByte(1, 2.toUByte())
+                    b.setUnsignedByte(2, 3.toUByte())
+                    b.setUnsignedByte(3, 4.toUByte())
+                    b.setUnsignedByte(4, 5.toUByte())
+                    b.setUnsignedByte(5, 6.toUByte())
+                    b.setUnsignedByte(6, 7.toUByte())
+                    b.setUnsignedByte(7, 8.toUByte())
+                    b shouldBe byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedByte(8, 1.toUByte()) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedByte(-1, 1.toUByte()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setShortBE") {
+                it("should set the short at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setShortBE(0, 0x0102.toShort())
+                    b.setShortBE(1, 0x0203.toShort())
+                    b.setShortBE(4, 0x0506.toShort())
+                    b.setShortBE(5, 0x0607.toShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setShortBE(7, 0x0102.toShort()) }.isFailure shouldBe true
+                    runCatching { b.setShortBE(-1, 0x0102.toShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setShortLE") {
+                it("should set the short at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setShortLE(0, 0x0102.toShort())
+                    b.setShortLE(1, 0x0203.toShort())
+                    b.setShortLE(4, 0x0506.toShort())
+                    b.setShortLE(5, 0x0607.toShort())
+                    b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setShortLE(7, 0x0102.toShort()) }.isFailure shouldBe true
+                    runCatching { b.setShortLE(-1, 0x0102.toShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setShort") {
+                it("should set the short at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setShort(0, 0x0102.toShort())
+                    b.setShort(1, 0x0203.toShort())
+                    b.setShort(4, 0x0506.toShort())
+                    b.setShort(5, 0x0607.toShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setShort(7, 0x0102.toShort()) }.isFailure shouldBe true
+                    runCatching { b.setShort(-1, 0x0102.toShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUShortBE") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUShortBE(0, 0x0102.toUShort())
+                    b.setUShortBE(1, 0x0203.toUShort())
+                    b.setUShortBE(4, 0x0506.toUShort())
+                    b.setUShortBE(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUShortBE(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUShortBE(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUShortLE") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUShortLE(0, 0x0102.toUShort())
+                    b.setUShortLE(1, 0x0203.toUShort())
+                    b.setUShortLE(4, 0x0506.toUShort())
+                    b.setUShortLE(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUShortLE(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUShortLE(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUShort") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUShort(0, 0x0102.toUShort())
+                    b.setUShort(1, 0x0203.toUShort())
+                    b.setUShort(4, 0x0506.toUShort())
+                    b.setUShort(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUShort(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUShort(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedShortBE") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedShortBE(0, 0x0102.toUShort())
+                    b.setUnsignedShortBE(1, 0x0203.toUShort())
+                    b.setUnsignedShortBE(4, 0x0506.toUShort())
+                    b.setUnsignedShortBE(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedShortBE(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedShortBE(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedShortLE") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedShortLE(0, 0x0102.toUShort())
+                    b.setUnsignedShortLE(1, 0x0203.toUShort())
+                    b.setUnsignedShortLE(4, 0x0506.toUShort())
+                    b.setUnsignedShortLE(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x02.toByte(), 3, 2, 0, 6, 7, 6, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedShortLE(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedShortLE(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedShort") {
+                it("should set the ushort at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedShort(0, 0x0102.toUShort())
+                    b.setUnsignedShort(1, 0x0203.toUShort())
+                    b.setUnsignedShort(4, 0x0506.toUShort())
+                    b.setUnsignedShort(5, 0x0607.toUShort())
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 0, 5, 6, 7, 0)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedShort(7, 0x0102.toUShort()) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedShort(-1, 0x0102.toUShort()) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setIntBE") {
+                it("should set the int at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setIntBE(0, 0x01020304)
+                    b.setIntBE(1, 0x02030405)
+                    b.setIntBE(4, 0x05060708)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setIntBE(7, 0x01020304) }.isFailure shouldBe true
+                    runCatching { b.setIntBE(-1, 0x01020304) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setIntLE") {
+                it("should set the int at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setIntLE(0, 0x01020304)
+                    b.setIntLE(1, 0x02030405)
+                    b.setIntLE(4, 0x05060708)
+                    b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setIntLE(7, 0x01020304) }.isFailure shouldBe true
+                    runCatching { b.setIntLE(-1, 0x01020304) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setInt") {
+                it("should set the int at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setInt(0, 0x01020304)
+                    b.setInt(1, 0x02030405)
+                    b.setInt(4, 0x05060708)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setInt(7, 0x01020304) }.isFailure shouldBe true
+                    runCatching { b.setInt(-1, 0x01020304) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUIntBE") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUIntBE(0, 0x01020304u)
+                    b.setUIntBE(1, 0x02030405u)
+                    b.setUIntBE(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUIntBE(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUIntBE(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUIntLE") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUIntLE(0, 0x01020304u)
+                    b.setUIntLE(1, 0x02030405u)
+                    b.setUIntLE(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUIntLE(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUIntLE(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUInt") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUInt(0, 0x01020304u)
+                    b.setUInt(1, 0x02030405u)
+                    b.setUInt(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUInt(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUInt(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedIntBE") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedIntBE(0, 0x01020304u)
+                    b.setUnsignedIntBE(1, 0x02030405u)
+                    b.setUnsignedIntBE(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedIntBE(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedIntBE(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedIntLE") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedIntLE(0, 0x01020304u)
+                    b.setUnsignedIntLE(1, 0x02030405u)
+                    b.setUnsignedIntLE(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x04.toByte(), 5, 4, 3, 8, 7, 6, 5)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedIntLE(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedIntLE(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedInt") {
+                it("should set the uint at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedInt(0, 0x01020304u)
+                    b.setUnsignedInt(1, 0x02030405u)
+                    b.setUnsignedInt(4, 0x05060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedInt(7, 0x01020304u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedInt(-1, 0x01020304u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setLongBE") {
+                it("should set the long at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setLongBE(0, 0x0102030405060708)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setLongBE(7, 0x0102030405060708) }.isFailure shouldBe true
+                    runCatching { b.setLongBE(-1, 0x0102030405060708) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setLongLE") {
+                it("should set the long at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setLongLE(0, 0x0102030405060708)
+                    b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setLongLE(7, 0x0102030405060708) }.isFailure shouldBe true
+                    runCatching { b.setLongLE(-1, 0x0102030405060708) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setLong") {
+                it("should set the long at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setLong(0, 0x0102030405060708)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setLong(7, 0x0102030405060708) }.isFailure shouldBe true
+                    runCatching { b.setLong(-1, 0x0102030405060708) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setULongBE") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setULongBE(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setULongBE(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setULongBE(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setULongLE") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setULongLE(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setULongLE(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setULongLE(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setULong") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setULong(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setULong(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setULong(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedLongBE") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedLongBE(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedLongBE(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedLongBE(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedLongLE") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedLongLE(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x08.toByte(), 7, 6, 5, 4, 3, 2, 1)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedLongLE(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedLongLE(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setUnsignedLong") {
+                it("should set the ulong at the given index") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    b.setUnsignedLong(0, 0x0102030405060708u)
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(0.toByte(), 0, 0, 0, 0, 0, 0, 0)
+                    runCatching { b.setUnsignedLong(7, 0x0102030405060708u) }.isFailure shouldBe true
+                    runCatching { b.setUnsignedLong(-1, 0x0102030405060708u) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setFloatBE") {
+                it("should set the float at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0x80.toByte(), 0x3F.toByte())
+                    b.setFloatBE(0, 1.0f)
+                    assertCompare(1.0f, b.getFloatBE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setFloatBE(8, 1.0f) }.isFailure shouldBe true
+                    runCatching { b.setFloatBE(-1, 1.0f) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setFloatLE") {
+                it("should set the float at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0x3F.toByte(), 0x80.toByte(), 0, 0)
+                    b.setFloatLE(0, 1.0f)
+                    assertCompare(1.0f, b.getFloatLE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setFloatLE(8, 1.0f) }.isFailure shouldBe true
+                    runCatching { b.setFloatLE(-1, 1.0f) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setFloat") {
+                it("should set the float at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0x80.toByte(), 0x3F.toByte())
+                    b.setFloat(0, 1.0f)
+                    assertCompare(1.0f, b.getFloat(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setFloat(8, 1.0f) }.isFailure shouldBe true
+                    runCatching { b.setFloat(-1, 1.0f) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setDoubleBE") {
+                it("should set the double at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setDoubleBE(0, 1.0)
+                    assertCompare(1.0, b.getDoubleBE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setDoubleBE(8, 1.0) }.isFailure shouldBe true
+                    runCatching { b.setDoubleBE(-1, 1.0) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setDoubleLE") {
+                it("should set the double at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setDoubleLE(0, 1.0)
+                    assertCompare(1.0, b.getDoubleLE(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setDoubleLE(8, 1.0) }.isFailure shouldBe true
+                    runCatching { b.setDoubleLE(-1, 1.0) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setDouble") {
+                it("should set the double at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setDouble(0, 1.0)
+                    assertCompare(1.0, b.getDouble(0))
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setDouble(8, 1.0) }.isFailure shouldBe true
+                    runCatching { b.setDouble(-1, 1.0) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setBytesBE") {
+                it("should set the bytes at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setBytesBE(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setBytesBE(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                    runCatching { b.setBytesBE(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setBytesLE") {
+                it("should set the bytes at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setBytesLE(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                    b shouldBe byteArrayOf(0x04.toByte(), 3, 2, 1, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setBytesLE(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                    runCatching { b.setBytesLE(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                }
+            }
+
+            describe("setBytes") {
+                it("should set the bytes at the given index") {
+                    val b = byteArrayOf(0x00.toByte(), 0, 0, 0, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                    b.setBytes(0, byteArrayOf(0x01.toByte(), 2, 3, 4))
+                    b shouldBe byteArrayOf(0x01.toByte(), 2, 3, 4, 0, 0, 0xF0.toByte(), 0x3F.toByte())
+                }
+
+                it("should throw an exception if the index is out of bounds") {
+                    val b = byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8)
+                    runCatching { b.setBytes(8, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                    runCatching { b.setBytes(-1, byteArrayOf(0x01.toByte(), 2, 3, 4)) }.isFailure shouldBe true
+                }
             }
         }
 
-        "toLong" {
-            byteArrayOf(
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-            ).toLong() shouldBe 0x0000000000000000uL.toLong()
-            byteArrayOf(
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x10u,
-            ).toLong() shouldBe 0x0000000000000010uL.toLong()
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
-            byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
-            byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u).toLong()
+        describe("byteArrayOf (ubyte)") {
+            it("should create a byte array") {
+                val b = byteArrayOf(1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 255u)
+                b shouldBe byteArrayOf(1.toByte(), 2, 3, 4, 5, 6, 7, 8, -1)
             }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x01u,
-                ).toLong()
-            }
-        }
-
-        "toFloat" {
-            assertCompare(0.0f, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toFloat())
-            assertCompare(1.0f, byteArrayOf(0x3Fu, 0x80u, 0x00u, 0x00u).toFloat())
-            assertCompare(-1.0f, byteArrayOf(0xBFu, 0x80u, 0x00u, 0x00u).toFloat())
-            assertCompare(Float.MIN_VALUE, byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toFloat())
-            assertCompare(Float.MAX_VALUE, byteArrayOf(0x7Fu, 0x7Fu, 0xFFu, 0xFFu).toFloat())
-            assertCompare(Float.NaN, byteArrayOf(0x7Fu, 0xC0u, 0x00u, 0x00u).toFloat())
-            assertCompare(
-                Float.NEGATIVE_INFINITY,
-                byteArrayOf(
-                    0xFFu,
-                    0x80u,
-                    0x00u,
-                    0x00u,
-                ).toFloat(),
-            )
-            assertCompare(
-                Float.POSITIVE_INFINITY,
-                byteArrayOf(
-                    0x7Fu,
-                    0x80u,
-                    0x00u,
-                    0x00u,
-                ).toFloat(),
-            )
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
-            }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x00u).toFloat()
-            }
-        }
-
-        "toDouble" {
-            assertCompare(
-                0.0,
-                byteArrayOf(
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                ).toDouble(),
-            )
-            assertCompare(
-                1.0,
-                byteArrayOf(
-                    0x3Fu,
-                    0xF0u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                ).toDouble(),
-            )
-            assertCompare(
-                -1.0,
-                byteArrayOf(
-                    0xBFu,
-                    0xF0u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                ).toDouble(),
-            )
-            assertCompare(
-                Double.MIN_VALUE,
-                byteArrayOf(
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x01u,
-                ).toDouble(),
-            )
-            assertCompare(
-                Double.MAX_VALUE,
-                byteArrayOf(
-                    0x7Fu,
-                    0xEFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                ).toDouble(),
-            )
-            assertCompare(
-                Double.NaN,
-                byteArrayOf(
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                    0xFFu,
-                ).toDouble(),
-            )
-            assertCompare(
-                Double.NEGATIVE_INFINITY,
-                byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble(),
-            )
-            assertCompare(
-                Double.POSITIVE_INFINITY,
-                byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble(),
-            )
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x01u,
-                ).toDouble()
-            }
-
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
-            }
-        }
-
-        "toUnsignedByte" {
-            byteArrayOf(0x00u).toUnsignedByte() shouldBe 0x00u
-            byteArrayOf(0x01u).toUnsignedByte() shouldBe 0x01u
-            byteArrayOf(0xFFu).toUnsignedByte() shouldBe 0xFFu
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x01u).toUnsignedByte()
-            }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf().toUnsignedByte()
-            }
-        }
-
-        "toUnsignedShort" {
-            byteArrayOf(0x00u, 0x00u).toUnsignedShort() shouldBe 0x0000u
-            byteArrayOf(0x00u, 0x01u).toUnsignedShort() shouldBe 0x0001u
-            byteArrayOf(0xFFu, 0xFFu).toUnsignedShort() shouldBe 0xFFFFu
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x01u).toUnsignedShort()
-            }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf().toUnsignedShort()
-            }
-        }
-
-        "toUnsignedInt" {
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt() shouldBe 0x00000000u
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt() shouldBe 0x00000001u
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt() shouldBe 0xFFFFFFFFu
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt()
-            }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf().toUnsignedInt()
-            }
-        }
-
-        "toUnsignedLong" {
-            byteArrayOf(
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-            ).toUnsignedLong() shouldBe 0x0000000000000000uL
-            byteArrayOf(
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x00u,
-                0x01u,
-            ).toUnsignedLong() shouldBe 0x0000000000000001uL
-            byteArrayOf(
-                0xFFu,
-                0xFFu,
-                0xFFu,
-                0xFFu,
-                0xFFu,
-                0xFFu,
-                0xFFu,
-                0xFFu,
-            ).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf(
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x00u,
-                    0x01u,
-                ).toUnsignedLong()
-            }
-            shouldThrow<IllegalArgumentException> {
-                byteArrayOf().toUnsignedLong()
-            }
-        }
-
-        "setBytes" {
-            var bytes = ByteArray(8)
-            bytes.setBytes(
-                0,
-                byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u),
-            )
-            (0..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setBytes(
-                2,
-                byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu),
-            )
-            bytes[0] shouldBe 0x00u.toByte()
-            bytes[1] shouldBe 0x00u.toByte()
-            (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            bytes[10] shouldBe 0x00u.toByte()
-            bytes[11] shouldBe 0x00u.toByte()
-        }
-
-        "setBytes errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setBytes(
-                    -1,
-                    byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu),
-                )
-            }
-
-            shouldThrow<IllegalArgumentException> {
-                bytes.setBytes(1, ByteArray(8) { 0xFF.toByte() })
-            }
-        }
-
-        "setByte" {
-            var bytes = ByteArray(8)
-            bytes.setByte(0, 0xFFu.toByte())
-            bytes[0] shouldBe 0xFFu.toByte()
-            (1..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setByte(2, 0xFFu.toByte())
-            bytes[0] shouldBe 0x00u.toByte()
-            bytes[1] shouldBe 0x00u.toByte()
-            bytes[2] shouldBe 0xFFu.toByte()
-            (3..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setByte errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setByte(-1, 0xFFu.toByte())
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setByte(8, 0xFFu.toByte())
-            }
-        }
-
-        "setShort" {
-            var bytes = ByteArray(8)
-            bytes.setShort(0, 0xFFFFu.toShort())
-            bytes[0] shouldBe 0xFFu.toByte()
-            bytes[1] shouldBe 0xFFu.toByte()
-            (2..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setShort(2, 0xFFFFu.toShort())
-            bytes[0] shouldBe 0x00u.toByte()
-            bytes[1] shouldBe 0x00u.toByte()
-            bytes[2] shouldBe 0xFFu.toByte()
-            bytes[3] shouldBe 0xFFu.toByte()
-            (4..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setShort errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setShort(-1, 0xFFFFu.toShort())
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setShort(8, 0xFFFFu.toShort())
-            }
-        }
-
-        "setInt" {
-            var bytes = ByteArray(8)
-            bytes.setInt(0, 0xFFFFFFFFu.toInt())
-            bytes[0] shouldBe 0xFFu.toByte()
-            bytes[1] shouldBe 0xFFu.toByte()
-            bytes[2] shouldBe 0xFFu.toByte()
-            bytes[3] shouldBe 0xFFu.toByte()
-            (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setInt(2, 0xFFFFFFFFu.toInt())
-            bytes[0] shouldBe 0x00u.toByte()
-            bytes[1] shouldBe 0x00u.toByte()
-            (2..5).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (6..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setInt errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setInt(-1, 0xFFFFFFFFu.toInt())
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setInt(8, 0xFFFFFFFFu.toInt())
-            }
-        }
-
-        "setLong" {
-            var bytes = ByteArray(8)
-            bytes.setLong(0, 0xFFFFFFFFFFFFFFFFuL.toLong())
-            (0..7).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            bytes = ByteArray(12)
-            bytes.setLong(2, 0xFFFFFFFFFFFFFFFFuL.toLong())
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setLong errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setLong(-1, 0xFFFFFFFFFFFFFFFFuL.toLong())
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setLong(8, 0xFFFFFFFFFFFFFFFFuL.toLong())
-            }
-        }
-
-        "setFloat" {
-            var bytes = ByteArray(8)
-            bytes.setFloat(0, Float.fromBits(0x3f99999au.toInt()))
-            bytes[0] shouldBe 0x3Fu.toByte()
-            (1..2).forEach { bytes[it] shouldBe 0x99u.toByte() }
-            bytes[3] shouldBe 0x9Au.toByte()
-            (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setFloat(2, Float.fromBits(0x3f99999au.toInt()))
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes[2] shouldBe 0x3Fu.toByte()
-            (3..4).forEach { bytes[it] shouldBe 0x99u.toByte() }
-            bytes[5] shouldBe 0x9Au.toByte()
-            (8..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setFloat errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setFloat(-1, Float.fromBits(0x3f99999au.toInt()))
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setFloat(5, Float.fromBits(0x3f99999au.toInt()))
-            }
-        }
-
-        "setDouble" {
-            var bytes = ByteArray(8)
-            bytes.setDouble(0, Double.fromBits(0x3ff3333333333333uL.toLong()))
-            bytes[0] shouldBe 0x3Fu.toByte()
-            bytes[1] shouldBe 0xf3u.toByte()
-            (2..7).forEach { bytes[it] shouldBe 0x33u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setDouble(2, Double.fromBits(0x3ff3333333333333uL.toLong()))
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes[2] shouldBe 0x3Fu.toByte()
-            bytes[3] shouldBe 0xf3u.toByte()
-            (4..9).forEach { bytes[it] shouldBe 0x33u.toByte() }
-            (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setDouble errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setDouble(-1, Double.fromBits(0x3ff3333333333333uL.toLong()))
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setDouble(8, Double.fromBits(0x3ff3333333333333uL.toLong()))
-            }
-        }
-
-        "setUnsignedByte" {
-            var bytes = ByteArray(8)
-            bytes.setUnsignedByte(0, 0xFFu)
-            bytes[0] shouldBe 0xFFu.toByte()
-            (1..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setUnsignedByte(2, 0xFFu)
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes[2] shouldBe 0xFFu.toByte()
-            (3..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setUnsignedByte errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedByte(-1, 0xFFu)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedByte(8, 0xFFu)
-            }
-        }
-
-        "setUnsignedShort" {
-            var bytes = ByteArray(8)
-            bytes.setUnsignedShort(0, 0xFFFFu)
-            (0..1).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (2..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setUnsignedShort(2, 0xFFFFu)
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            (2..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (4..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setUnsignedShort errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedShort(-1, 0xFFFFu)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedShort(8, 0xFFFFu)
-            }
-        }
-
-        "setUnsignedInt" {
-            var bytes = ByteArray(8)
-            bytes.setUnsignedInt(0, 0xFFFFFFFFu)
-            (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            bytes = ByteArray(12)
-            bytes.setUnsignedInt(2, 0xFFFFFFFFu)
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            (2..5).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (6..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setUnsignedInt errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedInt(8, 0xFFFFFFFFu)
-            }
-        }
-
-        "setUnsignedLong" {
-            var bytes = ByteArray(8)
-            bytes.setUnsignedLong(0, 0xFFFFFFFFFFFFFFFFu)
-            (0..7).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            bytes = ByteArray(12)
-            bytes.setUnsignedLong(2, 0xFFFFFFFFFFFFFFFFu)
-            (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
-            (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "setUnsignedLong errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFu)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.setUnsignedLong(8, 0xFFFFFFFFFFFFFFFFu)
-            }
-        }
-
-        "getByte" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0xFFu.toByte()
-            bytes[1] = 0xFFu.toByte()
-            bytes[2] = 0xFFu.toByte()
-            bytes[3] = 0xFFu.toByte()
-            bytes[4] = 0x00u.toByte()
-            bytes[5] = 0x00u.toByte()
-            bytes[6] = 0x00u.toByte()
-            bytes[7] = 0x00u.toByte()
-            (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "getByte errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getByte(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getByte(8)
-            }
-        }
-
-        "getUnsignedByte" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0xFFu.toByte()
-            bytes[1] = 0xFFu.toByte()
-            bytes[2] = 0xFFu.toByte()
-            bytes[3] = 0xFFu.toByte()
-            bytes[4] = 0x00u.toByte()
-            bytes[5] = 0x00u.toByte()
-            bytes[6] = 0x00u.toByte()
-            bytes[7] = 0x00u.toByte()
-            (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
-            (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
-        }
-
-        "getUnsignedByte errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedByte(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedByte(8)
-            }
-        }
-
-        "getShort" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes.getShort(0) shouldBe 0x0011u.toShort()
-            bytes.getShort(2) shouldBe 0x2233u.toShort()
-            bytes.getShort(4) shouldBe 0x4455u.toShort()
-            bytes.getShort(6) shouldBe 0x6677u.toShort()
-        }
-
-        "getShort errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getShort(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getShort(8)
-            }
-        }
-
-        "getUnsignedShort" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes.getUnsignedShort(0) shouldBe 0x0011u
-            bytes.getUnsignedShort(2) shouldBe 0x2233u
-            bytes.getUnsignedShort(4) shouldBe 0x4455u
-            bytes.getUnsignedShort(6) shouldBe 0x6677u
-        }
-
-        "getUnsignedShort errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedShort(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedShort(8)
-            }
-        }
-
-        "getInt" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes.getInt(0) shouldBe 0x00112233u.toInt()
-            bytes.getInt(4) shouldBe 0x44556677u.toInt()
-        }
-
-        "getInt errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getInt(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getInt(8)
-            }
-        }
-
-        "getUnsignedInt" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes.getUnsignedInt(0) shouldBe 0x00112233u
-            bytes.getUnsignedInt(4) shouldBe 0x44556677u
-        }
-
-        "getUnsignedInt errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedInt(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedInt(8)
-            }
-        }
-
-        "getLong" {
-            val bytes = ByteArray(16)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes[8] = 0x88u.toByte()
-            bytes[9] = 0x99u.toByte()
-            bytes[10] = 0xAAu.toByte()
-            bytes[11] = 0xBBu.toByte()
-            bytes[12] = 0xCCu.toByte()
-            bytes[13] = 0xDDu.toByte()
-            bytes[14] = 0xEEu.toByte()
-            bytes[15] = 0xFFu.toByte()
-            bytes.getLong(0) shouldBe 0x0011223344556677uL.toLong()
-            bytes.getLong(8) shouldBe 0x8899AABBCCDDEEFFuL.toLong()
-        }
-
-        "getLong errors" {
-            val bytes = ByteArray(16)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getLong(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getLong(16)
-            }
-        }
-
-        "getUnsignedLong" {
-            val bytes = ByteArray(16)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes[8] = 0x88u.toByte()
-            bytes[9] = 0x99u.toByte()
-            bytes[10] = 0xAAu.toByte()
-            bytes[11] = 0xBBu.toByte()
-            bytes[12] = 0xCCu.toByte()
-            bytes[13] = 0xDDu.toByte()
-            bytes[14] = 0xEEu.toByte()
-            bytes[15] = 0xFFu.toByte()
-            bytes.getUnsignedLong(0) shouldBe 0x0011223344556677uL
-            bytes.getUnsignedLong(8) shouldBe 0x8899AABBCCDDEEFFuL
-        }
-
-        "getUnsignedLong errors" {
-            val bytes = ByteArray(16)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedLong(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getUnsignedLong(16)
-            }
-        }
-
-        "getFloat" {
-            val bytes = ByteArray(8)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes.getFloat(0) shouldBe Float.fromBits(0x00112233u.toInt())
-            bytes.getFloat(4) shouldBe Float.fromBits(0x44556677u.toInt())
-        }
-
-        "getFloat errors" {
-            val bytes = ByteArray(8)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getFloat(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getFloat(8)
-            }
-        }
-
-        "getDouble" {
-            val bytes = ByteArray(16)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes[8] = 0x88u.toByte()
-            bytes[9] = 0x99u.toByte()
-            bytes[10] = 0xAAu.toByte()
-            bytes[11] = 0xBBu.toByte()
-            bytes[12] = 0xCCu.toByte()
-            bytes[13] = 0xDDu.toByte()
-            bytes[14] = 0xEEu.toByte()
-            bytes[15] = 0xFFu.toByte()
-            bytes.getDouble(0) shouldBe Double.fromBits(0x0011223344556677uL.toLong())
-            bytes.getDouble(8) shouldBe Double.fromBits(0x8899AABBCCDDEEFFuL.toLong())
-        }
-
-        "getDouble errors" {
-            val bytes = ByteArray(16)
-            shouldThrow<IllegalArgumentException> {
-                bytes.getDouble(-1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getDouble(16)
-            }
-        }
-
-        "getBytes" {
-            val bytes = ByteArray(16)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes[8] = 0x88u.toByte()
-            bytes[9] = 0x99u.toByte()
-            bytes[10] = 0xAAu.toByte()
-            bytes[11] = 0xBBu.toByte()
-            bytes[12] = 0xCCu.toByte()
-            bytes[13] = 0xDDu.toByte()
-            bytes[14] = 0xEEu.toByte()
-            bytes[15] = 0xFFu.toByte()
-            bytes.getBytes(0, 16).toList() shouldBe byteArrayOf(
-                0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
-                0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu,
-            ).toList()
-            bytes.getBytes(1, 2).toList() shouldBe byteArrayOf(0x11u, 0x22u).toList()
-        }
-
-        "getBytes errors" {
-            val bytes = ByteArray(16)
-            shouldThrow<IndexOutOfBoundsException> {
-                bytes.getBytes(-1, 16)
-            }
-            shouldThrow<IllegalArgumentException> {
-                bytes.getBytes(0, -1)
-            }
-            shouldThrow<IndexOutOfBoundsException> {
-                bytes.getBytes(16, 4)
-            }
-            shouldThrow<IndexOutOfBoundsException> {
-                bytes.getBytes(0, 20)
-            }
-        }
-
-        "getUnsignedBytes" {
-            val bytes = ByteArray(16)
-            bytes[0] = 0x00u.toByte()
-            bytes[1] = 0x11u.toByte()
-            bytes[2] = 0x22u.toByte()
-            bytes[3] = 0x33u.toByte()
-            bytes[4] = 0x44u.toByte()
-            bytes[5] = 0x55u.toByte()
-            bytes[6] = 0x66u.toByte()
-            bytes[7] = 0x77u.toByte()
-            bytes[8] = 0x88u.toByte()
-            bytes[9] = 0x99u.toByte()
-            bytes[10] = 0xAAu.toByte()
-            bytes[11] = 0xBBu.toByte()
-            bytes[12] = 0xCCu.toByte()
-            bytes[13] = 0xDDu.toByte()
-            bytes[14] = 0xEEu.toByte()
-            bytes[15] = 0xFFu.toByte()
-            bytes.toHexString() shouldBe "00112233445566778899aabbccddeeff"
-        }
-
-        "getUnsignedBytes errors" {
-            val bytes = "hello world".toCharArray().map { it.code.toUByte().toByte() }.toByteArray()
-            bytes.toUtf8String() shouldBe "hello world"
-        }
-
-        "toHexString" {
-            val byteArray = byteArrayOf(0x00u, 0xFFu)
-            byteArray[0] shouldBe 0x00u.toByte()
-            byteArray[1] shouldBe 0xFFu.toByte()
         }
     },
 )

@@ -1,7 +1,8 @@
 package com.shakelang.shake.processor
 
 import com.shakelang.shake.lexer.ShakeLexer
-import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.ShakeStatementNode
+import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.outer.ShakeFileNode
