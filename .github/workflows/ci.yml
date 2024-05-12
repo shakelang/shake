@@ -21,7 +21,7 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -45,7 +45,7 @@ jobs:
           TEST_CONFIGURATION: full
 
       - name: Upload gradle_output.txt as artifact 📤
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: gradle-output
           path: gradle_output.txt
@@ -72,7 +72,7 @@ jobs:
           path: build/reports/kover/html.zip
 
       - name: Upload Coverage Report to CodeCov 📈
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -90,7 +90,7 @@ jobs:
 
       # Download gradle_output.txt artifact from the build job.
       - name: Download gradle_output.txt artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: gradle-output
           path: .
@@ -101,6 +101,6 @@ jobs:
 
       # Upload SARIF to Security tab.
       - name: Upload SARIF to Security tab 🔒
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: compiler_output.sarif
