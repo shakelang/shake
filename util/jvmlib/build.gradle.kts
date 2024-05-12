@@ -6,7 +6,7 @@ import conventions.projectGroup
 group = projectGroup("util")
 version = resolveVersion()
 public = true
-description = "A library for jvm stuff in java"
+description = "A library for working with JVM class-files and resources"
 
 plugins {
     id("conventions.all")

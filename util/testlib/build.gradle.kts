@@ -11,7 +11,7 @@ plugins {
 
 group = projectGroup("util")
 version = resolveVersion()
-description = "Utilities for parsing stuff with kotlin"
+description = "Extension upon the Kotest testing framework to provide additional functionality."
 public = true
 
 val projectName = name

@@ -9,7 +9,7 @@ plugins {
 
 group = projectGroup("util")
 version = resolveVersion()
-description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
+description = "Kotlin common io utilities (Streams, etc.)"
 public = true
 
 val projectName = name

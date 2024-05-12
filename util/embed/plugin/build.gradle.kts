@@ -15,7 +15,7 @@ repositories {
 
 group = projectGroup("util.embed")
 version = resolveVersion()
-description = "Gradle plugin for embedding resources into kotlin source"
+description = "Gradle plugin for embedding resources into kotlin source (plugin)"
 public = true
 
 val projectName = name

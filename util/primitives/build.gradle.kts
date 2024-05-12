@@ -10,7 +10,7 @@ plugins {
 
 group = projectGroup("util")
 version = resolveVersion()
-description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
+description = "Utility library for primitive types in KMP (Access single bits, work with bytes, etc...)"
 public = true
 
 val projectName = name

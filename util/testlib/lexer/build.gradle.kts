@@ -11,7 +11,7 @@ plugins {
 
 group = projectGroup("util.testlib")
 version = resolveVersion()
-description = "Utilities for parsing stuff with kotlin"
+description = "A library for testing lexer implementations"
 public = true
 
 val projectName = name

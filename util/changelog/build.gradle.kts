@@ -15,7 +15,7 @@ repositories {
 
 group = projectGroup("util.changelog")
 version = resolveVersion()
-description = "Changelog generation plugin for Shake"
+description = "Changelog / Versioning plugin for gradle"
 public = true
 
 val projectName = name
