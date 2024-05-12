@@ -11,14 +11,8 @@
       },
       "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type_name%\"}",
       "access": "%access%",
-      "is_static":
-      %
-      static
-      %,
-      "is_final":
-      %
-      final
-      %
+      "is_static": %static%,
+      "is_final": %final%
     }
   ]
 }
