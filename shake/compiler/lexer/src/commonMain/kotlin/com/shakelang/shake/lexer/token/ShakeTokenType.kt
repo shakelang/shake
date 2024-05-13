@@ -24,7 +24,7 @@ enum class ShakeTokenType(
     BITWISE_XNOR("~^", "'~^'"),
     BITWISE_SHL("<<", "'<<'"),
     BITWISE_SHR(">>", "'>>'"),
-    BITWISE_USHR(">>>", "'>>>'"),
+    BITWISE_SHRU(">>>", "'>>>'"),
     CHARACTER(null, "[character]"),
     COLON(":", "':'"),
     COMMA(",", "','"),

@@ -32,6 +32,9 @@ class AutoExpressionTests : FreeSpec(
                 val bitwiseXorTemplate = Template("expr/bitwise-xor")
                 val unaryMinusTemplate = Template("expr/unary-minus")
                 val unaryPlusTemplate = Template("expr/unary-plus")
+                val shlTemplate = Template("expr/shl")
+                val shrTemplate = Template("expr/shr")
+                val ushrTemplate = Template("expr/shru")
 
                 fun literal(value: String) = literalTemplate.applied(
                     replaceTemplate(
@@ -101,6 +104,12 @@ class AutoExpressionTests : FreeSpec(
                     arrayOf(
                         TestGenerator("addition", gop2(addTemplate), 2),
                         TestGenerator("subtraction", gop2(subTemplate), 2),
+                    ),
+                    // shifts
+                    arrayOf(
+                        TestGenerator("shl", gop2(shlTemplate), 2),
+                        TestGenerator("shr", gop2(shrTemplate), 2),
+                        TestGenerator("ushr", gop2(ushrTemplate), 2),
                     ),
                     // bitwise
                     arrayOf(TestGenerator("bitwise_and", gop2(bitwiseAndTemplate), 2)),

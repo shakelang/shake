@@ -132,7 +132,7 @@ class ShakeLexer(
                 input.skip()
                 if (input.hasNext() && input.peek() == '>') {
                     input.skip()
-                    factory.create(ShakeTokenType.BITWISE_USHR)
+                    factory.create(ShakeTokenType.BITWISE_SHRU)
                 } else {
                     factory.create(ShakeTokenType.BITWISE_SHR)
                 }

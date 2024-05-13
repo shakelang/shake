@@ -1088,13 +1088,15 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         while (input.hasNext() &&
             (
                 input.peek().type.also { tmpType = it } == ShakeTokenType.BITWISE_SHL ||
-                    tmpType == ShakeTokenType.BITWISE_SHR
+                    tmpType == ShakeTokenType.BITWISE_SHR ||
+                    tmpType == ShakeTokenType.BITWISE_SHRU
                 )
         ) {
             val operator = input.next()
             left = when (tmpType) {
                 ShakeTokenType.BITWISE_SHL -> ShakeBitwiseShiftLeftNode(map, left, expectValuedExpr(), operator)
-                else -> ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), operator)
+                ShakeTokenType.BITWISE_SHR -> ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), operator)
+                else -> ShakeBitwiseShiftRightUnsignedNode(map, left, expectValuedExpr(), operator)
             }
         }
         return left

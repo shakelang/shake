@@ -103,7 +103,7 @@ class LexerBaseTests : FreeSpec(
         "bit shifts" {
             generateToken("<<", ShakeTokenType.BITWISE_SHL)
             generateToken(">>", ShakeTokenType.BITWISE_SHR)
-            generateToken(">>>", ShakeTokenType.BITWISE_USHR)
+            generateToken(">>>", ShakeTokenType.BITWISE_SHRU)
         }
 
         "brackets" {

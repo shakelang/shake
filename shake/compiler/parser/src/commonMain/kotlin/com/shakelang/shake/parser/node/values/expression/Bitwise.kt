@@ -136,7 +136,7 @@ class ShakeBitwiseShiftRightNode(
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseShiftRightZeroFillNode(
+class ShakeBitwiseShiftRightUnsignedNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,

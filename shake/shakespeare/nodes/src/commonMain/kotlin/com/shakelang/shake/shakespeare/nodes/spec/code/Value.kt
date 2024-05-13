@@ -809,13 +809,13 @@ class UnsignedRightShiftNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : Un
     override val right: ValueNodeSpec
         get() = super.right as ValueNodeSpec
 
-    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBitwiseShiftRightZeroFillNode {
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBitwiseShiftRightUnsignedNode {
         val left = this.left.dump(ctx, nctx)
         nctx.space()
-        val operator = nctx.createToken(ShakeTokenType.BITWISE_USHR)
+        val operator = nctx.createToken(ShakeTokenType.BITWISE_SHRU)
         nctx.space()
         val right = this.right.dump(ctx, nctx)
-        return ShakeBitwiseShiftRightZeroFillNode(
+        return ShakeBitwiseShiftRightUnsignedNode(
             nctx.map,
             left,
             right,
