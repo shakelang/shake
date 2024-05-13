@@ -29,6 +29,7 @@ interface TypeSpec : AbstractSpec {
         fun double() = PrimitiveTypeSpec.DOUBLE
         fun char() = PrimitiveTypeSpec.CHAR
         fun boolean() = PrimitiveTypeSpec.BOOLEAN
+        fun void() = PrimitiveTypeSpec.VOID
         fun string() = ObjectTypeSpec("String")
 
         fun of(type: String): TypeSpec {
@@ -88,6 +89,7 @@ enum class PrimitiveTypeSpec(val type: String) : TypeSpec {
     DOUBLE("double"),
     CHAR("char"),
     BOOLEAN("boolean"),
+    VOID("void"),
     ;
 
     override fun generate(ctx: GenerationContext): String {
