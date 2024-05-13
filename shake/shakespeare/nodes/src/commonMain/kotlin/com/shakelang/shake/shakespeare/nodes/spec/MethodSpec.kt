@@ -53,6 +53,16 @@ class ParameterNodeSpec(
             assignToken,
         )
     }
+
+    companion object {
+        fun of(parameter: ParameterSpec): ParameterNodeSpec {
+            return ParameterNodeSpec(
+                parameter.name,
+                TypeNodeSpec.of(parameter.type),
+                parameter.defaultValue?.let { ValueNodeSpec.of(it) },
+            )
+        }
+    }
 }
 
 class MethodNodeSpec(
@@ -166,5 +176,26 @@ class MethodNodeSpec(
             commaTokens.toTypedArray(),
             null,
         )
+    }
+
+    companion object {
+        fun of(method: MethodSpec): MethodNodeSpec {
+            return MethodNodeSpec(
+                method.name,
+                TypeNodeSpec.of(method.returnType),
+                method.extending?.let { TypeNodeSpec.of(it) },
+                method.parameters.map { ParameterNodeSpec.of(it) },
+                method.body?.let { CodeNodeSpec.of(it) },
+                method.isStatic,
+                method.isAbstract,
+                method.isFinal,
+                method.isOverride,
+                method.isOperator,
+                method.accessModifier,
+                method.isSynchronized,
+                method.isNative,
+                method.isInline,
+            )
+        }
     }
 }

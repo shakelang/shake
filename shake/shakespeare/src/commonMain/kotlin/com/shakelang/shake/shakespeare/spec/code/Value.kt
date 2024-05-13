@@ -2776,3 +2776,246 @@ open class BitwiseNotSpec(
         fun builder() = BitwiseNotSpecBuilder()
     }
 }
+
+/**
+ * A ValueSpec that represents a left shift
+ */
+open class LeftShiftSpec(
+
+    /**
+     * The left value of the left shift
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the left shift
+     */
+    right: ValueSpec,
+
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the left shift
+     * @param ctx The context to generate the left shift in
+     * @return The generated left shift
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} << ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is LeftShiftSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for LeftShiftSpec
+     */
+    class LeftShiftSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the left shift
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the left shift
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<LeftShiftSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the LeftShiftSpec
+         * @return The created LeftShiftSpec
+         */
+        override fun build(): LeftShiftSpec {
+            return LeftShiftSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new LeftShiftSpecBuilder
+         * @return The created LeftShiftSpecBuilder
+         */
+        fun builder() = LeftShiftSpecBuilder()
+    }
+}
+
+/**
+ * A ValueSpec that represents a right shift
+ */
+open class RightShiftSpec(
+
+    /**
+     * The left value of the right shift
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the right shift
+     */
+    right: ValueSpec,
+
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the right shift
+     * @param ctx The context to generate the right shift in
+     * @return The generated right shift
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} >> ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is RightShiftSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for RightShiftSpec
+     */
+    class RightShiftSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the right shift
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the right shift
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<RightShiftSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the RightShiftSpec
+         * @return The created RightShiftSpec
+         */
+        override fun build(): RightShiftSpec {
+            return RightShiftSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new RightShiftSpecBuilder
+         * @return The created RightShiftSpecBuilder
+         */
+        fun builder() = RightShiftSpecBuilder()
+    }
+}
+
+/**
+ * A ValueSpec that represents an unsigned right shift
+ */
+open class UnsignedRightShiftSpec(
+
+    /**
+     * The left value of the unsigned right shift
+     */
+    left: ValueSpec,
+
+    /**
+     * The right value of the unsigned right shift
+     */
+    right: ValueSpec,
+
+) : AbstractDualOperatorSpec(left, right) {
+
+    /**
+     * Generate the unsigned right shift
+     * @param ctx The context to generate the unsigned right shift in
+     * @return The generated unsigned right shift
+     */
+    override fun generate(ctx: GenerationContext): String {
+        return "${left.generate(ctx)} >>> ${right.generate(ctx)}"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is UnsignedRightShiftSpec) return false
+        if (left != other.left) return false
+        if (right != other.right) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + right.hashCode()
+        return result
+    }
+
+    /**
+     * Builder for UnsignedRightShiftSpec
+     */
+    class UnsignedRightShiftSpecBuilder
+    internal constructor(
+
+        /**
+         * The left value of the unsigned right shift
+         */
+        left: ValueSpec? = null,
+
+        /**
+         * The right value of the unsigned right shift
+         */
+        right: ValueSpec? = null,
+    ) : AbstractDualOperatorSpecBuilder<UnsignedRightShiftSpecBuilder>(left, right) {
+
+        override fun getThis() = this
+
+        /**
+         * Build the UnsignedRightShiftSpec
+         * @return The created UnsignedRightShiftSpec
+         */
+        override fun build(): UnsignedRightShiftSpec {
+            return UnsignedRightShiftSpec(
+                left ?: throw IllegalStateException("Left not set"),
+                right ?: throw IllegalStateException("Right not set"),
+            )
+        }
+    }
+
+    companion object {
+
+        /**
+         * Create a new UnsignedRightShiftSpecBuilder
+         * @return The created UnsignedRightShiftSpecBuilder
+         */
+        fun builder() = UnsignedRightShiftSpecBuilder()
+    }
+}

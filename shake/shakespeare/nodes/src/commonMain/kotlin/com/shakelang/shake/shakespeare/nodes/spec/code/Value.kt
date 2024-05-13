@@ -183,7 +183,8 @@ open class NullLiteralNodeSpec : NullLiteralSpec(), ValueNodeSpec {
     }
 
     companion object {
-        fun of(spec: NullLiteralSpec) = if (spec is NullLiteralNodeSpec) spec else NullLiteralNodeSpec()
+        val INSTANCE = NullLiteralNodeSpec()
+        fun of(spec: NullLiteralSpec) = if (spec is NullLiteralNodeSpec) spec else INSTANCE
     }
 }
 
@@ -749,6 +750,84 @@ class BitwiseNotNodeSpec(value: ValueNodeSpec) : BitwiseNotSpec(value), ValueNod
     }
 }
 
+class LeftShiftNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : LeftShiftSpec(left, right), ValueNodeSpec {
+    override val left: ValueNodeSpec
+        get() = super.left as ValueNodeSpec
+
+    override val right: ValueNodeSpec
+        get() = super.right as ValueNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBitwiseShiftLeftNode {
+        val left = this.left.dump(ctx, nctx)
+        nctx.space()
+        val operator = nctx.createToken(ShakeTokenType.BITWISE_SHL)
+        nctx.space()
+        val right = this.right.dump(ctx, nctx)
+        return ShakeBitwiseShiftLeftNode(
+            nctx.map,
+            left,
+            right,
+            operator,
+        )
+    }
+
+    companion object {
+        fun of(spec: LeftShiftSpec) = if (spec is LeftShiftNodeSpec) spec else LeftShiftNodeSpec(ValueNodeSpec.of(spec.left), ValueNodeSpec.of(spec.right))
+    }
+}
+
+class RightShiftNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : RightShiftSpec(left, right), ValueNodeSpec {
+    override val left: ValueNodeSpec
+        get() = super.left as ValueNodeSpec
+
+    override val right: ValueNodeSpec
+        get() = super.right as ValueNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBitwiseShiftRightNode {
+        val left = this.left.dump(ctx, nctx)
+        nctx.space()
+        val operator = nctx.createToken(ShakeTokenType.BITWISE_SHR)
+        nctx.space()
+        val right = this.right.dump(ctx, nctx)
+        return ShakeBitwiseShiftRightNode(
+            nctx.map,
+            left,
+            right,
+            operator,
+        )
+    }
+
+    companion object {
+        fun of(spec: RightShiftSpec) = if (spec is RightShiftNodeSpec) spec else RightShiftNodeSpec(ValueNodeSpec.of(spec.left), ValueNodeSpec.of(spec.right))
+    }
+}
+
+class UnsignedRightShiftNodeSpec(left: ValueNodeSpec, right: ValueNodeSpec) : UnsignedRightShiftSpec(left, right), ValueNodeSpec {
+    override val left: ValueNodeSpec
+        get() = super.left as ValueNodeSpec
+
+    override val right: ValueNodeSpec
+        get() = super.right as ValueNodeSpec
+
+    override fun dump(ctx: GenerationContext, nctx: NodeContext): ShakeBitwiseShiftRightZeroFillNode {
+        val left = this.left.dump(ctx, nctx)
+        nctx.space()
+        val operator = nctx.createToken(ShakeTokenType.BITWISE_USHR)
+        nctx.space()
+        val right = this.right.dump(ctx, nctx)
+        return ShakeBitwiseShiftRightZeroFillNode(
+            nctx.map,
+            left,
+            right,
+            operator,
+        )
+    }
+
+    companion object {
+        fun of(spec: UnsignedRightShiftSpec) = if (spec is UnsignedRightShiftNodeSpec) spec else UnsignedRightShiftNodeSpec(ValueNodeSpec.of(spec.left), ValueNodeSpec.of(spec.right))
+    }
+}
+
 fun ValueSpec.toNodeSpec(): ValueNodeSpec = ValueNodeSpec.of(this)
 fun StringLiteralSpec.toNodeSpec(): StringLiteralNodeSpec = StringLiteralNodeSpec.of(this)
 fun CharacterLiteralSpec.toNodeSpec(): CharacterLiteralNodeSpec = CharacterLiteralNodeSpec.of(this)
@@ -775,3 +854,10 @@ fun GreaterThanSpec.toNodeSpec(): GreaterThanNodeSpec = GreaterThanNodeSpec.of(t
 fun GreaterThanOrEqualSpec.toNodeSpec(): GreaterThanOrEqualNodeSpec = GreaterThanOrEqualNodeSpec.of(this)
 fun LessThanSpec.toNodeSpec(): LessThanNodeSpec = LessThanNodeSpec.of(this)
 fun LessThanOrEqualSpec.toNodeSpec(): LessThanOrEqualNodeSpec = LessThanOrEqualNodeSpec.of(this)
+fun BitwiseAndSpec.toNodeSpec(): BitwiseAndNodeSpec = BitwiseAndNodeSpec.of(this)
+fun BitwiseOrSpec.toNodeSpec(): BitwiseOrNodeSpec = BitwiseOrNodeSpec.of(this)
+fun BitwiseXorSpec.toNodeSpec(): BitwiseXorNodeSpec = BitwiseXorNodeSpec.of(this)
+fun BitwiseNotSpec.toNodeSpec(): BitwiseNotNodeSpec = BitwiseNotNodeSpec.of(this)
+fun LeftShiftSpec.toNodeSpec(): LeftShiftNodeSpec = LeftShiftNodeSpec.of(this)
+fun RightShiftSpec.toNodeSpec(): RightShiftNodeSpec = RightShiftNodeSpec.of(this)
+fun UnsignedRightShiftSpec.toNodeSpec(): UnsignedRightShiftNodeSpec = UnsignedRightShiftNodeSpec.of(this)

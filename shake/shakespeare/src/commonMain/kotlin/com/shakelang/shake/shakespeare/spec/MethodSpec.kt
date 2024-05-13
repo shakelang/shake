@@ -49,7 +49,7 @@ open class ParameterSpec(
             return this
         }
 
-        fun defaultValue(defaultValue: ValueSpec): ParameterSpecBuilder {
+        fun defaultValue(defaultValue: ValueSpec?): ParameterSpecBuilder {
             this.defaultValue = defaultValue
             return this
         }
@@ -159,6 +159,21 @@ open class MethodSpec(
 
         fun addParameter(parameter: ParameterSpec): MethodSpecBuilder {
             parameters.add(parameter)
+            return this
+        }
+
+        fun addParameter(name: String, type: TypeSpec, defaultValue: ValueSpec? = null): MethodSpecBuilder {
+            parameters.add(ParameterSpec.builder().name(name).type(type).defaultValue(defaultValue).build())
+            return this
+        }
+
+        fun parameter(parameter: ParameterSpec): MethodSpecBuilder {
+            parameters.add(parameter)
+            return this
+        }
+
+        fun parameter(name: String, type: TypeSpec, defaultValue: ValueSpec? = null): MethodSpecBuilder {
+            parameters.add(ParameterSpec.builder().name(name).type(type).defaultValue(defaultValue).build())
             return this
         }
 

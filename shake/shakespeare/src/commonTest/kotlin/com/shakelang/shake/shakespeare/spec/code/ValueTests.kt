@@ -2423,5 +2423,296 @@ class ValueTests : FlatTestSpec(
                 }
             }
         }
+
+        describe("BitwiseNotSpec") {
+            describe("create") {
+                it("should create") {
+                    val value = IntLiteralSpec(42)
+                    val node = BitwiseNotSpec(value)
+                    node.value shouldBe value
+                }
+            }
+
+            describe("generate") {
+                it("should generate") {
+                    val value = IntLiteralSpec(42)
+                    val node = BitwiseNotSpec(value)
+                    val ctx = GenerationContext()
+                    node.generate(ctx) shouldBe "~42"
+                }
+            }
+
+            describe("equals") {
+                it("should be equal to same instance") {
+                    val value = IntLiteralSpec(42)
+                    val node = BitwiseNotSpec(value)
+                    node shouldBe node
+                }
+                it("should be equal to another BitwiseNotSpec with the same value") {
+                    BitwiseNotSpec(IntLiteralSpec(42)) shouldBe BitwiseNotSpec(IntLiteralSpec(42))
+                }
+                it("should not be equal to another BitwiseNotSpec with a different value") {
+                    BitwiseNotSpec(IntLiteralSpec(42)) shouldNotBe BitwiseNotSpec(IntLiteralSpec(43))
+                }
+                it("should not be equal to another type") {
+                    BitwiseNotSpec(IntLiteralSpec(42)) shouldNotBe IntLiteralSpec(42)
+                }
+                it("should not be equal to null") {
+                    BitwiseNotSpec(IntLiteralSpec(42)) shouldNotBe null
+                }
+            }
+
+            describe("builder") {
+                it("should create a builder") {
+                    val builder = BitwiseNotSpec.builder()
+                    builder shouldNotBe null
+                    builder.value shouldBe null
+                }
+
+                abstractUnaryOperatorSpecBuilderTests(BitwiseNotSpec::builder)
+
+                describe("builder.build()") {
+                    it("should build the BitwiseNotSpec") {
+                        val value = IntLiteralSpec(42)
+                        val node = BitwiseNotSpec.builder()
+                            .value(value)
+                            .build()
+                        node.value shouldBe value
+                    }
+
+                    it("should throw an exception if the value is not set") {
+                        val builder = BitwiseNotSpec.builder()
+                        shouldThrowWithMessage<IllegalStateException>("Value not set") {
+                            builder.build()
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("LeftShiftSpec") {
+            describe("create") {
+                it("should create") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = LeftShiftSpec(left, right)
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+            }
+
+            describe("generate") {
+                it("should generate") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = LeftShiftSpec(left, right)
+                    val ctx = GenerationContext()
+                    node.generate(ctx) shouldBe "42 << 43"
+                }
+            }
+
+            describe("equals") {
+                it("should be equal to same instance") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    LeftShiftSpec(left, right) shouldBe LeftShiftSpec(left, right)
+                }
+                it("should not be equal to another LeftShiftSpec with different values") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    LeftShiftSpec(left, right) shouldNotBe LeftShiftSpec(right, left)
+                }
+            }
+
+            describe("builder") {
+                it("should create a builder") {
+                    val builder = LeftShiftSpec.builder()
+                    builder shouldNotBe null
+                    builder.left shouldBe null
+                    builder.right shouldBe null
+                }
+
+                abstractDualOperatorSpecBuilderTests(LeftShiftSpec::builder)
+
+                describe("builder.build()") {
+                    it("should build the LeftShiftSpec") {
+                        val left = IntLiteralSpec(42)
+                        val right = IntLiteralSpec(43)
+                        val node = LeftShiftSpec.builder()
+                            .left(left)
+                            .right(right)
+                            .build()
+                        node.left shouldBe left
+                        node.right shouldBe right
+                    }
+
+                    it("should throw an exception if the left value is not set") {
+                        val builder = LeftShiftSpec.builder()
+                        builder.right(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                            builder.build()
+                        }
+                    }
+
+                    it("should throw an exception if the right value is not set") {
+                        val builder = LeftShiftSpec.builder()
+                        builder.left(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                            builder.build()
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("RightShiftSpec") {
+            describe("create") {
+                it("should create") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = RightShiftSpec(left, right)
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+            }
+
+            describe("generate") {
+                it("should generate") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = RightShiftSpec(left, right)
+                    val ctx = GenerationContext()
+                    node.generate(ctx) shouldBe "42 >> 43"
+                }
+            }
+
+            describe("equals") {
+                it("should be equal to same instance") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    RightShiftSpec(left, right) shouldBe RightShiftSpec(left, right)
+                }
+                it("should not be equal to another RightShiftSpec with different values") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    RightShiftSpec(left, right) shouldNotBe RightShiftSpec(right, left)
+                }
+            }
+
+            describe("builder") {
+                it("should create a builder") {
+                    val builder = RightShiftSpec.builder()
+                    builder shouldNotBe null
+                    builder.left shouldBe null
+                    builder.right shouldBe null
+                }
+
+                abstractDualOperatorSpecBuilderTests(RightShiftSpec::builder)
+
+                describe("builder.build()") {
+                    it("should build the RightShiftSpec") {
+                        val left = IntLiteralSpec(42)
+                        val right = IntLiteralSpec(43)
+                        val node = RightShiftSpec.builder()
+                            .left(left)
+                            .right(right)
+                            .build()
+                        node.left shouldBe left
+                        node.right shouldBe right
+                    }
+
+                    it("should throw an exception if the left value is not set") {
+                        val builder = RightShiftSpec.builder()
+                        builder.right(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                            builder.build()
+                        }
+                    }
+
+                    it("should throw an exception if the right value is not set") {
+                        val builder = RightShiftSpec.builder()
+                        builder.left(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                            builder.build()
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("UnsignedRightShiftSpec") {
+            describe("create") {
+                it("should create") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = UnsignedRightShiftSpec(left, right)
+                    node.left shouldBe left
+                    node.right shouldBe right
+                }
+            }
+
+            describe("generate") {
+                it("should generate") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    val node = UnsignedRightShiftSpec(left, right)
+                    val ctx = GenerationContext()
+                    node.generate(ctx) shouldBe "42 >>> 43"
+                }
+            }
+
+            describe("equals") {
+                it("should be equal to same instance") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    UnsignedRightShiftSpec(left, right) shouldBe UnsignedRightShiftSpec(left, right)
+                }
+                it("should not be equal to another UnsignedRightShiftSpec with different values") {
+                    val left = IntLiteralSpec(42)
+                    val right = IntLiteralSpec(43)
+                    UnsignedRightShiftSpec(left, right) shouldNotBe UnsignedRightShiftSpec(right, left)
+                }
+            }
+
+            describe("builder") {
+                it("should create a builder") {
+                    val builder = UnsignedRightShiftSpec.builder()
+                    builder shouldNotBe null
+                    builder.left shouldBe null
+                    builder.right shouldBe null
+                }
+
+                abstractDualOperatorSpecBuilderTests(UnsignedRightShiftSpec::builder)
+
+                describe("builder.build()") {
+                    it("should build the UnsignedRightShiftSpec") {
+                        val left = IntLiteralSpec(42)
+                        val right = IntLiteralSpec(43)
+                        val node = UnsignedRightShiftSpec.builder()
+                            .left(left)
+                            .right(right)
+                            .build()
+                        node.left shouldBe left
+                        node.right shouldBe right
+                    }
+
+                    it("should throw an exception if the left value is not set") {
+                        val builder = UnsignedRightShiftSpec.builder()
+                        builder.right(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Left not set") {
+                            builder.build()
+                        }
+                    }
+
+                    it("should throw an exception if the right value is not set") {
+                        val builder = UnsignedRightShiftSpec.builder()
+                        builder.left(IntLiteralSpec(42))
+                        shouldThrowWithMessage<IllegalStateException>("Right not set") {
+                            builder.build()
+                        }
+                    }
+                }
+            }
+        }
     },
 )

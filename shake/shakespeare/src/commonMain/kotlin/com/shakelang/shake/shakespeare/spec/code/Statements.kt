@@ -207,7 +207,7 @@ open class VariableDeclarationSpec(
             return VariableDeclarationSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 type ?: throw IllegalStateException("Type not set"),
-                value ?: throw IllegalStateException("Value not set"),
+                value,
                 isVal,
             )
         }

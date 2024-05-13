@@ -128,3 +128,21 @@ class ShakeBitwiseShiftRightNode(
     override val operator: String
         get() = ">>"
 }
+
+/**
+ * Node for a bitwise shift right with zero fill expression
+ * @param map The position of the node in the code
+ * @param left The left node
+ * @param right The right node
+ * @param operatorToken The operator token
+ */
+class ShakeBitwiseShiftRightZeroFillNode(
+    map: PositionMap,
+    left: ShakeValuedNode,
+    right: ShakeValuedNode,
+    operatorToken: ShakeToken,
+) :
+    ShakeExpressionNode(map, left, right, operatorToken) {
+    override val operator: String
+        get() = ">>>"
+}
