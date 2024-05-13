@@ -1,8 +1,8 @@
-package com.shakelang.shake.parser.tests
+package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.tests.api.combineAttributes
-import com.shakelang.shake.parser.tests.api.generateTests
-import com.shakelang.shake.parser.tests.api.primitiveTypes
+import com.shakelang.shake.parser.api.combineAttributes
+import com.shakelang.shake.parser.api.generateTests
+import com.shakelang.shake.parser.api.primitiveTypes
 import io.kotest.core.spec.style.FreeSpec
 
 class AutoFieldTests : FreeSpec(

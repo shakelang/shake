@@ -8,7 +8,7 @@
       "access": "package",
       "fields": [
         {
-          "name": "ShakeVariableDeclarationNode",
+          "name": "ShakeFieldDeclarationNode",
           "variable_name": "i",
           "type": {
             "name": "ShakeVariableType",
@@ -16,11 +16,15 @@
           },
           "access": "package",
           "assignment": {
-            "name": "ShakeIntegerNode",
+            "name": "ShakeIntegerLiteralNode",
             "value": 0
           },
           "is_static": false,
-          "is_final": false
+          "is_final": false,
+          "is_native": false,
+          "is_const": false,
+          "is_override": false,
+          "is_inline": false
         }
       ],
       "methods": [],

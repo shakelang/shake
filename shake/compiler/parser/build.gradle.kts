@@ -29,8 +29,6 @@ kotlin {
         implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("stdlib"))
-        testImplementation(project(":shake:shakespeare"))
-        testImplementation(project(":shake:shakespeare:nodes"))
         testImplementation(project(":util:testlib"))
         kotest()
     }

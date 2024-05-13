@@ -1,7 +1,7 @@
-package com.shakelang.shake.parser.tests
+package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.tests.api.Template
-import com.shakelang.shake.parser.tests.api.generateTests
+import com.shakelang.shake.parser.api.Template
+import com.shakelang.shake.parser.api.generateTests
 import io.kotest.core.spec.style.FreeSpec
 
 class AutoExpressionTests : FreeSpec(

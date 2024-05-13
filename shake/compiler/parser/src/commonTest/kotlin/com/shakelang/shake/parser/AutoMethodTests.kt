@@ -1,8 +1,9 @@
-package com.shakelang.shake.parser.tests
+package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.tests.api.combineAttributes
-import com.shakelang.shake.parser.tests.api.generateTests
-import com.shakelang.shake.parser.tests.api.primitiveTypes
+import com.shakelang.shake.parser.api.combineAttributes
+import com.shakelang.shake.parser.api.generateTests
+import com.shakelang.shake.parser.api.primitiveTypes
+import com.shakelang.shake.parser.api.replaceTemplate
 import io.kotest.core.spec.style.FreeSpec
 
 class AutoMethodTests : FreeSpec(
@@ -25,7 +26,7 @@ class AutoMethodTests : FreeSpec(
                             val template = it.first
 
                             it.first.apply(
-                                com.shakelang.shake.parser.tests.api.replaceTemplate(
+                                replaceTemplate(
                                     "%access%" to attributeInfo.accessModifier,
                                     "%static%" to if (attributeInfo.isStatic) "true" else "false",
                                     "%final%" to if (attributeInfo.isFinal) "true" else "false",
@@ -57,7 +58,7 @@ class AutoMethodTests : FreeSpec(
                                 val template = it.first
 
                                 it.first.apply(
-                                    com.shakelang.shake.parser.tests.api.replaceTemplate(
+                                    replaceTemplate(
                                         "%access%" to attributeInfo.accessModifier,
                                         "%static%" to if (attributeInfo.isStatic) "true" else "false",
                                         "%final%" to if (attributeInfo.isFinal) "true" else "false",
@@ -92,7 +93,7 @@ class AutoMethodTests : FreeSpec(
                                 val template = it.first
 
                                 it.first.apply(
-                                    com.shakelang.shake.parser.tests.api.replaceTemplate(
+                                    replaceTemplate(
                                         "%access%" to attributeInfo.accessModifier,
                                         "%static%" to if (attributeInfo.isStatic) "true" else "false",
                                         "%final%" to if (attributeInfo.isFinal) "true" else "false",

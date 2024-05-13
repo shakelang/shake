@@ -72,6 +72,7 @@ enum class PrimitiveTypeNodeSpec(val type: String) : TypeNodeSpec {
     DOUBLE("double"),
     CHAR("char"),
     BOOLEAN("boolean"),
+    VOID("void"),
     ;
 
     val namespace = NamespaceNodeSpec(type)
@@ -99,6 +100,7 @@ enum class PrimitiveTypeNodeSpec(val type: String) : TypeNodeSpec {
                 PrimitiveTypeSpec.DOUBLE -> DOUBLE
                 PrimitiveTypeSpec.CHAR -> CHAR
                 PrimitiveTypeSpec.BOOLEAN -> BOOLEAN
+                PrimitiveTypeSpec.VOID -> VOID
             }
         }
     }
