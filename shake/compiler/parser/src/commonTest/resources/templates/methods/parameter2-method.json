@@ -8,19 +8,28 @@
         {
           "name": "ShakeParameterNode",
           "argument_name": "p",
-          "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type0_name%\"}"
+          "type": {
+            "name": "ShakeVariableType",
+            "type": "%type0_name%"
+          }
         },
         {
           "name": "ShakeParameterNode",
           "argument_name": "p2",
-          "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type1_name%\"}"
+          "type": {
+            "name": "ShakeVariableType",
+            "type": "%type1_name%"
+          }
         }
       ],
       "body": {
         "name": "ShakeBlockNode",
         "children": []
       },
-      "type": "{\"name\":\"ShakeVariableType\",\"type\":\"%type_name%\"}",
+      "type": {
+        "name": "ShakeVariableType",
+        "type": "%type_name%"
+      },
       "access": "%access%",
       "is_static": %static%,
       "is_final": %final%

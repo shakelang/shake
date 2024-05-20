@@ -187,7 +187,7 @@ class ShakeMethodDeclarationNode(
             "method_name" to name,
             "args" to args.map { it.json },
             "body" to body?.json,
-            "type" to type.toString(),
+            "type" to type.json,
             "access" to access.toString(),
             "is_static" to isStatic,
             "is_final" to isFinal,

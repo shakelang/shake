@@ -6,25 +6,22 @@
       "is_static": false,
       "is_final": false,
       "access": "package",
-      "fields": [
+      "fields": [],
+      "methods": [
         {
-          "name": "ShakeFieldDeclarationNode",
-          "variable_name": "%name%",
+          "name": "ShakeMethodDeclarationNode",
+          "method_name": "test",
+          "args": [],
+          "body": null,
           "type": {
             "name": "ShakeVariableType",
-            "type": "%type_name%"
+            "type": "%type%"
           },
           "access": "%access%",
-          "assignment": null,
           "is_static": %static%,
-          "is_final": %final%,
-          "is_native": false,
-          "is_const": false,
-          "is_override": %override%,
-          "is_inline": false
+          "is_final": %final%
         }
       ],
-      "methods": [],
       "classes": [],
       "constructors": []
     }

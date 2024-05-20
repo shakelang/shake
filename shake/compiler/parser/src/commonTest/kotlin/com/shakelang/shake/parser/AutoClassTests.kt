@@ -13,7 +13,7 @@ class AutoClassTests : FreeSpec(
                 name = "classes"
 
                 primitiveTypes.forEach { (type, typeName) ->
-                    combineAttributes().forEachIndexed { i, attributeInfo ->
+                    combineAttributes(includeOverride = true).forEachIndexed { i, attributeInfo ->
 
                         val templates = listOf(
                             template("classes/class-field") to "class_field",
@@ -29,11 +29,42 @@ class AutoClassTests : FreeSpec(
                                     "%access%" to attributeInfo.accessModifier,
                                     "%static%" to if (attributeInfo.isStatic) "true" else "false",
                                     "%final%" to if (attributeInfo.isFinal) "true" else "false",
+                                    "%override%" to if (attributeInfo.isOverride) "true" else "false",
                                     "%attributes%" to attributeInfo.attributeString,
                                     "%type%" to type,
                                     "%type_name%" to typeName,
                                     "%name%" to "test",
                                 ),
+                            )
+
+                            test("${typeName}_${it.second}$i", isIgnored = false) {
+                                this.input = template.code
+                                this.expectedJson = template.json
+                            }
+                        }
+
+                        val methodTemplates = listOf(
+                            template("classes/class-method") to "class_method",
+                        )
+
+                        methodTemplates.forEach {
+
+                            val template = it.first
+
+                            it.first.apply(
+                                replaceTemplate(
+                                    "%access%" to attributeInfo.accessModifier,
+                                    "%static%" to if (attributeInfo.isStatic) "true" else "false",
+                                    "%final%" to if (attributeInfo.isFinal) "true" else "false",
+                                    "%override%" to if (attributeInfo.isOverride) "true" else "false",
+                                    "%abstract%" to if (attributeInfo.isAbstract) "true" else "false",
+                                    "%attributes%" to attributeInfo.attributeString,
+                                    "%type%" to type,
+                                    "%type_name%" to typeName,
+                                    "%name%" to "test",
+                                    "%params%" to "",
+                                ),
+
                             )
 
                             test("${typeName}_${it.second}$i", isIgnored = false) {

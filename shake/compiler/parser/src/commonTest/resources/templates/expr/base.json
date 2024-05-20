@@ -6,7 +6,7 @@
       "variable_name": "field",
       "type": {
         "name": "ShakeVariableType",
-        "type": "integer"
+        "type": "int"
       },
       "access": "package",
       "assignment": %expr_json%,

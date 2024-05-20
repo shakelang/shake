@@ -18,16 +18,16 @@ val attributes = listOf(
 val primitiveTypes = listOf(
     "byte" to "byte",
     "short" to "short",
-    "int" to "integer",
+    "int" to "int",
     "long" to "long",
     "float" to "float",
     "double" to "double",
     "char" to "char",
     "boolean" to "boolean",
-    "ubyte" to "unsigned_byte",
-    "ushort" to "unsigned_short",
-    "uint" to "unsigned_integer",
-    "ulong" to "unsigned_long",
+    "ubyte" to "ubyte",
+    "ushort" to "ushort",
+    "uint" to "uint",
+    "ulong" to "ulong",
 )
 
 val primitiveTypesNoUnsigned = listOf(
@@ -41,21 +41,7 @@ val primitiveTypesNoUnsigned = listOf(
     "boolean" to "boolean",
 )
 
-val primitiveTypesIncludingVoid = listOf(
-    "byte" to "byte",
-    "short" to "short",
-    "int" to "integer",
-    "long" to "long",
-    "float" to "float",
-    "double" to "double",
-    "char" to "char",
-    "boolean" to "boolean",
-    "void" to "void",
-    "unsigned byte" to "unsigned_byte",
-    "unsigned short" to "unsigned_short",
-    "unsigned int" to "unsigned_integer",
-    "unsigned long" to "unsigned_long",
-)
+val primitiveTypesIncludingVoid = primitiveTypes + listOf("void" to "void")
 
 class AttributeInfo(
     val attributeString: String,
@@ -78,6 +64,12 @@ class AttributeInfo(
     val isPackagePrivate: Boolean
         get() = !isPublic && !isProtected && !isPrivate
 
+    val isAbstract: Boolean
+        get() = attributeString.contains("abstract")
+
+    val isOverride: Boolean
+        get() = attributeString.contains("override")
+
     val accessModifier: String
         get() = when {
             isPublic -> "public"
@@ -91,6 +83,8 @@ fun combineAttributes(
     includeStatic: Boolean = true,
     includeAccessModifiers: Boolean = true,
     includeFinal: Boolean = true,
+    includeAbstract: Boolean = false,
+    includeOverride: Boolean = false,
 ): List<AttributeInfo> {
     val attributes = mutableListOf<List<String>>()
     if (includeStatic) attributes.add(listOf("static"))
@@ -104,6 +98,8 @@ fun combineAttributes(
         )
     }
     if (includeFinal) attributes.add(listOf("final"))
+    if (includeAbstract) attributes.add(listOf("abstract"))
+    if (includeOverride) attributes.add(listOf("override"))
 
     return combineTokens(attributes).map { AttributeInfo(it) }
 }

@@ -45,7 +45,7 @@ open class ShakeVariableType(
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "type" to type.name.lowercase(),
+            "type" to type.toString(),
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -67,26 +67,26 @@ open class ShakeVariableType(
         return type.hashCode()
     }
 
-    enum class Type {
-        DYNAMIC,
-        BYTE,
-        SHORT,
-        INTEGER,
-        LONG,
-        FLOAT,
-        DOUBLE,
-        UNSIGNED_BYTE,
-        UNSIGNED_SHORT,
-        UNSIGNED_INTEGER,
-        UNSIGNED_LONG,
-        BOOLEAN,
-        CHAR,
-        OBJECT,
-        VOID,
+    enum class Type(val tname: String) {
+        DYNAMIC("dynamic"),
+        BYTE("byte"),
+        SHORT("short"),
+        INTEGER("int"),
+        LONG("long"),
+        FLOAT("float"),
+        DOUBLE("double"),
+        UNSIGNED_BYTE("ubyte"),
+        UNSIGNED_SHORT("ushort"),
+        UNSIGNED_INTEGER("uint"),
+        UNSIGNED_LONG("ulong"),
+        BOOLEAN("boolean"),
+        CHAR("char"),
+        OBJECT("object"),
+        VOID("void"),
         ;
 
         override fun toString(): String {
-            return name.lowercase()
+            return tname
         }
     }
 

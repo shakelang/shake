@@ -45,7 +45,7 @@ class ShakeParameterNode(
     val name: String get() = nameToken.value ?: throw Exception("Name of parameter token is null")
 
     override fun toJson(): Map<String, *> =
-        mapOf("name" to nodeName, "argument_name" to name, "type" to type.toString())
+        mapOf("name" to nodeName, "argument_name" to name, "type" to type.json)
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
