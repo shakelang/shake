@@ -7,6 +7,7 @@ import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspat
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
+import com.shakelang.util.parseutils.CompilerError
 
 fun createBaseProcessor(): ShakePackageBasedProcessor {
     val processor = ShakePackageBasedProcessor()
@@ -42,44 +43,52 @@ interface CodeSpec {
 }
 
 fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
-    val processor = createBaseProcessor()
+    try {
+        val processor = createBaseProcessor()
 
-    processor.loadSynthetic("<Unit Tests>", code)
+        processor.loadSynthetic("<Unit Tests>", code)
 
-    processor.finish()
+        processor.finish()
 
-    val generator = ShakeBytecodeGenerator()
-    val out = generator.generateProject(processor.project)
+        val generator = ShakeBytecodeGenerator()
+        val out = generator.generateProject(processor.project)
 
-    val stdout = ByteArrayOutputStream()
+        val stdout = ByteArrayOutputStream()
 
-    val interpreter = ShakeInterpreter()
-    interpreter.classPath.load(out)
-    interpreter.process.setOut(stdout)
+        val interpreter = ShakeInterpreter()
+        interpreter.classPath.load(out)
+        interpreter.process.setOut(stdout)
 
-    val codeSpec = (
-        object : CodeSpec {
+        val codeSpec = (
+            object : CodeSpec {
 
-            override var ticks: Int = -99
-                get() = if (field == -99) throw IllegalStateException("Code not executed") else field
-                private set
+                override var ticks: Int = -99
+                    get() = if (field == -99) throw IllegalStateException("Code not executed") else field
+                    private set
 
-            override val processor: ShakePackageBasedProcessor
-                get() = processor
-            override val stdout: ByteArrayOutputStream
-                get() = stdout
-            override val classpath: ShakeInterpreterClasspath
-                get() = interpreter.classPath
-            override val interpreter: ShakeInterpreter
-                get() = interpreter
-            override val format: StorageFormat
-                get() = out.find { it.packageName == "test" } ?: throw IllegalStateException("No test package found")
+                override val processor: ShakePackageBasedProcessor
+                    get() = processor
+                override val stdout: ByteArrayOutputStream
+                    get() = stdout
+                override val classpath: ShakeInterpreterClasspath
+                    get() = interpreter.classPath
+                override val interpreter: ShakeInterpreter
+                    get() = interpreter
+                override val format: StorageFormat
+                    get() = out.find { it.packageName == "test" } ?: throw IllegalStateException("No test package found")
 
-            override fun run(limit: Int) {
-                this.ticks = interpreter.run(limit)
+                override fun run(limit: Int) {
+                    this.ticks = interpreter.run(limit)
+                }
             }
-        }
-        )
+            )
 
-    then(codeSpec)
+        then(codeSpec)
+    } catch (e: CompilerError) {
+        println(e.message + " at " + e.marker.source)
+        println(e.marker.preview)
+        println(e.marker.marker)
+        e.printStackTrace()
+        throw e
+    }
 }

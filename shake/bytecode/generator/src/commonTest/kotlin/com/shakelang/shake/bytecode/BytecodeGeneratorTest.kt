@@ -195,7 +195,7 @@ class BytecodeGeneratorTest : FreeSpec(
             }
         }
 
-        "set / get field of object".config(enabled = false) {
+        "set / get field of object" {
 
             codeSpec(
                 """
@@ -203,14 +203,14 @@ class BytecodeGeneratorTest : FreeSpec(
                 
                 class Test {
                 
-                    var i
+                    var i : int
                     
                     constructor() {
                         print(10)
                     }
                 
                     static fun main() {
-                        Test test = new Test()
+                        val test: Test = Test()
                         test.i = 42
                         print(test.i)
                     }

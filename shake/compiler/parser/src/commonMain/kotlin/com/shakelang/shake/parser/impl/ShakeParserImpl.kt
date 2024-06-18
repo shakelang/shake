@@ -138,7 +138,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                 if (value is ShakeStatementNode) {
                     value
                 } else {
-                    throw errorFactory.createErrorAtCurrent("Expecting statement, got ${value::class.simpleName}")
+                    throw errorFactory.createErrorAtCurrent("Expecting statement, got ${value.json}")
                 }
             }
         }
