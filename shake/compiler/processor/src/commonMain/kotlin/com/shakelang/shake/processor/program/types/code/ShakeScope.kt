@@ -2,6 +2,7 @@ package com.shakelang.shake.processor.program.types.code
 
 import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeClass
+import com.shakelang.shake.processor.program.types.ShakeConstructor
 import com.shakelang.shake.processor.program.types.ShakeMethod
 
 /**
@@ -44,6 +45,14 @@ interface ShakeScope {
      * @return A list of functions with the specified name.
      */
     fun getFunctions(name: String): List<ShakeMethod>
+
+    /**
+     * Retrieves all constructors with the specified name within this scope.
+     *
+     * @param name The name of the constructors to retrieve.
+     * @return A list of constructors with the specified name.
+     */
+    fun getConstructors(name: String): List<ShakeConstructor>
 
     /**
      * Retrieves a class by its name within this scope.

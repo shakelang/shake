@@ -8,7 +8,7 @@ import com.shakelang.shake.processor.program.types.code.values.ShakeValue
  * Represents a generic assignment type in the Shake language.
  * This interface is a common base for specific assignment types.
  */
-interface ShakeAssignmentType : ShakeValue, ShakeStatement {
+interface ShakeAssignmentType : ShakeValuedStatement {
     /**
      * The variable being assigned to.
      */

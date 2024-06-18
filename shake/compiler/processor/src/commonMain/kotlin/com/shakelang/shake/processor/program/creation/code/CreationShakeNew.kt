@@ -3,7 +3,6 @@ package com.shakelang.shake.processor.program.creation.code
 import com.shakelang.shake.processor.program.creation.CreationShakeConstructor
 import com.shakelang.shake.processor.program.creation.CreationShakeProject
 import com.shakelang.shake.processor.program.creation.CreationShakeType
-import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import com.shakelang.shake.processor.program.types.code.ShakeNew
 
@@ -12,7 +11,7 @@ class CreationShakeNew(
     override val reference: CreationShakeConstructor,
     override val arguments: List<CreationShakeValue>,
     override val parent: CreationShakeValue? = null,
-) : CreationShakeValue, CreationShakeStatement, ShakeNew {
+) : CreationShakeValuedStatement, ShakeNew {
 
     override val type: CreationShakeType
         get() = reference.clazz.asType()

@@ -1,7 +1,6 @@
 package com.shakelang.shake.processor.program.creation.code
 
 import com.shakelang.shake.processor.program.creation.CreationShakeMethod
-import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import com.shakelang.shake.processor.program.types.ShakeProject
 import com.shakelang.shake.processor.program.types.ShakeType
@@ -14,7 +13,7 @@ private constructor(
     override val callable: ShakeInvokable,
     override val arguments: List<CreationShakeValue>,
     override val parent: CreationShakeValue? = null,
-) : CreationShakeValue, CreationShakeStatement, ShakeInvocation {
+) : CreationShakeValuedStatement, ShakeInvocation {
 
     override val type: ShakeType
         get() = callable.returnType

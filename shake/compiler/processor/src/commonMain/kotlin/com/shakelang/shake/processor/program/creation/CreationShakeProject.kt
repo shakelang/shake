@@ -40,7 +40,7 @@ class CreationShakeProject(
                 val field = import.fields.find { it.name == name }
                 if (field != null) return field
             }
-            return getField(name)
+            return parent?.getField(name)
         }
 
         override fun getFields(name: String): List<CreationShakeAssignable> {

@@ -3,6 +3,7 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
+import com.shakelang.shake.processor.program.types.ShakeConstructor
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeScope : ShakeScope {
@@ -16,6 +17,12 @@ abstract class CreationShakeScope : ShakeScope {
     abstract override fun getFields(name: String): List<CreationShakeAssignable>
     abstract fun setField(value: CreationShakeDeclaration)
     abstract override fun getFunctions(name: String): List<CreationShakeMethod>
+
+    override fun getConstructors(name: String): List<CreationShakeConstructor> {
+        CreationShakeConstructor.debug("scope", "Searching for constructor $name in $uniqueName (just redirecting to parent)")
+        return parent?.getConstructors(name) ?: emptyList()
+    }
+
     abstract fun setFunctions(function: CreationShakeMethod)
     abstract override fun getClass(name: String): CreationShakeClass?
     abstract override fun getClasses(name: String): List<CreationShakeClass>
@@ -23,10 +30,12 @@ abstract class CreationShakeScope : ShakeScope {
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
         val functions = getFunctions(name)
         val variable = getField(name)
+        val constructors = getConstructors(name)
+        val defaultConstructors = getClass(name)?.constructors?.filter { it.name == ShakeConstructor.DEFAULT_NAME } ?: emptyList()
         if (variable != null && variable is CreationShakeInvokable) {
-            return listOf(variable, *functions.toTypedArray())
+            return listOf(variable, *functions.toTypedArray(), *constructors.toTypedArray(), *defaultConstructors.toTypedArray())
         }
-        return functions
+        return listOf(*functions.toTypedArray(), *constructors.toTypedArray(), *defaultConstructors.toTypedArray())
     }
 
     override fun use(name: String) {

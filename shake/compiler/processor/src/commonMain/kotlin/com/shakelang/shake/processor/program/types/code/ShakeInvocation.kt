@@ -1,6 +1,5 @@
 package com.shakelang.shake.processor.program.types.code
 
-import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 /**
@@ -9,7 +8,7 @@ import com.shakelang.shake.processor.program.types.code.values.ShakeValue
  *
  * @since 0.1.0
  */
-interface ShakeInvocation : ShakeValue, ShakeStatement {
+interface ShakeInvocation : ShakeValuedStatement {
 
     /**
      * The callable entity that is being invoked.

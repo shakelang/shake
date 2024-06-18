@@ -1,6 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
 import com.shakelang.shake.processor.program.types.code.ShakeCode
+import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 /**
@@ -9,7 +10,7 @@ import com.shakelang.shake.processor.program.types.code.ShakeScope
  *
  * @since 0.1.0
  */
-interface ShakeConstructor {
+interface ShakeConstructor : ShakeInvokable {
     /**
      * The class which this constructor belongs to.
      */
@@ -18,7 +19,7 @@ interface ShakeConstructor {
     /**
      * The body of the constructor. It may contain the initialization code.
      */
-    val body: ShakeCode?
+    override val body: ShakeCode?
 
     /**
      * Indicates whether the constructor enforces strict type checking.
@@ -48,12 +49,12 @@ interface ShakeConstructor {
     /**
      * The name of the constructor. It may be null for anonymous constructors.
      */
-    val name: String?
+    val name: String
 
     /**
      * The parameters accepted by the constructor.
      */
-    val parameters: List<ShakeParameter>
+    override val parameters: List<ShakeParameter>
 
     /**
      * The scope in which the constructor is defined.
@@ -63,7 +64,7 @@ interface ShakeConstructor {
     /**
      * Fully qualified name of the constructor, combining the class's qualifier prefix and the constructor's name.
      */
-    val qualifiedName: String
+    override val qualifiedName: String
         get() = "${clazz.qualifierPrefix}+${name ?: "default"}"
 
     /**
@@ -76,7 +77,7 @@ interface ShakeConstructor {
      * Signature of the constructor, including its name and parameter types.
      */
     val signature: String
-        get() = "+${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+        get() = "+$name(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
 
     /**
      * Fully qualified signature of the constructor, including the qualified name and parameter types.
@@ -89,7 +90,7 @@ interface ShakeConstructor {
      *
      * @return A map containing the JSON representation of the constructor.
      */
-    fun toJson(): Map<String, Any?> {
+    override fun toJson(): Map<String, Any?> {
         return mapOf(
             "class" to clazz.toJson(),
             "body" to body?.toJson(),
@@ -111,4 +112,8 @@ interface ShakeConstructor {
      * Performs the fourth phase of the constructor processing.
      */
     fun phase4()
+
+    companion object {
+        const val DEFAULT_NAME = "default"
+    }
 }

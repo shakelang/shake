@@ -11,10 +11,7 @@ import com.shakelang.shake.parser.node.values.ShakeCastNode
 import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode
 import com.shakelang.shake.parser.node.values.expression.*
 import com.shakelang.shake.parser.node.values.factor.*
-import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import com.shakelang.shake.processor.program.creation.CreationShakeProject
-import com.shakelang.shake.processor.program.creation.CreationShakeScope
-import com.shakelang.shake.processor.program.creation.CreationShakeType
+import com.shakelang.shake.processor.program.creation.*
 import com.shakelang.shake.processor.program.creation.code.*
 import com.shakelang.shake.processor.program.creation.code.statements.*
 import com.shakelang.shake.processor.program.creation.code.values.*
@@ -556,7 +553,7 @@ open class ShakeASTProcessor {
         return CreationShakeIf(condition, body)
     }
 
-    private fun visitFunctionCallNode(scope: CreationShakeScope, n: ShakeInvocationNode): CreationShakeInvocation {
+    private fun visitFunctionCallNode(scope: CreationShakeScope, n: ShakeInvocationNode): CreationShakeValuedStatement {
         val functionNode = n.function
         if (functionNode is ShakeVariableUsageNode) {
             val identifierNode = functionNode.identifier
@@ -575,10 +572,15 @@ open class ShakeASTProcessor {
             val name = identifierNode.name
             val args = n.args.map { visitValue(scope, it) }
             val types = args.map { it.type }
-            val functions = scope.getFunctions(name)
+            val functions = scope.getInvokable(name)
             if (functions.isEmpty()) throw Exception("No function named $name")
             val function = ShakeSelect.selectFunction(functions, types)
                 ?: throw Exception("No function named $name with arguments $types")
+
+            // This could be a lambda, method or constructor
+            if (function is CreationShakeConstructor) {
+                return CreationShakeNew(scope.project, function, args, null)
+            }
             return CreationShakeInvocation.create(scope.project, function, args, null)
         }
         TODO("Direct returned lambda functions")

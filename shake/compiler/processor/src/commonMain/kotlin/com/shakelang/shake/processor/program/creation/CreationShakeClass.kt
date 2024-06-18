@@ -219,6 +219,16 @@ private constructor(
             return methods + parent.getFunctions(name)
         }
 
+        override fun getConstructors(name: String): List<CreationShakeConstructor> {
+            val constructors = constructors.filter { it.name == name }
+            if (constructors.isNotEmpty()) {
+                debug("scope", "Searching for constructor $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for constructor $name in $uniqueName had no result")
+            }
+            return constructors + parent.getConstructors(name)
+        }
+
         override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set in this scope")
         }

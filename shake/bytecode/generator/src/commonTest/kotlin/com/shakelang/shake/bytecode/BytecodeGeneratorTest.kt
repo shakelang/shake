@@ -170,7 +170,7 @@ class BytecodeGeneratorTest : FreeSpec(
 
         // TODO
 
-        "create a new object".config(enabled = false) {
+        "create a new object" {
 
             codeSpec(
                 """

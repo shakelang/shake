@@ -5,6 +5,7 @@ import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeConstructor
@@ -17,9 +18,18 @@ open class CreationShakeConstructor(
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val name: String? = null,
+    override val name: String = ShakeConstructor.DEFAULT_NAME,
     override var parameters: List<CreationShakeParameter>,
-) : ShakeConstructor {
+) : ShakeConstructor, CreationShakeInvokable(body, parameters, clazz.asType()) {
+
+    override val qualifiedSignature: String
+        get() = super.qualifiedSignature
+
+    override val qualifiedName: String
+        get() = super.qualifiedName
+
+    override val signature: String
+        get() = super.signature
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
 
@@ -34,6 +44,20 @@ open class CreationShakeConstructor(
                 scope,
             )
         }
+    }
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "clazz" to clazz.toJson(),
+            "body" to body.toJson(),
+            "isStrict" to isStrict,
+            "isPrivate" to isPrivate,
+            "isProtected" to isProtected,
+            "isPublic" to isPublic,
+            "isNative" to isNative,
+            "name" to name,
+            "parameters" to parameters.map { it.toJson() },
+        )
     }
 
     inner class ShakeConstructorScope : CreationShakeScope() {
@@ -130,7 +154,7 @@ open class CreationShakeConstructor(
                 node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
                 node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
                 node.isNative,
-                node.name,
+                ShakeConstructor.DEFAULT_NAME,
                 node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(clazz.prj, it.name, it) },
             )
         }
