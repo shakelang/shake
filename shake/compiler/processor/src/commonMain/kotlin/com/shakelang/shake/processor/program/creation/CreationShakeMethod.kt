@@ -85,10 +85,6 @@ class CreationShakeMethod(
             return parentScope.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalArgumentException("Cannot set a function in a method scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parentScope.getClass(name)
@@ -97,10 +93,6 @@ class CreationShakeMethod(
         override fun getClasses(name: String): List<CreationShakeClass> {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parentScope.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalArgumentException("Cannot set a class in a method scope")
         }
 
         override val processor: ShakeASTProcessor

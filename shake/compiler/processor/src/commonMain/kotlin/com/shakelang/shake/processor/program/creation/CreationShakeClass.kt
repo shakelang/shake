@@ -229,10 +229,6 @@ private constructor(
             return constructors + parent.getConstructors(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = staticClasses.find { it.name == name }
             if (clazz != null) {
@@ -251,10 +247,6 @@ private constructor(
                 debug("scope", "Searching for classes $name in $uniqueName had no result")
             }
             return classes + parent.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set in this scope")
         }
 
         override fun getThis(): ShakeAssignable? {
@@ -317,10 +309,6 @@ private constructor(
             return methods + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = classes.find { it.name == name }
             if (clazz != null) {
@@ -339,10 +327,6 @@ private constructor(
                 debug("scope", "Searching for classes $name in $uniqueName had no result")
             }
             return classes + parent.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set in this scope")
         }
 
         override fun getThis(): ShakeAssignable? {

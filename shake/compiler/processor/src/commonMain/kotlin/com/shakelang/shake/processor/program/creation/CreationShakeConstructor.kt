@@ -99,10 +99,6 @@ open class CreationShakeConstructor(
             return parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set function in method scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parent.getClass(name)
@@ -111,10 +107,6 @@ open class CreationShakeConstructor(
         override fun getClasses(name: String): List<CreationShakeClass> {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parent.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set class in method scope")
         }
 
         override fun getThis(): ShakeAssignable? {

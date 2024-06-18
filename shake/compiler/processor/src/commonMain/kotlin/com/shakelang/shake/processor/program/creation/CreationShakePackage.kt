@@ -185,10 +185,6 @@ open class CreationShakePackage(
             return functions + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set a function in a package scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = classes.find { it.name == name }
             if (clazz != null) {
@@ -207,10 +203,6 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return classes + parent.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set a class in a package scope")
         }
 
         override fun getThis(): ShakeAssignable? {
@@ -362,10 +354,6 @@ open class CreationShakePackage(
             return functions + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set a function in a package scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             lazyLoadImportedClasses()
             val clazz = importedClasses.find { it.name == name }
@@ -386,10 +374,6 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return classes + parent.getClasses(name)
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set a class in a package scope")
         }
 
         override fun getThis(): ShakeAssignable? {

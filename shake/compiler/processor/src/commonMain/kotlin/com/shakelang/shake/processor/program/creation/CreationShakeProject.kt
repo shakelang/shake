@@ -69,10 +69,6 @@ class CreationShakeProject(
             return functions
         }
 
-        override fun setFunctions(function: CreationShakeMethod) {
-            throw IllegalStateException("Cannot set a function in the project scope")
-        }
-
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in project scope")
 
@@ -93,10 +89,6 @@ class CreationShakeProject(
                 classes += import.classes.filter { it.name == name }
             }
             return classes
-        }
-
-        override fun setClass(klass: CreationShakeClass) {
-            throw IllegalStateException("Cannot set a class in the project scope")
         }
 
         override fun getThis(): CreationShakeAssignable? {

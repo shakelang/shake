@@ -22,11 +22,8 @@ abstract class CreationShakeScope : ShakeScope {
         CreationShakeConstructor.debug("scope", "Searching for constructor $name in $uniqueName (just redirecting to parent)")
         return parent?.getConstructors(name) ?: emptyList()
     }
-
-    abstract fun setFunctions(function: CreationShakeMethod)
     abstract override fun getClass(name: String): CreationShakeClass?
     abstract override fun getClasses(name: String): List<CreationShakeClass>
-    abstract fun setClass(klass: CreationShakeClass)
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
         val functions = getFunctions(name)
         val variable = getField(name)
