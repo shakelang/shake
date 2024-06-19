@@ -56,7 +56,6 @@ enum class ShakeTokenType(
     KEYWORD_INSTANCEOF("instanceof", "'instanceof'"),
     KEYWORD_INTERFACE("interface", "'interface'"),
     KEYWORD_NATIVE("native", "'native'"),
-    KEYWORD_NEW("new", "'new'"),
     KEYWORD_NULL("null", "'null'"),
     KEYWORD_OBJECT("object", "'object'"),
     KEYWORD_OPERATOR("operator", "'operator'"),
@@ -99,9 +98,7 @@ enum class ShakeTokenType(
     EOF("[EOF]", "'[EOF]'"),
     ;
 
-    override fun length(value: String?): Int {
-        return value?.length ?: length
-    }
+    override fun length(value: String?): Int = value?.length ?: length
 
     private val length: Int = value?.length ?: -1
 }

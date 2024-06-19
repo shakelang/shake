@@ -21,15 +21,13 @@ class ShakeLexer(
     >(input, ShakeTokenContext()) {
 
     private val eof = factory.create(ShakeTokenType.EOF, input.source.length)
-    override fun tokenFactory(ctx: TokenCreationContext<ShakeTokenType, ShakeToken, ShakeTokenInputStream, ShakeTokenContext>): ShakeToken {
-        return ShakeToken(
-            ctx.type,
-            ctx.value,
-            ctx.startIndex,
-            ctx.endIndex,
-            ctx.context,
-        )
-    }
+    override fun tokenFactory(ctx: TokenCreationContext<ShakeTokenType, ShakeToken, ShakeTokenInputStream, ShakeTokenContext>): ShakeToken = ShakeToken(
+        ctx.type,
+        ctx.value,
+        ctx.startIndex,
+        ctx.endIndex,
+        ctx.context,
+    )
 
     override fun createStream(factory: TokenFactory<ShakeToken>) = ShakeTokenInputStreamImpl(factory, input.positionMaker)
 
@@ -258,7 +256,6 @@ class ShakeLexer(
                 "instanceof" -> ShakeTokenType.KEYWORD_INSTANCEOF
                 "interface" -> ShakeTokenType.KEYWORD_INTERFACE
                 "native" -> ShakeTokenType.KEYWORD_NATIVE
-                "new" -> ShakeTokenType.KEYWORD_NEW
                 "null" -> ShakeTokenType.KEYWORD_NULL
                 "object" -> ShakeTokenType.KEYWORD_OBJECT
                 "operator" -> ShakeTokenType.KEYWORD_OPERATOR
