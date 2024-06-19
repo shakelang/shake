@@ -1674,3 +1674,599 @@ public native operator fun ulong.bnot(): ulong
 public native operator fun long.bnot(): long
 public native operator fun float.bnot(): float
 public native operator fun double.bnot(): double
+
+// Comparison operators
+
+public native operator fun ubyte.lessThan(b: ubyte): boolean
+public native operator fun ubyte.lessThan(b: byte): boolean
+public native operator fun ubyte.lessThan(s: ushort): boolean
+public native operator fun ubyte.lessThan(s: short): boolean
+public native operator fun ubyte.lessThan(i: uint): boolean
+public native operator fun ubyte.lessThan(i: int): boolean
+public native operator fun ubyte.lessThan(l: ulong): boolean
+public native operator fun ubyte.lessThan(l: long): boolean
+public native operator fun ubyte.lessThan(f: float): boolean
+public native operator fun ubyte.lessThan(d: double): boolean
+
+public native operator fun byte.lessThan(b: ubyte): boolean
+public native operator fun byte.lessThan(b: byte): boolean
+public native operator fun byte.lessThan(s: ushort): boolean
+public native operator fun byte.lessThan(s: short): boolean
+public native operator fun byte.lessThan(i: uint): boolean
+public native operator fun byte.lessThan(i: int): boolean
+public native operator fun byte.lessThan(l: ulong): boolean
+public native operator fun byte.lessThan(l: long): boolean
+public native operator fun byte.lessThan(f: float): boolean
+public native operator fun byte.lessThan(d: double): boolean
+
+public native operator fun ushort.lessThan(b: ubyte): boolean
+public native operator fun ushort.lessThan(b: byte): boolean
+public native operator fun ushort.lessThan(s: ushort): boolean
+public native operator fun ushort.lessThan(s: short): boolean
+public native operator fun ushort.lessThan(i: uint): boolean
+public native operator fun ushort.lessThan(i: int): boolean
+public native operator fun ushort.lessThan(l: ulong): boolean
+public native operator fun ushort.lessThan(l: long): boolean
+public native operator fun ushort.lessThan(f: float): boolean
+public native operator fun ushort.lessThan(d: double): boolean
+
+public native operator fun short.lessThan(b: ubyte): boolean
+public native operator fun short.lessThan(b: byte): boolean
+public native operator fun short.lessThan(s: ushort): boolean
+public native operator fun short.lessThan(s: short): boolean
+public native operator fun short.lessThan(i: uint): boolean
+public native operator fun short.lessThan(i: int): boolean
+public native operator fun short.lessThan(l: ulong): boolean
+public native operator fun short.lessThan(l: long): boolean
+public native operator fun short.lessThan(f: float): boolean
+public native operator fun short.lessThan(d: double): boolean
+
+public native operator fun uint.lessThan(b: ubyte): boolean
+public native operator fun uint.lessThan(b: byte): boolean
+public native operator fun uint.lessThan(s: ushort): boolean
+public native operator fun uint.lessThan(s: short): boolean
+public native operator fun uint.lessThan(i: uint): boolean
+public native operator fun uint.lessThan(i: int): boolean
+public native operator fun uint.lessThan(l: ulong): boolean
+public native operator fun uint.lessThan(l: long): boolean
+public native operator fun uint.lessThan(f: float): boolean
+public native operator fun uint.lessThan(d: double): boolean
+
+public native operator fun int.lessThan(b: ubyte): boolean
+public native operator fun int.lessThan(b: byte): boolean
+public native operator fun int.lessThan(s: ushort): boolean
+public native operator fun int.lessThan(s: short): boolean
+public native operator fun int.lessThan(i: uint): boolean
+public native operator fun int.lessThan(i: int): boolean
+public native operator fun int.lessThan(l: ulong): boolean
+public native operator fun int.lessThan(l: long): boolean
+public native operator fun int.lessThan(f: float): boolean
+public native operator fun int.lessThan(d: double): boolean
+
+public native operator fun ulong.lessThan(b: ubyte): boolean
+public native operator fun ulong.lessThan(b: byte): boolean
+public native operator fun ulong.lessThan(s: ushort): boolean
+public native operator fun ulong.lessThan(s: short): boolean
+public native operator fun ulong.lessThan(i: uint): boolean
+public native operator fun ulong.lessThan(i: int): boolean
+public native operator fun ulong.lessThan(l: ulong): boolean
+public native operator fun ulong.lessThan(l: long): boolean
+public native operator fun ulong.lessThan(f: float): boolean
+public native operator fun ulong.lessThan(d: double): boolean
+
+public native operator fun long.lessThan(b: ubyte): boolean
+public native operator fun long.lessThan(b: byte): boolean
+public native operator fun long.lessThan(s: ushort): boolean
+public native operator fun long.lessThan(s: short): boolean
+public native operator fun long.lessThan(i: uint): boolean
+public native operator fun long.lessThan(i: int): boolean
+public native operator fun long.lessThan(l: ulong): boolean
+public native operator fun long.lessThan(l: long): boolean
+public native operator fun long.lessThan(f: float): boolean
+public native operator fun long.lessThan(d: double): boolean
+
+public native operator fun float.lessThan(b: ubyte): boolean
+public native operator fun float.lessThan(b: byte): boolean
+public native operator fun float.lessThan(s: ushort): boolean
+public native operator fun float.lessThan(s: short): boolean
+public native operator fun float.lessThan(i: uint): boolean
+public native operator fun float.lessThan(i: int): boolean
+public native operator fun float.lessThan(l: ulong): boolean
+public native operator fun float.lessThan(l: long): boolean
+public native operator fun float.lessThan(f: float): boolean
+public native operator fun float.lessThan(d: double): boolean
+
+public native operator fun double.lessThan(b: ubyte): boolean
+public native operator fun double.lessThan(b: byte): boolean
+public native operator fun double.lessThan(s: ushort): boolean
+public native operator fun double.lessThan(s: short): boolean
+public native operator fun double.lessThan(i: uint): boolean
+public native operator fun double.lessThan(i: int): boolean
+public native operator fun double.lessThan(l: ulong): boolean
+public native operator fun double.lessThan(l: long): boolean
+public native operator fun double.lessThan(f: float): boolean
+public native operator fun double.lessThan(d: double): boolean
+
+public native operator fun ubyte.lessThanOrEqual(b: ubyte): boolean
+public native operator fun ubyte.lessThanOrEqual(b: byte): boolean
+public native operator fun ubyte.lessThanOrEqual(s: ushort): boolean
+public native operator fun ubyte.lessThanOrEqual(s: short): boolean
+public native operator fun ubyte.lessThanOrEqual(i: uint): boolean
+public native operator fun ubyte.lessThanOrEqual(i: int): boolean
+public native operator fun ubyte.lessThanOrEqual(l: ulong): boolean
+public native operator fun ubyte.lessThanOrEqual(l: long): boolean
+public native operator fun ubyte.lessThanOrEqual(f: float): boolean
+public native operator fun ubyte.lessThanOrEqual(d: double): boolean
+
+public native operator fun byte.lessThanOrEqual(b: ubyte): boolean
+public native operator fun byte.lessThanOrEqual(b: byte): boolean
+public native operator fun byte.lessThanOrEqual(s: ushort): boolean
+public native operator fun byte.lessThanOrEqual(s: short): boolean
+public native operator fun byte.lessThanOrEqual(i: uint): boolean
+public native operator fun byte.lessThanOrEqual(i: int): boolean
+public native operator fun byte.lessThanOrEqual(l: ulong): boolean
+public native operator fun byte.lessThanOrEqual(l: long): boolean
+public native operator fun byte.lessThanOrEqual(f: float): boolean
+public native operator fun byte.lessThanOrEqual(d: double): boolean
+
+public native operator fun ushort.lessThanOrEqual(b: ubyte): boolean
+public native operator fun ushort.lessThanOrEqual(b: byte): boolean
+public native operator fun ushort.lessThanOrEqual(s: ushort): boolean
+public native operator fun ushort.lessThanOrEqual(s: short): boolean
+public native operator fun ushort.lessThanOrEqual(i: uint): boolean
+public native operator fun ushort.lessThanOrEqual(i: int): boolean
+public native operator fun ushort.lessThanOrEqual(l: ulong): boolean
+public native operator fun ushort.lessThanOrEqual(l: long): boolean
+public native operator fun ushort.lessThanOrEqual(f: float): boolean
+public native operator fun ushort.lessThanOrEqual(d: double): boolean
+
+public native operator fun short.lessThanOrEqual(b: ubyte): boolean
+public native operator fun short.lessThanOrEqual(b: byte): boolean
+public native operator fun short.lessThanOrEqual(s: ushort): boolean
+public native operator fun short.lessThanOrEqual(s: short): boolean
+public native operator fun short.lessThanOrEqual(i: uint): boolean
+public native operator fun short.lessThanOrEqual(i: int): boolean
+public native operator fun short.lessThanOrEqual(l: ulong): boolean
+public native operator fun short.lessThanOrEqual(l: long): boolean
+public native operator fun short.lessThanOrEqual(f: float): boolean
+public native operator fun short.lessThanOrEqual(d: double): boolean
+
+public native operator fun uint.lessThanOrEqual(b: ubyte): boolean
+public native operator fun uint.lessThanOrEqual(b: byte): boolean
+public native operator fun uint.lessThanOrEqual(s: ushort): boolean
+public native operator fun uint.lessThanOrEqual(s: short): boolean
+public native operator fun uint.lessThanOrEqual(i: uint): boolean
+public native operator fun uint.lessThanOrEqual(i: int): boolean
+public native operator fun uint.lessThanOrEqual(l: ulong): boolean
+public native operator fun uint.lessThanOrEqual(l: long): boolean
+public native operator fun uint.lessThanOrEqual(f: float): boolean
+public native operator fun uint.lessThanOrEqual(d: double): boolean
+
+public native operator fun int.lessThanOrEqual(b: ubyte): boolean
+public native operator fun int.lessThanOrEqual(b: byte): boolean
+public native operator fun int.lessThanOrEqual(s: ushort): boolean
+public native operator fun int.lessThanOrEqual(s: short): boolean
+public native operator fun int.lessThanOrEqual(i: uint): boolean
+public native operator fun int.lessThanOrEqual(i: int): boolean
+public native operator fun int.lessThanOrEqual(l: ulong): boolean
+public native operator fun int.lessThanOrEqual(l: long): boolean
+public native operator fun int.lessThanOrEqual(f: float): boolean
+public native operator fun int.lessThanOrEqual(d: double): boolean
+
+public native operator fun ulong.lessThanOrEqual(b: ubyte): boolean
+public native operator fun ulong.lessThanOrEqual(b: byte): boolean
+public native operator fun ulong.lessThanOrEqual(s: ushort): boolean
+public native operator fun ulong.lessThanOrEqual(s: short): boolean
+public native operator fun ulong.lessThanOrEqual(i: uint): boolean
+public native operator fun ulong.lessThanOrEqual(i: int): boolean
+public native operator fun ulong.lessThanOrEqual(l: ulong): boolean
+public native operator fun ulong.lessThanOrEqual(l: long): boolean
+public native operator fun ulong.lessThanOrEqual(f: float): boolean
+public native operator fun ulong.lessThanOrEqual(d: double): boolean
+
+public native operator fun long.lessThanOrEqual(b: ubyte): boolean
+public native operator fun long.lessThanOrEqual(b: byte): boolean
+public native operator fun long.lessThanOrEqual(s: ushort): boolean
+public native operator fun long.lessThanOrEqual(s: short): boolean
+public native operator fun long.lessThanOrEqual(i: uint): boolean
+public native operator fun long.lessThanOrEqual(i: int): boolean
+public native operator fun long.lessThanOrEqual(l: ulong): boolean
+public native operator fun long.lessThanOrEqual(l: long): boolean
+public native operator fun long.lessThanOrEqual(f: float): boolean
+public native operator fun long.lessThanOrEqual(d: double): boolean
+
+public native operator fun float.lessThanOrEqual(b: ubyte): boolean
+public native operator fun float.lessThanOrEqual(b: byte): boolean
+public native operator fun float.lessThanOrEqual(s: ushort): boolean
+public native operator fun float.lessThanOrEqual(s: short): boolean
+public native operator fun float.lessThanOrEqual(i: uint): boolean
+public native operator fun float.lessThanOrEqual(i: int): boolean
+public native operator fun float.lessThanOrEqual(l: ulong): boolean
+public native operator fun float.lessThanOrEqual(l: long): boolean
+public native operator fun float.lessThanOrEqual(f: float): boolean
+public native operator fun float.lessThanOrEqual(d: double): boolean
+
+public native operator fun double.lessThanOrEqual(b: ubyte): boolean
+public native operator fun double.lessThanOrEqual(b: byte): boolean
+public native operator fun double.lessThanOrEqual(s: ushort): boolean
+public native operator fun double.lessThanOrEqual(s: short): boolean
+public native operator fun double.lessThanOrEqual(i: uint): boolean
+public native operator fun double.lessThanOrEqual(i: int): boolean
+public native operator fun double.lessThanOrEqual(l: ulong): boolean
+public native operator fun double.lessThanOrEqual(l: long): boolean
+public native operator fun double.lessThanOrEqual(f: float): boolean
+public native operator fun double.lessThanOrEqual(d: double): boolean
+
+public native operator fun ubyte.equals(b: ubyte): boolean
+public native operator fun ubyte.equals(b: byte): boolean
+public native operator fun ubyte.equals(s: ushort): boolean
+public native operator fun ubyte.equals(s: short): boolean
+public native operator fun ubyte.equals(i: uint): boolean
+public native operator fun ubyte.equals(i: int): boolean
+public native operator fun ubyte.equals(l: ulong): boolean
+public native operator fun ubyte.equals(l: long): boolean
+public native operator fun ubyte.equals(f: float): boolean
+public native operator fun ubyte.equals(d: double): boolean
+
+public native operator fun byte.equals(b: ubyte): boolean
+public native operator fun byte.equals(b: byte): boolean
+public native operator fun byte.equals(s: ushort): boolean
+public native operator fun byte.equals(s: short): boolean
+public native operator fun byte.equals(i: uint): boolean
+public native operator fun byte.equals(i: int): boolean
+public native operator fun byte.equals(l: ulong): boolean
+public native operator fun byte.equals(l: long): boolean
+public native operator fun byte.equals(f: float): boolean
+public native operator fun byte.equals(d: double): boolean
+
+public native operator fun ushort.equals(b: ubyte): boolean
+public native operator fun ushort.equals(b: byte): boolean
+public native operator fun ushort.equals(s: ushort): boolean
+public native operator fun ushort.equals(s: short): boolean
+public native operator fun ushort.equals(i: uint): boolean
+public native operator fun ushort.equals(i: int): boolean
+public native operator fun ushort.equals(l: ulong): boolean
+public native operator fun ushort.equals(l: long): boolean
+public native operator fun ushort.equals(f: float): boolean
+public native operator fun ushort.equals(d: double): boolean
+
+public native operator fun short.equals(b: ubyte): boolean
+public native operator fun short.equals(b: byte): boolean
+public native operator fun short.equals(s: ushort): boolean
+public native operator fun short.equals(s: short): boolean
+public native operator fun short.equals(i: uint): boolean
+public native operator fun short.equals(i: int): boolean
+public native operator fun short.equals(l: ulong): boolean
+public native operator fun short.equals(l: long): boolean
+public native operator fun short.equals(f: float): boolean
+public native operator fun short.equals(d: double): boolean
+
+public native operator fun uint.equals(b: ubyte): boolean
+public native operator fun uint.equals(b: byte): boolean
+public native operator fun uint.equals(s: ushort): boolean
+public native operator fun uint.equals(s: short): boolean
+public native operator fun uint.equals(i: uint): boolean
+public native operator fun uint.equals(i: int): boolean
+public native operator fun uint.equals(l: ulong): boolean
+public native operator fun uint.equals(l: long): boolean
+public native operator fun uint.equals(f: float): boolean
+public native operator fun uint.equals(d: double): boolean
+
+public native operator fun int.equals(b: ubyte): boolean
+public native operator fun int.equals(b: byte): boolean
+public native operator fun int.equals(s: ushort): boolean
+public native operator fun int.equals(s: short): boolean
+public native operator fun int.equals(i: uint): boolean
+public native operator fun int.equals(i: int): boolean
+public native operator fun int.equals(l: ulong): boolean
+public native operator fun int.equals(l: long): boolean
+public native operator fun int.equals(f: float): boolean
+public native operator fun int.equals(d: double): boolean
+
+public native operator fun ulong.equals(b: ubyte): boolean
+public native operator fun ulong.equals(b: byte): boolean
+public native operator fun ulong.equals(s: ushort): boolean
+public native operator fun ulong.equals(s: short): boolean
+public native operator fun ulong.equals(i: uint): boolean
+public native operator fun ulong.equals(i: int): boolean
+public native operator fun ulong.equals(l: ulong): boolean
+public native operator fun ulong.equals(l: long): boolean
+public native operator fun ulong.equals(f: float): boolean
+public native operator fun ulong.equals(d: double): boolean
+
+public native operator fun long.equals(b: ubyte): boolean
+public native operator fun long.equals(b: byte): boolean
+public native operator fun long.equals(s: ushort): boolean
+public native operator fun long.equals(s: short): boolean
+public native operator fun long.equals(i: uint): boolean
+public native operator fun long.equals(i: int): boolean
+public native operator fun long.equals(l: ulong): boolean
+public native operator fun long.equals(l: long): boolean
+public native operator fun long.equals(f: float): boolean
+public native operator fun long.equals(d: double): boolean
+
+public native operator fun float.equals(b: ubyte): boolean
+public native operator fun float.equals(b: byte): boolean
+public native operator fun float.equals(s: ushort): boolean
+public native operator fun float.equals(s: short): boolean
+public native operator fun float.equals(i: uint): boolean
+public native operator fun float.equals(i: int): boolean
+public native operator fun float.equals(l: ulong): boolean
+public native operator fun float.equals(l: long): boolean
+public native operator fun float.equals(f: float): boolean
+public native operator fun float.equals(d: double): boolean
+
+public native operator fun double.equals(b: ubyte): boolean
+public native operator fun double.equals(b: byte): boolean
+public native operator fun double.equals(s: ushort): boolean
+public native operator fun double.equals(s: short): boolean
+public native operator fun double.equals(i: uint): boolean
+public native operator fun double.equals(i: int): boolean
+public native operator fun double.equals(l: ulong): boolean
+public native operator fun double.equals(l: long): boolean
+public native operator fun double.equals(f: float): boolean
+public native operator fun double.equals(d: double): boolean
+
+public native operator fun ubyte.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun ubyte.greaterThanOrEqual(b: byte): boolean
+public native operator fun ubyte.greaterThanOrEqual(s: ushort): boolean
+public native operator fun ubyte.greaterThanOrEqual(s: short): boolean
+public native operator fun ubyte.greaterThanOrEqual(i: uint): boolean
+public native operator fun ubyte.greaterThanOrEqual(i: int): boolean
+public native operator fun ubyte.greaterThanOrEqual(l: ulong): boolean
+public native operator fun ubyte.greaterThanOrEqual(l: long): boolean
+public native operator fun ubyte.greaterThanOrEqual(f: float): boolean
+public native operator fun ubyte.greaterThanOrEqual(d: double): boolean
+
+public native operator fun byte.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun byte.greaterThanOrEqual(b: byte): boolean
+public native operator fun byte.greaterThanOrEqual(s: ushort): boolean
+public native operator fun byte.greaterThanOrEqual(s: short): boolean
+public native operator fun byte.greaterThanOrEqual(i: uint): boolean
+public native operator fun byte.greaterThanOrEqual(i: int): boolean
+public native operator fun byte.greaterThanOrEqual(l: ulong): boolean
+public native operator fun byte.greaterThanOrEqual(l: long): boolean
+public native operator fun byte.greaterThanOrEqual(f: float): boolean
+public native operator fun byte.greaterThanOrEqual(d: double): boolean
+
+public native operator fun ushort.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun ushort.greaterThanOrEqual(b: byte): boolean
+public native operator fun ushort.greaterThanOrEqual(s: ushort): boolean
+public native operator fun ushort.greaterThanOrEqual(s: short): boolean
+public native operator fun ushort.greaterThanOrEqual(i: uint): boolean
+public native operator fun ushort.greaterThanOrEqual(i: int): boolean
+public native operator fun ushort.greaterThanOrEqual(l: ulong): boolean
+public native operator fun ushort.greaterThanOrEqual(l: long): boolean
+public native operator fun ushort.greaterThanOrEqual(f: float): boolean
+public native operator fun ushort.greaterThanOrEqual(d: double): boolean
+
+public native operator fun short.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun short.greaterThanOrEqual(b: byte): boolean
+public native operator fun short.greaterThanOrEqual(s: ushort): boolean
+public native operator fun short.greaterThanOrEqual(s: short): boolean
+public native operator fun short.greaterThanOrEqual(i: uint): boolean
+public native operator fun short.greaterThanOrEqual(i: int): boolean
+public native operator fun short.greaterThanOrEqual(l: ulong): boolean
+public native operator fun short.greaterThanOrEqual(l: long): boolean
+public native operator fun short.greaterThanOrEqual(f: float): boolean
+public native operator fun short.greaterThanOrEqual(d: double): boolean
+
+public native operator fun uint.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun uint.greaterThanOrEqual(b: byte): boolean
+public native operator fun uint.greaterThanOrEqual(s: ushort): boolean
+public native operator fun uint.greaterThanOrEqual(s: short): boolean
+public native operator fun uint.greaterThanOrEqual(i: uint): boolean
+public native operator fun uint.greaterThanOrEqual(i: int): boolean
+public native operator fun uint.greaterThanOrEqual(l: ulong): boolean
+public native operator fun uint.greaterThanOrEqual(l: long): boolean
+public native operator fun uint.greaterThanOrEqual(f: float): boolean
+public native operator fun uint.greaterThanOrEqual(d: double): boolean
+
+public native operator fun int.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun int.greaterThanOrEqual(b: byte): boolean
+public native operator fun int.greaterThanOrEqual(s: ushort): boolean
+public native operator fun int.greaterThanOrEqual(s: short): boolean
+public native operator fun int.greaterThanOrEqual(i: uint): boolean
+public native operator fun int.greaterThanOrEqual(i: int): boolean
+public native operator fun int.greaterThanOrEqual(l: ulong): boolean
+public native operator fun int.greaterThanOrEqual(l: long): boolean
+public native operator fun int.greaterThanOrEqual(f: float): boolean
+public native operator fun int.greaterThanOrEqual(d: double): boolean
+
+public native operator fun ulong.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun ulong.greaterThanOrEqual(b: byte): boolean
+public native operator fun ulong.greaterThanOrEqual(s: ushort): boolean
+public native operator fun ulong.greaterThanOrEqual(s: short): boolean
+public native operator fun ulong.greaterThanOrEqual(i: uint): boolean
+public native operator fun ulong.greaterThanOrEqual(i: int): boolean
+public native operator fun ulong.greaterThanOrEqual(l: ulong): boolean
+public native operator fun ulong.greaterThanOrEqual(l: long): boolean
+public native operator fun ulong.greaterThanOrEqual(f: float): boolean
+public native operator fun ulong.greaterThanOrEqual(d: double): boolean
+
+public native operator fun long.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun long.greaterThanOrEqual(b: byte): boolean
+public native operator fun long.greaterThanOrEqual(s: ushort): boolean
+public native operator fun long.greaterThanOrEqual(s: short): boolean
+public native operator fun long.greaterThanOrEqual(i: uint): boolean
+public native operator fun long.greaterThanOrEqual(i: int): boolean
+public native operator fun long.greaterThanOrEqual(l: ulong): boolean
+public native operator fun long.greaterThanOrEqual(l: long): boolean
+public native operator fun long.greaterThanOrEqual(f: float): boolean
+public native operator fun long.greaterThanOrEqual(d: double): boolean
+
+public native operator fun float.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun float.greaterThanOrEqual(b: byte): boolean
+public native operator fun float.greaterThanOrEqual(s: ushort): boolean
+public native operator fun float.greaterThanOrEqual(s: short): boolean
+public native operator fun float.greaterThanOrEqual(i: uint): boolean
+public native operator fun float.greaterThanOrEqual(i: int): boolean
+public native operator fun float.greaterThanOrEqual(l: ulong): boolean
+public native operator fun float.greaterThanOrEqual(l: long): boolean
+public native operator fun float.greaterThanOrEqual(f: float): boolean
+public native operator fun float.greaterThanOrEqual(d: double): boolean
+
+public native operator fun double.greaterThanOrEqual(b: ubyte): boolean
+public native operator fun double.greaterThanOrEqual(b: byte): boolean
+public native operator fun double.greaterThanOrEqual(s: ushort): boolean
+public native operator fun double.greaterThanOrEqual(s: short): boolean
+public native operator fun double.greaterThanOrEqual(i: uint): boolean
+public native operator fun double.greaterThanOrEqual(i: int): boolean
+public native operator fun double.greaterThanOrEqual(l: ulong): boolean
+public native operator fun double.greaterThanOrEqual(l: long): boolean
+public native operator fun double.greaterThanOrEqual(f: float): boolean
+public native operator fun double.greaterThanOrEqual(d: double): boolean
+
+public native operator fun ubyte.greaterThan(b: ubyte): boolean
+public native operator fun ubyte.greaterThan(b: byte): boolean
+public native operator fun ubyte.greaterThan(s: ushort): boolean
+public native operator fun ubyte.greaterThan(s: short): boolean
+public native operator fun ubyte.greaterThan(i: uint): boolean
+public native operator fun ubyte.greaterThan(i: int): boolean
+public native operator fun ubyte.greaterThan(l: ulong): boolean
+public native operator fun ubyte.greaterThan(l: long): boolean
+public native operator fun ubyte.greaterThan(f: float): boolean
+public native operator fun ubyte.greaterThan(d: double): boolean
+
+public native operator fun byte.greaterThan(b: ubyte): boolean
+public native operator fun byte.greaterThan(b: byte): boolean
+public native operator fun byte.greaterThan(s: ushort): boolean
+public native operator fun byte.greaterThan(s: short): boolean
+public native operator fun byte.greaterThan(i: uint): boolean
+public native operator fun byte.greaterThan(i: int): boolean
+public native operator fun byte.greaterThan(l: ulong): boolean
+public native operator fun byte.greaterThan(l: long): boolean
+public native operator fun byte.greaterThan(f: float): boolean
+public native operator fun byte.greaterThan(d: double): boolean
+
+public native operator fun ushort.greaterThan(b: ubyte): boolean
+public native operator fun ushort.greaterThan(b: byte): boolean
+public native operator fun ushort.greaterThan(s: ushort): boolean
+public native operator fun ushort.greaterThan(s: short): boolean
+public native operator fun ushort.greaterThan(i: uint): boolean
+public native operator fun ushort.greaterThan(i: int): boolean
+public native operator fun ushort.greaterThan(l: ulong): boolean
+public native operator fun ushort.greaterThan(l: long): boolean
+public native operator fun ushort.greaterThan(f: float): boolean
+public native operator fun ushort.greaterThan(d: double): boolean
+
+public native operator fun short.greaterThan(b: ubyte): boolean
+public native operator fun short.greaterThan(b: byte): boolean
+public native operator fun short.greaterThan(s: ushort): boolean
+public native operator fun short.greaterThan(s: short): boolean
+public native operator fun short.greaterThan(i: uint): boolean
+public native operator fun short.greaterThan(i: int): boolean
+public native operator fun short.greaterThan(l: ulong): boolean
+public native operator fun short.greaterThan(l: long): boolean
+public native operator fun short.greaterThan(f: float): boolean
+public native operator fun short.greaterThan(d: double): boolean
+
+public native operator fun uint.greaterThan(b: ubyte): boolean
+public native operator fun uint.greaterThan(b: byte): boolean
+public native operator fun uint.greaterThan(s: ushort): boolean
+public native operator fun uint.greaterThan(s: short): boolean
+public native operator fun uint.greaterThan(i: uint): boolean
+public native operator fun uint.greaterThan(i: int): boolean
+public native operator fun uint.greaterThan(l: ulong): boolean
+public native operator fun uint.greaterThan(l: long): boolean
+public native operator fun uint.greaterThan(f: float): boolean
+public native operator fun uint.greaterThan(d: double): boolean
+
+public native operator fun int.greaterThan(b: ubyte): boolean
+public native operator fun int.greaterThan(b: byte): boolean
+public native operator fun int.greaterThan(s: ushort): boolean
+public native operator fun int.greaterThan(s: short): boolean
+public native operator fun int.greaterThan(i: uint): boolean
+public native operator fun int.greaterThan(i: int): boolean
+public native operator fun int.greaterThan(l: ulong): boolean
+public native operator fun int.greaterThan(l: long): boolean
+public native operator fun int.greaterThan(f: float): boolean
+public native operator fun int.greaterThan(d: double): boolean
+
+public native operator fun ulong.greaterThan(b: ubyte): boolean
+public native operator fun ulong.greaterThan(b: byte): boolean
+public native operator fun ulong.greaterThan(s: ushort): boolean
+public native operator fun ulong.greaterThan(s: short): boolean
+public native operator fun ulong.greaterThan(i: uint): boolean
+public native operator fun ulong.greaterThan(i: int): boolean
+public native operator fun ulong.greaterThan(l: ulong): boolean
+public native operator fun ulong.greaterThan(l: long): boolean
+public native operator fun ulong.greaterThan(f: float): boolean
+public native operator fun ulong.greaterThan(d: double): boolean
+
+public native operator fun long.greaterThan(b: ubyte): boolean
+public native operator fun long.greaterThan(b: byte): boolean
+public native operator fun long.greaterThan(s: ushort): boolean
+public native operator fun long.greaterThan(s: short): boolean
+public native operator fun long.greaterThan(i: uint): boolean
+public native operator fun long.greaterThan(i: int): boolean
+public native operator fun long.greaterThan(l: ulong): boolean
+public native operator fun long.greaterThan(l: long): boolean
+public native operator fun long.greaterThan(f: float): boolean
+public native operator fun long.greaterThan(d: double): boolean
+
+public native operator fun float.greaterThan(b: ubyte): boolean
+public native operator fun float.greaterThan(b: byte): boolean
+public native operator fun float.greaterThan(s: ushort): boolean
+public native operator fun float.greaterThan(s: short): boolean
+public native operator fun float.greaterThan(i: uint): boolean
+public native operator fun float.greaterThan(i: int): boolean
+public native operator fun float.greaterThan(l: ulong): boolean
+public native operator fun float.greaterThan(l: long): boolean
+public native operator fun float.greaterThan(f: float): boolean
+public native operator fun float.greaterThan(d: double): boolean
+
+public native operator fun double.greaterThan(b: ubyte): boolean
+public native operator fun double.greaterThan(b: byte): boolean
+public native operator fun double.greaterThan(s: ushort): boolean
+public native operator fun double.greaterThan(s: short): boolean
+public native operator fun double.greaterThan(i: uint): boolean
+public native operator fun double.greaterThan(i: int): boolean
+public native operator fun double.greaterThan(l: ulong): boolean
+public native operator fun double.greaterThan(l: long): boolean
+public native operator fun double.greaterThan(f: float): boolean
+public native operator fun double.greaterThan(d: double): boolean
+
+// Increment and decrement operators
+
+public native operator fun ubyte.incrementBefore(): ubyte
+public native operator fun ubyte.incrementAfter(): ubyte
+public native operator fun byte.incrementBefore(): byte
+public native operator fun byte.incrementAfter(): byte
+public native operator fun ushort.incrementBefore(): ushort
+public native operator fun ushort.incrementAfter(): ushort
+public native operator fun short.incrementBefore(): short
+public native operator fun short.incrementAfter(): short
+public native operator fun uint.incrementBefore(): uint
+public native operator fun uint.incrementAfter(): uint
+public native operator fun int.incrementBefore(): int
+public native operator fun int.incrementAfter(): int
+public native operator fun ulong.incrementBefore(): ulong
+public native operator fun ulong.incrementAfter(): ulong
+public native operator fun long.incrementBefore(): long
+public native operator fun long.incrementAfter(): long
+public native operator fun float.incrementBefore(): float
+public native operator fun float.incrementAfter(): float
+public native operator fun double.incrementBefore(): double
+public native operator fun double.incrementAfter(): double
+
+public native operator fun ubyte.decrementBefore(): ubyte
+public native operator fun ubyte.decrementAfter(): ubyte
+public native operator fun byte.decrementBefore(): byte
+public native operator fun byte.decrementAfter(): byte
+public native operator fun ushort.decrementBefore(): ushort
+public native operator fun ushort.decrementAfter(): ushort
+public native operator fun short.decrementBefore(): short
+public native operator fun short.decrementAfter(): short
+public native operator fun uint.decrementBefore(): uint
+public native operator fun uint.decrementAfter(): uint
+public native operator fun int.decrementBefore(): int
+public native operator fun int.decrementAfter(): int
+public native operator fun ulong.decrementBefore(): ulong
+public native operator fun ulong.decrementAfter(): ulong
+public native operator fun long.decrementBefore(): long
+public native operator fun long.decrementAfter(): long
+public native operator fun float.decrementBefore(): float
+public native operator fun float.decrementAfter(): float
+public native operator fun double.decrementBefore(): double
+public native operator fun double.decrementAfter(): double

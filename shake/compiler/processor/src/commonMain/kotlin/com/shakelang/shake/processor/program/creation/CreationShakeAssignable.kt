@@ -16,86 +16,135 @@ interface CreationShakeAssignable : ShakeAssignable {
     fun access(scope: CreationShakeScope): CreationShakeValue
 
     override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.assignType(other, scope)
+        val overload = type.assignType(other, scope)
+        if (overload != null) return overload
+
+        // Check compatibility
+        if (!other.compatibleTo(type)) return null
+
+        // TODO: Return type or other type? Other may be more specific, but there may be automatic conversions happening
+        return type
     }
 
     override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.additionAssignType(other, scope)
+        val overload = type.additionAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.additionType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
     override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.subtractionAssignType(other, scope)
+        val overload = type.subtractionAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.subtractionType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
     override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.multiplicationAssignType(other, scope)
+        val overload = type.multiplicationAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.multiplicationType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
     override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.divisionAssignType(other, scope)
+        val overload = type.divisionAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.divisionType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
     override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.modulusAssignType(other, scope)
+        val overload = type.modulusAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.modulusType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
     override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-        return type.powerAssignType(other, scope)
+        val overload = type.powerAssignType(other, scope)
+        if (overload != null) return overload
+
+        val indirect = type.powerType(other, scope) ?: return null
+        return assignType(indirect, scope)
     }
 
-    override fun incrementBeforeType(scope: ShakeScope): ShakeType? {
-        return type.incrementBeforeType(scope)
-    }
+    override fun incrementBeforeType(scope: ShakeScope): ShakeType? = type.incrementBeforeType(scope)
 
-    override fun incrementAfterType(scope: ShakeScope): ShakeType? {
-        return type.incrementAfterType(scope)
-    }
+    override fun incrementAfterType(scope: ShakeScope): ShakeType? = type.incrementAfterType(scope)
 
-    override fun decrementBeforeType(scope: ShakeScope): ShakeType? {
-        return type.decrementBeforeType(scope)
-    }
+    override fun decrementBeforeType(scope: ShakeScope): ShakeType? = type.decrementBeforeType(scope)
 
-    override fun decrementAfterType(scope: ShakeScope): ShakeType? {
-        return type.decrementAfterType(scope)
-    }
+    override fun decrementAfterType(scope: ShakeScope): ShakeType? = type.decrementAfterType(scope)
 
     fun createAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeAssignment {
         val type = assignType(value.type, scope) ?: throw Exception("Cannot assign ${value.type} to ${this.type}")
         return CreationShakeAssignment(project, this, value, type)
     }
 
-    fun createAddAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeAddAssignment {
-        val type = additionAssignType(value.type, scope) ?: throw Exception("Cannot add ${value.type} to ${this.type}")
-        return CreationShakeAddAssignment(project, this, value, type)
+    fun createAddAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.additionAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakeAddAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.additionOperator(value.type, scope) ?: throw Exception("Cannot add-assign ${value.type} to ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakeAssignment(project, this, newValue, type)
     }
 
-    fun createSubtractAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeSubAssignment {
-        val type = subtractionAssignType(value.type, scope)
-            ?: throw Exception("Cannot subtract ${value.type} from ${this.type}")
-        return CreationShakeSubAssignment(project, this, value, type)
+    fun createSubtractAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.subtractionAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakeSubAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.subtractionOperator(value.type, scope) ?: throw Exception("Cannot subtract-assign ${value.type} from ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakeAssignment(project, this, newValue, type)
     }
 
-    fun createMultiplyAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeMulAssignment {
-        val type = multiplicationAssignType(value.type, scope)
-            ?: throw Exception("Cannot multiply ${value.type} with ${this.type}")
-        return CreationShakeMulAssignment(project, this, value, type)
+    fun createMultiplyAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.multiplicationAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakeMulAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.multiplicationOperator(value.type, scope) ?: throw Exception("Cannot multiply-assign ${value.type} to ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakeAssignment(project, this, newValue, type)
     }
 
-    fun createDivideAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeDivAssignment {
-        val type =
-            divisionAssignType(value.type, scope) ?: throw Exception("Cannot divide ${value.type} by ${this.type}")
-        return CreationShakeDivAssignment(project, this, value, type)
+    fun createDivideAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.divisionAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakeDivAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.divisionOperator(value.type, scope) ?: throw Exception("Cannot divide-assign ${value.type} by ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakeAssignment(project, this, newValue, type)
     }
 
-    fun createModulusAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeModAssignment {
-        val type =
-            modulusAssignType(value.type, scope) ?: throw Exception("Cannot modulus ${value.type} by ${this.type}")
-        return CreationShakeModAssignment(project, this, value, type)
+    fun createModulusAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.modulusAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakeModAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.modulusOperator(value.type, scope) ?: throw Exception("Cannot modulus-assign ${value.type} by ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakeAssignment(project, this, newValue, type)
     }
 
-    fun createPowerAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakePowerAssignment {
-        val type = powerAssignType(value.type, scope) ?: throw Exception("Cannot power ${value.type} by ${this.type}")
-        return CreationShakePowerAssignment(project, this, value, type)
+    fun createPowerAssignment(value: CreationShakeValue, scope: CreationShakeScope): CreationShakeValuedStatement {
+        val overloadType = type.powerAssignType(value.type, scope)
+        if (overloadType != null) return CreationShakePowerAssignment(project, this, value, overloadType)
+        // TODO Handle overloads
+
+        val aw = type.powerOperator(value.type, scope) ?: throw Exception("Cannot power-assign ${value.type} to ${this.type}")
+        val newValue = CreationShakeInvocation.create(project, aw.overload, listOf(value), this.access(scope))
+        return CreationShakePowerAssignment(project, this, newValue, type)
     }
 
     fun createIncrementBeforeAssignment(scope: ShakeScope): CreationShakeIncrementBefore {
@@ -121,75 +170,47 @@ interface CreationShakeAssignable : ShakeAssignable {
     fun toJson(): Map<String, Any?>
 
     companion object {
-        fun wrap(project: CreationShakeProject, v: CreationShakeValue): CreationShakeAssignable {
-            return object : CreationShakeAssignable {
+        fun wrap(project: CreationShakeProject, v: CreationShakeValue): CreationShakeAssignable = object : CreationShakeAssignable {
 
-                override val project: CreationShakeProject = project
+            override val project: CreationShakeProject = project
 
-                override fun access(scope: CreationShakeScope): CreationShakeValue {
-                    return v
-                }
+            override fun access(scope: CreationShakeScope): CreationShakeValue = v
 
-                override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.assignType(other, scope)
-                }
+            override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.assignType(other, scope)
 
-                override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.additionAssignType(other, scope)
-                }
+            override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.additionAssignType(other, scope)
 
-                override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.subtractionAssignType(other, scope)
-                }
+            override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.subtractionAssignType(other, scope)
 
-                override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.multiplicationAssignType(other, scope)
-                }
+            override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.multiplicationAssignType(other, scope)
 
-                override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.divisionAssignType(other, scope)
-                }
+            override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.divisionAssignType(other, scope)
 
-                override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.modulusAssignType(other, scope)
-                }
+            override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.modulusAssignType(other, scope)
 
-                override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
-                    return v.type.powerAssignType(other, scope)
-                }
+            override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = v.type.powerAssignType(other, scope)
 
-                override fun incrementBeforeType(scope: ShakeScope): ShakeType? {
-                    return v.type.incrementBeforeType(scope)
-                }
+            override fun incrementBeforeType(scope: ShakeScope): ShakeType? = v.type.incrementBeforeType(scope)
 
-                override fun incrementAfterType(scope: ShakeScope): ShakeType? {
-                    return v.type.incrementAfterType(scope)
-                }
+            override fun incrementAfterType(scope: ShakeScope): ShakeType? = v.type.incrementAfterType(scope)
 
-                override fun decrementBeforeType(scope: ShakeScope): ShakeType? {
-                    return v.type.decrementBeforeType(scope)
-                }
+            override fun decrementBeforeType(scope: ShakeScope): ShakeType? = v.type.decrementBeforeType(scope)
 
-                override fun decrementAfterType(scope: ShakeScope): ShakeType? {
-                    return v.type.decrementAfterType(scope)
-                }
+            override fun decrementAfterType(scope: ShakeScope): ShakeType? = v.type.decrementAfterType(scope)
 
-                override val actualType: ShakeType
-                    get() = v.type
+            override val actualType: ShakeType
+                get() = v.type
 
-                override val actualValue: CreationShakeValue
-                    get() = v
+            override val actualValue: CreationShakeValue
+                get() = v
 
-                override val type: ShakeType
-                    get() = v.type
+            override val type: ShakeType
+                get() = v.type
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf(
-                        "type" to "anonymous-assignable",
-                        "value" to v.toJson(),
-                    )
-                }
-            }
+            override fun toJson(): Map<String, Any?> = mapOf(
+                "type" to "anonymous-assignable",
+                "value" to v.toJson(),
+            )
         }
     }
 }

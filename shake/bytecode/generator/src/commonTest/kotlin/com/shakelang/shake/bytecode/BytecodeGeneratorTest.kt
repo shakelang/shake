@@ -4,28 +4,29 @@ import com.shakelang.shake.bytecode.tools.BytecodeStringGenerator
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class BytecodeGeneratorTest : FreeSpec(
-    {
+class BytecodeGeneratorTest :
+    FreeSpec(
+        {
 
-        "call native with params" {
-            codeSpec(
-                """
+            "call native with params" {
+                codeSpec(
+                    """
                 package test
                 
                 fun main() {
                     print(1 + 2)
                 }
                 
-                """.trimIndent(),
-            ) {
-                execute("test/main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        "call a method" {
-            codeSpec(
-                """
+            "call a method" {
+                codeSpec(
+                    """
                 package test
                 
                 fun main() {
@@ -36,16 +37,16 @@ class BytecodeGeneratorTest : FreeSpec(
                     print(1)
                 }
                 
-                """.trimIndent(),
-            ) {
-                execute("test/main()V")
-                consoleOut shouldBe "1"
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "1"
+                }
             }
-        }
 
-        "call a method (with return value)" {
-            codeSpec(
-                """
+            "call a method (with return value)" {
+                codeSpec(
+                    """
                 package test
                 
                 fun main() {
@@ -56,16 +57,16 @@ class BytecodeGeneratorTest : FreeSpec(
                     return 1
                 }
                 
-                """.trimIndent(),
-            ) {
-                execute("test/main()V")
-                consoleOut shouldBe "1"
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "1"
+                }
             }
-        }
 
-        "call a method (with params)" {
-            codeSpec(
-                """
+            "call a method (with params)" {
+                codeSpec(
+                    """
                 package test
                 
                 fun main() {
@@ -76,16 +77,16 @@ class BytecodeGeneratorTest : FreeSpec(
                     print(i)
                 }
                 
-                """.trimIndent(),
-            ) {
-                execute("test/main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        "call a method (with parameters and return value)" {
-            codeSpec(
-                """
+            "call a method (with parameters and return value)" {
+                codeSpec(
+                    """
                 package test
                 
                 fun main() {
@@ -96,17 +97,17 @@ class BytecodeGeneratorTest : FreeSpec(
                     return a + b
                 }
                 
-                """.trimIndent(),
-            ) {
-                execute("test/main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        "call a static method" {
+            "call a static method" {
 
-            codeSpec(
-                """
+                codeSpec(
+                    """
                 package test
                 
                 class Test {
@@ -115,17 +116,17 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 }
                                 
-                """.trimIndent(),
-            ) {
-                execute("test/Test:main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/Test:main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        "call a static method (with parameters)" {
+            "call a static method (with parameters)" {
 
-            codeSpec(
-                """
+                codeSpec(
+                    """
                 package test
                 
                 class Test {
@@ -138,17 +139,17 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 }
                                 
-                """.trimIndent(),
-            ) {
-                execute("test/Test:main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/Test:main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        "call a static method (with parameters and return value)" {
+            "call a static method (with parameters and return value)" {
 
-            codeSpec(
-                """
+                codeSpec(
+                    """
                 package test
                 
                 class Test {
@@ -161,19 +162,19 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 }
                                 
-                """.trimIndent(),
-            ) {
-                execute("test/Test:main()V")
-                consoleOut shouldBe "3"
+                    """.trimIndent(),
+                ) {
+                    execute("test/Test:main()V")
+                    consoleOut shouldBe "3"
+                }
             }
-        }
 
-        // TODO
+            // TODO
 
-        "create a new object" {
+            "create a new object" {
 
-            codeSpec(
-                """
+                codeSpec(
+                    """
                 package test
                 
                 class Test {
@@ -188,17 +189,17 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 }
                                 
-                """.trimIndent(),
-            ) {
-                execute("test/Test:main()V")
-                consoleOut shouldBe "10test/Test@0000000000000000"
+                    """.trimIndent(),
+                ) {
+                    execute("test/Test:main()V")
+                    consoleOut shouldBe "10test/Test@0000000000000000"
+                }
             }
-        }
 
-        "set / get field of object" {
+            "set / get field of object" {
 
-            codeSpec(
-                """
+                codeSpec(
+                    """
                 package test
                 
                 class Test {
@@ -216,13 +217,53 @@ class BytecodeGeneratorTest : FreeSpec(
                     }
                 }
                                 
-                """.trimIndent(),
-            ) {
-                println(BytecodeStringGenerator(format).generate().joinToString("\n"))
-
-                execute("test/Test:main()V")
-                consoleOut shouldBe "1042"
+                    """.trimIndent(),
+                ) {
+                    execute("test/Test:main()V")
+                    consoleOut shouldBe "1042"
+                }
             }
-        }
-    },
-)
+
+            "while loop" {
+
+                codeSpec(
+                    """
+                    package test
+                    
+                    fun main() {
+                        var i = 0
+                        while(i < 10) {
+                            print(i)
+                            i += 1
+                        }
+                    }
+                    
+                    """.trimIndent(),
+                ) {
+                    execute("test/main()V")
+                    consoleOut shouldBe "0123456789"
+                }
+            }
+
+            "for loop" {
+
+                codeSpec(
+                    """
+                    package test
+                    
+                    fun main() {
+                        for(var i = 0; i < 10; i++) {
+                            print(i)
+                        }
+                    }
+                    
+                    """.trimIndent(),
+                ) {
+                    println(BytecodeStringGenerator(format).generate().joinToString("\n"))
+
+                    execute("test/main()V")
+                    consoleOut shouldBe "0123456789"
+                }
+            }
+        },
+    )

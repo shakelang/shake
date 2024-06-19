@@ -54,9 +54,7 @@ class CreationShakeProject(
             return fields
         }
 
-        override fun setField(value: CreationShakeDeclaration) {
-            throw IllegalStateException("Cannot set a value in the project scope")
-        }
+        override fun setField(value: CreationShakeDeclaration): Unit = throw IllegalStateException("Cannot set a value in the project scope")
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             debug("scope", "Searching for function $name in project scope")
@@ -91,26 +89,18 @@ class CreationShakeProject(
             return classes
         }
 
-        override fun getThis(): CreationShakeAssignable? {
-            throw IllegalStateException("Cannot get this in the project scope")
-        }
+        override fun getThis(): CreationShakeAssignable? = throw IllegalStateException("Cannot get this in the project scope")
 
-        override fun getThis(name: String): CreationShakeAssignable? {
-            throw IllegalStateException("Cannot get this in the project scope")
-        }
+        override fun getThis(name: String): CreationShakeAssignable? = throw IllegalStateException("Cannot get this in the project scope")
 
-        override fun getSuper(): CreationShakeAssignable? {
-            throw IllegalStateException("Cannot get super in the project scope")
-        }
+        override fun getSuper(): CreationShakeAssignable? = throw IllegalStateException("Cannot get super in the project scope")
 
-        override fun getSuper(name: String): CreationShakeAssignable? {
-            throw IllegalStateException("Cannot get super in the project scope")
-        }
+        override fun getSuper(name: String): CreationShakeAssignable? = throw IllegalStateException("Cannot get super in the project scope")
     }
 
     fun putFile(name: String, content: ShakeFileNode) {
         val pkgNode =
-            (content.children.find { it is ShakePackageNode } ?: error("No package node found")) as ShakePackageNode
+            (content.children.find { it is ShakePackageNode } ?: error("No package node \"$name\" found")) as ShakePackageNode
         val pkgName = pkgNode.pkg
         requirePackage(pkgName).putFile(name, content)
     }

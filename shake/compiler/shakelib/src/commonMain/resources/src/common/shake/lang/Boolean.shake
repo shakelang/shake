@@ -1,0 +1,6 @@
+package shake.lang
+
+public native operator fun boolean.not(): boolean
+public native operator fun boolean.and(other: boolean): boolean
+public native operator fun boolean.or(other: boolean): boolean
+public native operator fun boolean.xor(other: boolean): boolean

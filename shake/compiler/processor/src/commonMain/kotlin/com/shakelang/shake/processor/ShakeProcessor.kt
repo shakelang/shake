@@ -30,9 +30,7 @@ abstract class ShakeProcessor<T> {
 
     abstract val src: T
 
-    open fun parseFile(src: String): ShakeFileNode {
-        return parseFile(src, File(src).contents)
-    }
+    open fun parseFile(src: String): ShakeFileNode = parseFile(src, File(src).contents)
 
     open fun parseFile(src: String, contents: CharArray): ShakeFileNode {
         val chars: CharacterInputStream = SourceCharacterInputStream(src, contents)
@@ -49,9 +47,7 @@ abstract class ShakeProcessor<T> {
     abstract fun phase3()
     abstract fun phase4()
 
-    fun <O> generate(f: (T) -> O): O {
-        return f(src)
-    }
+    fun <O> generate(f: (T) -> O): O = f(src)
 
     companion object {
         val debug = debug("shake:compiler:processor")
@@ -104,110 +100,96 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
 
 open class ShakeASTProcessor {
 
-    fun visitValue(scope: CreationShakeScope, value: ShakeValuedNode): CreationShakeValue {
-        return when (value) {
-            // Literals
-            is ShakeIntegerLiteralNode -> visitIntegerNode(scope, value)
-            is ShakeFloatLiteralNode -> visitDoubleNode(scope, value)
-            is ShakeStringLiteralNode -> visitStringNode(scope, value)
-            is ShakeTrueLiteralNode -> visitLogicalTrueNode(scope, value)
-            is ShakeFalseLiteralNode -> visitLogicalFalseNode(scope, value)
-            is ShakeNullLiteralNode -> visitNullNode(scope, value)
-            is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
-            is ShakeLogicalOrNode -> visitLogicalOrNode(scope, value)
-            is ShakeLogicalXOrNode -> visitLogicalXOrNode(scope, value)
-            is ShakeEqualNode -> visitEqEqualsNode(scope, value)
-            is ShakeGreaterThanOrEqualNode -> visitBiggerEqualsNode(scope, value)
-            is ShakeLessThanOrEqualNode -> visitSmallerEqualsNode(scope, value)
-            is ShakeGreaterThanNode -> visitBiggerNode(scope, value)
-            is ShakeLessThanNode -> visitSmallerNode(scope, value)
-            is ShakeAddNode -> visitAddNode(scope, value)
-            is ShakeSubNode -> visitSubNode(scope, value)
-            is ShakeMulNode -> visitMulNode(scope, value)
-            is ShakeDivNode -> visitDivNode(scope, value)
-            is ShakeModNode -> visitModNode(scope, value)
-            is ShakePowNode -> visitPowNode(scope, value)
-            is ShakeVariableAssignmentNode -> visitVariableAssignmentNode(scope, value)
-            is ShakeVariableAddAssignmentNode -> visitVariableAddAssignmentNode(scope, value)
-            is ShakeVariableSubAssignmentNode -> visitVariableSubAssignmentNode(scope, value)
-            is ShakeVariableMulAssignmentNode -> visitVariableMulAssignmentNode(scope, value)
-            is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, value)
-            is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, value)
-            is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, value)
-            is ShakeVariableIncrementBeforeNode -> visitVariableIncrementNode(scope, value)
-            is ShakeVariableIncrementAfterNode -> visitVariableIncrementNode(scope, value)
-            is ShakeVariableDecrementBeforeNode -> visitVariableDecrementNode(scope, value)
-            is ShakeVariableDecrementAfterNode -> visitVariableDecrementNode(scope, value)
-            is ShakeVariableUsageNode -> visitVariableUsageNode(scope, value)
-            is ShakeCastNode -> visitCastNode(scope, value)
-            is ShakeInvocationNode -> visitFunctionCallNode(scope, value)
-            else -> throw IllegalArgumentException("Unsupported value type: ${value::class.simpleName}")
-        }
+    fun visitValue(scope: CreationShakeScope, value: ShakeValuedNode): CreationShakeValue = when (value) {
+        // Literals
+        is ShakeIntegerLiteralNode -> visitIntegerNode(scope, value)
+        is ShakeFloatLiteralNode -> visitDoubleNode(scope, value)
+        is ShakeStringLiteralNode -> visitStringNode(scope, value)
+        is ShakeTrueLiteralNode -> visitLogicalTrueNode(scope, value)
+        is ShakeFalseLiteralNode -> visitLogicalFalseNode(scope, value)
+        is ShakeNullLiteralNode -> visitNullNode(scope, value)
+        is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
+        is ShakeLogicalOrNode -> visitLogicalOrNode(scope, value)
+        is ShakeLogicalXOrNode -> visitLogicalXOrNode(scope, value)
+        is ShakeEqualNode -> visitEqEqualsNode(scope, value)
+        is ShakeGreaterThanOrEqualNode -> visitBiggerEqualsNode(scope, value)
+        is ShakeLessThanOrEqualNode -> visitSmallerEqualsNode(scope, value)
+        is ShakeGreaterThanNode -> visitBiggerNode(scope, value)
+        is ShakeLessThanNode -> visitSmallerNode(scope, value)
+        is ShakeAddNode -> visitAddNode(scope, value)
+        is ShakeSubNode -> visitSubNode(scope, value)
+        is ShakeMulNode -> visitMulNode(scope, value)
+        is ShakeDivNode -> visitDivNode(scope, value)
+        is ShakeModNode -> visitModNode(scope, value)
+        is ShakePowNode -> visitPowNode(scope, value)
+        is ShakeVariableAssignmentNode -> visitVariableAssignmentNode(scope, value)
+        is ShakeVariableAddAssignmentNode -> visitVariableAddAssignmentNode(scope, value)
+        is ShakeVariableSubAssignmentNode -> visitVariableSubAssignmentNode(scope, value)
+        is ShakeVariableMulAssignmentNode -> visitVariableMulAssignmentNode(scope, value)
+        is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, value)
+        is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, value)
+        is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, value)
+        is ShakeVariableIncrementBeforeNode -> visitVariableIncrementNode(scope, value)
+        is ShakeVariableIncrementAfterNode -> visitVariableIncrementNode(scope, value)
+        is ShakeVariableDecrementBeforeNode -> visitVariableDecrementNode(scope, value)
+        is ShakeVariableDecrementAfterNode -> visitVariableDecrementNode(scope, value)
+        is ShakeVariableUsageNode -> visitVariableUsageNode(scope, value)
+        is ShakeCastNode -> visitCastNode(scope, value)
+        is ShakeInvocationNode -> visitFunctionCallNode(scope, value)
+        else -> throw IllegalArgumentException("Unsupported value type: ${value::class.simpleName}")
     }
 
-    fun visitStatement(scope: CreationShakeScope, statement: ShakeStatementNode): CreationShakeStatement {
-        return when (statement) {
-            is ShakeIfNode -> visitIfNode(scope, statement)
-            is ShakeWhileNode -> visitWhileNode(scope, statement)
-            is ShakeDoWhileNode -> visitDoWhileNode(scope, statement)
-            is ShakeForNode -> visitForNode(scope, statement)
-            is ShakeReturnNode -> visitReturnNode(scope, statement)
-            is ShakeLocalDeclarationNode -> visitVariableDeclarationNode(scope, statement)
-            is ShakeVariableAssignmentNode -> visitVariableAssignmentNode(scope, statement)
-            is ShakeVariableAddAssignmentNode -> visitVariableAddAssignmentNode(scope, statement)
-            is ShakeVariableSubAssignmentNode -> visitVariableSubAssignmentNode(scope, statement)
-            is ShakeVariableMulAssignmentNode -> visitVariableMulAssignmentNode(scope, statement)
-            is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, statement)
-            is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, statement)
-            is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, statement)
-            is ShakeVariableIncrementBeforeNode -> visitVariableIncrementNode(scope, statement)
-            is ShakeVariableIncrementAfterNode -> visitVariableIncrementNode(scope, statement)
-            is ShakeVariableDecrementBeforeNode -> visitVariableDecrementNode(scope, statement)
-            is ShakeVariableDecrementAfterNode -> visitVariableDecrementNode(scope, statement)
-            is ShakeInvocationNode -> visitFunctionCallNode(scope, statement)
-            else -> throw IllegalArgumentException("Unsupported statement type: ${statement::class}")
-        }
+    fun visitStatement(scope: CreationShakeScope, statement: ShakeStatementNode): CreationShakeStatement = when (statement) {
+        is ShakeIfNode -> visitIfNode(scope, statement)
+        is ShakeWhileNode -> visitWhileNode(scope, statement)
+        is ShakeDoWhileNode -> visitDoWhileNode(scope, statement)
+        is ShakeForNode -> visitForNode(scope, statement)
+        is ShakeReturnNode -> visitReturnNode(scope, statement)
+        is ShakeLocalDeclarationNode -> visitVariableDeclarationNode(scope, statement)
+        is ShakeVariableAssignmentNode -> visitVariableAssignmentNode(scope, statement)
+        is ShakeVariableAddAssignmentNode -> visitVariableAddAssignmentNode(scope, statement)
+        is ShakeVariableSubAssignmentNode -> visitVariableSubAssignmentNode(scope, statement)
+        is ShakeVariableMulAssignmentNode -> visitVariableMulAssignmentNode(scope, statement)
+        is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, statement)
+        is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, statement)
+        is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, statement)
+        is ShakeVariableIncrementBeforeNode -> visitVariableIncrementNode(scope, statement)
+        is ShakeVariableIncrementAfterNode -> visitVariableIncrementNode(scope, statement)
+        is ShakeVariableDecrementBeforeNode -> visitVariableDecrementNode(scope, statement)
+        is ShakeVariableDecrementAfterNode -> visitVariableDecrementNode(scope, statement)
+        is ShakeInvocationNode -> visitFunctionCallNode(scope, statement)
+        else -> throw IllegalArgumentException("Unsupported statement type: ${statement::class}")
     }
 
-    fun visitTree(scope: CreationShakeScope, t: ShakeBlockNode): CreationShakeCode {
-        return CreationShakeCode(
-            t.children.map {
-                visitStatement(scope, it)
-            },
-        )
+    fun visitTree(scope: CreationShakeScope, t: ShakeBlockNode): CreationShakeCode = CreationShakeCode(
+        t.children.map {
+            visitStatement(scope, it)
+        },
+    )
+
+    fun visitType(scope: CreationShakeScope, t: ShakeVariableType): CreationShakeType? = when (t.type) {
+        ShakeVariableType.Type.DYNAMIC -> null
+        ShakeVariableType.Type.BYTE -> CreationShakeType.Primitives.BYTE
+        ShakeVariableType.Type.SHORT -> CreationShakeType.Primitives.SHORT
+        ShakeVariableType.Type.INTEGER -> CreationShakeType.Primitives.INT
+        ShakeVariableType.Type.LONG -> CreationShakeType.Primitives.LONG
+        ShakeVariableType.Type.FLOAT -> CreationShakeType.Primitives.FLOAT
+        ShakeVariableType.Type.DOUBLE -> CreationShakeType.Primitives.DOUBLE
+        ShakeVariableType.Type.BOOLEAN -> CreationShakeType.Primitives.BOOLEAN
+        else -> null
     }
 
-    fun visitType(scope: CreationShakeScope, t: ShakeVariableType): CreationShakeType? {
-        return when (t.type) {
-            ShakeVariableType.Type.DYNAMIC -> null
-            ShakeVariableType.Type.BYTE -> CreationShakeType.Primitives.BYTE
-            ShakeVariableType.Type.SHORT -> CreationShakeType.Primitives.SHORT
-            ShakeVariableType.Type.INTEGER -> CreationShakeType.Primitives.INT
-            ShakeVariableType.Type.LONG -> CreationShakeType.Primitives.LONG
-            ShakeVariableType.Type.FLOAT -> CreationShakeType.Primitives.FLOAT
-            ShakeVariableType.Type.DOUBLE -> CreationShakeType.Primitives.DOUBLE
-            ShakeVariableType.Type.BOOLEAN -> CreationShakeType.Primitives.BOOLEAN
-            else -> null
-        }
-    }
+    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeFloatLiteralNode): CreationShakeDoubleLiteral = CreationShakeDoubleLiteral(scope.project, n.value)
 
-    private fun visitDoubleNode(scope: CreationShakeScope, n: ShakeFloatLiteralNode): CreationShakeDoubleLiteral {
-        return CreationShakeDoubleLiteral(scope.project, n.value)
-    }
+    private fun visitIntegerNode(scope: CreationShakeScope, n: ShakeIntegerLiteralNode): CreationShakeIntegerLiteral = CreationShakeIntegerLiteral(scope.project, n.value)
 
-    private fun visitIntegerNode(scope: CreationShakeScope, n: ShakeIntegerLiteralNode): CreationShakeIntegerLiteral {
-        return CreationShakeIntegerLiteral(scope.project, n.value)
-    }
-
-    private fun visitStringNode(scope: CreationShakeScope, n: ShakeStringLiteralNode): CreationShakeStringLiteral {
-        return CreationShakeStringLiteral(scope.project, n.value)
-    }
+    private fun visitStringNode(scope: CreationShakeScope, n: ShakeStringLiteralNode): CreationShakeStringLiteral = CreationShakeStringLiteral(scope.project, n.value)
 
     private fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.additionOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No addition operator for ${left.type} and ${right.type}")
@@ -218,7 +200,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.subtractionOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No subtraction operator for ${left.type} and ${right.type}")
@@ -229,7 +211,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.multiplicationOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No multiplication operator for ${left.type} and ${right.type}")
@@ -240,7 +222,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.divisionOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No division operator for ${left.type} and ${right.type}")
@@ -251,7 +233,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.modulusOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No modulus operator for ${left.type} and ${right.type}")
@@ -262,7 +244,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.powerOperator(right.type, scope)
-        return if (aw.overload != null) {
+        return if (aw != null) {
             CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         } else {
             throw Exception("No power operator for ${left.type} and ${right.type}")
@@ -313,7 +295,7 @@ open class ShakeASTProcessor {
     private fun visitVariableAddAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariableAddAssignmentNode,
-    ): CreationShakeAddAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -323,7 +305,7 @@ open class ShakeASTProcessor {
     private fun visitVariableSubAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariableSubAssignmentNode,
-    ): CreationShakeSubAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -333,7 +315,7 @@ open class ShakeASTProcessor {
     private fun visitVariableMulAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariableMulAssignmentNode,
-    ): CreationShakeMulAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -343,7 +325,7 @@ open class ShakeASTProcessor {
     private fun visitVariableDivAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariableDivAssignmentNode,
-    ): CreationShakeDivAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -353,7 +335,7 @@ open class ShakeASTProcessor {
     private fun visitVariableModAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariableModAssignmentNode,
-    ): CreationShakeModAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -363,7 +345,7 @@ open class ShakeASTProcessor {
     private fun visitVariablePowAssignmentNode(
         scope: CreationShakeScope,
         n: ShakeVariablePowAssignmentNode,
-    ): CreationShakePowerAssignment {
+    ): CreationShakeValuedStatement {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if (variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
@@ -424,7 +406,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val eq = left.type.equalsOperator(right.type, scope)
-        return if (eq.overload != null) {
+        return if (eq != null) {
             CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         } else {
             throw Exception("No equals operator for ${left.type} and ${right.type}")
@@ -438,7 +420,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val eq = left.type.greaterThanOrEqualOperator(right.type, scope)
-        return if (eq.overload != null) {
+        return if (eq != null) {
             CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         } else {
             throw Exception("No greater equals operator for ${left.type} and ${right.type}")
@@ -452,7 +434,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val eq = left.type.lessThanOrEqualOperator(right.type, scope)
-        return if (eq.overload != null) {
+        return if (eq != null) {
             CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         } else {
             throw Exception("No less equals operator for ${left.type} and ${right.type}")
@@ -463,7 +445,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val eq = left.type.greaterThanOperator(right.type, scope)
-        return if (eq.overload != null) {
+        return if (eq != null) {
             CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         } else {
             throw Exception("No greater operator for ${left.type} and ${right.type}")
@@ -474,7 +456,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val eq = left.type.lessThanOperator(right.type, scope)
-        return if (eq.overload != null) {
+        return if (eq != null) {
             CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         } else {
             throw Exception("No less operator for ${left.type} and ${right.type}")
@@ -485,7 +467,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val operator = left.type.andOperator(right.type, scope)
-        return if (operator.overload != null) {
+        return if (operator != null) {
             CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         } else {
             throw Exception("No and operator for ${left.type} and ${right.type}")
@@ -496,7 +478,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val operator = left.type.orOperator(right.type, scope)
-        return if (operator.overload != null) {
+        return if (operator != null) {
             CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         } else {
             throw Exception("No or operator for ${left.type} and ${right.type}")
@@ -507,7 +489,7 @@ open class ShakeASTProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val operator = left.type.xorOperator(right.type, scope)
-        return if (operator.overload != null) {
+        return if (operator != null) {
             CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         } else {
             throw Exception("No xor operator for ${left.type} and ${right.type}")
@@ -586,17 +568,11 @@ open class ShakeASTProcessor {
         TODO("Direct returned lambda functions")
     }
 
-    private fun visitLogicalTrueNode(scope: CreationShakeScope, n: ShakeTrueLiteralNode): CreationShakeValue {
-        return CreationShakeBooleanLiteral(scope.project, true)
-    }
+    private fun visitLogicalTrueNode(scope: CreationShakeScope, n: ShakeTrueLiteralNode): CreationShakeValue = CreationShakeBooleanLiteral(scope.project, true)
 
-    private fun visitLogicalFalseNode(scope: CreationShakeScope, n: ShakeFalseLiteralNode): CreationShakeValue {
-        return CreationShakeBooleanLiteral(scope.project, false)
-    }
+    private fun visitLogicalFalseNode(scope: CreationShakeScope, n: ShakeFalseLiteralNode): CreationShakeValue = CreationShakeBooleanLiteral(scope.project, false)
 
-    private fun visitNullNode(scope: CreationShakeScope, n: ShakeNullLiteralNode): CreationShakeValue {
-        return CreationShakeNullLiteral(scope.project)
-    }
+    private fun visitNullNode(scope: CreationShakeScope, n: ShakeNullLiteralNode): CreationShakeValue = CreationShakeNullLiteral(scope.project)
 
     private fun visitCastNode(scope: CreationShakeScope, n: ShakeCastNode): CreationShakeCast {
         val value = visitValue(scope, n.value)

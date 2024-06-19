@@ -127,6 +127,66 @@ object Natives {
                     // smaller types to the bigger type)
                     mod(sBiggerType)
                 }
+
+                register("shake/lang/lessThan($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    clt()
+                }
+
+                register("shake/lang/lessThanOrEqual($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    cle()
+                }
+
+                register("shake/lang/greaterThan($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    cgt()
+                }
+
+                register("shake/lang/greaterThanOrEqual($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    cge()
+                }
+
+                register("shake/lang/equals($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    ceq()
+                }
+
+                register("shake/lang/notEquals($sType0,$sType1)Z") {
+                    castBeforeCalc(it)
+
+                    // Now we can compare the two values on the stack
+                    // We use the bigger type (because we just casted the
+                    // smaller types to the bigger type)
+                    cmp(sBiggerType)
+                    cne()
+                }
             }
         }
     }
