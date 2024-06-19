@@ -8,140 +8,141 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 @Suppress("unused")
-class LexerBaseTests : FreeSpec(
-    {
+class LexerBaseTests :
+    FreeSpec(
+        {
 
-        fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
-            val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
-            val lexer = ShakeLexer(i)
-            val t = lexer.makeToken()
-            t.type shouldBe tt
-            i.hasNext() shouldBe false
-            return t
-        }
-
-        "string" {
-            generateToken("\"\"", ShakeTokenType.STRING).value shouldBe "\"\""
-            generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "\"afvne9214 ro\""
-            generateToken(
-                "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"",
-                ShakeTokenType.STRING,
-            ).value shouldBe "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\""
-        }
-
-        "character" {
-            listOf(
-                " ", "a", "\\r", "\\n", "\\b", "\\t", "\\f", "\\'", "\\u0000",
-            ).forEach {
-                generateToken("'$it'", ShakeTokenType.CHARACTER).value shouldBe "'$it'"
+            fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
+                val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
+                val lexer = ShakeLexer(i)
+                val t = lexer.makeToken()
+                t.type shouldBe tt
+                i.hasNext() shouldBe false
+                return t
             }
-        }
 
-        "punctuation" {
-            generateToken(";", ShakeTokenType.SEMICOLON)
-            generateToken(",", ShakeTokenType.COMMA)
-            generateToken(".", ShakeTokenType.DOT)
-            generateToken(":", ShakeTokenType.COLON)
-        }
+            "string" {
+                generateToken("\"\"", ShakeTokenType.STRING).value shouldBe "\"\""
+                generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "\"afvne9214 ro\""
+                generateToken(
+                    "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"",
+                    ShakeTokenType.STRING,
+                ).value shouldBe "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\""
+            }
 
-        "line separator" {
-            generateToken("\n", ShakeTokenType.LINE_SEPARATOR)
-            generateToken("\r\n", ShakeTokenType.LINE_SEPARATOR)
-        }
+            "character" {
+                listOf(
+                    " ", "a", "\\r", "\\n", "\\b", "\\t", "\\f", "\\'", "\\u0000",
+                ).forEach {
+                    generateToken("'$it'", ShakeTokenType.CHARACTER).value shouldBe "'$it'"
+                }
+            }
 
-        "assign" {
-            // assign
-            generateToken("=", ShakeTokenType.ASSIGN)
+            "punctuation" {
+                generateToken(";", ShakeTokenType.SEMICOLON)
+                generateToken(",", ShakeTokenType.COMMA)
+                generateToken(".", ShakeTokenType.DOT)
+                generateToken(":", ShakeTokenType.COLON)
+            }
 
-            // math assign operators
-            generateToken("+=", ShakeTokenType.ADD_ASSIGN)
-            generateToken("-=", ShakeTokenType.SUB_ASSIGN)
-            generateToken("*=", ShakeTokenType.MUL_ASSIGN)
-            generateToken("/=", ShakeTokenType.DIV_ASSIGN)
-            generateToken("%=", ShakeTokenType.MOD_ASSIGN)
-            generateToken("**=", ShakeTokenType.POW_ASSIGN)
-            generateToken("++", ShakeTokenType.INCR)
-            generateToken("--", ShakeTokenType.DECR)
-        }
+            "line separator" {
+                generateToken("\n", ShakeTokenType.LINE_SEPARATOR)
+                generateToken("\r\n", ShakeTokenType.LINE_SEPARATOR)
+            }
 
-        "math operators" {
-            generateToken("+", ShakeTokenType.ADD)
-            generateToken("-", ShakeTokenType.SUB)
-            generateToken("*", ShakeTokenType.MUL)
-            generateToken("/", ShakeTokenType.DIV)
-            generateToken("%", ShakeTokenType.MOD)
-            generateToken("**", ShakeTokenType.POW)
-        }
+            "assign" {
+                // assign
+                generateToken("=", ShakeTokenType.ASSIGN)
 
-        "logical comparison" {
-            generateToken("==", ShakeTokenType.EQ_EQUALS)
-            generateToken(">=", ShakeTokenType.BIGGER_EQUALS)
-            generateToken("<=", ShakeTokenType.SMALLER_EQUALS)
-            generateToken(">", ShakeTokenType.BIGGER)
-            generateToken("<", ShakeTokenType.SMALLER)
-            generateToken("!=", ShakeTokenType.NOT_EQUALS)
-        }
+                // math assign operators
+                generateToken("+=", ShakeTokenType.ADD_ASSIGN)
+                generateToken("-=", ShakeTokenType.SUB_ASSIGN)
+                generateToken("*=", ShakeTokenType.MUL_ASSIGN)
+                generateToken("/=", ShakeTokenType.DIV_ASSIGN)
+                generateToken("%=", ShakeTokenType.MOD_ASSIGN)
+                generateToken("**=", ShakeTokenType.POW_ASSIGN)
+                generateToken("++", ShakeTokenType.INCR)
+                generateToken("--", ShakeTokenType.DECR)
+            }
 
-        "logical concatenation" {
-            generateToken("||", ShakeTokenType.LOGICAL_OR)
-            generateToken("^^", ShakeTokenType.LOGICAL_XOR)
-            generateToken("&&", ShakeTokenType.LOGICAL_AND)
-            generateToken("!", ShakeTokenType.LOGICAL_NOT)
-        }
+            "math operators" {
+                generateToken("+", ShakeTokenType.ADD)
+                generateToken("-", ShakeTokenType.SUB)
+                generateToken("*", ShakeTokenType.MUL)
+                generateToken("/", ShakeTokenType.DIV)
+                generateToken("%", ShakeTokenType.MOD)
+                generateToken("**", ShakeTokenType.POW)
+            }
 
-        "bitwise concatenation" {
-            generateToken("|", ShakeTokenType.BITWISE_OR)
-            generateToken("^", ShakeTokenType.BITWISE_XOR)
-            generateToken("&", ShakeTokenType.BITWISE_AND)
-            generateToken("~", ShakeTokenType.BITWISE_NOT)
+            "logical comparison" {
+                generateToken("==", ShakeTokenType.EQ_EQUALS)
+                generateToken(">=", ShakeTokenType.BIGGER_EQUALS)
+                generateToken("<=", ShakeTokenType.SMALLER_EQUALS)
+                generateToken(">", ShakeTokenType.BIGGER)
+                generateToken("<", ShakeTokenType.SMALLER)
+                generateToken("!=", ShakeTokenType.NOT_EQUALS)
+            }
 
-            generateToken("~|", ShakeTokenType.BITWISE_NOR)
-            generateToken("~^", ShakeTokenType.BITWISE_XNOR)
-            generateToken("~&", ShakeTokenType.BITWISE_NAND)
-        }
+            "logical concatenation" {
+                generateToken("||", ShakeTokenType.LOGICAL_OR)
+                generateToken("^^", ShakeTokenType.LOGICAL_XOR)
+                generateToken("&&", ShakeTokenType.LOGICAL_AND)
+                generateToken("!", ShakeTokenType.LOGICAL_NOT)
+            }
 
-        "bit shifts" {
-            generateToken("<<", ShakeTokenType.BITWISE_SHL)
-            generateToken(">>", ShakeTokenType.BITWISE_SHR)
-            generateToken(">>>", ShakeTokenType.BITWISE_SHRU)
-        }
+            "bitwise concatenation" {
+                generateToken("|", ShakeTokenType.BITWISE_OR)
+                generateToken("^", ShakeTokenType.BITWISE_XOR)
+                generateToken("&", ShakeTokenType.BITWISE_AND)
+                generateToken("~", ShakeTokenType.BITWISE_NOT)
 
-        "brackets" {
-            generateToken("(", ShakeTokenType.LPAREN)
-            generateToken(")", ShakeTokenType.RPAREN)
-            generateToken("{", ShakeTokenType.LCURL)
-            generateToken("}", ShakeTokenType.RCURL)
-        }
+                generateToken("~|", ShakeTokenType.BITWISE_NOR)
+                generateToken("~^", ShakeTokenType.BITWISE_XNOR)
+                generateToken("~&", ShakeTokenType.BITWISE_NAND)
+            }
 
-        fun testKeyword(test: KeywordTest) {
-            generateToken(test.input, test.output)
-        }
+            "bit shifts" {
+                generateToken("<<", ShakeTokenType.BITWISE_SHL)
+                generateToken(">>", ShakeTokenType.BITWISE_SHR)
+                generateToken(">>>", ShakeTokenType.BITWISE_SHRU)
+            }
 
-        KeywordTest.entries.forEach {
-            "${it.name} keyword" { testKeyword(it) }
-        }
+            "brackets" {
+                generateToken("(", ShakeTokenType.LPAREN)
+                generateToken(")", ShakeTokenType.RPAREN)
+                generateToken("{", ShakeTokenType.LCURL)
+                generateToken("}", ShakeTokenType.RCURL)
+            }
 
-        "numbers" {
-            generateToken("149", ShakeTokenType.INTEGER).value shouldBe "149"
-            generateToken("0.01", ShakeTokenType.FLOAT).value shouldBe "0.01"
-        }
+            fun testKeyword(test: KeywordTest) {
+                generateToken(test.input, test.output)
+            }
 
-        "identifiers" {
-            generateToken("hello", ShakeTokenType.IDENTIFIER).value shouldBe "hello"
-            generateToken("world0A_", ShakeTokenType.IDENTIFIER).value shouldBe "world0A_"
-        }
+            KeywordTest.entries.forEach {
+                "${it.name} keyword" { testKeyword(it) }
+            }
 
-        "line comments" {
-            generateToken("// test\n", ShakeTokenType.LINE_SEPARATOR)
-        }
+            "numbers" {
+                generateToken("149", ShakeTokenType.INTEGER).value shouldBe "149"
+                generateToken("0.01", ShakeTokenType.FLOAT).value shouldBe "0.01"
+            }
 
-        "multi line comments" {
-            generateToken("/* test */\n", ShakeTokenType.LINE_SEPARATOR)
-            generateToken("/*\ntest\ntest2*/\n", ShakeTokenType.LINE_SEPARATOR)
-            generateToken("/*\n * test\n *  test2\n */\n", ShakeTokenType.LINE_SEPARATOR)
-        }
-    },
-) {
+            "identifiers" {
+                generateToken("hello", ShakeTokenType.IDENTIFIER).value shouldBe "hello"
+                generateToken("world0A_", ShakeTokenType.IDENTIFIER).value shouldBe "world0A_"
+            }
+
+            "line comments" {
+                generateToken("// test\n", ShakeTokenType.LINE_SEPARATOR)
+            }
+
+            "multi line comments" {
+                generateToken("/* test */\n", ShakeTokenType.LINE_SEPARATOR)
+                generateToken("/*\ntest\ntest2*/\n", ShakeTokenType.LINE_SEPARATOR)
+                generateToken("/*\n * test\n *  test2\n */\n", ShakeTokenType.LINE_SEPARATOR)
+            }
+        },
+    ) {
 
     @Suppress("unused")
     enum class KeywordTest(val input: String, val output: ShakeTokenType) {
@@ -162,7 +163,6 @@ class LexerBaseTests : FreeSpec(
         PUBLIC("public", ShakeTokenType.KEYWORD_PUBLIC),
         PROTECTED("protected", ShakeTokenType.KEYWORD_PROTECTED),
         PRIVATE("private", ShakeTokenType.KEYWORD_PRIVATE),
-        NEW("new", ShakeTokenType.KEYWORD_NEW),
         IMPORT("import", ShakeTokenType.KEYWORD_IMPORT),
         VAL("val", ShakeTokenType.KEYWORD_VAL),
         VAR("var", ShakeTokenType.KEYWORD_VAR),
@@ -170,8 +170,6 @@ class LexerBaseTests : FreeSpec(
         AS("as", ShakeTokenType.KEYWORD_AS),
         ;
 
-        override fun toString(): String {
-            return "Keyword '$input'"
-        }
+        override fun toString(): String = "Keyword '$input'"
     }
 }
