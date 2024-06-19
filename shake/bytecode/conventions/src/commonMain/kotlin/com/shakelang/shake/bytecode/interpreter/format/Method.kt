@@ -17,7 +17,7 @@ import kotlin.experimental.or
 /**
  * A class representing a method in the bytecode
  *
- * [Method Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
+ * [Method Specification](https://spec.shakelang.com/bytecode/map-format/#methods)
  *
  * @constructor Creates a [Method] with the given [pool], [qualifiedNameConstant], [flags] and [attributes]
  *
@@ -39,7 +39,7 @@ open class Method(
     /**
      * The [ConstantPool] of the bytecode
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -52,7 +52,7 @@ open class Method(
     /**
      * The index of an utf8 constant in the [ConstantPool] that represents the qualified name of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-qualified-name-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -62,7 +62,7 @@ open class Method(
     /**
      * The flags of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -72,7 +72,7 @@ open class Method(
     /**
      * The attributes of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-attributes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -83,7 +83,7 @@ open class Method(
     /**
      * Returns the name of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-qualified-name-index)
      *
      * @see [qualifiedName]
      * @since 0.1.0
@@ -95,7 +95,7 @@ open class Method(
     /**
      * Returns if the method is public
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -107,7 +107,7 @@ open class Method(
     /**
      * Returns if the method is private
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -119,7 +119,7 @@ open class Method(
     /**
      * Returns if the method is protected
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -131,7 +131,7 @@ open class Method(
     /**
      * Returns if the method is static
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -143,7 +143,7 @@ open class Method(
     /**
      * Returns if the method is final
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -155,7 +155,7 @@ open class Method(
     /**
      * Returns if the method is synchronized
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -167,7 +167,7 @@ open class Method(
     /**
      * Returns if the method is native
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -179,7 +179,7 @@ open class Method(
     /**
      * Returns if the method is abstract
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -191,7 +191,7 @@ open class Method(
     /**
      * Returns if the method is strict
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -203,7 +203,7 @@ open class Method(
     /**
      * Returns if the method is a constructor
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @see [Flags.FLAG_IS_CONSTRUCTOR]
@@ -216,7 +216,7 @@ open class Method(
     /**
      * Returns the qualified name of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-qualified-name-index)
      *
      * @see [qualifiedNameConstant]
      * @see [pool]
@@ -228,7 +228,7 @@ open class Method(
     /**
      * Dumps the [Method] to the given [stream]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#methods)
      *
      * @param stream The [DataOutputStream] to write to
      *
@@ -249,7 +249,7 @@ open class Method(
     /**
      * Dumps the [Method] to a [ByteArray]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#methods)
      *
      * @see [dump]
      * @see [dump]
@@ -319,7 +319,7 @@ open class Method(
             /**
              * The flag that represents a public method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -329,7 +329,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_PUBLIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -339,7 +339,7 @@ open class Method(
             /**
              * The flag that represents a private method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -349,7 +349,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_PRIVATE]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -359,7 +359,7 @@ open class Method(
             /**
              * The flag that represents a protected method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -369,7 +369,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_PROTECTED]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -379,7 +379,7 @@ open class Method(
             /**
              * The flag that represents a static method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -389,7 +389,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_STATIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -399,7 +399,7 @@ open class Method(
             /**
              * The flag that represents a final method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -409,7 +409,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_FINAL]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -419,7 +419,7 @@ open class Method(
             /**
              * The flag that represents a synchronized method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -429,7 +429,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_SYNCHRONIZED]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -439,7 +439,7 @@ open class Method(
             /**
              * The flag that represents a native method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -449,7 +449,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_NATIVE]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -459,7 +459,7 @@ open class Method(
             /**
              * The flag that represents an abstract method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -469,7 +469,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_ABSTRACT]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -479,7 +479,7 @@ open class Method(
             /**
              * The flag that represents a strict method
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -489,7 +489,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_STRICT]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -499,7 +499,7 @@ open class Method(
             /**
              * Flag for marking a constructor
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -509,7 +509,7 @@ open class Method(
             /**
              * Inverted [FLAG_IS_CONSTRUCTOR]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -519,7 +519,7 @@ open class Method(
             /**
              * Get isPublic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isPublic from
              * @return If the flags contain the isPublic flag
@@ -532,7 +532,7 @@ open class Method(
              * Set isPublic in the given [flags]
              * (Sets the first bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isPublic in
              * @return The flags with the isPublic flag set
@@ -545,7 +545,7 @@ open class Method(
             /**
              * Get isPrivate from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isPrivate from
              * @return If the flags contain the isPrivate flag
@@ -558,7 +558,7 @@ open class Method(
              * Set isPrivate in the given [flags]
              * (Sets the second bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isPrivate in
              * @return The flags with the isPrivate flag set
@@ -571,7 +571,7 @@ open class Method(
             /**
              * Get isProtected from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isProtected from
              * @return If the flags contain the isProtected flag
@@ -584,7 +584,7 @@ open class Method(
              * Set isProtected in the given [flags]
              * (Sets the third bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isProtected in
              * @return The flags with the isProtected flag set
@@ -597,7 +597,7 @@ open class Method(
             /**
              * Get isStatic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isStatic from
              * @return If the flags contain the isStatic flag
@@ -610,7 +610,7 @@ open class Method(
              * Set isStatic in the given [flags]
              * (Sets the fourth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isStatic in
              * @return The flags with the isStatic flag set
@@ -623,7 +623,7 @@ open class Method(
             /**
              * Get isFinal from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isFinal from
              * @return If the flags contain the isFinal flag
@@ -636,7 +636,7 @@ open class Method(
              * Set isFinal in the given [flags]
              * (Sets the fifth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isFinal in
              * @return The flags with the isFinal flag set
@@ -649,7 +649,7 @@ open class Method(
             /**
              * Get isSynchronized from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isSynchronized from
              * @return If the flags contain the isSynchronized flag
@@ -662,7 +662,7 @@ open class Method(
              * Set isSynchronized in the given [flags]
              * (Sets the sixth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isSynchronized in
              * @return The flags with the isSynchronized flag set
@@ -675,7 +675,7 @@ open class Method(
             /**
              * Get isNative from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isNative from
              * @return If the flags contain the isNative flag
@@ -688,7 +688,7 @@ open class Method(
              * Set isNative in the given [flags]
              * (Sets the seventh bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isNative in
              * @return The flags with the isNative flag set
@@ -701,7 +701,7 @@ open class Method(
             /**
              * Get isAbstract from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isAbstract from
              * @return If the flags contain the isAbstract flag
@@ -714,7 +714,7 @@ open class Method(
              * Set isAbstract in the given [flags]
              * (Sets the eighth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isAbstract in
              * @return The flags with the isAbstract flag set
@@ -727,7 +727,7 @@ open class Method(
             /**
              * Get isStrict from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isStrict from
              * @return If the flags contain the isStrict flag
@@ -740,7 +740,7 @@ open class Method(
              * Set isStrict in the given [flags]
              * (Sets the ninth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isStrict in
              * @return The flags with the isStrict flag set
@@ -753,7 +753,7 @@ open class Method(
             /**
              * Get isConstructor from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to get the isConstructor from
              * @return If the flags contain the isConstructor flag
@@ -766,7 +766,7 @@ open class Method(
              * Set isConstructor in the given [flags]
              * (Sets the tenth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
              *
              * @param flags The flags to set the isConstructor in
              * @return The flags with the isConstructor flag set
@@ -780,7 +780,7 @@ open class Method(
         /**
          * Reads a [Method] from the given [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#methods)
          *
          * @param pool The [ConstantPool] of the method
          * @param stream The [DataInputStream] to read from
@@ -824,7 +824,7 @@ class MutableMethod(
     /**
      * The index of an utf8 constant in the [ConstantPool] that represents the qualified name of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-qualified-name-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -834,7 +834,7 @@ class MutableMethod(
     /**
      * The flags of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -846,7 +846,7 @@ class MutableMethod(
     /**
      * The [MutableConstantPool] of the bytecode
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * This function is just a cast of the [pool] property
      * This is a safe cast, because the [pool] property is always a [MutableConstantPool]
@@ -864,7 +864,7 @@ class MutableMethod(
     /**
      * The qualified name of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-qualified-name-index)
      *
      * @see [qualifiedNameConstant]
      * @see [pool]
@@ -880,7 +880,7 @@ class MutableMethod(
     /**
      * The attributes of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-attributes)
      *
      * This function is just a cast of the [attributes] property
      * This is a safe cast, because the [attributes] property is always a [MutableList]
@@ -896,7 +896,7 @@ class MutableMethod(
     /**
      * Is this method public?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -911,7 +911,7 @@ class MutableMethod(
     /**
      * Is this method private?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -926,7 +926,7 @@ class MutableMethod(
     /**
      * Is this method protected?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -941,7 +941,7 @@ class MutableMethod(
     /**
      * Is this method static?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -956,7 +956,7 @@ class MutableMethod(
     /**
      * Is this method final?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -971,7 +971,7 @@ class MutableMethod(
     /**
      * Is this method synchronized?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -986,7 +986,7 @@ class MutableMethod(
     /**
      * Is this method native?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -1001,7 +1001,7 @@ class MutableMethod(
     /**
      * Is this method abstract?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @see [isAbstract]
@@ -1017,7 +1017,7 @@ class MutableMethod(
     /**
      * Is this method strict?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @see [isStrict]
@@ -1033,7 +1033,7 @@ class MutableMethod(
     /**
      * Is this method a constructor?
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#method-flags)
      *
      * @see [flags]
      * @see [isConstructor]
@@ -1061,19 +1061,17 @@ class MutableMethod(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromMethod(pool: MutableConstantPool, method: Method): MutableMethod {
-            return MutableMethod(
-                pool,
-                method.qualifiedNameConstant,
-                method.flags,
-                method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
-            )
-        }
+        fun fromMethod(pool: MutableConstantPool, method: Method): MutableMethod = MutableMethod(
+            pool,
+            method.qualifiedNameConstant,
+            method.flags,
+            method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
+        )
 
         /**
          * Reads a [MutableMethod] from the given [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#methods)
          *
          * @param pool The [MutableConstantPool] of the method
          * @param stream The [DataInputStream] to read from

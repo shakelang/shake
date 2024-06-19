@@ -29,7 +29,7 @@ package com.shakelang.shake.bytecode.interpreter.format.descriptor
  *
  * The method `shake.lang.String.Builder::build` would be represented as `shake/lang/String:Builder:build`.
  *
- * See [specification](https://spec.shakelang.com/bytecode/storage-format#path-signature)
+ * See [specification](https://spec.shakelang.com/bytecode/map-format#path-signature)
  *
  * @param packageEntities The package entities
  * @param classEntities The class entities
@@ -71,7 +71,7 @@ class PathDescriptor(
     /**
      * String representation of the [PathDescriptor]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#path-signature)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#path-signature)
      *
      * @return The string representation of the [PathDescriptor]
      *
@@ -118,7 +118,7 @@ class PathDescriptor(
         /**
          * Parse a [PathDescriptor] from a [String]
          *
-         * See [specification](https://spec.shakelang.com/bytecode/storage-format#path-signature)
+         * See [specification](https://spec.shakelang.com/bytecode/map-format#path-signature)
          *
          * @param descriptor The descriptor to parse
          * @return The parsed [PathDescriptor]

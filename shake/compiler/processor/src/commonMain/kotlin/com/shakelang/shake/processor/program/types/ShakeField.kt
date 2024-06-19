@@ -2,13 +2,16 @@ package com.shakelang.shake.processor.program.types
 
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.util.primitives.bits.*
 
 /**
  * A ShakeField is a field in a ShakeClass or ShakePackage
  * @see ShakeClass
  * @see ShakePackage
  */
-interface ShakeField : ShakeDeclaration, ShakeAssignable {
+interface ShakeField :
+    ShakeDeclaration,
+    ShakeAssignable {
 
     /**
      * The project this field is in.
@@ -73,6 +76,19 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
      * Is this field native?
      */
     val isNative: Boolean
+
+    /**
+     * Field flags
+     */
+    val flags: Short get() =
+        (0).toShort()
+            .withBit0(isStatic)
+            .withBit1(isFinal)
+            .withBit2(isAbstract)
+            .withBit3(isPrivate)
+            .withBit4(isProtected)
+            .withBit5(isPublic)
+            .withBit6(isNative)
 
     /**
      * The initial value of this field
@@ -165,18 +181,16 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     /**
      * Get the json representation of this field
      */
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "isStatic" to isStatic,
-            "isFinal" to isFinal,
-            "isAbstract" to isAbstract,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic,
-            "type" to type.toJson(),
-        )
-    }
+    override fun toJson(): Map<String, Any?> = mapOf(
+        "name" to name,
+        "isStatic" to isStatic,
+        "isFinal" to isFinal,
+        "isAbstract" to isAbstract,
+        "isPrivate" to isPrivate,
+        "isProtected" to isProtected,
+        "isPublic" to isPublic,
+        "type" to type.toJson(),
+    )
 
     /**
      * Processor phase 3 action

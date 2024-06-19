@@ -11,7 +11,7 @@ import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
  * Attribute implementation for the code attribute
  * This attribute contains the code of a method
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#code-attribute)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#code-attribute)
  *
  * @property pool the [ConstantPool] of the attribute
  * @property nameConstant the name of the attribute
@@ -42,7 +42,7 @@ open class CodeAttribute(
     /**
      * The [ConstantPool] of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -54,7 +54,7 @@ open class CodeAttribute(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -65,7 +65,7 @@ open class CodeAttribute(
     /**
      * The maximum size of the stack
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#max-stack)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#max-stack)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -75,7 +75,7 @@ open class CodeAttribute(
     /**
      * The maximum size of the locals
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#max-locals)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#max-locals)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -85,7 +85,7 @@ open class CodeAttribute(
     /**
      * The code of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#code)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#code)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -95,7 +95,7 @@ open class CodeAttribute(
     /**
      * The exception table of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-table)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-table)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -105,7 +105,7 @@ open class CodeAttribute(
     /**
      * The attributes of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -135,7 +135,7 @@ open class CodeAttribute(
     /**
      * The value of the attribute (Automatically generated from the [maxStack], [maxLocals], [code], [exceptionTable] and [attributes])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-info)
      *
      * @see Attribute
      * @since 0.1.0
@@ -160,7 +160,7 @@ open class CodeAttribute(
      * An entry of the exception table
      * This is used to handle exceptions
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#code-attribute-exception-table)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#code-attribute-exception-table)
      *
      * @property startPc the start pc of the exception
      * @property endPc the end pc of the exception
@@ -182,7 +182,7 @@ open class CodeAttribute(
         /**
          * The start pc of the exception
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-start-pc)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-start-pc)
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -192,7 +192,7 @@ open class CodeAttribute(
         /**
          * The end pc of the exception
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-end-pc)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-end-pc)
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -202,7 +202,7 @@ open class CodeAttribute(
         /**
          * The handler pc of the exception
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-handler-pc)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-handler-pc)
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -212,7 +212,7 @@ open class CodeAttribute(
         /**
          * The catch type of the exception
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-catch-type)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-catch-type)
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -394,7 +394,7 @@ class MutableCodeAttribute(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -405,7 +405,7 @@ class MutableCodeAttribute(
     /**
      * The maximum size of the stack
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#max-stack)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#max-stack)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -415,7 +415,7 @@ class MutableCodeAttribute(
     /**
      * The maximum size of the locals
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#max-locals)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#max-locals)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -425,7 +425,7 @@ class MutableCodeAttribute(
     /**
      * The code of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#code)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#code)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -435,7 +435,7 @@ class MutableCodeAttribute(
     /**
      * The exception table of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#exception-table)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#exception-table)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -445,7 +445,7 @@ class MutableCodeAttribute(
     /**
      * The attributes of the method
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -466,7 +466,7 @@ class MutableCodeAttribute(
     /**
      * The [MutableConstantPool] of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -485,17 +485,15 @@ class MutableCodeAttribute(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromCodeAttribute(attribute: CodeAttribute): MutableCodeAttribute {
-            return MutableCodeAttribute(
-                attribute.pool as MutableConstantPool,
-                attribute.nameConstant,
-                attribute.maxStack,
-                attribute.maxLocals,
-                attribute.code,
-                attribute.exceptionTable,
-                attribute.attributes,
-            )
-        }
+        fun fromCodeAttribute(attribute: CodeAttribute): MutableCodeAttribute = MutableCodeAttribute(
+            attribute.pool as MutableConstantPool,
+            attribute.nameConstant,
+            attribute.maxStack,
+            attribute.maxLocals,
+            attribute.code,
+            attribute.exceptionTable,
+            attribute.attributes,
+        )
 
         /**
          * Read a [MutableCodeAttribute] from a [DataInputStream]

@@ -15,7 +15,7 @@ class ConstantPoolEntryTagException(message: String) : ConstantPoolException(mes
 /**
  * A ConstantPoolEntry is an entry in the constant pool of a class file
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format#constant-pool)
  *
  * @see ConstantPool
  * @since 0.1.0
@@ -81,7 +81,7 @@ sealed class ConstantPoolEntry {
     /**
      * A Utf8Constant is a constant pool entry that contains a string
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#utf8-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#utf8-constant)
      *
      * @param value the string value of the entry
      * @see ConstantPoolEntry
@@ -109,9 +109,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "Utf8Constant(value='$value')"
-        }
+        override fun toString(): String = "Utf8Constant(value='$value')"
 
         /**
          * Dump the utf8 constant to the given [stream]
@@ -146,9 +144,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -160,9 +156,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): Utf8Constant {
-                return Utf8Constant(stream.readUTF())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): Utf8Constant = Utf8Constant(stream.readUTF())
 
             /**
              * Create a new Utf8Constant from the given [stream]
@@ -182,7 +176,7 @@ sealed class ConstantPoolEntry {
     /**
      * A ByteConstant is a constant pool entry that contains a byte
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#byte-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#byte-constant)
      *
      * @param value the byte value of the entry
      * @see ConstantPoolEntry
@@ -209,9 +203,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "ByteConstant(value=$value)"
-        }
+        override fun toString(): String = "ByteConstant(value=$value)"
 
         /**
          * Dump the byte constant to the given [stream]
@@ -246,9 +238,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -260,9 +250,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ByteConstant {
-                return ByteConstant(stream.readByte())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ByteConstant = ByteConstant(stream.readByte())
 
             /**
              * Create a new ByteConstant from the given [stream]
@@ -282,7 +270,7 @@ sealed class ConstantPoolEntry {
     /**
      * A ShortConstant is a constant pool entry that contains a shorts
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#shorts-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#shorts-constant)
      *
      * @param value the shorts value of the entry
      * @see ConstantPoolEntry
@@ -308,9 +296,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "ShortConstant(value=$value)"
-        }
+        override fun toString(): String = "ShortConstant(value=$value)"
 
         /**
          * Dump the shorts constant to the given [stream]
@@ -345,9 +331,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -359,9 +343,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ShortConstant {
-                return ShortConstant(stream.readShort())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ShortConstant = ShortConstant(stream.readShort())
 
             /**
              * Create a new ShortConstant from the given [stream]
@@ -381,7 +363,7 @@ sealed class ConstantPoolEntry {
     /**
      * An IntConstant is a constant pool entry that contains an int
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#int-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#int-constant)
      *
      * @param value the int value of the entry
      * @see ConstantPoolEntry
@@ -408,9 +390,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "IntConstant(value=$value)"
-        }
+        override fun toString(): String = "IntConstant(value=$value)"
 
         /**
          * Dump the int constant to the given [stream]
@@ -445,9 +425,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -459,9 +437,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): IntConstant {
-                return IntConstant(stream.readInt())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): IntConstant = IntConstant(stream.readInt())
 
             /**
              * Create a new IntConstant from the given [stream]
@@ -481,7 +457,7 @@ sealed class ConstantPoolEntry {
     /**
      * A LongConstant is a constant pool entry that contains a long
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#long-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#long-constant)
      *
      * @param value the long value of the entry
      * @see ConstantPoolEntry
@@ -508,9 +484,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "LongConstant(value=$value)"
-        }
+        override fun toString(): String = "LongConstant(value=$value)"
 
         /**
          * Dump the long constant to the given [stream]
@@ -545,9 +519,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -559,9 +531,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): LongConstant {
-                return LongConstant(stream.readLong())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): LongConstant = LongConstant(stream.readLong())
 
             /**
              * Create a new LongConstant from the given [stream]
@@ -581,7 +551,7 @@ sealed class ConstantPoolEntry {
     /**
      * A FloatConstant is a constant pool entry that contains a float
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#float-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#float-constant)
      *
      * @param value the float value of the entry
      * @see ConstantPoolEntry
@@ -608,9 +578,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "FloatConstant(value=$value)"
-        }
+        override fun toString(): String = "FloatConstant(value=$value)"
 
         /**
          * Dump the float constant to the given [stream]
@@ -645,9 +613,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -659,9 +625,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): FloatConstant {
-                return FloatConstant(stream.readFloat())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): FloatConstant = FloatConstant(stream.readFloat())
 
             /**
              * Create a new FloatConstant from the given [stream]
@@ -681,7 +645,7 @@ sealed class ConstantPoolEntry {
     /**
      * A DoubleConstant is a constant pool entry that contains a double
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#double-constant)
      *
      * @param value the double value of the entry
      * @see ConstantPoolEntry
@@ -708,9 +672,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "DoubleConstant(value=$value)"
-        }
+        override fun toString(): String = "DoubleConstant(value=$value)"
 
         /**
          * Dump the double constant to the given [stream]
@@ -745,9 +707,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return value.hashCode()
-        }
+        override fun hashCode(): Int = value.hashCode()
 
         companion object {
 
@@ -759,9 +719,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): DoubleConstant {
-                return DoubleConstant(stream.readDouble())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): DoubleConstant = DoubleConstant(stream.readDouble())
 
             /**
              * Create a new DoubleConstant from the given [stream]
@@ -781,7 +739,7 @@ sealed class ConstantPoolEntry {
     /**
      * A ClassConstant is a constant pool entry that contains a class identifier
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#class-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#class-constant)
      *
      * @param identifier the class identifier of the entry
      * @see ConstantPoolEntry
@@ -808,9 +766,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "ClassConstant(identifier=$identifier)"
-        }
+        override fun toString(): String = "ClassConstant(identifier=$identifier)"
 
         /**
          * Dump the class constant to the given [stream]
@@ -845,9 +801,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return identifier
-        }
+        override fun hashCode(): Int = identifier
 
         companion object {
 
@@ -859,9 +813,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ClassConstant {
-                return ClassConstant(stream.readInt())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): ClassConstant = ClassConstant(stream.readInt())
 
             /**
              * Create a new ClassConstant from the given [stream]
@@ -881,7 +833,7 @@ sealed class ConstantPoolEntry {
     /**
      * A StringConstant is a constant pool entry that contains a string identifier
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#string-constant)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#string-constant)
      *
      * @param identifier the string identifier of the entry
      * @see ConstantPoolEntry
@@ -908,9 +860,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun toString(): String {
-            return "StringConstant(identifier=$identifier)"
-        }
+        override fun toString(): String = "StringConstant(identifier=$identifier)"
 
         /**
          * Dump the string constant to the given [stream]
@@ -945,9 +895,7 @@ sealed class ConstantPoolEntry {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return identifier
-        }
+        override fun hashCode(): Int = identifier
 
         companion object {
 
@@ -959,9 +907,7 @@ sealed class ConstantPoolEntry {
              * @since 0.1.0
              * @version 0.1.0
              */
-            fun fromStreamIgnoreIdentifier(stream: DataInputStream): StringConstant {
-                return StringConstant(stream.readInt())
-            }
+            fun fromStreamIgnoreIdentifier(stream: DataInputStream): StringConstant = StringConstant(stream.readInt())
 
             /**
              * Create a new StringConstant from the given [stream]

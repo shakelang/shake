@@ -7,8 +7,8 @@ import com.shakelang.util.io.streaming.input.bytes.DataInputStream
 import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 
 /**
- * The magic number of the storage format is used to identify the storage format. It is always the same.
- * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
+ * The magic number of the map format is used to identify the map format. It is always the same.
+ * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#magic)
  * for more information
  *
  * The magic number is `0x4a16a478`.
@@ -19,11 +19,11 @@ import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 
 /**
- * Implementation of the storage format.
- * See the [storage format specification](https://spec.shakelang.com/bytecode/file-format) for more information
+ * Implementation of the map format.
+ * See the [map format specification](https://spec.shakelang.com/bytecode/file-format) for more information
  *
- * @param major The major version of the storage format
- * @param minor The minor version of the storage format
+ * @param major The major version of the map format
+ * @param minor The minor version of the map format
  * @param packageNameConstant The constant of the package name
  * @param constantPool The constant pool
  * @param classes The classes
@@ -36,8 +36,8 @@ const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 open class StorageFormat(
 
     /**
-     * The major version of the storage format
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
+     * The major version of the map format
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -45,8 +45,8 @@ open class StorageFormat(
     open val major: Short,
 
     /**
-     * The minor version of the storage format
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
+     * The minor version of the map format
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -55,7 +55,7 @@ open class StorageFormat(
 
     /**
      * The constant of the package name
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#package-name)
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -63,7 +63,7 @@ open class StorageFormat(
 
     /**
      * The constant pool
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#constant-pool-count--constant-pool)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -72,7 +72,7 @@ open class StorageFormat(
 
     /**
      * The classes
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#class-count--classes)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#class-count--classes)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -81,7 +81,7 @@ open class StorageFormat(
 
     /**
      * The methods
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#method-count--methods)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#method-count--methods)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -90,7 +90,7 @@ open class StorageFormat(
 
     /**
      * The fields
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#field-count--fields)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#field-count--fields)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -99,8 +99,8 @@ open class StorageFormat(
 ) : DumpAble {
 
     /**
-     * The magic number of the storage format is used to identify the storage format. It is always the same.
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
+     * The magic number of the map format is used to identify the map format. It is always the same.
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#magic)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -110,7 +110,7 @@ open class StorageFormat(
     /**
      * The package name
      * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#package-name)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -119,8 +119,8 @@ open class StorageFormat(
         get() = constantPool.getUtf8(packageNameConstant).value
 
     /**
-     * Dump the storage format to a [DataOutputStream]
-     * @param stream The stream to dump the storage format to
+     * Dump the map format to a [DataOutputStream]
+     * @param stream The stream to dump the map format to
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -145,9 +145,9 @@ open class StorageFormat(
     }
 
     /**
-     * Check if this storage format is equal to another object
+     * Check if this map format is equal to another object
      * @param other The other object
-     * @return If the storage formats are equal
+     * @return If the map formats are equal
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -183,7 +183,7 @@ open class StorageFormat(
     }
 
     /**
-     * Get the hash code of this storage format
+     * Get the hash code of this map format
      * @return The hash code
      * @since 0.1.0
      * @version 0.1.0
@@ -202,8 +202,8 @@ open class StorageFormat(
 
         /**
          * Create a [StorageFormat] from a [DataInputStream]
-         * @param stream The stream to read the storage format from
-         * @return The storage format
+         * @param stream The stream to read the map format from
+         * @return The map format
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -238,7 +238,7 @@ open class StorageFormat(
 
 /**
  * Mutable implementation of the [StorageFormat]
- * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format) for more information
+ * See the [map format specification](https://spec.shakelang.com/bytecode/map-format) for more information
  * @see StorageFormat
  * @since 0.1.0
  * @version 0.1.0
@@ -246,8 +246,8 @@ open class StorageFormat(
 class MutableStorageFormat(
 
     /**
-     * The major version of the storage format
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
+     * The major version of the map format
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -255,8 +255,8 @@ class MutableStorageFormat(
     override var major: Short,
 
     /**
-     * The minor version of the storage format
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
+     * The minor version of the map format
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -265,7 +265,7 @@ class MutableStorageFormat(
 
     /**
      * The constant of the package name
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#package-name)
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -273,7 +273,7 @@ class MutableStorageFormat(
 
     /**
      * The constant pool
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#constant-pool-count--constant-pool)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -282,7 +282,7 @@ class MutableStorageFormat(
 
     /**
      * The classes
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#class-count--classes)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#class-count--classes)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -291,7 +291,7 @@ class MutableStorageFormat(
 
     /**
      * The methods
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#method-count--methods)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#method-count--methods)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -300,7 +300,7 @@ class MutableStorageFormat(
 
     /**
      * The fields
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#field-count--fields)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#field-count--fields)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -319,7 +319,7 @@ class MutableStorageFormat(
     /**
      * The package name
      * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
+     * See the [map format specification](https://spec.shakelang.com/bytecode/map-format#package-name)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -334,8 +334,8 @@ class MutableStorageFormat(
 
         /**
          * Create a [MutableStorageFormat] from a [StorageFormat]
-         * @param storageFormat The storage format to create the mutable storage format from
-         * @return The mutable storage format
+         * @param storageFormat The map format to create the mutable map format from
+         * @return The mutable map format
          * @since 0.1.0
          * @version 0.1.0
          */
@@ -354,8 +354,8 @@ class MutableStorageFormat(
 
         /**
          * Create a [MutableStorageFormat] from a [DataInputStream]
-         * @param stream The stream to read the storage format from
-         * @return The storage format
+         * @param stream The stream to read the map format from
+         * @return The map format
          * @since 0.1.0
          * @version 0.1.0
          */

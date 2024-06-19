@@ -10,7 +10,7 @@ import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
  * An abstract [Attribute] implementation without any custom properties
  * This implementation can wrap any attribute.
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
  *
  * @param pool the [ConstantPool] of the attribute
  * @param nameConstant the name of the attribute
@@ -25,7 +25,7 @@ open class AnonymousAttributeImpl(
     /**
      * The [ConstantPool] of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -37,7 +37,7 @@ open class AnonymousAttributeImpl(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -48,7 +48,7 @@ open class AnonymousAttributeImpl(
     /**
      * The value of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-info)
      *
      * @see Attribute
      * @since 0.1.0
@@ -60,7 +60,7 @@ open class AnonymousAttributeImpl(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -71,7 +71,7 @@ open class AnonymousAttributeImpl(
     /**
      * Get the size of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-info)
      *
      * @see Attribute
      * @since 0.1.0
@@ -86,7 +86,7 @@ open class AnonymousAttributeImpl(
     /**
      * Get the size of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-info)
      *
      * @see Attribute
      * @since 0.1.0
@@ -161,7 +161,7 @@ open class AnonymousAttributeImpl(
  * A mutable [AnonymousAttributeImpl] implementation without any custom properties
  * This implementation can wrap any attribute.
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
  *
  * @param pool the [MutableConstantPool] of the attribute
  * @param nameConstant the name of the attribute
@@ -176,7 +176,7 @@ class MutableAnonymousAttributeImpl(
     /**
      * The [MutableConstantPool] of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -188,7 +188,7 @@ class MutableAnonymousAttributeImpl(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -199,19 +199,20 @@ class MutableAnonymousAttributeImpl(
     /**
      * The value of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-info)
      *
      * @see Attribute
      * @since 0.1.0
      * @version 0.1.0
      */
     override var value: ByteArray,
-) : AnonymousAttributeImpl(pool, nameConstant, value), MutableAttribute {
+) : AnonymousAttributeImpl(pool, nameConstant, value),
+    MutableAttribute {
 
     /**
      * The [MutableConstantPool] of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -224,7 +225,7 @@ class MutableAnonymousAttributeImpl(
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see Attribute
      * @since 0.1.0
@@ -241,23 +242,21 @@ class MutableAnonymousAttributeImpl(
         /**
          * Create an [MutableAnonymousAttributeImpl] from an [Attribute]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromAttribute(attribute: Attribute): MutableAnonymousAttributeImpl {
-            return MutableAnonymousAttributeImpl(
-                attribute.pool as MutableConstantPool,
-                attribute.nameConstant,
-                attribute.value,
-            )
-        }
+        fun fromAttribute(attribute: Attribute): MutableAnonymousAttributeImpl = MutableAnonymousAttributeImpl(
+            attribute.pool as MutableConstantPool,
+            attribute.nameConstant,
+            attribute.value,
+        )
 
         /**
          * Create an [MutableAnonymousAttributeImpl] from an [Attribute]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
          *
          * @since 0.1.0
          * @version 0.1.0

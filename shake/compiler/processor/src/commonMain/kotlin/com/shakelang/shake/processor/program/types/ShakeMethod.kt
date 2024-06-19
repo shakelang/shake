@@ -2,6 +2,7 @@ package com.shakelang.shake.processor.program.types
 
 import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.util.primitives.bits.*
 
 /**
  * A ShakeMethod is a method in a ShakeClass or ShakePackage
@@ -91,6 +92,22 @@ interface ShakeMethod : ShakeInvokable {
     val isOperator: Boolean
 
     /**
+     * The method's flags
+     */
+    val flags: Short get() =
+        (0).toShort()
+            .withBit0(isStatic)
+            .withBit1(isFinal)
+            .withBit2(isAbstract)
+            .withBit3(isSynchronized)
+            .withBit4(isStrict)
+            .withBit5(isPrivate)
+            .withBit6(isProtected)
+            .withBit7(isPublic)
+            .withBit8(isNative)
+            .withBit9(isOperator)
+
+    /**
      * The type this method expands (int.toString() -> String)
      */
     val expanding: ShakeType?
@@ -139,26 +156,24 @@ interface ShakeMethod : ShakeInvokable {
     /**
      * The json representation of this method
      */
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "qualifiedName" to qualifiedName,
-            "signature" to signature,
-            "qualifiedSignature" to qualifiedSignature,
-            "isNative" to isNative,
-            "isStatic" to isStatic,
-            "isFinal" to isFinal,
-            "isAbstract" to isAbstract,
-            "isSynchronized" to isSynchronized,
-            "isStrict" to isStrict,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic,
-            "returnType" to returnType.toJson(),
-            "parameters" to parameters.map { it.toJson() },
-            "body" to body?.toJson(),
-        )
-    }
+    override fun toJson(): Map<String, Any?> = mapOf(
+        "name" to name,
+        "qualifiedName" to qualifiedName,
+        "signature" to signature,
+        "qualifiedSignature" to qualifiedSignature,
+        "isNative" to isNative,
+        "isStatic" to isStatic,
+        "isFinal" to isFinal,
+        "isAbstract" to isAbstract,
+        "isSynchronized" to isSynchronized,
+        "isStrict" to isStrict,
+        "isPrivate" to isPrivate,
+        "isProtected" to isProtected,
+        "isPublic" to isPublic,
+        "returnType" to returnType.toJson(),
+        "parameters" to parameters.map { it.toJson() },
+        "body" to body?.toJson(),
+    )
 
     /**
      * Processor phase 3 action

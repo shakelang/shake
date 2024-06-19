@@ -23,8 +23,7 @@ open class ConstantPoolException(message: String? = null, cause: Throwable? = nu
  * @since 0.1.0
  * @version 0.1.0
  */
-open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) :
-    ConstantPoolException(message, cause)
+open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) : ConstantPoolException(message, cause)
 
 /**
  * A [ConstantPoolTypeException] is thrown if the [ConstantPool] contains a wrong type
@@ -33,15 +32,14 @@ open class ConstantPoolOverflowException(message: String? = null, cause: Throwab
  * @since 0.1.0
  * @version 0.1.0
  */
-open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) :
-    ConstantPoolException(message, cause)
+open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) : ConstantPoolException(message, cause)
 
 /**
  * A ConstantPool is a list of [ConstantPoolEntry]s
  * We store data inside the [ConstantPool]. This has the advantage that we can reference to the data
  * by an index. Double-used data will only be stored once, and we can reference to it by the index.
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
  *
  * @param entries The entries of the [ConstantPool]
  *
@@ -515,9 +513,7 @@ open class ConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override fun hashCode(): Int {
-        return entries.hashCode()
-    }
+    override fun hashCode(): Int = entries.hashCode()
 
     /**
      * Get the string representation of the [ConstantPool]
@@ -526,9 +522,7 @@ open class ConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override fun toString(): String {
-        return "ConstantPool(entries=$entries)"
-    }
+    override fun toString(): String = "ConstantPool(entries=$entries)"
 
     companion object {
 
@@ -557,18 +551,14 @@ open class ConstantPool(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromByteArray(array: ByteArray): ConstantPool {
-            return fromStream(array.dataStream())
-        }
+        fun fromByteArray(array: ByteArray): ConstantPool = fromStream(array.dataStream())
 
         /**
          * Create a [ConstantPool] from the given [List]
          * @param list The [List] to create the [ConstantPool] from
          * @return The [ConstantPool] created from the [List]
          */
-        fun fromList(list: List<ConstantPoolEntry>): ConstantPool {
-            return ConstantPool(list)
-        }
+        fun fromList(list: List<ConstantPoolEntry>): ConstantPool = ConstantPool(list)
     }
 }
 
@@ -589,7 +579,8 @@ class MutableConstantPool(
      */
     entries: MutableList<ConstantPoolEntry> = mutableListOf(),
 
-) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
+) : ConstantPool(entries),
+    MutableList<ConstantPoolEntry> by entries {
 
     /**
      * The entries of the [MutableConstantPool]
@@ -891,27 +882,21 @@ class MutableConstantPool(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromByteArray(array: ByteArray): MutableConstantPool {
-            return fromStream(array.dataStream())
-        }
+        fun fromByteArray(array: ByteArray): MutableConstantPool = fromStream(array.dataStream())
 
         /**
          * Create a [MutableConstantPool] from the given [List]
          * @param list The [List] to create the [MutableConstantPool] from
          * @return The [MutableConstantPool] created from the [List]
          */
-        fun fromList(list: List<ConstantPoolEntry>): MutableConstantPool {
-            return MutableConstantPool(list.toMutableList())
-        }
+        fun fromList(list: List<ConstantPoolEntry>): MutableConstantPool = MutableConstantPool(list.toMutableList())
 
         /**
          * Create a [MutableConstantPool] from the given [ConstantPool]
          * @param pool The [ConstantPool] to create the [MutableConstantPool] from
          * @return The [MutableConstantPool] created from the [ConstantPool]
          */
-        fun fromConstantPool(pool: ConstantPool): MutableConstantPool {
-            return MutableConstantPool(pool.entries.toMutableList())
-        }
+        fun fromConstantPool(pool: ConstantPool): MutableConstantPool = MutableConstantPool(pool.entries.toMutableList())
     }
 
     override fun contains(element: ConstantPoolEntry) = entries.contains(element)

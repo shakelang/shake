@@ -1,6 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
 import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.util.primitives.bits.*
 import kotlin.math.min
 
 /**
@@ -127,6 +128,20 @@ interface ShakeClass {
      * Is this class native?
      */
     val isNative: Boolean
+
+    val flags: Short get() =
+        (0).toShort()
+            .withBit0(isInterface)
+            .withBit1(isEnum)
+            .withBit2(isAnnotation)
+            .withBit3(isObject)
+            .withBit4(isAbstract)
+            .withBit5(isFinal)
+            .withBit6(isStatic)
+            .withBit7(isPublic)
+            .withBit8(isPrivate)
+            .withBit9(isProtected)
+            .withBit10(isNative)
 
     /**
      * The instance methods of this class
@@ -276,20 +291,18 @@ interface ShakeClass {
     /**
      * Get the json representation of this class
      */
-    fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to this.name,
-            "super" to this.superClass.qualifiedName,
-            "interfaces" to this.interfaces.map { it.name },
-            "methods" to this.methods.map { it.toJson() },
-            "staticMethods" to this.staticMethods.map { it.toJson() },
-            "fields" to this.fields.map { it.toJson() },
-            "staticFields" to this.staticFields.map { it.toJson() },
-            "constructors" to this.constructors.map { it.toJson() },
-            "classes" to this.classes.map { it.toJson() },
-            "staticClasses" to this.staticClasses.map { it.toJson() },
-        )
-    }
+    fun toJson(): Map<String, Any?> = mapOf(
+        "name" to this.name,
+        "super" to this.superClass.qualifiedName,
+        "interfaces" to this.interfaces.map { it.name },
+        "methods" to this.methods.map { it.toJson() },
+        "staticMethods" to this.staticMethods.map { it.toJson() },
+        "fields" to this.fields.map { it.toJson() },
+        "staticFields" to this.staticFields.map { it.toJson() },
+        "constructors" to this.constructors.map { it.toJson() },
+        "classes" to this.classes.map { it.toJson() },
+        "staticClasses" to this.staticClasses.map { it.toJson() },
+    )
 
     /**
      * Get a child class

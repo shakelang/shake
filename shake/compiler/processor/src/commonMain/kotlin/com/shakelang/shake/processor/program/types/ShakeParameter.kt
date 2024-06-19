@@ -19,7 +19,7 @@ interface ShakeParameter : ShakeAssignable {
      */
     // TODO uniqueName is not necessarily unique
     val uniqueName: String
-        get() = "param_$name"
+        get() = "@$name"
 
     /**
      * The type of the parameter.

@@ -14,7 +14,7 @@ import kotlin.experimental.or
 /**
  * A class representing a field in the shake [StorageFormat]
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
  *
  * @constructor Creates a [Field] with the given [pool], [nameConstant], [typeConstant], [flags] and [attributes]
  *
@@ -42,7 +42,7 @@ open class Field(
     /**
      * The [ConstantPool]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -55,7 +55,7 @@ open class Field(
     /**
      * The constant pool index of the name of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-name-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -65,7 +65,7 @@ open class Field(
     /**
      * The constant pool index of the type of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-type-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-type-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -75,7 +75,7 @@ open class Field(
     /**
      * The flags of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -85,7 +85,7 @@ open class Field(
     /**
      * The attributes of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-attributes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -96,7 +96,7 @@ open class Field(
     /**
      * Returns if the field is public
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -108,7 +108,7 @@ open class Field(
     /**
      * Returns if the field is private
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -120,7 +120,7 @@ open class Field(
     /**
      * Returns if the field is protected
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -132,7 +132,7 @@ open class Field(
     /**
      * Returns if the field is static
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -144,7 +144,7 @@ open class Field(
     /**
      * Returns if the field is final
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -156,7 +156,7 @@ open class Field(
     /**
      * Returns if the field is abstract
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see [flags]
      * @since 0.1.0
@@ -168,7 +168,7 @@ open class Field(
     /**
      * Returns the name of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-name-index)
      *
      * @see [nameConstant]
      * @see [pool]
@@ -180,7 +180,7 @@ open class Field(
     /**
      * Returns the type of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-type-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-type-index)
      *
      * @see [typeConstant]
      * @see [pool]
@@ -192,7 +192,7 @@ open class Field(
     /**
      * Dumps the [Field] to the given [stream]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
      *
      * @param stream The [DataOutputStream] to dump the [Field] to
      * @see [dump]
@@ -210,7 +210,7 @@ open class Field(
     /**
      * Dumps the [Field] to a [ByteArray]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
      *
      * @see [dump]
      * @since 0.1.0
@@ -254,7 +254,7 @@ open class Field(
             /**
              * The flag that represents a public field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -264,7 +264,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_PUBLIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -274,7 +274,7 @@ open class Field(
             /**
              * The flag that represents a private field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -284,7 +284,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_PRIVATE]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -294,7 +294,7 @@ open class Field(
             /**
              * The flag that represents a protected field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -304,7 +304,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_PROTECTED]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -314,7 +314,7 @@ open class Field(
             /**
              * The flag that represents a static field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -324,7 +324,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_STATIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -334,7 +334,7 @@ open class Field(
             /**
              * The flag that represents a final field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -344,7 +344,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_FINAL]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -354,7 +354,7 @@ open class Field(
             /**
              * The flag that represents an abstract field
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -364,7 +364,7 @@ open class Field(
             /**
              * Inverted [FLAG_IS_ABSTRACT]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -374,7 +374,7 @@ open class Field(
             /**
              * Get isPublic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isPublic from
              * @return If the flags contain the isPublic flag
@@ -387,7 +387,7 @@ open class Field(
              * Set isPublic in the given [flags]
              * (Sets the first bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isPublic in
              * @return The flags with the isPublic flag set
@@ -400,7 +400,7 @@ open class Field(
             /**
              * Get isPrivate from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isPrivate from
              * @return If the flags contain the isPrivate flag
@@ -413,7 +413,7 @@ open class Field(
              * Set isPrivate in the given [flags]
              * (Sets the second bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isPrivate in
              * @return The flags with the isPrivate flag set
@@ -426,7 +426,7 @@ open class Field(
             /**
              * Get isProtected from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isProtected from
              * @return If the flags contain the isProtected flag
@@ -439,7 +439,7 @@ open class Field(
              * Set isProtected in the given [flags]
              * (Sets the third bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isProtected in
              * @return The flags with the isProtected flag set
@@ -452,7 +452,7 @@ open class Field(
             /**
              * Get isStatic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isStatic from
              * @return If the flags contain the isStatic flag
@@ -465,7 +465,7 @@ open class Field(
              * Set isStatic in the given [flags]
              * (Sets the fourth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isStatic in
              * @return The flags with the isStatic flag set
@@ -478,7 +478,7 @@ open class Field(
             /**
              * Get isFinal from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isFinal from
              * @return If the flags contain the isFinal flag
@@ -491,7 +491,7 @@ open class Field(
              * Set isFinal in the given [flags]
              * (Sets the fifth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isFinal in
              * @return The flags with the isFinal flag set
@@ -504,7 +504,7 @@ open class Field(
             /**
              * Get isAbstract from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to get the isAbstract from
              * @return If the flags contain the isAbstract flag
@@ -517,7 +517,7 @@ open class Field(
              * Set isAbstract in the given [flags]
              * (Sets the sixth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
              *
              * @param flags The flags to set the isAbstract in
              * @return The flags with the isAbstract flag set
@@ -531,7 +531,7 @@ open class Field(
         /**
          * Reads a [Field] from the given [pool] and [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
          *
          * @param pool The [ConstantPool]
          * @param stream The [DataInputStream] to read the [Field] from
@@ -553,7 +553,7 @@ open class Field(
 /**
  * A mutable version of [Field]
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
  *
  * @constructor Creates a [MutableField] with the given [pool], [nameConstant], [typeConstant], [flags] and [attributes]
  *
@@ -581,7 +581,7 @@ class MutableField(
     /**
      * The constant pool index of the name of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-name-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -591,7 +591,7 @@ class MutableField(
     /**
      * The constant pool index of the type of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-type-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-type-index)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -601,7 +601,7 @@ class MutableField(
     /**
      * The flags of the field
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -615,7 +615,7 @@ class MutableField(
     /**
      * The [MutableConstantPool]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * This function is just a cast of the [pool] property
      * This is a safe cast, because the [pool] property is always a [MutableConstantPool]
@@ -633,7 +633,7 @@ class MutableField(
      * The name of the field
      * This is just a getter and setter for the [nameConstant] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-name-index)
      *
      * @see nameConstant
      * @see pool
@@ -650,7 +650,7 @@ class MutableField(
      * The type of the field
      * This is just a getter and setter for the [typeConstant] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-type-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-type-index)
      *
      * @see typeConstant
      * @see pool
@@ -667,7 +667,7 @@ class MutableField(
      * The attributes of the field
      * This is just a getter and setter for the [attributes] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-attributes)
      *
      * This function is just a cast of the [attributes] property
      * This is a safe cast, because the [attributes] property is always a [MutableList]
@@ -685,7 +685,7 @@ class MutableField(
      * Is the field public?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -701,7 +701,7 @@ class MutableField(
      * Is the field private?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -717,7 +717,7 @@ class MutableField(
      * Is the field protected?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -733,7 +733,7 @@ class MutableField(
      * Is the field static?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -749,7 +749,7 @@ class MutableField(
      * Is the field final?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -765,7 +765,7 @@ class MutableField(
      * Is the field abstract?
      * This is just a getter and setter for the [flags] property
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#field-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#field-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -791,20 +791,18 @@ class MutableField(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromField(pool: MutableConstantPool, field: Field): MutableField {
-            return MutableField(
-                pool,
-                field.nameConstant,
-                field.typeConstant,
-                field.flags,
-                field.attributes.toMutableList(),
-            )
-        }
+        fun fromField(pool: MutableConstantPool, field: Field): MutableField = MutableField(
+            pool,
+            field.nameConstant,
+            field.typeConstant,
+            field.flags,
+            field.attributes.toMutableList(),
+        )
 
         /**
          * Reads a [MutableField] from the given [pool] and [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#fields)
          *
          * @param pool The [MutableConstantPool]
          * @param stream The [DataInputStream] to read the [MutableField] from

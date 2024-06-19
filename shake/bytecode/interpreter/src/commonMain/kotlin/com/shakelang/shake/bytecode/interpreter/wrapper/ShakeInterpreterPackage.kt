@@ -102,12 +102,12 @@ interface ShakeInterpreterPackage {
                 // Their main purpose is to map an index
                 // to a class/method/field.
                 // This is needed because we can load multiple storages.
-                // If we take the index of the class/method/field in the storage, we
+                // If we take the index of the class/method/field in the map, we
                 // could run into cases, where we try to map two different classes/methods/fields
                 // to the same index.
                 // We also have private methods to load classes/methods/fields (loadClass, loadMethod,
                 // loadField).
-                // These methods load the class/method/field from the storage save it into
+                // These methods load the class/method/field from the map save it into
                 // our cache list and return it.
                 // And we have private methods to get them (getClass, getMethod, getField).
                 // These
@@ -119,7 +119,7 @@ interface ShakeInterpreterPackage {
                 // we need to include the parameters),
                 // we have the resolveClassIndex, resolveMethodIndex
                 // and resolveFieldIndex methods.
-                // They look for them inside the storage format and
+                // They look for them inside the map format and
                 // return the indexes they are mapped to.
                 // The indexes will depend on the order the storages are loaded in.
 
@@ -188,17 +188,11 @@ interface ShakeInterpreterPackage {
                     return field
                 }
 
-                fun getClass(index: Int): ShakeInterpreterClass {
-                    return classList[index] ?: loadClass(index)
-                }
+                fun getClass(index: Int): ShakeInterpreterClass = classList[index] ?: loadClass(index)
 
-                fun getMethod(index: Int): ShakeInterpreterMethod {
-                    return methodList[index] ?: loadMethod(index)
-                }
+                fun getMethod(index: Int): ShakeInterpreterMethod = methodList[index] ?: loadMethod(index)
 
-                fun getField(index: Int): ShakeInterpreterField {
-                    return fieldList[index] ?: loadField(index)
-                }
+                fun getField(index: Int): ShakeInterpreterField = fieldList[index] ?: loadField(index)
 
                 fun loadAllClasses() {
                     for (i in storages.indices) loadClass(i)

@@ -9,7 +9,7 @@ import com.shakelang.util.io.streaming.output.bytes.DataOutputStream
 /**
  * An attribute of a class, method or field
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
  *
  * @since 0.1.0
  * @version 0.1.0
@@ -19,7 +19,7 @@ interface Attribute {
     /**
      * The constant pool of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -31,7 +31,7 @@ interface Attribute {
     /**
      * The constant pool index of the name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name-index)
      *
      * @see name
      * @see pool
@@ -43,7 +43,7 @@ interface Attribute {
     /**
      * The value of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name)
      *
      * @see nameConstant
      * @see pool
@@ -55,7 +55,7 @@ interface Attribute {
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name)
      *
      * @see nameConstant
      * @see pool
@@ -67,7 +67,7 @@ interface Attribute {
     /**
      * Dump the attribute to a [DataOutputStream]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
      *
      * @see DataOutputStream
      * @since 0.1.0
@@ -82,7 +82,7 @@ interface Attribute {
     /**
      * Dump the attribute to a [ByteArray]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
      *
      * @see DataOutputStream
      * @since 0.1.0
@@ -147,7 +147,7 @@ interface Attribute {
         /**
          * Create an [Attribute] from a [DataInputStream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
          *
          * @see DataInputStream
          * @since 0.1.0
@@ -177,7 +177,7 @@ interface MutableAttribute : Attribute {
     /**
      * The constant pool of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#constant-pool)
      *
      * @see ConstantPool
      * @see MutableConstantPool
@@ -189,7 +189,7 @@ interface MutableAttribute : Attribute {
     /**
      * The value of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name)
      *
      * @see nameConstant
      * @see pool
@@ -201,7 +201,7 @@ interface MutableAttribute : Attribute {
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name)
      *
      * @see nameConstant
      * @see pool
@@ -213,7 +213,7 @@ interface MutableAttribute : Attribute {
     /**
      * The name of the attribute
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#attribute-name)
      *
      * @see nameConstant
      * @see pool
@@ -231,7 +231,7 @@ interface MutableAttribute : Attribute {
         /**
          * Read an [MutableAttribute] from a [DataInputStream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
          *
          * @see DataInputStream
          * @since 0.1.0
@@ -250,17 +250,15 @@ interface MutableAttribute : Attribute {
         /**
          * Create an [Attribute] from an [Attribute]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#attributes)
          *
          * @see Attribute
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromAttribute(attribute: Attribute): MutableAttribute {
-            return when (attribute) {
-                is CodeAttribute -> MutableCodeAttribute.fromCodeAttribute(attribute)
-                else -> MutableAnonymousAttributeImpl.fromAttribute(attribute)
-            }
+        fun fromAttribute(attribute: Attribute): MutableAttribute = when (attribute) {
+            is CodeAttribute -> MutableCodeAttribute.fromCodeAttribute(attribute)
+            else -> MutableAnonymousAttributeImpl.fromAttribute(attribute)
         }
     }
 }

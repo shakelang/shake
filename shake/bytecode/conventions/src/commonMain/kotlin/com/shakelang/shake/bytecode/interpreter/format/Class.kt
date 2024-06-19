@@ -15,7 +15,7 @@ import kotlin.experimental.or
 /**
  * A class that represents a class in the bytecode
  *
- * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+ * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#classes)
  *
  * @property pool The [ConstantPool] of the class
  * @property nameConstant The constant of the name of the class
@@ -49,7 +49,7 @@ open class Class(
     /**
      * The [ConstantPool] of the class
      *
-     * See [ConstantPool Specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool)
+     * See [ConstantPool Specification](https://spec.shakelang.com/bytecode/map-format#constant-pool)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -60,7 +60,7 @@ open class Class(
      * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
      * that represents the name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-name-index)
      *
      * @see name
      * @since 0.1.0
@@ -72,7 +72,7 @@ open class Class(
      * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
      * that represents the super name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-super-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-super-index)
      *
      * @see superName
      * @since 0.1.0
@@ -83,7 +83,7 @@ open class Class(
     /**
      * The flags of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -93,7 +93,7 @@ open class Class(
     /**
      * The constants of the interfaces of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#classes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -103,7 +103,7 @@ open class Class(
     /**
      * The subclasses of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#class-subclasses
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#class-subclasses
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -113,7 +113,7 @@ open class Class(
     /**
      * The methods of the class
      *
-     * See [Method Specification](https://spec.shakelang.com/bytecode/storage-format#class-methods)
+     * See [Method Specification](https://spec.shakelang.com/bytecode/map-format#class-methods)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -123,7 +123,7 @@ open class Class(
     /**
      * The fields of the class
      *
-     * See [Field Specification](https://spec.shakelang.com/bytecode/storage-format#class-fields)
+     * See [Field Specification](https://spec.shakelang.com/bytecode/map-format#class-fields)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -133,7 +133,7 @@ open class Class(
     /**
      * The attributes of the class
      *
-     * See [Attribute Specification](https://spec.shakelang.com/bytecode/storage-format#class-attributes)
+     * See [Attribute Specification](https://spec.shakelang.com/bytecode/map-format#class-attributes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -144,7 +144,7 @@ open class Class(
     /**
      * The name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-name-index)
      *
      * @see nameConstant
      * @since 0.1.0
@@ -155,7 +155,7 @@ open class Class(
     /**
      * The super name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-super-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-super-index)
      *
      * @see superNameConstant
      * @since 0.1.0
@@ -166,7 +166,7 @@ open class Class(
     /**
      * The interfaces of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-interfaces)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-interfaces)
      *
      * @see interfacesConstants
      * @since 0.1.0
@@ -178,7 +178,7 @@ open class Class(
      * Returns if the class is public
      * (Checks if the first bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -191,7 +191,7 @@ open class Class(
      * Returns if the class is private
      * (Checks if the second bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -204,7 +204,7 @@ open class Class(
      * Returns if the class is protected
      * (Checks if the third bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -217,7 +217,7 @@ open class Class(
      * Returns if the class is static
      * (Checks if the fourth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -230,7 +230,7 @@ open class Class(
      * Returns if the class is final
      * (Checks if the fifth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -243,7 +243,7 @@ open class Class(
      * Returns if the class is an interface
      * (Checks if the sixth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -256,7 +256,7 @@ open class Class(
      * Returns if the class is abstract
      * (Checks if the seventh bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -269,7 +269,7 @@ open class Class(
      * Returns if the class is synthetic
      * (Checks if the eighth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -282,7 +282,7 @@ open class Class(
      * Returns if the class is an annotation
      * (Checks if the ninth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -295,7 +295,7 @@ open class Class(
      * Returns if the class is an enum
      * (Checks if the tenth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -308,7 +308,7 @@ open class Class(
      * Returns if the class is an object
      * (Checks if the eleventh bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -320,7 +320,7 @@ open class Class(
     /**
      * Dumps the class to the given [stream]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#classes)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#classes)
      *
      * @param stream The [DataOutputStream] to dump the class to
      * @since 0.1.0
@@ -452,7 +452,7 @@ open class Class(
             /**
              * The flag that represents a public class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -462,7 +462,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_PUBLIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -472,7 +472,7 @@ open class Class(
             /**
              * The flag that represents a private class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -482,7 +482,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_PRIVATE]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -492,7 +492,7 @@ open class Class(
             /**
              * The flag that represents a protected class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -502,7 +502,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_PROTECTED]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -512,7 +512,7 @@ open class Class(
             /**
              * The flag that represents a static class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -522,7 +522,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_STATIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -532,7 +532,7 @@ open class Class(
             /**
              * The flag that represents a final class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -542,7 +542,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_FINAL]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -552,7 +552,7 @@ open class Class(
             /**
              * The flag that represents an interface class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -562,7 +562,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_INTERFACE]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -572,7 +572,7 @@ open class Class(
             /**
              * The flag that represents an abstract class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -582,7 +582,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_ABSTRACT]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -592,7 +592,7 @@ open class Class(
             /**
              * The flag that represents a synthetic class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -602,7 +602,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_SYNTHETIC]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -612,7 +612,7 @@ open class Class(
             /**
              * The flag that represents an annotation class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -622,7 +622,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_ANNOTATION]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -632,7 +632,7 @@ open class Class(
             /**
              * The flag that represents an enum class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -642,7 +642,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_ENUM]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -652,7 +652,7 @@ open class Class(
             /**
              * The flag that represents an object class
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -662,7 +662,7 @@ open class Class(
             /**
              * Inverted [FLAG_IS_OBJECT]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @since 0.1.0
              * @version 0.1.0
@@ -672,7 +672,7 @@ open class Class(
             /**
              * Get isPublic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isPublic from
              * @return If the flags contain the isPublic flag
@@ -685,7 +685,7 @@ open class Class(
              * Set isPublic in the given [flags]
              * (Sets the first bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isPublic in
              * @return The flags with the isPublic flag set
@@ -698,7 +698,7 @@ open class Class(
             /**
              * Get isPrivate from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isPrivate from
              * @return If the flags contain the isPrivate flag
@@ -711,7 +711,7 @@ open class Class(
              * Set isPrivate in the given [flags]
              * (Sets the second bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isPrivate in
              * @return The flags with the isPrivate flag set
@@ -724,7 +724,7 @@ open class Class(
             /**
              * Get isProtected from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isProtected from
              * @return If the flags contain the isProtected flag
@@ -737,7 +737,7 @@ open class Class(
              * Set isProtected in the given [flags]
              * (Sets the third bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isProtected in
              * @return The flags with the isProtected flag set
@@ -750,7 +750,7 @@ open class Class(
             /**
              * Get isStatic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isStatic from
              * @return If the flags contain the isStatic flag
@@ -763,7 +763,7 @@ open class Class(
              * Set isStatic in the given [flags]
              * (Sets the fourth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isStatic in
              * @return The flags with the isStatic flag set
@@ -776,7 +776,7 @@ open class Class(
             /**
              * Get isFinal from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isFinal from
              * @return If the flags contain the isFinal flag
@@ -789,7 +789,7 @@ open class Class(
              * Set isFinal in the given [flags]
              * (Sets the fifth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isFinal in
              * @return The flags with the isFinal flag set
@@ -802,7 +802,7 @@ open class Class(
             /**
              * Get isInterface from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isInterface from
              * @return If the flags contain the isInterface flag
@@ -815,7 +815,7 @@ open class Class(
              * Set isInterface in the given [flags]
              * (Sets the sixth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isInterface in
              * @return The flags with the isInterface flag set
@@ -828,7 +828,7 @@ open class Class(
             /**
              * Get isAbstract from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isAbstract from
              * @return If the flags contain the isAbstract flag
@@ -841,7 +841,7 @@ open class Class(
              * Set isAbstract in the given [flags]
              * (Sets the seventh bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isAbstract in
              * @return The flags with the isAbstract flag set
@@ -854,7 +854,7 @@ open class Class(
             /**
              * Get isSynthetic from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isSynthetic from
              * @return If the flags contain the isSynthetic flag
@@ -867,7 +867,7 @@ open class Class(
              * Set isSynthetic in the given [flags]
              * (Sets the eighth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isSynthetic in
              * @return The flags with the isSynthetic flag set
@@ -880,7 +880,7 @@ open class Class(
             /**
              * Get isAnnotation from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isAnnotation from
              * @return If the flags contain the isAnnotation flag
@@ -893,7 +893,7 @@ open class Class(
              * Set isAnnotation in the given [flags]
              * (Sets the ninth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isAnnotation in
              * @return The flags with the isAnnotation flag set
@@ -906,7 +906,7 @@ open class Class(
             /**
              * Get isEnum from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isEnum from
              * @return If the flags contain the isEnum flag
@@ -919,7 +919,7 @@ open class Class(
              * Set isEnum in the given [flags]
              * (Sets the tenth bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isEnum in
              * @return The flags with the isEnum flag set
@@ -932,7 +932,7 @@ open class Class(
             /**
              * Get isObject from the given [flags]
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to get the isObject from
              * @return If the flags contain the isObject flag
@@ -945,7 +945,7 @@ open class Class(
              * Set isObject in the given [flags]
              * (Sets the eleventh bit of the [flags])
              *
-             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
              *
              * @param flags The flags to set the isObject in
              * @return The flags with the isObject flag set
@@ -959,9 +959,9 @@ open class Class(
         /**
          * Reads a [Class] from the given [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#classes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#classes)
          *
-         * @param pool The [ConstantPool] of the storage format containing the class
+         * @param pool The [ConstantPool] of the map format containing the class
          * @param stream The [DataInputStream] to read the class from
          * @return The read [Class]
          * @since 0.1.0
@@ -999,7 +999,7 @@ open class Class(
 /**
  * A mutable class that represents a class in the bytecode
  *
- * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+ * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#classes)
  *
  * @property nameConstant The constant of the name of the class
  * @property superNameConstant The constant of the super name of the class
@@ -1029,7 +1029,7 @@ class MutableClass(
      * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
      * that represents the name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-name-index)
      *
      * @see name
      * @since 0.1.0
@@ -1041,7 +1041,7 @@ class MutableClass(
      * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
      * that represents the super name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-super-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-super-index)
      *
      * @see superName
      * @since 0.1.0
@@ -1052,7 +1052,7 @@ class MutableClass(
     /**
      * The flags of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -1062,7 +1062,7 @@ class MutableClass(
     /**
      * The constants of the interfaces of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#classes)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -1078,7 +1078,7 @@ class MutableClass(
     /**
      * The [MutableConstantPool] of the class
      *
-     * See [ConstantPool Specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool)
+     * See [ConstantPool Specification](https://spec.shakelang.com/bytecode/map-format#constant-pool)
      *
      * This function is just a cast of the [pool] property
      * This is a safe cast, because the [pool] property is always a [MutableConstantPool]
@@ -1093,7 +1093,7 @@ class MutableClass(
     /**
      * The subclasses of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#class-subclasses
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#class-subclasses
      *
      * This function is just a cast of the [subClasses] property
      * This is a safe cast, because the [subClasses] property is always a [MutableList]
@@ -1109,7 +1109,7 @@ class MutableClass(
     /**
      * The methods of the class
      *
-     * See [Method Specification](https://spec.shakelang.com/bytecode/storage-format#class-methods)
+     * See [Method Specification](https://spec.shakelang.com/bytecode/map-format#class-methods)
      *
      * This function is just a cast of the [methods] property
      * This is a safe cast, because the [methods] property is always a [MutableList]
@@ -1125,7 +1125,7 @@ class MutableClass(
     /**
      * The subclasses of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#class-subclasses
+     * See [Class Specification](https://spec.shakelang.com/bytecode/map-format#class-subclasses
      *
      * This function is just a cast of the [subClasses] property
      * This is a safe cast, because the [subClasses] property is always a [MutableList]
@@ -1141,7 +1141,7 @@ class MutableClass(
     /**
      * The attributes of the class
      *
-     * See [Attribute Specification](https://spec.shakelang.com/bytecode/storage-format#class-attributes)
+     * See [Attribute Specification](https://spec.shakelang.com/bytecode/map-format#class-attributes)
      *
      * This function is just a cast of the [attributes] property
      * This is a safe cast, because the [attributes] property is always a [MutableList]
@@ -1158,7 +1158,7 @@ class MutableClass(
      * Is the class public?
      * (Checks if the first bit of the [flags] is set / sets the first bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1174,7 +1174,7 @@ class MutableClass(
      * Is the class private?
      * (Checks if the second bit of the [flags] is set / sets the second bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1190,7 +1190,7 @@ class MutableClass(
      * Is the class protected?
      * (Checks if the third bit of the [flags] is set / sets the third bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1206,7 +1206,7 @@ class MutableClass(
      * Is the class static?
      * (Checks if the fourth bit of the [flags] is set / sets the fourth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1221,7 +1221,7 @@ class MutableClass(
      * Is the class final?
      * (Checks if the fifth bit of the [flags] is set / sets the fifth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1237,7 +1237,7 @@ class MutableClass(
      * Is the class an interface?
      * (Checks if the sixth bit of the [flags] is set / sets the sixth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1253,7 +1253,7 @@ class MutableClass(
      * Is the class abstract?
      * (Checks if the seventh bit of the [flags] is set / sets the seventh bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1269,7 +1269,7 @@ class MutableClass(
      * Is the class synthetic?
      * (Checks if the eighth bit of the [flags] is set / sets the eighth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1285,7 +1285,7 @@ class MutableClass(
      * Is the class an annotation?
      * (Checks if the ninth bit of the [flags] is set / sets the ninth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1301,7 +1301,7 @@ class MutableClass(
      * Is the class an enum?
      * (Checks if the tenth bit of the [flags] is set / sets the tenth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1317,7 +1317,7 @@ class MutableClass(
      * Is the class an object?
      * (Checks if the eleventh bit of the [flags] is set / sets the eleventh bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -1332,7 +1332,7 @@ class MutableClass(
     /**
      * The name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-name-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-name-index)
      *
      * @see nameConstant
      * @since 0.1.0
@@ -1347,7 +1347,7 @@ class MutableClass(
     /**
      * The super name of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-super-index)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-super-index)
      *
      * @see superNameConstant
      * @since 0.1.0
@@ -1362,7 +1362,7 @@ class MutableClass(
     /**
      * The interfaces of the class
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-interfaces)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format/#class-interfaces)
      *
      * @see interfacesConstants
      * @since 0.1.0
@@ -1387,26 +1387,24 @@ class MutableClass(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun fromClass(pool: MutableConstantPool, clazz: Class): MutableClass {
-            return MutableClass(
-                pool,
-                clazz.nameConstant,
-                clazz.superNameConstant,
-                clazz.flags,
-                clazz.interfacesConstants.toMutableList(),
-                clazz.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
-                clazz.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
-                clazz.subClasses.map { fromClass(pool, it) }.toMutableList(),
-                clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
-            )
-        }
+        fun fromClass(pool: MutableConstantPool, clazz: Class): MutableClass = MutableClass(
+            pool,
+            clazz.nameConstant,
+            clazz.superNameConstant,
+            clazz.flags,
+            clazz.interfacesConstants.toMutableList(),
+            clazz.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
+            clazz.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
+            clazz.subClasses.map { fromClass(pool, it) }.toMutableList(),
+            clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
+        )
 
         /**
          * Reads a [MutableClass] from the given [stream]
          *
-         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#classes)
+         * [Specification](https://spec.shakelang.com/bytecode/map-format/#classes)
          *
-         * @param pool The [MutableConstantPool] of the storage format containing the class
+         * @param pool The [MutableConstantPool] of the map format containing the class
          * @param stream The [DataInputStream] to read the class from
          * @return The read [MutableClass]
          * @since 0.1.0

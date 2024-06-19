@@ -6,7 +6,7 @@ import com.shakelang.util.io.streaming.input.bytes.byteStream
 /**
  * A type (of a field, method, parameter, variable, etc.)
  *
- * [Specification](https://spec.shakelang.com/bytecode/storage-format#type-descriptors)
+ * [Specification](https://spec.shakelang.com/bytecode/map-format#type-descriptors)
  *
  * @since 0.1.0
  * @version 0.1.0
@@ -17,7 +17,7 @@ interface TypeDescriptor {
     /**
      * Get the string representation of the [TypeDescriptor]
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#type-descriptors)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#type-descriptors)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -25,7 +25,7 @@ interface TypeDescriptor {
     val descriptor: String
 
     /**
-     * Get the size for a primitive storage of this type
+     * Get the size for a primitive map of this type
      * Objects and arrays are stored as pointers and therefore always
      * have a size of 8
      *
@@ -39,7 +39,7 @@ interface TypeDescriptor {
      *
      * It has the descriptor `B` and a size of 1
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#byte)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#byte)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -72,7 +72,7 @@ interface TypeDescriptor {
      * A [ShortType] represents the primitive type `shorts` in shake
      * It has the descriptor `S` and a size of 2
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#shorts)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#shorts)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -102,7 +102,7 @@ interface TypeDescriptor {
      * A [IntType] represents the primitive type `int` in shake
      * It has the descriptor `I` and a size of 4
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#int)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#int)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -135,7 +135,7 @@ interface TypeDescriptor {
      * A [LongType] represents the primitive type `long` in shake
      * It has the descriptor `J` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#long)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#long)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -168,7 +168,7 @@ interface TypeDescriptor {
      * A [UnsignedByteType] represents the primitive type `ubyte` in shake
      * It has the descriptor `b` and a size of 1
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ubyte)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#ubyte)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -201,7 +201,7 @@ interface TypeDescriptor {
      * A [UnsignedShortType] represents the primitive type `ushort` in shake
      * It has the descriptor `s` and a size of 2
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ushort)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#ushort)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -234,7 +234,7 @@ interface TypeDescriptor {
      * A [UnsignedIntType] represents the primitive type `uint` in shake
      * It has the descriptor `i` and a size of 4
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#uint)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#uint)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -267,7 +267,7 @@ interface TypeDescriptor {
      * A [UnsignedLongType] represents the primitive type `ulong` in shake
      * It has the descriptor `j` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ulong)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#ulong)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -300,7 +300,7 @@ interface TypeDescriptor {
      * A [FloatType] represents the primitive type `float` in shake
      * It has the descriptor `F` and a size of 4
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#float)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#float)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -333,7 +333,7 @@ interface TypeDescriptor {
      * A [DoubleType] represents the primitive type `double` in shake
      * It has the descriptor `D` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#double)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -366,7 +366,7 @@ interface TypeDescriptor {
      * A [CharType] represents the primitive type `char` in shake
      * It has the descriptor `C` and a size of 2
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#char)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#char)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -399,7 +399,7 @@ interface TypeDescriptor {
      * A [BooleanType] represents the primitive type `boolean` in shake
      * It has the descriptor `Z` and a size of 1
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#boolean)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#boolean)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -432,7 +432,7 @@ interface TypeDescriptor {
      * A [VoidType] represents the primitive type `void` in shake
      * It has the descriptor `V` and a size of 0
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#void)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#void)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -495,7 +495,7 @@ interface TypeDescriptor {
      *
      * Objects can be generic, so they can have generic types
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#Objects)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#Objects)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -568,7 +568,7 @@ interface TypeDescriptor {
      * An [ArrayType] represents an array type in shake
      * It has the descriptor `[<type>;` and a size of 8
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format#Arrays)
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#Arrays)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -608,9 +608,7 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        override fun hashCode(): Int {
-            return type.hashCode()
-        }
+        override fun hashCode(): Int = type.hashCode()
     }
 
     companion object {
