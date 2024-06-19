@@ -3,6 +3,7 @@ package com.shakelang.shake.processor.program.types
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.util.primitives.bits.*
 
 /**
  * Represents a constructor in the Shake language.
@@ -45,6 +46,18 @@ interface ShakeConstructor : ShakeInvokable {
      * Indicates if the constructor is native, i.e., implemented in a language other than Shake.
      */
     val isNative: Boolean
+
+    /**
+     * The flags of the constructor.
+     */
+    val flags: Short
+        get() =
+            (0).toShort()
+                .withBit0(isStrict)
+                .withBit1(isPrivate)
+                .withBit2(isProtected)
+                .withBit3(isPublic)
+                .withBit4(isNative)
 
     /**
      * The name of the constructor. It may be null for anonymous constructors.
@@ -90,18 +103,16 @@ interface ShakeConstructor : ShakeInvokable {
      *
      * @return A map containing the JSON representation of the constructor.
      */
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "class" to clazz.toJson(),
-            "body" to body?.toJson(),
-            "isStrict" to isStrict,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic,
-            "name" to name,
-            "parameters" to parameters.map { it.toJson() },
-        )
-    }
+    override fun toJson(): Map<String, Any?> = mapOf(
+        "class" to clazz.toJson(),
+        "body" to body?.toJson(),
+        "isStrict" to isStrict,
+        "isPrivate" to isPrivate,
+        "isProtected" to isProtected,
+        "isPublic" to isPublic,
+        "name" to name,
+        "parameters" to parameters.map { it.toJson() },
+    )
 
     /**
      * Performs the third phase of the constructor processing.

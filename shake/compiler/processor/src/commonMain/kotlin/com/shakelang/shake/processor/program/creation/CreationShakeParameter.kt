@@ -13,21 +13,19 @@ class CreationShakeParameter(
     override val type: ShakeType,
     override var actualValue: CreationShakeValue? = null,
     override var actualType: ShakeType = type,
-) : ShakeParameter, CreationShakeDeclaration {
+) : ShakeParameter,
+    CreationShakeDeclaration {
 
     // TODO: THESE MAY NOT BE UNIQUE
+
     override val qualifiedName: String
         get() = name
     override val uniqueName: String
         get() = name
 
-    override fun use(scope: CreationShakeScope): CreationShakeUsage {
-        return CreationShakeVariableUsage(scope, this)
-    }
+    override fun use(scope: CreationShakeScope): CreationShakeUsage = CreationShakeVariableUsage(scope, this)
 
-    override fun access(scope: CreationShakeScope): CreationShakeValue {
-        return CreationShakeVariableUsage(scope, this)
-    }
+    override fun access(scope: CreationShakeScope): CreationShakeValue = CreationShakeVariableUsage(scope, this)
 
     override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
         val typeAssign = type.assignType(other, scope)
@@ -128,10 +126,8 @@ class CreationShakeParameter(
         return null
     }
 
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "type" to type.toJson(),
-        )
-    }
+    override fun toJson(): Map<String, Any?> = mapOf(
+        "name" to name,
+        "type" to type.toJson(),
+    )
 }

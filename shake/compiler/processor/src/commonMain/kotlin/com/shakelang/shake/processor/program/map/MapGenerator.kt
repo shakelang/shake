@@ -41,9 +41,6 @@ class MapGenerator(
         // Package name
         output.writeUTF8(pkg.name)
 
-        // Class count
-        output.writeUnsignedShort(pkg.classes.size.toUShort())
-
         // Subpackage count
         output.writeUnsignedShort(pkg.subpackages.size.toUShort())
 
@@ -107,6 +104,14 @@ class MapGenerator(
             store(subclass)
         }
 
+        // Constructor count
+        output.writeUnsignedShort(cls.constructors.size.toUShort())
+
+        // Store all constructors
+        for (constructor in cls.constructors) {
+            store(constructor)
+        }
+
         // Method count
         output.writeUnsignedShort((cls.methods.size + cls.staticMethods.size).toUShort())
 
@@ -129,6 +134,22 @@ class MapGenerator(
 
         for (field in cls.staticFields) {
             store(field)
+        }
+    }
+
+    fun store(constructor: CreationShakeConstructor) {
+        // Constructor name
+        output.writeUTF8(constructor.name)
+
+        // Constructor flags
+        output.writeShort(constructor.flags)
+
+        // Parameter count
+        output.writeUnsignedShort(constructor.parameters.size.toUShort())
+
+        // Store all parameters
+        for (parameter in constructor.parameters) {
+            store(parameter)
         }
     }
 
