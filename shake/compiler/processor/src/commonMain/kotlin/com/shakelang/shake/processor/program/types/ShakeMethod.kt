@@ -92,6 +92,12 @@ interface ShakeMethod : ShakeInvokable {
     val isOperator: Boolean
 
     /**
+     * Is this method an extension method?
+     */
+    val isExtension: Boolean
+        get() = expanding != null
+
+    /**
      * The method's flags
      */
     val flags: Short get() =
@@ -106,6 +112,7 @@ interface ShakeMethod : ShakeInvokable {
             .withBit7(isPublic)
             .withBit8(isNative)
             .withBit9(isOperator)
+            .withBit10(isExtension)
 
     /**
      * The type this method expands (int.toString() -> String)

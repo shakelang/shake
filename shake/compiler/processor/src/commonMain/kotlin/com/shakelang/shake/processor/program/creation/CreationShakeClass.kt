@@ -130,7 +130,7 @@ private constructor(
         debug("phases", "Phase 2 of class $qualifiedName")
 
         superClassNames.forEach {
-            val superClass = parentScope.getClass(it.toString()) ?: throw IllegalStateException("Superclass $it not found in classpath")
+            val superClass = parentScope.getClass(it.joinToString(".")) ?: throw IllegalStateException("Superclass ${it.joinToString(".")} not found in classpath")
 
             if (superClass.isInterface) {
                 this._interfaces.add(superClass)

@@ -1,104 +1,8 @@
 package com.shakelang.shake.processor.program.map
 
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.program.map.information.*
 import com.shakelang.util.io.streaming.input.bytes.DataInputStream
-
-class PackageInformation(
-    val name: String,
-    val subpackages: List<PackageInformation>,
-    val classInformation: List<ClassInformation>,
-    val methodInformation: List<MethodInformation>,
-    val fieldInformation: List<FieldInformation>,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "package",
-        "name" to name,
-        "subpackages" to subpackages.map { it.json() },
-        "classInformation" to classInformation.map { it.json() },
-        "methodInformation" to methodInformation.map { it.json() },
-        "fieldInformation" to fieldInformation.map { it.json() },
-    )
-}
-
-class ClassInformation(
-    val name: String,
-    val flags: Short,
-    val superClass: String,
-    val interfaces: List<String>,
-    val methodInformation: List<MethodInformation>,
-    val fieldInformation: List<FieldInformation>,
-    val constructorInformation: List<ConstructorInformation>,
-    val classInformation: List<ClassInformation>,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "class",
-        "name" to name,
-        "flags" to flags,
-        "superClass" to superClass,
-        "interfaces" to interfaces,
-        "methodInformation" to methodInformation.map { it.json() },
-        "fieldInformation" to fieldInformation.map { it.json() },
-        "constructorInformation" to constructorInformation.map { it.json() },
-        "classInformation" to classInformation.map { it.json() },
-    )
-}
-
-class MethodInformation(
-    val name: String,
-    val flags: Short,
-    val parameters: List<ParameterInformation>,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "method",
-        "name" to name,
-        "flags" to flags,
-        "parameters" to parameters.map { it.json() },
-    )
-}
-
-class FieldInformation(
-    val name: String,
-    val flags: Short,
-    val type: String,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "field",
-        "name" to name,
-        "flags" to flags,
-        "type" to type,
-    )
-}
-
-class ConstructorInformation(
-    val flags: Short,
-    val parameters: List<ParameterInformation>,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "constructor",
-        "flags" to flags,
-        "parameters" to parameters.map { it.json() },
-    )
-}
-
-class ParameterInformation(
-    val name: String,
-    val type: String,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "parameter",
-        "name" to name,
-        "type" to type,
-    )
-}
-
-class ProjectInformation(
-    val packages: List<PackageInformation>,
-) {
-    fun json(): Map<String, Any> = mapOf(
-        "type" to "project",
-        "packages" to packages.map { it.json() },
-    )
-}
 
 class MapReader(
     val inputStream: DataInputStream,
@@ -202,23 +106,16 @@ class MapReader(
             fieldInformation.add(readField(parent))
         }
 
-        return ClassInformation(name, flags, superClass, interfaces, methodInformation, fieldInformation, constructorInformation, classInformation)
+        return ClassInformation(name, flags, superClass, interfaces, classInformation, constructorInformation, methodInformation, fieldInformation)
     }
 
-    fun readMethod(parent: PackageInformation): MethodInformation {
-        val name = inputStream.readUTF8()
+    private fun readMethod(parent: PackageInformation): MethodInformation {
+        val signa = inputStream.readUTF8()
         val flags = inputStream.readShort()
-
-        val parameterCount = inputStream.readUnsignedShort().toInt()
-        val parameters = mutableListOf<ParameterInformation>()
-        for (i in 0 until parameterCount) {
-            parameters.add(buildParameter())
-        }
-
-        return MethodInformation(name, flags, parameters)
+        return MethodInformation(signa, flags)
     }
 
-    fun readField(parent: PackageInformation): FieldInformation {
+    private fun readField(parent: PackageInformation): FieldInformation {
         val name = inputStream.readUTF8()
         val flags = inputStream.readShort()
         val type = inputStream.readUTF8()
@@ -226,19 +123,8 @@ class MapReader(
     }
 
     fun readConstructor(parent: PackageInformation): ConstructorInformation {
-        val name = inputStream.readUTF8()
+        val signatur = inputStream.readUTF8()
         val flags = inputStream.readShort()
-        val parameterCount = inputStream.readUnsignedShort().toInt()
-        val parameters = mutableListOf<ParameterInformation>()
-        for (i in 0 until parameterCount) {
-            parameters.add(buildParameter())
-        }
-        return ConstructorInformation(flags, parameters)
-    }
-
-    fun buildParameter(): ParameterInformation {
-        val name = inputStream.readUTF8()
-        val type = inputStream.readUTF8()
-        return ParameterInformation(name, type)
+        return ConstructorInformation(signatur, flags)
     }
 }
