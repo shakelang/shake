@@ -14,7 +14,7 @@ class MapGenerator(
     constructor(output: OutputStream) : this(DataOutputStream(output))
 
     companion object {
-        const val MAGIC_NUMBER: Short = 0x5348
+        const val MAGIC_NUMBER: Int = 0x4a16a479
     }
 
     val configuration = StorageConfiguration()
@@ -23,16 +23,16 @@ class MapGenerator(
 
     fun store(project: ProjectInformation) {
         // Magic number
-        output.writeShort(MAGIC_NUMBER)
+        output.writeIntBE(MAGIC_NUMBER)
 
         // Major version
-        output.writeByte(0)
+        output.writeShort(0)
 
         // Minor version
-        output.writeByte(1)
+        output.writeShort(1)
 
         // Package count
-        output.writeUnsignedShort(project.packages.size.toUShort())
+        output.writeUnsignedShortBE(project.packages.size.toUShort())
 
         // Store all packages
         for (pkg in project.packages) {
@@ -45,7 +45,7 @@ class MapGenerator(
         output.writeUTF8(pkg.name)
 
         // Subpackage count
-        output.writeUnsignedShort(pkg.subpackages.size.toUShort())
+        output.writeUnsignedShortBE(pkg.subpackages.size.toUShort())
 
         // Store all subpackages
         for (spkg in pkg.subpackages) {
@@ -53,7 +53,7 @@ class MapGenerator(
         }
 
         // Class count
-        output.writeUnsignedShort(pkg.classInformation.size.toUShort())
+        output.writeUnsignedShortBE(pkg.classInformation.size.toUShort())
 
         // Store all classes
         for (cls in pkg.classInformation) {
@@ -61,7 +61,7 @@ class MapGenerator(
         }
 
         // Method count
-        output.writeUnsignedShort(pkg.methodInformation.size.toUShort())
+        output.writeUnsignedShortBE(pkg.methodInformation.size.toUShort())
 
         // Store all methods
         for (method in pkg.methodInformation) {
@@ -69,7 +69,7 @@ class MapGenerator(
         }
 
         // Field count
-        output.writeUnsignedShort(pkg.fieldInformation.size.toUShort())
+        output.writeUnsignedShortBE(pkg.fieldInformation.size.toUShort())
 
         // Store all fields
         for (field in pkg.fieldInformation) {
@@ -82,13 +82,13 @@ class MapGenerator(
         output.writeUTF8(cls.name)
 
         // Class flags
-        output.writeShort(cls.flags)
+        output.writeShortBE(cls.flags)
 
         // Superclass name
         output.writeUTF8(cls.superClass)
 
         // Interface count
-        output.writeUnsignedShort(cls.interfaces.size.toUShort())
+        output.writeUnsignedShortBE(cls.interfaces.size.toUShort())
 
         // Store all interfaces
         for (inter in cls.interfaces) {
@@ -96,7 +96,7 @@ class MapGenerator(
         }
 
         // Subclass count
-        output.writeUnsignedShort(cls.classInformation.size.toUShort())
+        output.writeUnsignedShortBE(cls.classInformation.size.toUShort())
 
         // Store all subclasses
         for (subclass in cls.classInformation) {
@@ -104,7 +104,7 @@ class MapGenerator(
         }
 
         // Constructor count
-        output.writeUnsignedShort(cls.constructorInformation.size.toUShort())
+        output.writeUnsignedShortBE(cls.constructorInformation.size.toUShort())
 
         // Store all constructors
         for (constructor in cls.constructorInformation) {
@@ -112,7 +112,7 @@ class MapGenerator(
         }
 
         // Method count
-        output.writeUnsignedShort(cls.methodInformation.size.toUShort())
+        output.writeUnsignedShortBE(cls.methodInformation.size.toUShort())
 
         // Store all methods
         for (method in cls.methodInformation) {
@@ -120,7 +120,7 @@ class MapGenerator(
         }
 
         // Field count
-        output.writeUnsignedShort(cls.fieldInformation.size.toUShort())
+        output.writeUnsignedShortBE(cls.fieldInformation.size.toUShort())
 
         // Store all fields
         for (field in cls.fieldInformation) {
@@ -133,7 +133,7 @@ class MapGenerator(
         output.writeUTF8(constructor.signature)
 
         // Constructor flags
-        output.writeShort(constructor.flags)
+        output.writeShortBE(constructor.flags)
     }
 
     fun store(method: MethodInformation) {
@@ -141,7 +141,7 @@ class MapGenerator(
         output.writeUTF8(method.signature)
 
         // Method flags
-        output.writeShort(method.flags)
+        output.writeShortBE(method.flags)
     }
 
     fun store(field: FieldInformation) {
@@ -149,7 +149,7 @@ class MapGenerator(
         output.writeUTF8(field.name)
 
         // Field flags
-        output.writeShort(field.flags)
+        output.writeShortBE(field.flags)
 
         // Field type
         output.writeUTF8(field.type)

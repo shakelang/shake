@@ -38,6 +38,7 @@ include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
 include(":shake:compiler:jsgenerator")
 include(":shake:compiler:processor")
+include(":shake:compiler:descriptor")
 
 include(":bin:cli")
 include(":bin:cli:jvm")
