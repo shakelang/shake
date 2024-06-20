@@ -54,10 +54,12 @@ abstract class ShakeProcessor<T> {
     }
 }
 
-open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
+open class ShakePackageBasedProcessor(
+    project: CreationShakeProject = CreationShakeProject(ShakeASTProcessor()),
+) : ShakeProcessor<CreationShakeProject>() {
 
-    val codeProcessor = ShakeASTProcessor()
-    open val project = CreationShakeProject(codeProcessor)
+    open val project = project
+
     override val src: CreationShakeProject
         get() = project
 

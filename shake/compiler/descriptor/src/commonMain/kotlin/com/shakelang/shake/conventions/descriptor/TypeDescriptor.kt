@@ -1,4 +1,4 @@
-package com.shakelang.shake.bytecode.interpreter.format.descriptor
+package com.shakelang.shake.conventions.descriptor
 
 import com.shakelang.util.io.streaming.input.bytes.InputStream
 import com.shakelang.util.io.streaming.input.bytes.byteStream
@@ -462,6 +462,16 @@ interface TypeDescriptor {
     }
 
     /**
+     * A [DynamicType] is a type that can be anything
+     */
+    object DynamicType : TypeDescriptor {
+        override val descriptor: String
+            get() = "?"
+        override val byteSize: Int
+            get() = 8
+    }
+
+    /**
      * A [NewType] is a symbolic type. It is used to represent an anonymous pointer
      * to a new object created by a constructor call.
      */
@@ -768,6 +778,12 @@ interface TypeDescriptor {
         val NEW_TYPE = NewType
 
         /**
+         * A [DynamicType] is a type that can be anything
+         * This is a shortcut for [TypeDescriptor.DynamicType]
+         */
+        val DYNAMIC_TYPE = DynamicType
+
+        /**
          * Parse a [TypeDescriptor] from an [InputStream]
          * @since 0.1.0
          * @version 0.1.0
@@ -781,13 +797,14 @@ interface TypeDescriptor {
                 'b' -> return UNSIGNED_BYTE
                 's' -> return UNSIGNED_SHORT
                 'i' -> return UNSIGNED_INT
-                'l' -> return UNSIGNED_LONG
+                'j' -> return UNSIGNED_LONG
                 'F' -> return FLOAT
                 'D' -> return DOUBLE
                 'C' -> return CHAR
                 'Z' -> return BOOLEAN
                 'V' -> return VOID
                 'N' -> return NEW_TYPE
+                '?' -> return DYNAMIC_TYPE
                 '[' -> return ArrayType(parse(name))
                 'L' -> {
                     val className = StringBuilder()

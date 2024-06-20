@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 import com.shakelang.util.io.streaming.input.bytes.BufferedInputStream
 import com.shakelang.util.io.streaming.input.bytes.InputStream
 import com.shakelang.util.io.streaming.input.bytes.bufferedStream

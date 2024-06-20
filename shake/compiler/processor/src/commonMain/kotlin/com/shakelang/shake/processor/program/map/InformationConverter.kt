@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.map
 
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescriptor
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.*
 import com.shakelang.shake.processor.program.map.information.*
@@ -77,6 +77,11 @@ object InformationConverter {
             info.signature,
             info.flags,
         )
+
+    fun recreate(info: ProjectInformation): CreationShakeProject {
+        val recreator = InformationRecreator()
+        return recreator.recreate(info)
+    }
 }
 
 class InformationRecreator(
@@ -132,6 +137,8 @@ class InformationRecreator(
                 recreate(it, pack)
             },
         )
+
+        packageList.add(info to pack)
 
         return pack
     }
@@ -233,6 +240,7 @@ class InformationRecreator(
         is TypeDescriptor.CharType -> CreationShakeType.Primitives.CHAR
         is TypeDescriptor.BooleanType -> CreationShakeType.Primitives.BOOLEAN
         is TypeDescriptor.VoidType -> CreationShakeType.Primitives.VOID
+        is TypeDescriptor.DynamicType -> CreationShakeType.Primitives.DYNAMIC
         is TypeDescriptor.NewType -> throw Exception("NewType not supported")
         is TypeDescriptor.ArrayType -> CreationShakeType.array(recreateType(type.type))
         is TypeDescriptor.ObjectType -> CreationShakeType.objectType(project.getClass(type.className) ?: error("Class '${type.className}' not found"))
