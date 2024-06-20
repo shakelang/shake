@@ -129,19 +129,20 @@ interface ShakeClass {
      */
     val isNative: Boolean
 
-    val flags: Short get() =
-        (0).toShort()
-            .withBit0(isInterface)
-            .withBit1(isEnum)
-            .withBit2(isAnnotation)
-            .withBit3(isObject)
-            .withBit4(isAbstract)
-            .withBit5(isFinal)
-            .withBit6(isStatic)
-            .withBit7(isPublic)
-            .withBit8(isPrivate)
-            .withBit9(isProtected)
-            .withBit10(isNative)
+    val flags: ShakeClassFlags get() =
+        ShakeClassFlags(
+            isInterface,
+            isEnum,
+            isAnnotation,
+            isObject,
+            isAbstract,
+            isFinal,
+            isStatic,
+            isPublic,
+            isPrivate,
+            isProtected,
+            isNative,
+        )
 
     /**
      * The instance methods of this class
@@ -384,4 +385,198 @@ interface ShakeClass {
      * Processor phase 4 action
      */
     fun phase4()
+
+    open class ShakeClassFlags(
+        flags: Short,
+    ) {
+
+        constructor(flags: Int) : this(flags.toShort())
+        constructor(
+            isInterface: Boolean = false,
+            isEnum: Boolean = false,
+            isAnnotation: Boolean = false,
+            isObject: Boolean = false,
+            isAbstract: Boolean = false,
+            isFinal: Boolean = false,
+            isStatic: Boolean = false,
+            isPublic: Boolean = false,
+            isPrivate: Boolean = false,
+            isProtected: Boolean = false,
+            isNative: Boolean = false,
+        ) : this(
+            (0).toShort()
+                .withBit0(isInterface)
+                .withBit1(isEnum)
+                .withBit2(isAnnotation)
+                .withBit3(isObject)
+                .withBit4(isAbstract)
+                .withBit5(isFinal)
+                .withBit6(isStatic)
+                .withBit7(isPublic)
+                .withBit8(isPrivate)
+                .withBit9(isProtected)
+                .withBit10(isNative),
+        )
+
+        var flags: Short = flags
+            protected set
+
+        open var isInterface: Boolean get() = flags.bit0
+            protected set(value) {
+                flags = flags.withBit0(value)
+            }
+
+        open var isEnum: Boolean get() = flags.bit1
+            protected set(value) {
+                flags = flags.withBit1(value)
+            }
+
+        open var isAnnotation: Boolean get() = flags.bit2
+            protected set(value) {
+                flags = flags.withBit2(value)
+            }
+
+        open var isObject: Boolean get() = flags.bit3
+            protected set(value) {
+                flags = flags.withBit3(value)
+            }
+
+        open var isAbstract: Boolean get() = flags.bit4
+            protected set(value) {
+                flags = flags.withBit4(value)
+            }
+
+        open var isFinal: Boolean get() = flags.bit5
+            protected set(value) {
+                flags = flags.withBit5(value)
+            }
+
+        open var isStatic: Boolean get() = flags.bit6
+            protected set(value) {
+                flags = flags.withBit6(value)
+            }
+
+        open var isPublic: Boolean get() = flags.bit7
+            protected set(value) {
+                flags = flags.withBit7(value)
+            }
+
+        open var isPrivate: Boolean get() = flags.bit8
+            protected set(value) {
+                flags = flags.withBit8(value)
+            }
+
+        open var isProtected: Boolean get() = flags.bit9
+            protected set(value) {
+                flags = flags.withBit9(value)
+            }
+
+        open var isNative: Boolean get() = flags.bit10
+            protected set(value) {
+                flags = flags.withBit10(value)
+            }
+
+        fun toFlags() = ShakeClassFlags(flags)
+        fun toMutableFlags() = ShakeMutableClassFlags(flags)
+
+        fun toShort() = flags
+    }
+
+    class ShakeMutableClassFlags(
+        flags: Short,
+    ) : ShakeClassFlags(flags) {
+        constructor(flags: Int) : this(flags.toShort())
+        constructor(
+            isInterface: Boolean = false,
+            isEnum: Boolean = false,
+            isAnnotation: Boolean = false,
+            isObject: Boolean = false,
+            isAbstract: Boolean = false,
+            isFinal: Boolean = false,
+            isStatic: Boolean = false,
+            isPublic: Boolean = false,
+            isPrivate: Boolean = false,
+            isProtected: Boolean = false,
+            isNative: Boolean = false,
+        ) : this(
+            (0).toShort()
+                .withBit0(isInterface)
+                .withBit1(isEnum)
+                .withBit2(isAnnotation)
+                .withBit3(isObject)
+                .withBit4(isAbstract)
+                .withBit5(isFinal)
+                .withBit6(isStatic)
+                .withBit7(isPublic)
+                .withBit8(isPrivate)
+                .withBit9(isProtected)
+                .withBit10(isNative),
+        )
+
+        override var isInterface: Boolean
+            get() = super.isInterface
+            set(value) {
+                super.isInterface = value
+            }
+
+        override var isEnum: Boolean
+            get() = super.isEnum
+            set(value) {
+                super.isEnum = value
+            }
+
+        override var isAnnotation: Boolean
+            get() = super.isAnnotation
+            set(value) {
+                super.isAnnotation = value
+            }
+
+        override var isObject: Boolean
+            get() = super.isObject
+            set(value) {
+                super.isObject = value
+            }
+
+        override var isAbstract: Boolean
+            get() = super.isAbstract
+            set(value) {
+                super.isAbstract = value
+            }
+
+        override var isFinal: Boolean
+            get() = super.isFinal
+            set(value) {
+                super.isFinal = value
+            }
+
+        override var isStatic: Boolean
+            get() = super.isStatic
+            set(value) {
+                super.isStatic = value
+            }
+
+        override var isPublic: Boolean
+            get() = super.isPublic
+            set(value) {
+                super.isPublic = value
+            }
+
+        override var isPrivate: Boolean
+            get() = super.isPrivate
+            set(value) {
+                super.isPrivate = value
+            }
+
+        override var isProtected: Boolean
+            get() = super.isProtected
+            set(value) {
+                super.isProtected = value
+            }
+
+        override var isNative: Boolean
+            get() = super.isNative
+            set(value) {
+                super.isNative = value
+            }
+    }
 }

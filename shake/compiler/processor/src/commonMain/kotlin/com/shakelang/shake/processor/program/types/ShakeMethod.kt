@@ -100,19 +100,19 @@ interface ShakeMethod : ShakeInvokable {
     /**
      * The method's flags
      */
-    val flags: Short get() =
-        (0).toShort()
-            .withBit0(isStatic)
-            .withBit1(isFinal)
-            .withBit2(isAbstract)
-            .withBit3(isSynchronized)
-            .withBit4(isStrict)
-            .withBit5(isPrivate)
-            .withBit6(isProtected)
-            .withBit7(isPublic)
-            .withBit8(isNative)
-            .withBit9(isOperator)
-            .withBit10(isExtension)
+    val flags: ShakeMethodFlags get() = ShakeMethodFlags(
+        isStatic,
+        isFinal,
+        isAbstract,
+        isSynchronized,
+        isStrict,
+        isPrivate,
+        isProtected,
+        isPublic,
+        isNative,
+        isOperator,
+        isExtension,
+    )
 
     /**
      * The type this method expands (int.toString() -> String)
@@ -191,4 +191,189 @@ interface ShakeMethod : ShakeInvokable {
      * Processor phase 4 action
      */
     fun phase4()
+
+    class Mutable
+
+    open class ShakeMethodFlags(
+        flags: Short,
+    ) {
+
+        var flags: Short = flags
+            protected set
+
+        constructor(flags: Int) : this(flags.toShort())
+
+        constructor(
+            isStatic: Boolean = false,
+            isFinal: Boolean = false,
+            isAbstract: Boolean = false,
+            isSynchronized: Boolean = false,
+            isStrict: Boolean = false,
+            isPrivate: Boolean = false,
+            isProtected: Boolean = false,
+            isPublic: Boolean = false,
+            isNative: Boolean = false,
+            isOperator: Boolean = false,
+            isExtension: Boolean = false,
+        ) : this(
+            0
+                .withBit0(isStatic)
+                .withBit1(isFinal)
+                .withBit2(isAbstract)
+                .withBit3(isSynchronized)
+                .withBit4(isStrict)
+                .withBit5(isPrivate)
+                .withBit6(isProtected)
+                .withBit7(isPublic)
+                .withBit8(isNative)
+                .withBit9(isOperator)
+                .withBit10(isExtension),
+        )
+
+        open var isStatic: Boolean get() = flags.bit0
+            protected set(value) {
+                flags = flags.withBit0(value)
+            }
+
+        open var isFinal: Boolean get() = flags.bit1
+            protected set(value) {
+                flags = flags.withBit1(value)
+            }
+
+        open var isAbstract: Boolean get() = flags.bit2
+            protected set(value) {
+                flags = flags.withBit2(value)
+            }
+
+        open var isSynchronized: Boolean get() = flags.bit3
+            protected set(value) {
+                flags = flags.withBit3(value)
+            }
+
+        open var isStrict: Boolean get() = flags.bit4
+            protected set(value) {
+                flags = flags.withBit4(value)
+            }
+
+        open var isPrivate: Boolean get() = flags.bit5
+            protected set(value) {
+                flags = flags.withBit5(value)
+            }
+
+        open var isProtected: Boolean get() = flags.bit6
+            protected set(value) {
+                flags = flags.withBit6(value)
+            }
+
+        open var isPublic: Boolean get() = flags.bit7
+            protected set(value) {
+                flags = flags.withBit7(value)
+            }
+
+        open var isNative: Boolean get() = flags.bit8
+            protected set(value) {
+                flags = flags.withBit8(value)
+            }
+
+        open var isOperator: Boolean get() = flags.bit9
+            protected set(value) {
+                flags = flags.withBit9(value)
+            }
+
+        open var isExtension: Boolean get() = flags.bit10
+            protected set(value) {
+                flags = flags.withBit10(value)
+            }
+
+        fun toFlags(): ShakeMethodFlags = ShakeMethodFlags(flags)
+        fun toMutableFlags(): MutableShakeMethodFlags = MutableShakeMethodFlags(flags)
+
+        fun toShort(): Short = flags
+    }
+
+    class MutableShakeMethodFlags(flags: Short) : ShakeMethodFlags(flags) {
+
+        constructor(flags: Int) : this(flags.toShort())
+        constructor(
+            isStatic: Boolean = false,
+            isFinal: Boolean = false,
+            isAbstract: Boolean = false,
+            isSynchronized: Boolean = false,
+            isStrict: Boolean = false,
+            isPrivate: Boolean = false,
+            isProtected: Boolean = false,
+            isPublic: Boolean = false,
+            isNative: Boolean = false,
+            isOperator: Boolean = false,
+            isExtension: Boolean = false,
+        ) : this(
+            0
+                .withBit0(isStatic)
+                .withBit1(isFinal)
+                .withBit2(isAbstract)
+                .withBit3(isSynchronized)
+                .withBit4(isStrict)
+                .withBit5(isPrivate)
+                .withBit6(isProtected)
+                .withBit7(isPublic)
+                .withBit8(isNative)
+                .withBit9(isOperator)
+                .withBit10(isExtension),
+        )
+
+        override var isStatic: Boolean get() = super.isStatic
+            set(value) {
+                super.isStatic = value
+            }
+
+        override var isFinal: Boolean get() = super.isFinal
+            set(value) {
+                super.isFinal = value
+            }
+
+        override var isAbstract: Boolean get() = super.isAbstract
+            set(value) {
+                super.isAbstract = value
+            }
+
+        override var isSynchronized: Boolean get() = super.isSynchronized
+            set(value) {
+                super.isSynchronized = value
+            }
+
+        override var isStrict: Boolean get() = super.isStrict
+            set(value) {
+                super.isStrict = value
+            }
+
+        override var isPrivate: Boolean get() = super.isPrivate
+            set(value) {
+                super.isPrivate = value
+            }
+
+        override var isProtected: Boolean get() = super.isProtected
+            set(value) {
+                super.isProtected = value
+            }
+
+        override var isPublic: Boolean get() = super.isPublic
+            set(value) {
+                super.isPublic = value
+            }
+
+        override var isNative: Boolean get() = super.isNative
+            set(value) {
+                super.isNative = value
+            }
+
+        override var isOperator: Boolean get() = super.isOperator
+            set(value) {
+                super.isOperator = value
+            }
+
+        override var isExtension: Boolean get() = super.isExtension
+            set(value) {
+                super.isExtension = value
+            }
+    }
 }

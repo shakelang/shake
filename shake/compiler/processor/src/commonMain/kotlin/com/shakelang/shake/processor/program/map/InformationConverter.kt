@@ -8,7 +8,7 @@ object InformationConverter {
     fun toInformation(info: ShakeProject): ProjectInformation =
         ProjectInformation(
             info.subpackages.map {
-                InformationConverter.toInformation(it)
+                toInformation(it)
             },
         )
 
@@ -16,7 +16,7 @@ object InformationConverter {
         PackageInformation(
             info.name,
             info.subpackages.map {
-                InformationConverter.toInformation(it)
+                toInformation(it)
             },
             info.classes.map {
                 toInformation(it)
@@ -32,7 +32,7 @@ object InformationConverter {
     fun toInformation(info: ShakeClass): ClassInformation =
         ClassInformation(
             info.name,
-            info.flags,
+            info.flags.toShort(),
             info.superClass.signature,
             info.interfaces.map {
                 it.signature
@@ -54,13 +54,13 @@ object InformationConverter {
     fun toInformation(info: ShakeMethod): MethodInformation =
         MethodInformation(
             info.signature,
-            info.flags,
+            info.flags.toShort(),
         )
 
     fun toInformation(info: ShakeField): FieldInformation =
         FieldInformation(
             info.name,
-            info.flags,
+            info.flags.toShort(),
             info.type.qualifiedName,
         )
 
