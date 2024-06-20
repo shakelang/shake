@@ -1,12 +1,12 @@
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.heap.GarbageCollector
 import com.shakelang.shake.bytecode.interpreter.heap.GlobalMemory
 import com.shakelang.shake.bytecode.interpreter.heap.Malloc
 import com.shakelang.shake.bytecode.interpreter.natives.ShakeInterpreterProcess
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 import com.shakelang.util.primitives.bytes.*
 import com.shakelang.util.primitives.calc.shl
 import com.shakelang.util.primitives.calc.shr
@@ -100,13 +100,11 @@ class ShakeInterpreter {
     fun putFunctionOnStack(
         method: String,
         args: ByteArray,
-    ): ShakeCallStackElement {
-        return putFunctionOnStack(
-            classPath.getMethod(method)
-                ?: throw NullPointerException("Method $method not found"),
-            args,
-        )
-    }
+    ): ShakeCallStackElement = putFunctionOnStack(
+        classPath.getMethod(method)
+            ?: throw NullPointerException("Method $method not found"),
+        args,
+    )
 
     inner class ShakeCodeInterpreter(
         val code: ByteArray,
@@ -1118,8 +1116,9 @@ class ShakeInterpreter {
 
                     val array = malloc.malloc(size.toLong() * type.byteSize + 4)
                     globalMemory.setInt(array, size)
-                    for (i in 0 until size * type.byteSize)
+                    for (i in 0 until size * type.byteSize) {
                         globalMemory.setByte(array + 4 + i, 0)
+                    }
 
                     stack.push(array)
                 }

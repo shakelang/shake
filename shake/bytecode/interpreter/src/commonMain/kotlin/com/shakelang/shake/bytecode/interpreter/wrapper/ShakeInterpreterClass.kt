@@ -3,8 +3,8 @@ package com.shakelang.shake.bytecode.interpreter.wrapper
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 
 object ClassRegister {
 

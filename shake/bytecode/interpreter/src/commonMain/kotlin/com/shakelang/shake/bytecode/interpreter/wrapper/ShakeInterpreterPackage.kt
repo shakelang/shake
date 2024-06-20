@@ -6,7 +6,7 @@ import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 
 interface ShakeInterpreterPackage {
 

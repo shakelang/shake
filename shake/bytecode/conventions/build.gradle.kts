@@ -17,6 +17,7 @@ kotlin {
         implementation(project(":util:pointers"))
         implementation(project(":util:primitives"))
         implementation(project(":util:common-io"))
+        implementation(project(":shake:compiler:descriptor"))
         testImplementation(project(":util:testlib"))
     }
 }

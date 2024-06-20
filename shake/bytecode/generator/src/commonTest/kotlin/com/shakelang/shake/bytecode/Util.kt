@@ -5,17 +5,29 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
+import com.shakelang.shake.processor.program.map.InformationConverter
+import com.shakelang.shake.processor.program.map.information.ProjectInformation
 import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.io.streaming.output.bytes.ByteArrayOutputStream
 import com.shakelang.util.parseutils.CompilerError
 
-fun createBaseProcessor(): ShakePackageBasedProcessor {
+val baseInfo = createBaseInfo()
+
+fun createBaseInfo(): ProjectInformation {
     val processor = ShakePackageBasedProcessor()
     ShakeLib.forEachFile {
         processor.loadSynthetic(it.path, it.contentsAsString())
     }
+    val project = processor.finish()
+    return InformationConverter.toInformation(project)
+}
 
-    return processor
+/**
+ * Create a processor with the basic apis
+ */
+fun createBaseProcessor(): ShakePackageBasedProcessor {
+    val project = InformationConverter.recreate(baseInfo)
+    return ShakePackageBasedProcessor(project)
 }
 
 interface CodeSpec {

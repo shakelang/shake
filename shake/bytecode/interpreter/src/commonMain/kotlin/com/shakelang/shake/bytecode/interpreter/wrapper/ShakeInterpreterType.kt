@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 
 interface ShakeInterpreterType {
     val name: String
@@ -105,26 +105,24 @@ interface ShakeInterpreterType {
             override val byteSize: Int = 8
         }
 
-        fun of(storage: TypeDescriptor, classpath: ShakeInterpreterClasspath): ShakeInterpreterType {
-            return when (storage) {
-                is TypeDescriptor.ByteType -> BYTE
-                is TypeDescriptor.ShortType -> SHORT
-                is TypeDescriptor.IntType -> INT
-                is TypeDescriptor.LongType -> LONG
-                is TypeDescriptor.UnsignedByteType -> UNSIGNED_BYTE
-                is TypeDescriptor.UnsignedShortType -> UNSIGNED_SHORT
-                is TypeDescriptor.UnsignedIntType -> UNSIGNED_INT
-                is TypeDescriptor.UnsignedLongType -> UNSIGNED_LONG
-                is TypeDescriptor.FloatType -> FLOAT
-                is TypeDescriptor.DoubleType -> DOUBLE
-                is TypeDescriptor.CharType -> CHAR
-                is TypeDescriptor.BooleanType -> BOOLEAN
-                is TypeDescriptor.VoidType -> VOID
-                is TypeDescriptor.NewType -> NEW
-                is TypeDescriptor.ArrayType -> ArrayType(of(storage.type, classpath))
-                is TypeDescriptor.ObjectType -> ObjectType(classpath.getClass(storage.className)!!)
-                else -> throw IllegalArgumentException("Unknown type: ${storage::class.simpleName}")
-            }
+        fun of(storage: TypeDescriptor, classpath: ShakeInterpreterClasspath): ShakeInterpreterType = when (storage) {
+            is TypeDescriptor.ByteType -> BYTE
+            is TypeDescriptor.ShortType -> SHORT
+            is TypeDescriptor.IntType -> INT
+            is TypeDescriptor.LongType -> LONG
+            is TypeDescriptor.UnsignedByteType -> UNSIGNED_BYTE
+            is TypeDescriptor.UnsignedShortType -> UNSIGNED_SHORT
+            is TypeDescriptor.UnsignedIntType -> UNSIGNED_INT
+            is TypeDescriptor.UnsignedLongType -> UNSIGNED_LONG
+            is TypeDescriptor.FloatType -> FLOAT
+            is TypeDescriptor.DoubleType -> DOUBLE
+            is TypeDescriptor.CharType -> CHAR
+            is TypeDescriptor.BooleanType -> BOOLEAN
+            is TypeDescriptor.VoidType -> VOID
+            is TypeDescriptor.NewType -> NEW
+            is TypeDescriptor.ArrayType -> ArrayType(of(storage.type, classpath))
+            is TypeDescriptor.ObjectType -> ObjectType(classpath.getClass(storage.className)!!)
+            else -> throw IllegalArgumentException("Unknown type: ${storage::class.simpleName}")
         }
     }
 }
