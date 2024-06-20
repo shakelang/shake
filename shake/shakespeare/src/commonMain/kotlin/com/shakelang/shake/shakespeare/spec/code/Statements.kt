@@ -33,9 +33,7 @@ interface StatementSpec : AbstractSpec {
          */
         fun of(value: String): StatementSpec {
             return object : StatementSpec {
-                override fun generate(ctx: GenerationContext): String {
-                    return value
-                }
+                override fun generate(ctx: GenerationContext): String = value
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) return true
@@ -43,9 +41,7 @@ interface StatementSpec : AbstractSpec {
                     return value == other.generate(GenerationContext())
                 }
 
-                override fun hashCode(): Int {
-                    return value.hashCode()
-                }
+                override fun hashCode(): Int = value.hashCode()
             }
         }
     }
@@ -204,6 +200,7 @@ open class VariableDeclarationSpec(
          * @return The built [VariableDeclarationSpec]
          */
         fun build(): VariableDeclarationSpec {
+            if (value == null && isVal) throw IllegalStateException("Value not set for val")
             return VariableDeclarationSpec(
                 name ?: throw IllegalStateException("Name not set"),
                 type ?: throw IllegalStateException("Type not set"),
@@ -246,9 +243,7 @@ open class WhileSpec(
      * @param ctx The [GenerationContext] to use
      * @return The generated while loop
      */
-    override fun generate(ctx: GenerationContext): String {
-        return "while (${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
-    }
+    override fun generate(ctx: GenerationContext): String = "while (${condition.generate(ctx)}) ${body.generate(ctx.indent())}"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -315,12 +310,10 @@ open class WhileSpec(
          * Build the [WhileSpec]
          * @return The built [WhileSpec]
          */
-        fun build(): WhileSpec {
-            return WhileSpec(
-                condition ?: throw IllegalStateException("Condition not set"),
-                body ?: throw IllegalStateException("Body not set"),
-            )
-        }
+        fun build(): WhileSpec = WhileSpec(
+            condition ?: throw IllegalStateException("Condition not set"),
+            body ?: throw IllegalStateException("Body not set"),
+        )
     }
 
     companion object {
@@ -356,9 +349,7 @@ open class DoWhileSpec(
      * @param ctx The [GenerationContext] to use
      * @return The generated do while loop
      */
-    override fun generate(ctx: GenerationContext): String {
-        return "do ${body.generate(ctx.indent())} while (${condition.generate(ctx)})"
-    }
+    override fun generate(ctx: GenerationContext): String = "do ${body.generate(ctx.indent())} while (${condition.generate(ctx)})"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -425,12 +416,10 @@ open class DoWhileSpec(
          * Build the [DoWhileSpec]
          * @return The built [DoWhileSpec]
          */
-        fun build(): DoWhileSpec {
-            return DoWhileSpec(
-                body ?: throw IllegalStateException("Body not set"),
-                condition ?: throw IllegalStateException("Condition not set"),
-            )
-        }
+        fun build(): DoWhileSpec = DoWhileSpec(
+            body ?: throw IllegalStateException("Body not set"),
+            condition ?: throw IllegalStateException("Condition not set"),
+        )
     }
 
     companion object {
@@ -478,9 +467,7 @@ open class ForSpec(
      * @param ctx The [GenerationContext] to use
      * @return The generated for loop
      */
-    override fun generate(ctx: GenerationContext): String {
-        return "for (${init.generate(ctx)}; ${condition.generate(ctx)}; ${update.generate(ctx)}) ${body.generate(ctx.indent())}"
-    }
+    override fun generate(ctx: GenerationContext): String = "for (${init.generate(ctx)}; ${condition.generate(ctx)}; ${update.generate(ctx)}) ${body.generate(ctx.indent())}"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -601,14 +588,12 @@ open class ForSpec(
          * Build the [ForSpec]
          * @return The built [ForSpec]
          */
-        fun build(): ForSpec {
-            return ForSpec(
-                init ?: throw IllegalStateException("Init not set"),
-                condition ?: throw IllegalStateException("Condition not set"),
-                update ?: throw IllegalStateException("Update not set"),
-                body ?: throw IllegalStateException("Body not set"),
-            )
-        }
+        fun build(): ForSpec = ForSpec(
+            init ?: throw IllegalStateException("Init not set"),
+            condition ?: throw IllegalStateException("Condition not set"),
+            update ?: throw IllegalStateException("Update not set"),
+            body ?: throw IllegalStateException("Body not set"),
+        )
     }
 
     companion object {
@@ -747,13 +732,11 @@ open class IfSpec(
          * Build the [IfSpec]
          * @return The built [IfSpec]
          */
-        fun build(): IfSpec {
-            return IfSpec(
-                condition ?: throw IllegalStateException("Condition not set"),
-                body ?: throw IllegalStateException("Body not set"),
-                elseBody,
-            )
-        }
+        fun build(): IfSpec = IfSpec(
+            condition ?: throw IllegalStateException("Condition not set"),
+            body ?: throw IllegalStateException("Body not set"),
+            elseBody,
+        )
     }
 
     companion object {
@@ -783,9 +766,7 @@ open class ReturnSpec(
      * @param ctx The [GenerationContext] to use
      * @return The generated return statement
      */
-    override fun generate(ctx: GenerationContext): String {
-        return "return${if (value != null) " ${value!!.generate(ctx)}" else ""}"
-    }
+    override fun generate(ctx: GenerationContext): String = "return${if (value != null) " ${value!!.generate(ctx)}" else ""}"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -794,9 +775,7 @@ open class ReturnSpec(
         return true
     }
 
-    override fun hashCode(): Int {
-        return value?.hashCode() ?: this::class.hashCode()
-    }
+    override fun hashCode(): Int = value?.hashCode() ?: this::class.hashCode()
 
     /**
      * A builder for [ReturnSpec]
@@ -834,11 +813,9 @@ open class ReturnSpec(
          * Build the [ReturnSpec]
          * @return The built [ReturnSpec]
          */
-        fun build(): ReturnSpec {
-            return ReturnSpec(
-                value,
-            )
-        }
+        fun build(): ReturnSpec = ReturnSpec(
+            value,
+        )
     }
 
     companion object {
