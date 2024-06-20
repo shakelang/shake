@@ -111,15 +111,23 @@ class MapReader(
 
     private fun readMethod(parent: PackageInformation): MethodInformation {
         val signa = inputStream.readUTF8()
+
+        val parameterCount = inputStream.readUnsignedShortBE().toInt()
+        val parameterNames = mutableListOf<String>()
+        for (i in 0 until parameterCount) {
+            parameterNames.add(inputStream.readUTF8())
+        }
+
         val flags = inputStream.readShortBE()
-        return MethodInformation(signa, flags)
+        return MethodInformation(signa, parameterNames, flags)
     }
 
     private fun readField(parent: PackageInformation): FieldInformation {
         val name = inputStream.readUTF8()
         val flags = inputStream.readShortBE()
         val type = inputStream.readUTF8()
-        return FieldInformation(name, flags, type)
+        val expanding = inputStream.readUTF8()
+        return FieldInformation(name, flags, type, expanding)
     }
 
     fun readConstructor(parent: PackageInformation): ConstructorInformation {

@@ -18,13 +18,13 @@ val superClass = cl.lateinitSuper()
 val interfaces = cl.lateinitInterfaces(clz..size)
  *
  */
-private constructor(
+constructor(
     baseProject: CreationShakeProject,
     override val pkg: CreationShakePackage,
     override val parentScope: CreationShakeScope,
     override val clazz: ShakeClass?,
     override val name: String,
-    private val clz: ShakeClassDeclarationNode?,
+    private val declarationNode: ShakeClassDeclarationNode?,
     override val isAbstract: Boolean,
     override val isFinal: Boolean,
     override val isStatic: Boolean,
@@ -42,6 +42,9 @@ private constructor(
     constructors: List<CreationShakeConstructor>,
     private val superClassNames: List<Array<String>>,
 ) : ShakeClass {
+
+    // The phase of the class
+    private var phase: Byte = 0
 
     constructor(
         baseProject: CreationShakeProject,
@@ -72,6 +75,54 @@ private constructor(
         emptyList(),
         emptyList(),
         clz.superClasses.map { it.toArray() },
+    )
+
+    constructor(
+        project: CreationShakeProject,
+        name: String,
+        pkg: CreationShakePackage,
+        clazz: ShakeClass?,
+        scope: CreationShakeScope,
+        flags: ShakeClass.ShakeClassFlags,
+    ) : this(
+        project,
+        pkg,
+        scope,
+        clazz,
+        name,
+        null,
+        flags.isAbstract,
+        flags.isFinal,
+        flags.isStatic,
+        flags.isPublic,
+        flags.isPrivate,
+        flags.isProtected,
+        flags.isNative,
+        flags.isAnnotation,
+        flags.isEnum,
+        flags.isInterface,
+        flags.isObject,
+        emptyList(),
+        emptyList(),
+        emptyList(),
+        emptyList(),
+        emptyList(),
+    )
+
+    constructor(
+        project: CreationShakeProject,
+        name: String,
+        pkg: CreationShakePackage,
+        clazz: ShakeClass?,
+        scope: CreationShakeScope,
+        flags: Short,
+    ) : this(
+        project,
+        name,
+        pkg,
+        clazz,
+        scope,
+        ShakeClass.ShakeClassFlags(flags),
     )
 
     override val staticScope: StaticScope
@@ -105,9 +156,15 @@ private constructor(
     override fun phase1() {
         debug("phases", "Phase 1 of class $qualifiedName")
 
+        if (this.phase > 0) {
+            debug("phases", "Skipping phase 1 of class $qualifiedName")
+            return
+        }
+        this.phase = 1
+
         // Register all subclasses (will only be executed, if clz is not null)
         // In MapRebuilder this should just be ignored
-        clz?.classes?.forEach {
+        declarationNode?.classes?.forEach {
             if (it.isStatic) {
                 val clz = from(prj, pkg, this.staticScope, it)
                 this.classes.add(clz)
@@ -128,6 +185,12 @@ private constructor(
      */
     override fun phase2() {
         debug("phases", "Phase 2 of class $qualifiedName")
+
+        if (this.phase > 1) {
+            debug("phases", "Skipping phase 2 of class $qualifiedName")
+            return
+        }
+        this.phase = 2
 
         superClassNames.forEach {
             val superClass = parentScope.getClass(it.joinToString(".")) ?: throw IllegalStateException("Superclass ${it.joinToString(".")} not found in classpath")
@@ -160,19 +223,25 @@ private constructor(
     override fun phase3() {
         debug("phases", "Phase 3 of class $qualifiedName")
 
+        if (this.phase > 2) {
+            debug("phases", "Skipping phase 3 of class $qualifiedName")
+            return
+        }
+        this.phase = 3
+
         // This should only be executed if clz is not null
         // In MapRebuilder this should just be ignored
-        clz?.methods?.forEach {
+        declarationNode?.methods?.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val method = CreationShakeMethod.from(this, scope, it)
             this.methods.add(method)
         }
-        clz?.fields?.forEach {
+        declarationNode?.fields?.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val field = CreationShakeField.from(this, scope, it)
             this.fields.add(field)
         }
-        clz?.constructors?.forEach {
+        declarationNode?.constructors?.forEach {
             val constructor = CreationShakeConstructor.from(this, instanceScope, it)
             this.constructors.add(constructor)
         }
@@ -189,6 +258,13 @@ private constructor(
      */
     override fun phase4() {
         debug("phases", "Phase 4 of class $qualifiedName")
+
+        if (this.phase > 3) {
+            debug("phases", "Skipping phase 4 of class $qualifiedName")
+            return
+        }
+        this.phase = 4
+
         this.methods.forEach { it.phase4() }
         this.staticMethods.forEach { it.phase4() }
         this.fields.forEach { it.phase4() }
@@ -379,5 +455,17 @@ private constructor(
             parentScope: CreationShakeScope,
             clz: ShakeClassDeclarationNode,
         ): CreationShakeClass = CreationShakeClass(clazz.prj, clazz.pkg, parentScope, clazz, clz)
+
+        fun disablePhases(e: CreationShakeClass) {
+            e.phase = 4
+        }
+
+        fun initSuper(e: CreationShakeClass, superClass: CreationShakeClass) {
+            e.superClass = superClass
+        }
+
+        fun initInterfaces(e: CreationShakeClass, interfaces: List<CreationShakeClass>) {
+            e._interfaces = interfaces.toMutableList()
+        }
     }
 }

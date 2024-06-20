@@ -3,7 +3,7 @@ import conventions.dependencies
 import conventions.projectGroup
 import conventions.useKotest
 
-group = projectGroup("shake.compiler")
+group = projectGroup("shake.compiler.conventions")
 version = resolveVersion()
 description = "Compiler descriptor conventions"
 java.sourceCompatibility = JavaVersion.VERSION_1_8

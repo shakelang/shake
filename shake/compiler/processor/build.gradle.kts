@@ -26,6 +26,7 @@ kotlin {
         implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         implementation(project(":shake:compiler:parser"))
+        implementation(project(":shake:compiler:descriptor"))
         testImplementation(project(":util:testlib"))
         testImplementation(project(":util:embed:api"))
         testImplementation(project(":shake:compiler:shakelib"))

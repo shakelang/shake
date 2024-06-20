@@ -26,7 +26,38 @@ open class CreationShakeField(
     override val initialValue: CreationShakeValue?,
     override val type: CreationShakeType,
     override val expanding: CreationShakeType?,
-) : CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
+) : CreationShakeDeclaration,
+    CreationShakeAssignable,
+    ShakeField {
+
+    constructor(
+        project: CreationShakeProject,
+        pkg: CreationShakePackage?,
+        clazz: CreationShakeClass?,
+        parentScope: CreationShakeScope,
+        name: String,
+        flags: ShakeField.ShakeFieldFlags,
+        type: CreationShakeType,
+        expanding: CreationShakeType?,
+    ) : this(
+        project,
+        pkg,
+        clazz,
+        parentScope,
+        name,
+        flags.isStatic,
+        flags.isFinal,
+        flags.isAbstract,
+        flags.isPrivate,
+        flags.isProtected,
+        flags.isPublic,
+        flags.isNative,
+        null,
+        type,
+        expanding,
+    )
+
+    private var phase: Byte = 0
 
     override val qualifiedName
         get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name
@@ -61,36 +92,44 @@ open class CreationShakeField(
     override fun decrementBeforeType(scope: ShakeScope): ShakeType? = type.decrementBeforeType(scope) ?: type
     override fun decrementAfterType(scope: ShakeScope): ShakeType? = type.decrementAfterType(scope) ?: type
 
-    override fun access(scope: CreationShakeScope): CreationShakeValue {
-        return CreationShakeFieldUsage(scope, this)
-    }
+    override fun access(scope: CreationShakeScope): CreationShakeValue = CreationShakeFieldUsage(scope, this)
 
-    override fun use(scope: CreationShakeScope): CreationShakeUsage {
-        return CreationShakeFieldUsage(scope, this)
-    }
+    override fun use(scope: CreationShakeScope): CreationShakeUsage = CreationShakeFieldUsage(scope, this)
 
     override fun phase3() {
         debug("phases", "Phase 3 of field $qualifiedName")
+
+        if (phase > 2) {
+            debug("phases", "Skipping phase 3 of field $qualifiedName")
+            return
+        }
+        phase = 3
+
         // Nothing to do here
     }
 
     override fun phase4() {
         debug("phases", "Phase 4 of field $qualifiedName")
+
+        if (phase > 3) {
+            debug("phases", "Skipping phase 4 of field $qualifiedName")
+            return
+        }
+        phase = 4
+
         // TODO: Visit initial value
     }
 
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "isStatic" to isStatic,
-            "isFinal" to isFinal,
-            "isAbstract" to isAbstract,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic,
-            "type" to type.toJson(),
-        )
-    }
+    override fun toJson(): Map<String, Any?> = mapOf(
+        "name" to name,
+        "isStatic" to isStatic,
+        "isFinal" to isFinal,
+        "isAbstract" to isAbstract,
+        "isPrivate" to isPrivate,
+        "isProtected" to isProtected,
+        "isPublic" to isPublic,
+        "type" to type.toJson(),
+    )
 
     companion object {
 
@@ -101,48 +140,48 @@ open class CreationShakeField(
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
             node: ShakeFieldDeclarationNode,
-        ): CreationShakeField {
-            return CreationShakeField(
-                baseProject,
-                pkg,
-                null,
-                parentScope,
-                node.name,
-                node.isStatic,
-                node.isFinal,
-                false,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
-                node.isNative,
-                null,
-                parentScope.getType(node.type ?: TODO("Automatic type detection")),
-                node.expandedType?.let { parentScope.getType(it) },
-            )
-        }
+        ): CreationShakeField = CreationShakeField(
+            baseProject,
+            pkg,
+            null,
+            parentScope,
+            node.name,
+            node.isStatic,
+            node.isFinal,
+            false,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
+            node.isNative,
+            null,
+            parentScope.getType(node.type ?: TODO("Automatic type detection")),
+            node.expandedType?.let { parentScope.getType(it) },
+        )
 
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
             node: ShakeFieldDeclarationNode,
-        ): CreationShakeField {
-            return CreationShakeField(
-                clazz.prj,
-                clazz.pkg,
-                clazz,
-                parentScope,
-                node.name,
-                node.isStatic,
-                node.isFinal,
-                false,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
-                node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
-                node.isNative,
-                null,
-                parentScope.getType(node.type ?: TODO("Automatic type detection")),
-                node.expandedType?.let { parentScope.getType(it) },
-            )
+        ): CreationShakeField = CreationShakeField(
+            clazz.prj,
+            clazz.pkg,
+            clazz,
+            parentScope,
+            node.name,
+            node.isStatic,
+            node.isFinal,
+            false,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PRIVATE,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PROTECTED,
+            node.access.type == ShakeAccessDescriber.ShakeAccessDescriberType.PUBLIC,
+            node.isNative,
+            null,
+            parentScope.getType(node.type ?: TODO("Automatic type detection")),
+            node.expandedType?.let { parentScope.getType(it) },
+        )
+
+        fun disablePhases(e: CreationShakeField) {
+            e.phase = 4
         }
     }
 }

@@ -26,14 +26,13 @@ abstract class CreationShakeType(
         return result
     }
 
-    override fun toString(): String {
-        return name
-    }
+    override fun toString(): String = name
 
     abstract class Primitive(
         name: String,
         override val type: ShakeType.PrimitiveType,
-    ) : CreationShakeType(name), ShakeType.Primitive {
+    ) : CreationShakeType(name),
+        ShakeType.Primitive {
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.PRIMITIVE
 
@@ -55,49 +54,27 @@ abstract class CreationShakeType(
 
         companion object {
 
-            private fun bool(): Primitive {
-                return BOOLEAN
-            }
+            private fun bool(): Primitive = BOOLEAN
 
-            private fun byte(): Primitive {
-                return BYTE
-            }
+            private fun byte(): Primitive = BYTE
 
-            private fun short(): Primitive {
-                return SHORT
-            }
+            private fun short(): Primitive = SHORT
 
-            private fun int(): Primitive {
-                return INT
-            }
+            private fun int(): Primitive = INT
 
-            private fun long(): Primitive {
-                return LONG
-            }
+            private fun long(): Primitive = LONG
 
-            private fun float(): Primitive {
-                return FLOAT
-            }
+            private fun float(): Primitive = FLOAT
 
-            private fun double(): Primitive {
-                return DOUBLE
-            }
+            private fun double(): Primitive = DOUBLE
 
-            private fun unsignedByte(): Primitive {
-                return UNSIGNED_BYTE
-            }
+            private fun unsignedByte(): Primitive = UNSIGNED_BYTE
 
-            private fun unsignedShort(): Primitive {
-                return UNSIGNED_SHORT
-            }
+            private fun unsignedShort(): Primitive = UNSIGNED_SHORT
 
-            private fun unsignedInt(): Primitive {
-                return UNSIGNED_INT
-            }
+            private fun unsignedInt(): Primitive = UNSIGNED_INT
 
-            private fun unsignedLong(): Primitive {
-                return UNSIGNED_LONG
-            }
+            private fun unsignedLong(): Primitive = UNSIGNED_LONG
 
             val BOOLEAN: Primitive = object : Primitive("boolean", ShakeType.PrimitiveType.BOOLEAN) {
                 override fun additionType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
@@ -121,9 +98,7 @@ abstract class CreationShakeType(
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if (other is Primitive && other.type == ShakeType.PrimitiveType.BOOLEAN) 0 else -1
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "boolean")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "boolean")
 
                 override val qualifiedName: String get() = "Z"
             }
@@ -133,9 +108,7 @@ abstract class CreationShakeType(
                     TODO("Not yet implemented")
                 }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "null")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "null")
 
                 override val qualifiedName: String get() = "N"
             }
@@ -156,9 +129,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "byte")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "byte")
 
                 override val qualifiedName: String get() = "B"
             }
@@ -178,9 +149,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "shorts")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "shorts")
 
                 override val qualifiedName: String get() = "S"
             }
@@ -199,9 +168,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "int")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "int")
 
                 override val qualifiedName: String get() = "I"
             }
@@ -219,9 +186,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "long")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "long")
 
                 override val qualifiedName: String get() = "J"
             }
@@ -238,9 +203,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "float")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "float")
 
                 override val qualifiedName: String get() = "F"
             }
@@ -256,9 +219,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "double")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "double")
 
                 override val qualifiedName: String get() = "D"
             }
@@ -282,9 +243,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "unsigned_byte")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "unsigned_byte")
 
                 override val qualifiedName: String get() = "b"
             }
@@ -309,9 +268,7 @@ abstract class CreationShakeType(
                             }
                         }
 
-                    override fun toJson(): Map<String, Any?> {
-                        return mapOf("type" to "unsigned_short")
-                    }
+                    override fun toJson(): Map<String, Any?> = mapOf("type" to "unsigned_short")
 
                     override val qualifiedName: String get() = "s"
                 }
@@ -334,9 +291,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "unsigned_int")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "unsigned_int")
 
                 override val qualifiedName: String get() = "i"
             }
@@ -358,9 +313,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "unsigned_long")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "unsigned_long")
 
                 override val qualifiedName: String get() = "j"
             }
@@ -384,9 +337,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "char")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "char")
 
                 override val qualifiedName: String get() = "C"
             }
@@ -402,9 +353,7 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "void")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "void")
 
                 override val qualifiedName: String get() = "V"
             }
@@ -420,17 +369,11 @@ abstract class CreationShakeType(
                         }
                     }
 
-                override fun compatibleTo(other: ShakeType): Boolean {
-                    return other == this
-                }
+                override fun compatibleTo(other: ShakeType): Boolean = other == this
 
-                override fun castableTo(other: ShakeType): Boolean {
-                    return true
-                }
+                override fun castableTo(other: ShakeType): Boolean = true
 
-                override fun toJson(): Map<String, Any?> {
-                    return mapOf("type" to "dynamic")
-                }
+                override fun toJson(): Map<String, Any?> = mapOf("type" to "dynamic")
 
                 override val qualifiedName: String get() = "?"
             }
@@ -439,51 +382,35 @@ abstract class CreationShakeType(
 
     class Object(
         override val clazz: CreationShakeClass,
-    ) : CreationShakeType(clazz.qualifiedName), ShakeType.Object {
+    ) : CreationShakeType(clazz.qualifiedName),
+        ShakeType.Object {
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.OBJECT
 
-        override fun castableTo(other: ShakeType): Boolean {
-            return other is Object && other.clazz.compatibleTo(clazz)
-        }
+        override fun castableTo(other: ShakeType): Boolean = other is Object && other.clazz.compatibleTo(clazz)
 
-        override fun compatibleTo(other: ShakeType): Boolean {
-            return other is Object && clazz.compatibleTo(other.clazz)
-        }
+        override fun compatibleTo(other: ShakeType): Boolean = other is Object && clazz.compatibleTo(other.clazz)
 
-        override fun compatibilityDistance(other: ShakeType): Int {
-            return if (other is Object) clazz.compatibilityDistance(other.clazz) else -1
-        }
+        override fun compatibilityDistance(other: ShakeType): Int = if (other is Object) clazz.compatibilityDistance(other.clazz) else -1
 
-        override fun toJson(): Map<String, Any?> {
-            return mapOf("type" to "object", "class" to clazz.qualifiedName)
-        }
+        override fun toJson(): Map<String, Any?> = mapOf("type" to "object", "class" to clazz.qualifiedName)
     }
 
     class Array(
-        name: String,
         val elementType: CreationShakeType,
-    ) : CreationShakeType(name) {
+    ) : CreationShakeType(elementType.name + "[]") {
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.ARRAY
 
-        override fun castableTo(other: ShakeType): Boolean {
-            return other is Array && other.elementType.castableTo(elementType)
-        }
+        override fun castableTo(other: ShakeType): Boolean = other is Array && other.elementType.castableTo(elementType)
 
-        override fun compatibleTo(other: ShakeType): Boolean {
-            return other is Array && elementType.compatibleTo(other.elementType)
-        }
+        override fun compatibleTo(other: ShakeType): Boolean = other is Array && elementType.compatibleTo(other.elementType)
 
-        override fun compatibilityDistance(other: ShakeType): Int {
-            return if (other is Array) elementType.compatibilityDistance(other.elementType) else -1
-        }
+        override fun compatibilityDistance(other: ShakeType): Int = if (other is Array) elementType.compatibilityDistance(other.elementType) else -1
 
-        override fun toJson(): Map<String, Any?> {
-            return mapOf("type" to "array", "elementType" to elementType.toJson())
-        }
+        override fun toJson(): Map<String, Any?> = mapOf("type" to "array", "elementType" to elementType.toJson())
 
         override val qualifiedName: String
             get() = "[${elementType.qualifiedName}"
@@ -513,13 +440,11 @@ abstract class CreationShakeType(
             return if (other is Lambda) returnType.compatibilityDistance(other.returnType) else -1
         }
 
-        override fun toJson(): Map<String, Any?> {
-            return mapOf(
-                "type" to "lambda",
-                "parameters" to parameters.map { it.toJson() },
-                "returnType" to returnType.toJson(),
-            )
-        }
+        override fun toJson(): Map<String, Any?> = mapOf(
+            "type" to "lambda",
+            "parameters" to parameters.map { it.toJson() },
+            "returnType" to returnType.toJson(),
+        )
 
         override val qualifiedName: String
             get() = "(${parameters.joinToString(", ") { it.type.qualifiedName }} -> ${returnType.qualifiedName})"
@@ -549,13 +474,9 @@ abstract class CreationShakeType(
     }
 
     companion object {
-        fun array(elementType: CreationShakeType): CreationShakeType {
-            return Array("${elementType.name}[]", elementType)
-        }
+        fun array(elementType: CreationShakeType): CreationShakeType = Array(elementType)
 
-        fun objectType(clazz: CreationShakeClass): CreationShakeType {
-            return Object(clazz)
-        }
+        fun objectType(clazz: CreationShakeClass): CreationShakeType = Object(clazz)
     }
 }
 

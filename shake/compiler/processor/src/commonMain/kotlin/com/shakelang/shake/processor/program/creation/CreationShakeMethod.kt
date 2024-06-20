@@ -38,6 +38,40 @@ class CreationShakeMethod(
 ),
     ShakeMethod {
 
+    constructor(
+        prj: CreationShakeProject,
+        pkg: CreationShakePackage?,
+        clazz: CreationShakeClass?,
+        parentScope: CreationShakeScope,
+        name: String,
+        flags: ShakeMethod.ShakeMethodFlags,
+        returnType: CreationShakeType,
+        parameters: List<CreationShakeParameter>,
+        expanding: ShakeType?,
+    ) : this(
+        prj,
+        pkg,
+        clazz,
+        parentScope,
+        name,
+        null,
+        flags.isStatic,
+        flags.isFinal,
+        flags.isAbstract,
+        flags.isSynchronized,
+        flags.isStrict,
+        flags.isPrivate,
+        flags.isProtected,
+        flags.isPublic,
+        flags.isNative,
+        flags.isOperator,
+        returnType,
+        parameters,
+        expanding,
+    )
+
+    private var phase: Byte = 0
+
     override val qualifiedName: String
         get() = super.qualifiedName
 
@@ -45,11 +79,25 @@ class CreationShakeMethod(
 
     override fun phase3() {
         debug("phases", "Phase 3 of method $qualifiedSignature")
+
+        if (phase > 2) {
+            debug("phases", "Skipping phase 3 of method $qualifiedSignature")
+            return
+        }
+        phase = 3
+
         // TODO: Implement
     }
 
     override fun phase4() {
         debug("phases", "Phase 4 of method $qualifiedSignature")
+
+        if (phase > 3) {
+            debug("phases", "Skipping phase 4 of method $qualifiedSignature")
+            return
+        }
+        phase = 4
+
         if (body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
@@ -179,5 +227,12 @@ class CreationShakeMethod(
             },
             node.expandedType?.let { parentScope.getType(it) },
         )
+
+        fun disablePhases(e: CreationShakeMethod) {
+            e.phase = 4
+        }
+
+        fun initCode(e: CreationShakeMethod, code: CreationShakeCode) {
+        }
     }
 }

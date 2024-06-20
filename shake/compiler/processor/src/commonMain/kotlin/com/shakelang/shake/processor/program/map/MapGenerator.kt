@@ -140,6 +140,14 @@ class MapGenerator(
         // Method name
         output.writeUTF8(method.signature)
 
+        // Parameter count
+        output.writeUnsignedShortBE(method.parameterNames.size.toUShort())
+
+        // Store all parameter names
+        for (param in method.parameterNames) {
+            output.writeUTF8(param)
+        }
+
         // Method flags
         output.writeShortBE(method.flags)
     }
@@ -153,5 +161,8 @@ class MapGenerator(
 
         // Field type
         output.writeUTF8(field.type)
+
+        // Field expanding
+        output.writeUTF8(field.expanding)
     }
 }

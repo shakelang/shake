@@ -1,5 +1,6 @@
 package com.shakelang.shake.processor
 
+import com.shakelang.shake.processor.program.map.InformationRecreator
 import com.shakelang.shake.processor.program.map.MapGenerator
 import com.shakelang.shake.processor.program.map.MapReader
 import com.shakelang.util.io.streaming.input.bytes.dataStream
@@ -21,6 +22,11 @@ class Test :
                 val mapReader = MapReader(bytes.dataStream())
                 val project = mapReader.readProject()
                 println(json.stringify(project.json()))
+
+                // recreate the CreationShakeProject
+
+                val recreator = InformationRecreator()
+                val recreated = recreator.recreate(project)
             }
         },
     )

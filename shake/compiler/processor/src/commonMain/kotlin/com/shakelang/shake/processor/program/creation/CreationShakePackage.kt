@@ -20,27 +20,21 @@ open class CreationShakePackage(
     override val fields: MutableList<CreationShakeField> = mutableListOf(),
 ) : ShakePackage {
 
+    private var phase: Byte = 0
+
     override val scope: CreationShakeScope = Scope()
     private val files: MutableList<FileEntry> = mutableListOf()
 
-    fun requirePackage(name: String): CreationShakePackage {
-        return subpackages.find { it.name == name } ?: CreationShakePackage(baseProject, name, this).let {
-            subpackages.add(it)
-            it
-        }
+    fun requirePackage(name: String): CreationShakePackage = subpackages.find { it.name == name } ?: CreationShakePackage(baseProject, name, this).let {
+        subpackages.add(it)
+        it
     }
 
-    fun requirePackage(name: Array<String>): CreationShakePackage {
-        return name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
-    }
+    fun requirePackage(name: Array<String>): CreationShakePackage = name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
 
-    fun requirePackage(name: List<String>): CreationShakePackage {
-        return name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
-    }
+    fun requirePackage(name: List<String>): CreationShakePackage = name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
 
-    override fun getPackage(name: String): CreationShakePackage? {
-        return subpackages.find { it.name == name }
-    }
+    override fun getPackage(name: String): CreationShakePackage? = subpackages.find { it.name == name }
 
     override fun getPackage(name: Array<String>): CreationShakePackage? {
         if (name.isEmpty()) return this
@@ -68,6 +62,13 @@ open class CreationShakePackage(
      */
     override fun phase1() {
         debug("phases", "Phase 1 of package $qualifiedName")
+
+        if (phase > 0.toByte()) {
+            debug("phases", "Skipping phase 1 of package $qualifiedName")
+            return
+        }
+        phase = 1
+
         this.files.forEach { file ->
             val classes = mutableListOf<CreationShakeClass>()
             file.classes.forEach { clz ->
@@ -90,6 +91,13 @@ open class CreationShakePackage(
      */
     override fun phase2() {
         debug("phases", "Phase 2 of package $qualifiedName")
+
+        if (phase > 1.toByte()) {
+            debug("phases", "Skipping phase 2 of package $qualifiedName")
+            return
+        }
+        phase = 2
+
         this.classes.forEach { it.phase2() }
         this.subpackages.forEach { it.phase2() }
     }
@@ -100,6 +108,13 @@ open class CreationShakePackage(
      */
     override fun phase3() {
         debug("phases", "Phase 3 of package $qualifiedName")
+
+        if (phase > 2.toByte()) {
+            debug("phases", "Skipping phase 3 of package $qualifiedName")
+            return
+        }
+        phase = 3
+
         this.files.forEach { file ->
             val functions = mutableListOf<CreationShakeMethod>()
             val fields = mutableListOf<CreationShakeField>()
@@ -128,6 +143,13 @@ open class CreationShakePackage(
      */
     override fun phase4() {
         debug("phases", "Phase 4 of package $qualifiedName")
+
+        if (phase > 3.toByte()) {
+            debug("phases", "Skipping phase 4 of package $qualifiedName")
+            return
+        }
+        phase = 4
+
         classes.forEach { it.phase4() }
         functions.forEach { it.phase4() }
         fields.forEach { it.phase4() }
@@ -171,9 +193,7 @@ open class CreationShakePackage(
             return fields + parent.getFields(name)
         }
 
-        override fun setField(value: CreationShakeDeclaration) {
-            throw IllegalStateException("Cannot set a value in a package scope")
-        }
+        override fun setField(value: CreationShakeDeclaration): Unit = throw IllegalStateException("Cannot set a value in a package scope")
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             val functions = functions.filter { it.name == name }
@@ -205,21 +225,13 @@ open class CreationShakePackage(
             return classes + parent.getClasses(name)
         }
 
-        override fun getThis(): ShakeAssignable? {
-            throw Error("Cannot get this in a package scope")
-        }
+        override fun getThis(): ShakeAssignable? = throw Error("Cannot get this in a package scope")
 
-        override fun getThis(name: String): ShakeAssignable? {
-            throw Error("Cannot get this in a package scope")
-        }
+        override fun getThis(name: String): ShakeAssignable? = throw Error("Cannot get this in a package scope")
 
-        override fun getSuper(): ShakeAssignable? {
-            throw Error("Cannot get super in a package scope")
-        }
+        override fun getSuper(): ShakeAssignable? = throw Error("Cannot get super in a package scope")
 
-        override fun getSuper(name: String): ShakeAssignable? {
-            throw Error("Cannot get super in a package scope")
-        }
+        override fun getSuper(name: String): ShakeAssignable? = throw Error("Cannot get super in a package scope")
 
         override val processor: ShakeASTProcessor
             get() = parent.processor
@@ -339,9 +351,7 @@ open class CreationShakePackage(
             return fields + parent.getFields(name)
         }
 
-        override fun setField(value: CreationShakeDeclaration) {
-            throw IllegalStateException("Cannot set a value in a package scope")
-        }
+        override fun setField(value: CreationShakeDeclaration): Unit = throw IllegalStateException("Cannot set a value in a package scope")
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             lazyLoadImportedFunctions()
@@ -376,24 +386,20 @@ open class CreationShakePackage(
             return classes + parent.getClasses(name)
         }
 
-        override fun getThis(): ShakeAssignable? {
-            throw Error("Cannot get this in a package scope")
-        }
+        override fun getThis(): ShakeAssignable? = throw Error("Cannot get this in a package scope")
 
-        override fun getThis(name: String): ShakeAssignable? {
-            throw Error("Cannot get this in a package scope")
-        }
+        override fun getThis(name: String): ShakeAssignable? = throw Error("Cannot get this in a package scope")
 
-        override fun getSuper(): ShakeAssignable? {
-            throw Error("Cannot get super in a package scope")
-        }
+        override fun getSuper(): ShakeAssignable? = throw Error("Cannot get super in a package scope")
 
-        override fun getSuper(name: String): ShakeAssignable? {
-            throw Error("Cannot get super in a package scope")
-        }
+        override fun getSuper(name: String): ShakeAssignable? = throw Error("Cannot get super in a package scope")
     }
 
     companion object {
         val debug = ShakeProcessor.debug.child("creation", "package")
+
+        fun disablePhases(e: CreationShakePackage) {
+            e.phase = 4
+        }
     }
 }

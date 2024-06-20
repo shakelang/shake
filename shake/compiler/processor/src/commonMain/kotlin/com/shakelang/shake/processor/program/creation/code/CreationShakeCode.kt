@@ -28,11 +28,9 @@ open class CreationShakeCode(
         }
     }
 
-    override fun toJson(): Map<String, Any> {
-        return mapOf(
-            "statements" to statements.map { it.toJson() },
-        )
-    }
+    override fun toJson(): Map<String, Any> = mapOf(
+        "statements" to statements.map { it.toJson() },
+    )
 
     class LocalScope(
         override val parent: CreationShakeScope,
@@ -85,29 +83,23 @@ open class CreationShakeCode(
         override val uniqueName: String
             get() = "local${hashCode()}"
 
-        override fun getThis(): ShakeAssignable? {
-            return parent.getThis()
-        }
+        override fun getThis(): ShakeAssignable? = parent.getThis()
 
-        override fun getThis(name: String): ShakeAssignable? {
-            return parent.getThis(name)
-        }
+        override fun getThis(name: String): ShakeAssignable? = parent.getThis(name)
 
-        override fun getSuper(): ShakeAssignable? {
-            return parent.getSuper()
-        }
+        override fun getSuper(): ShakeAssignable? = parent.getSuper()
 
-        override fun getSuper(name: String): ShakeAssignable? {
-            return parent.getSuper(name)
-        }
+        override fun getSuper(name: String): ShakeAssignable? = parent.getSuper(name)
     }
 
     companion object {
 
         val debug = ShakeProcessor.debug.child("creation", "code")
 
-        fun fromTree(tree: ShakeBlockNode): CreationShakeCode {
-            return ShakeLateProcessCode(tree)
-        }
+        fun fromTree(tree: ShakeBlockNode): CreationShakeCode = ShakeLateProcessCode(tree)
+
+        private val empty = CreationShakeCode(emptyList())
+
+        fun empty(): CreationShakeCode = empty
     }
 }
