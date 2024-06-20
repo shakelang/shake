@@ -9,4 +9,12 @@ class MethodInformation(
         "signature" to signature,
         "flags" to flags,
     )
+
+    companion object {
+        fun fromJson(json: Map<String, Any>): MethodInformation {
+            val signature = json["signature"] as String
+            val flags = json["flags"] as Short
+            return MethodInformation(signature, flags)
+        }
+    }
 }

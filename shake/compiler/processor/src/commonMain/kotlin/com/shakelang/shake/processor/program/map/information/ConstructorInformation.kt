@@ -9,4 +9,12 @@ class ConstructorInformation(
         "signature" to signature,
         "flags" to flags,
     )
+
+    companion object {
+        fun fromJson(json: Map<String, Any>): ConstructorInformation {
+            val signature = json["signature"] as String
+            val flags = json["flags"] as Short
+            return ConstructorInformation(signature, flags)
+        }
+    }
 }
