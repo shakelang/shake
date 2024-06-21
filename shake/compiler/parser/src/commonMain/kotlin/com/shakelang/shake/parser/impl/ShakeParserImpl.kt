@@ -11,6 +11,7 @@ import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.misc.*
 import com.shakelang.shake.parser.node.mixed.*
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationSuperClassEntry
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.outer.*
 import com.shakelang.shake.parser.node.statements.*
@@ -529,6 +530,35 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     // ****************************************************************************
     // Classes
 
+    private fun expectTypeArgumentDefinition(): ShakeTypeArgumentDeclaration {
+        val name = expectToken(ShakeTokenType.IDENTIFIER)
+        val colon = if (nextToken(ShakeTokenType.COLON)) input.next() else null
+        val type = if (nextToken(ShakeTokenType.IDENTIFIER)) expectType() else null
+        return ShakeTypeArgumentDeclaration(map, name, colon, type)
+    }
+
+    private fun expectTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclaration {
+        val open = expectToken(ShakeTokenType.SMALLER)
+        val args = mutableListOf<ShakeTypeArgumentDeclaration>()
+        val commas = mutableListOf<ShakeToken>()
+        do {
+            args.add(expectTypeArgumentDefinition())
+            if (nextToken(ShakeTokenType.COMMA)) {
+                commas.add(input.next())
+            } else {
+                break
+            }
+        } while (true)
+        val close = expectToken(ShakeTokenType.BIGGER)
+        return ShakeTypeArgumentsDeclaration(map, open, args.toTypedArray(), commas.toTypedArray(), close)
+    }
+
+    private fun checkTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclaration? = if (nextToken(ShakeTokenType.SMALLER)) {
+        expectTypeArgumentsDeclaration()
+    } else {
+        null
+    }
+
     /**
      * Expects a class declaration. This function is only called if the next token is a class keyword.
      */
@@ -541,19 +571,26 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         if (ctx.isOperator) throw errorFactory.createErrorAtCurrent("Operator classes are not supported")
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
+
+        val typeargs = checkTypeArgumentsDeclaration()
+
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
         val methods = mutableListOf<ShakeMethodDeclarationNode>()
         val classes = mutableListOf<ShakeClassDeclarationNode>()
         val constructors = mutableListOf<ShakeConstructorDeclarationNode>()
 
         var colon: ShakeToken? = null
-        val superClasses = mutableListOf<ShakeNamespaceNode>()
+        val superClasses = mutableListOf<ShakeClassDeclarationSuperClassEntry>()
+
+        val superCommas = mutableListOf<ShakeToken>()
 
         if (nextToken(ShakeTokenType.COLON)) {
             colon = input.peek()
             do {
-                input.skip()
-                superClasses.add(expectNamespace())
+                superCommas.add(input.next())
+                superClasses.add(
+                    ShakeClassDeclarationSuperClassEntry(expectType()),
+                )
                 // TODO Constructor invocation
             } while (nextToken(ShakeTokenType.COMMA))
         }
@@ -583,6 +620,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             ctx.finalToken,
             ctx.abstractToken,
             ctx.nativeToken,
+            typeargs,
         )
     }
 
@@ -602,17 +640,25 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         if (info.isOperator) throw errorFactory.createErrorAtCurrent("Operator interfaces are not supported")
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
+
+        val typeargs = checkTypeArgumentsDeclaration()
+
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
         val methods = mutableListOf<ShakeMethodDeclarationNode>()
         val classes = mutableListOf<ShakeClassDeclarationNode>()
 
-        var implements: MutableList<ShakeNamespaceNode>? = null
+        var implements: MutableList<ShakeClassDeclarationSuperClassEntry>? = null
+        val commaTokens = mutableListOf<ShakeToken>()
 
         if (nextToken(ShakeTokenType.COLON)) {
             input.skip()
             implements = mutableListOf()
             do {
-                implements.add(expectNamespace())
+                implements.add(
+                    ShakeClassDeclarationSuperClassEntry(
+                        expectType(),
+                    ),
+                )
             } while (nextToken(ShakeTokenType.COMMA))
         }
 
@@ -642,6 +688,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             info.finalToken,
             info.abstractToken,
             info.nativeToken,
+            typeargs,
         )
     }
 
@@ -1328,44 +1375,5 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
             else -> throw errorFactory.createErrorAtCurrent("Unexpected token $token")
         }
-    }
-
-    // Type arguments
-    private fun expectTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclarationNode {
-        if (!input.skipIgnorable().hasNext() || input.next().type != ShakeTokenType.SMALLER) {
-            throw errorFactory.createErrorAtCurrent("Expecting '<'")
-        }
-        if (!input.skipIgnorable().hasNext()) throw errorFactory.createErrorAtCurrent("Expecting type argument")
-        if (input.peek().type == ShakeTokenType.BIGGER) return ShakeTypeArgumentsDeclarationNode(map, emptyArray())
-
-        val arguments = mutableListOf<ShakeTypeArgumentDeclarationNode>()
-
-        while (input.skipIgnorable().hasNext() && input.peek().type != ShakeTokenType.BIGGER) {
-            arguments.add(expectTypeArgumentDeclaration())
-            if (input.peek().type == ShakeTokenType.COMMA) {
-                input.skip()
-            } else {
-                break
-            }
-        }
-
-        if (input.peek().type != ShakeTokenType.BIGGER) throw errorFactory.createErrorAtCurrent("Expecting '>'")
-
-        return ShakeTypeArgumentsDeclarationNode(map, arguments.toTypedArray())
-    }
-
-    private fun expectTypeArgumentDeclaration(): ShakeTypeArgumentDeclarationNode {
-        if (!input.hasNext() || input.peek().type != ShakeTokenType.IDENTIFIER) {
-            throw errorFactory.createErrorAtCurrent("Expecting type argument declaration")
-        }
-        val name = input.next().value
-
-        if (!input.skipIgnorable().hasNext()) throw errorFactory.createErrorAtCurrent("Expecting '>'")
-        if (input.peek().type == ShakeTokenType.COLON) { // TODO Replace with COLON?
-            input.skip()
-            return ShakeTypeArgumentDeclarationNode(map, name, expectType())
-        }
-
-        return ShakeTypeArgumentDeclarationNode(map, name, null)
     }
 }

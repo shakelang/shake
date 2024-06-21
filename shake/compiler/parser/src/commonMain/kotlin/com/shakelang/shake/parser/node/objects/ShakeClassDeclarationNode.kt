@@ -5,6 +5,8 @@ import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
+import com.shakelang.shake.parser.node.misc.ShakeTypeArgumentsDeclaration
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
@@ -15,7 +17,7 @@ class ShakeClassDeclarationNode(
     map: PositionMap,
     val classToken: ShakeToken,
     val nameToken: ShakeToken,
-    val superClasses: Array<ShakeNamespaceNode>,
+    val superClasses: Array<ShakeClassDeclarationSuperClassEntry>,
     val fields: Array<ShakeFieldDeclarationNode>,
     val methods: Array<ShakeMethodDeclarationNode>,
     val classes: Array<ShakeClassDeclarationNode>,
@@ -25,6 +27,7 @@ class ShakeClassDeclarationNode(
     val finalToken: ShakeToken? = null,
     val abstractToken: ShakeToken? = null,
     val nativeToken: ShakeToken? = null,
+    val typeArgs: ShakeTypeArgumentsDeclaration? = null,
 ) : ShakeFileChildNodeImpl(map) {
     val name: String
         get() = nameToken.value ?: throw IllegalStateException("Name token has no value")
@@ -199,3 +202,7 @@ class ShakeInterfaceDeclarationNode(
         return result
     }
 }
+
+class ShakeClassDeclarationSuperClassEntry(
+    val type: ShakeVariableType,
+)
