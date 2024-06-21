@@ -26,6 +26,8 @@ class ShakeNamespaceNode(
 
     fun toArray(): Array<String> = parent?.toArray()?.plus(name) ?: arrayOf(name)
 
+    fun stringify(): String = toArray().joinToString(".")
+
     override fun toJson(): Map<String, *> = mapOf(
         "type" to nodeName,
         "name" to nameToken.value,

@@ -482,7 +482,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             types.add(expectType())
             val commas = mutableListOf<ShakeToken>()
             while (nextToken(ShakeTokenType.COMMA)) {
-                input.skip()
+                commas.add(input.next())
                 types.add(expectType())
             }
             val gt = expectToken(ShakeTokenType.BIGGER)
