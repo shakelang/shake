@@ -37,9 +37,9 @@ object InformationConverter {
         ClassInformation(
             info.name,
             info.flags.toShort(),
-            info.superClass.signature,
+            info.superClass.qualifiedName,
             info.interfaces.map {
-                it.signature
+                it.qualifiedName
             },
             (info.classes + info.staticClasses).map {
                 toInformation(it)
@@ -186,11 +186,11 @@ class InformationRecreator(
         // Link superclasses and interfaces
 
         for ((info, clazz) in classList) {
-            CreationShakeClass.initSuper(clazz, project.getClass(info.superClass) ?: error("Superclass '${info.superClass}' not found"))
+            CreationShakeClass.initSuper(clazz, TypeStorage.from(info.superClass).resolve(project) as? CreationShakeType.Object ?: error("Superclass '${info.superClass}' not found"))
             CreationShakeClass.initInterfaces(
                 clazz,
                 info.interfaces.map {
-                    project.getClass(it) ?: error("Interface '$it' not found")
+                    TypeStorage.from(it).resolve(project) as? CreationShakeType.Object ?: error("Interface '$it' not found")
                 },
             )
         }
@@ -242,8 +242,16 @@ class InformationRecreator(
         is TypeDescriptor.VoidType -> CreationShakeType.Primitives.VOID
         is TypeDescriptor.DynamicType -> CreationShakeType.Primitives.DYNAMIC
         is TypeDescriptor.NewType -> throw Exception("NewType not supported")
-        is TypeDescriptor.ArrayType -> CreationShakeType.array(recreateType(type.type))
-        is TypeDescriptor.ObjectType -> CreationShakeType.objectType(project.getClass(type.className) ?: error("Class '${type.className}' not found"))
+        is TypeDescriptor.ArrayType -> CreationShakeType.objectType(
+            project.getClass("shake/lang/Array") ?: error("Core class 'Array' not found"),
+            listOf(recreateType(type.type)),
+        )
+        is TypeDescriptor.ObjectType -> CreationShakeType.objectType(
+            project.getClass(type.className) ?: error("Class '${type.className}' not found"),
+            type.genericTypes.map {
+                recreateType(it)
+            },
+        )
         else -> {
             throw Exception("Unknown type descriptor for reconstruction: $type")
         }

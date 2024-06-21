@@ -1,0 +1,9 @@
+package shake.lang
+
+native class Array<T> {
+
+    native val length: Int;
+    native operator fun get(index: Int): T;
+    native operator fun set(index: Int, value: T): Unit;
+
+}

@@ -22,6 +22,7 @@ abstract class CreationShakeScope : ShakeScope {
         CreationShakeConstructor.debug("scope", "Searching for constructor $name in $uniqueName (just redirecting to parent)")
         return parent?.getConstructors(name) ?: emptyList()
     }
+
     abstract override fun getClass(name: String): CreationShakeClass?
     abstract override fun getClasses(name: String): List<CreationShakeClass>
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
@@ -44,14 +45,38 @@ abstract class CreationShakeScope : ShakeScope {
         this.classRequirements.add(CreationShakeProject.ClassRequirement(name, then))
     }
 
-    fun getType(clzName: String): CreationShakeType {
-        return CreationShakeType.objectType(this.getClass(clzName) ?: throw IllegalArgumentException("Class $clzName not found"))
+    fun getType(type: String, generics: List<CreationShakeType>? = null): CreationShakeType {
+        return when (type) {
+            "byte" -> CreationShakeType.Primitives.BYTE
+            "short" -> CreationShakeType.Primitives.SHORT
+            "int" -> CreationShakeType.Primitives.INT
+            "long" -> CreationShakeType.Primitives.LONG
+            "float" -> CreationShakeType.Primitives.FLOAT
+            "double" -> CreationShakeType.Primitives.DOUBLE
+            "ubyte" -> CreationShakeType.Primitives.UBYTE
+            "ushort" -> CreationShakeType.Primitives.USHORT
+            "uint" -> CreationShakeType.Primitives.UINT
+            "ulong" -> CreationShakeType.Primitives.ULONG
+            "boolean" -> CreationShakeType.Primitives.BOOLEAN
+            "char" -> CreationShakeType.Primitives.CHAR
+            "dynamic" -> CreationShakeType.Primitives.DYNAMIC
+            "void" -> CreationShakeType.Primitives.VOID
+            else -> return CreationShakeType.objectType(
+                this.getClass(type)
+                    ?: throw IllegalArgumentException("Class $type not found"),
+                generics,
+            )
+        }
     }
 
-    fun getType(type: ShakeVariableType): CreationShakeType {
+    fun getType(
+        type: ShakeVariableType,
+    ): CreationShakeType {
+        val generics = type.genericTypes?.map { getType(it) }
+
         return when (type.type) {
             ShakeVariableType.Type.OBJECT -> {
-                this.getType(type.namespace.toArray().joinToString("."))
+                this.getType(type.namespace.toArray().joinToString("."), generics)
             }
 
             ShakeVariableType.Type.BYTE -> CreationShakeType.Primitives.BYTE

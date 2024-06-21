@@ -1620,7 +1620,6 @@ interface ShakeType {
     enum class Kind {
         PRIMITIVE,
         OBJECT,
-        ARRAY,
         LAMBDA,
     }
 
@@ -1666,6 +1665,8 @@ interface ShakeType {
 
     interface Object : ShakeType {
         val clazz: ShakeClass
+        val genericArguments: List<ShakeType>?
+
         override val kind: Kind get() = Kind.OBJECT
 
         override fun childField(name: String, scope: ShakeScope): ShakeField? {
@@ -1774,39 +1775,6 @@ interface ShakeType {
 
         override val qualifiedName: String
             get() = "L${clazz.qualifiedName};"
-    }
-
-    interface Array : ShakeType {
-        val elementType: ShakeType
-        override fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun divisionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun modulusType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun powerType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun equalsType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun notEqualsType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun greaterThanType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun logicalNotType(scope: ShakeScope): ShakeType? = null
-
-        override val kind: Kind
-            get() = Kind.ARRAY
-
-        override fun castableTo(other: ShakeType): Boolean = other is Array && other.elementType.castableTo(elementType)
-
-        override fun compatibleTo(other: ShakeType): Boolean = other is Array && elementType.compatibleTo(other.elementType)
-
-        override fun compatibilityDistance(other: ShakeType): Int = if (other is Array) elementType.compatibilityDistance(other.elementType) else -1
-
-        override fun toJson(): Map<String, Any?> = mapOf("type" to "array", "elementType" to elementType.toJson())
-
-        override val qualifiedName: String
-            get() = "[${elementType.qualifiedName};"
     }
 
     interface Lambda : ShakeType {

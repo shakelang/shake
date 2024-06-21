@@ -18,7 +18,7 @@ val superClass = cl.lateinitSuper()
 val interfaces = cl.lateinitInterfaces(clz..size)
  *
  */
-constructor(
+internal constructor(
     baseProject: CreationShakeProject,
     override val pkg: CreationShakePackage,
     override val parentScope: CreationShakeScope,
@@ -40,7 +40,7 @@ constructor(
     methods: List<CreationShakeMethod>,
     fields: List<CreationShakeField>,
     constructors: List<CreationShakeConstructor>,
-    private val superClassNames: List<Array<String>>,
+    private val superClassNames: List<TypeStorage>,
 ) : ShakeClass {
 
     // The phase of the class
@@ -74,7 +74,7 @@ constructor(
         emptyList(),
         emptyList(),
         emptyList(),
-        clz.superClasses.map { it.toArray() },
+        clz.superClasses.map { TypeStorage.from(it.type) },
     )
 
     constructor(
@@ -141,12 +141,12 @@ constructor(
     override val staticFields: List<CreationShakeField> get() = fields.filter { it.isStatic }
     override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
 
-    override lateinit var superClass: CreationShakeClass
+    override lateinit var superClass: CreationShakeType.Object
         private set
 
-    private var _interfaces: MutableList<CreationShakeClass?> = mutableListOf()
+    private var _interfaces: MutableList<CreationShakeType.Object?> = mutableListOf()
 
-    override val interfaces: List<CreationShakeClass>
+    override val interfaces: List<CreationShakeType.Object>
         get() = _interfaces.map { it!! }
 
     /**
@@ -193,17 +193,18 @@ constructor(
         this.phase = 2
 
         superClassNames.forEach {
-            val superClass = parentScope.getClass(it.joinToString(".")) ?: throw IllegalStateException("Superclass ${it.joinToString(".")} not found in classpath")
+            val superClass = it.resolve(parentScope) as? CreationShakeType.Object
+                ?: throw IllegalStateException("Superclass $it is not a class")
 
-            if (superClass.isInterface) {
+            if (superClass.clazz.isInterface) {
                 this._interfaces.add(superClass)
                 debug("inheritance", "Added interface $it to class $qualifiedName")
                 return@forEach
             }
 
-            if (superClass.isEnum) throw IllegalStateException("Superclass $it is an enum and cannot be extended")
-            if (superClass.isObject) throw IllegalStateException("Superclass $it is an object and cannot be extended")
-            if (superClass.isFinal) throw IllegalStateException("Superclass $it is final and cannot be extended")
+            if (superClass.clazz.isEnum) throw IllegalStateException("Superclass $it is an enum and cannot be extended")
+            if (superClass.clazz.isObject) throw IllegalStateException("Superclass $it is an object and cannot be extended")
+            if (superClass.clazz.isFinal) throw IllegalStateException("Superclass $it is final and cannot be extended")
 
             debug("inheritance", "Set superclass of class $qualifiedName to $it")
 
@@ -212,7 +213,7 @@ constructor(
         }
 
         if (!this::superClass.isInitialized) {
-            this.superClass = parentScope.getClass("shake.lang.Object") ?: throw IllegalStateException("shake.lang.Object not found in classpath")
+            this.superClass = parentScope.getClass("shake.lang.Object")?.asType() ?: throw IllegalStateException("shake.lang.Object not found in classpath")
         }
     }
 
@@ -279,7 +280,7 @@ constructor(
         this.instanceScope = InstanceScope()
     }
 
-    fun asType(): CreationShakeType = CreationShakeType.Object(this)
+    fun asType(): CreationShakeType.Object = CreationShakeType.Object(this)
 
     inner class StaticScope : CreationShakeScope() {
 
@@ -460,11 +461,11 @@ constructor(
             e.phase = 4
         }
 
-        fun initSuper(e: CreationShakeClass, superClass: CreationShakeClass) {
+        fun initSuper(e: CreationShakeClass, superClass: CreationShakeType.Object) {
             e.superClass = superClass
         }
 
-        fun initInterfaces(e: CreationShakeClass, interfaces: List<CreationShakeClass>) {
+        fun initInterfaces(e: CreationShakeClass, interfaces: List<CreationShakeType.Object>) {
             e._interfaces = interfaces.toMutableList()
         }
     }

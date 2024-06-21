@@ -206,12 +206,12 @@ interface ShakeClass {
     /**
      * The superclass of this class
      */
-    val superClass: ShakeClass
+    val superClass: ShakeType.Object
 
     /**
      * The interfaces of this class
      */
-    val interfaces: List<ShakeClass>
+    val interfaces: List<ShakeType.Object>
 
     /**
      * All instance-methods of this class (including methods defined in superclasses and interfaces)
@@ -220,10 +220,10 @@ interface ShakeClass {
     val allMethods: List<ShakeMethod>
         get() {
             val methods = this.methods.filter { !it.isStatic }
-            val superMethods = superClass.allMethods.filter {
+            val superMethods = superClass.clazz.allMethods.filter {
                 methods.none { m -> m.name == it.name && m.signature == it.signature }
             }
-            val interfaceMethods = interfaces.flatMap { it.allMethods }.filter {
+            val interfaceMethods = interfaces.flatMap { it.clazz.allMethods }.filter {
                 methods.none { m -> m.name == it.name && m.signature == it.signature } &&
                     // Super methods have priority over interface methods
                     superMethods.none { m -> m.name == it.name && m.signature == it.signature }
@@ -243,11 +243,11 @@ interface ShakeClass {
             val superFields = if (isObjectClass) {
                 emptyList()
             } else {
-                superClass.allFields.filter {
+                superClass.clazz.allFields.filter {
                     fields.none { f -> f.name == it.name }
                 }
             }
-            val interfaceFields = interfaces.flatMap { it.allFields }.filter {
+            val interfaceFields = interfaces.flatMap { it.clazz.allFields }.filter {
                 fields.none { f -> f.name == it.name } &&
                     // Super fields have priority over interface fields
                     superFields.none { f -> f.name == it.name }
@@ -271,8 +271,8 @@ interface ShakeClass {
     fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
         if (isObjectClass) return false
-        if (this.superClass.compatibleTo(other)) return true
-        return this.interfaces.any { it.compatibleTo(other) }
+        if (this.superClass.clazz.compatibleTo(other)) return true
+        return this.interfaces.any { it.clazz.compatibleTo(other) }
     }
 
     /**
@@ -282,8 +282,8 @@ interface ShakeClass {
     fun compatibilityDistance(other: ShakeClass): Int {
         if (this == other) return 0
         if (isObjectClass) return -1
-        val scd = this.superClass.compatibilityDistance(other) + 1
-        val intDistance = (this.interfaces.minOfOrNull { it.compatibilityDistance(other) } ?: -2) + 1
+        val scd = this.superClass.clazz.compatibilityDistance(other) + 1
+        val intDistance = (this.interfaces.minOfOrNull { it.clazz.compatibilityDistance(other) } ?: -2) + 1
         if (scd < 0) return intDistance
         if (intDistance < 0) return scd
         return min(scd, intDistance)

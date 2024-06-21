@@ -1,5 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
+import com.shakelang.shake.conventions.descriptor.TypeDescriptor
+import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
@@ -382,6 +384,7 @@ abstract class CreationShakeType(
 
     class Object(
         override val clazz: CreationShakeClass,
+        override val genericArguments: List<CreationShakeType>? = null,
     ) : CreationShakeType(clazz.qualifiedName),
         ShakeType.Object {
 
@@ -395,25 +398,6 @@ abstract class CreationShakeType(
         override fun compatibilityDistance(other: ShakeType): Int = if (other is Object) clazz.compatibilityDistance(other.clazz) else -1
 
         override fun toJson(): Map<String, Any?> = mapOf("type" to "object", "class" to clazz.qualifiedName)
-    }
-
-    class Array(
-        val elementType: CreationShakeType,
-    ) : CreationShakeType(elementType.name + "[]") {
-
-        override val kind: ShakeType.Kind
-            get() = ShakeType.Kind.ARRAY
-
-        override fun castableTo(other: ShakeType): Boolean = other is Array && other.elementType.castableTo(elementType)
-
-        override fun compatibleTo(other: ShakeType): Boolean = other is Array && elementType.compatibleTo(other.elementType)
-
-        override fun compatibilityDistance(other: ShakeType): Int = if (other is Array) elementType.compatibilityDistance(other.elementType) else -1
-
-        override fun toJson(): Map<String, Any?> = mapOf("type" to "array", "elementType" to elementType.toJson())
-
-        override val qualifiedName: String
-            get() = "[${elementType.qualifiedName}"
     }
 
     class Lambda(
@@ -474,11 +458,98 @@ abstract class CreationShakeType(
     }
 
     companion object {
-        fun array(elementType: CreationShakeType): CreationShakeType = Array(elementType)
 
-        fun objectType(clazz: CreationShakeClass): CreationShakeType = Object(clazz)
+        fun objectType(clazz: CreationShakeClass, genericArguments: List<CreationShakeType>? = null): CreationShakeType = Object(clazz, genericArguments)
     }
 }
 
 fun ShakeType?.isCreation() = this is CreationShakeType
 fun ShakeType?.asCreation() = this as CreationShakeType
+
+internal class TypeStorage(
+    val type: String,
+    val genericArguments: List<TypeStorage>? = null,
+) {
+    fun resolve(scope: CreationShakeScope): CreationShakeType {
+        val generics = genericArguments?.map { it.resolve(scope) }
+        return scope.getType(type, generics)
+    }
+
+    fun resolve(prj: CreationShakeProject): CreationShakeType = when (
+        type
+    ) {
+        "byte" -> CreationShakeType.Primitives.BYTE
+        "short" -> CreationShakeType.Primitives.SHORT
+        "int" -> CreationShakeType.Primitives.INT
+        "long" -> CreationShakeType.Primitives.LONG
+        "float" -> CreationShakeType.Primitives.FLOAT
+        "double" -> CreationShakeType.Primitives.DOUBLE
+        "ubyte" -> CreationShakeType.Primitives.UBYTE
+        "ushort" -> CreationShakeType.Primitives.USHORT
+        "uint" -> CreationShakeType.Primitives.UINT
+        "ulong" -> CreationShakeType.Primitives.ULONG
+        "boolean" -> CreationShakeType.Primitives.BOOLEAN
+        "char" -> CreationShakeType.Primitives.CHAR
+        "dynamic" -> CreationShakeType.Primitives.DYNAMIC
+        "void" -> CreationShakeType.Primitives.VOID
+        else -> {
+            val generics = genericArguments?.map { it.resolve(prj) }
+            val clazz = prj.getClass(type) ?: throw IllegalArgumentException("Class $type not found")
+            CreationShakeType.objectType(clazz, generics)
+        }
+    }
+
+    companion object {
+
+        private val Byte = TypeStorage("byte")
+        private val Short = TypeStorage("short")
+        private val Int = TypeStorage("int")
+        private val Long = TypeStorage("long")
+        private val UByte = TypeStorage("ubyte")
+        private val UShort = TypeStorage("ushort")
+        private val UInt = TypeStorage("uint")
+        private val ULong = TypeStorage("ulong")
+        private val Float = TypeStorage("float")
+        private val Double = TypeStorage("double")
+        private val Boolean = TypeStorage("boolean")
+        private val Char = TypeStorage("char")
+        private val Dynamic = TypeStorage("dynamic")
+        private val Void = TypeStorage("void")
+
+        fun from(type: ShakeVariableType): TypeStorage = TypeStorage(
+            type.type.toString(),
+            type.genericTypes?.map { from(it) },
+        )
+
+        fun from(type: TypeDescriptor): TypeStorage = when (type) {
+            is TypeDescriptor.ByteType -> Byte
+            is TypeDescriptor.ShortType -> Short
+            is TypeDescriptor.IntType -> Int
+            is TypeDescriptor.LongType -> Long
+            is TypeDescriptor.UnsignedByteType -> UByte
+            is TypeDescriptor.UnsignedShortType -> UShort
+            is TypeDescriptor.UnsignedIntType -> UInt
+            is TypeDescriptor.UnsignedLongType -> ULong
+            is TypeDescriptor.FloatType -> Float
+            is TypeDescriptor.DoubleType -> Double
+            is TypeDescriptor.BooleanType -> Boolean
+            is TypeDescriptor.CharType -> Char
+            is TypeDescriptor.DynamicType -> Dynamic
+            is TypeDescriptor.VoidType -> Void
+            is TypeDescriptor.ArrayType -> TypeStorage(
+                "shake/lang/Array",
+                listOf(from(type.type)),
+            )
+            is TypeDescriptor.ObjectType -> {
+                val genericTypes = type.genericTypes.map { from(it) }
+                TypeStorage(
+                    type.className,
+                    if (genericTypes.isEmpty()) null else genericTypes,
+                )
+            }
+            else -> throw IllegalArgumentException("Type $type not supported")
+        }
+
+        fun from(type: String): TypeStorage = from(TypeDescriptor.parse(type))
+    }
+}
