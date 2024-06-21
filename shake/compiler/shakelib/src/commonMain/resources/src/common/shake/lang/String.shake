@@ -3,10 +3,10 @@ package shake.lang
     
 native class String {
     
-    // native static fun valueOf(byte[] bytes): String
-    // native static fun valueOf(byte[] bytes, int offset, int length): String
-    // native static fun valueOf(char[] chars): String
-    // native static fun valueOf(char[] chars, int offset, int length): String
+    // native static fun valueOf(bytes: Array<byte>): String
+    // native static fun valueOf(bytes: Array<byte>, offset: int, length: int): String
+    // native static fun valueOf(chars: Array<char>): String
+    // native static fun valueOf(chars: Array<char>, offset: int, length: int): String
 
     native static fun valueOf(b: byte): String
     native static fun valueOf(c: short): String
