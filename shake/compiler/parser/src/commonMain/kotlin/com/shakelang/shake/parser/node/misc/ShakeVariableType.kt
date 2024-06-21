@@ -1,6 +1,7 @@
 package com.shakelang.shake.parser.node.misc
 
 import com.shakelang.shake.lexer.ShakeLexer
+import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.source.CharacterSource
@@ -10,7 +11,13 @@ import com.shakelang.util.shason.JSON
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 open class ShakeVariableType(
     val namespace: ShakeNamespaceNode,
+    val genericOpen: ShakeToken?,
+    val genericClose: ShakeToken?,
+    val genericCommas: List<ShakeToken>?,
+    val genericTypes: List<ShakeVariableType>?,
 ) : ShakeNode {
+
+    val isGeneric get() = genericOpen != null
 
     val type = if (namespace.parent == null) {
         when (namespace.name) {
@@ -63,9 +70,7 @@ open class ShakeVariableType(
         return true
     }
 
-    override fun hashCode(): Int {
-        return type.hashCode()
-    }
+    override fun hashCode(): Int = type.hashCode()
 
     enum class Type(val tname: String) {
         DYNAMIC("dynamic"),
@@ -85,9 +90,7 @@ open class ShakeVariableType(
         VOID("void"),
         ;
 
-        override fun toString(): String {
-            return tname
-        }
+        override fun toString(): String = tname
     }
 
     companion object {
@@ -101,6 +104,10 @@ open class ShakeVariableType(
                 null,
                 null,
             ),
+            null,
+            null,
+            null,
+            null,
         )
     }
 }

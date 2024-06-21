@@ -13,36 +13,26 @@ class ShakeNamespaceNode(
 ) : ShakeNodeImpl(map) {
 
     val name: String
-        get() = nameToken.value ?: throw NullPointerException("Name token value is null")
+        get() = nameToken.value
 
-    fun toType(): ShakeVariableType {
-        return ShakeVariableType(this)
-    }
+    fun toType(): ShakeVariableType = ShakeVariableType(this, null, null, null, null)
 
     fun toIdentifier(): ShakeIdentifierNode {
         if (parent == null) return ShakeIdentifierNode(map, null, nameToken, null)
         return ShakeIdentifierNode(map, parent.toValue(), nameToken, dotToken)
     }
 
-    fun toValue(): ShakeVariableUsageNode {
-        return ShakeVariableUsageNode(map, toIdentifier())
-    }
+    fun toValue(): ShakeVariableUsageNode = ShakeVariableUsageNode(map, toIdentifier())
 
-    fun toArray(): Array<String> {
-        return parent?.toArray()?.plus(name) ?: arrayOf(name)
-    }
+    fun toArray(): Array<String> = parent?.toArray()?.plus(name) ?: arrayOf(name)
 
-    override fun toJson(): Map<String, *> {
-        return mapOf(
-            "type" to nodeName,
-            "name" to nameToken.value,
-            "parent" to parent?.json,
-        )
-    }
+    override fun toJson(): Map<String, *> = mapOf(
+        "type" to nodeName,
+        "name" to nameToken.value,
+        "parent" to parent?.json,
+    )
 
-    override fun toString(): String {
-        return (parent?.toString()?.plus(".") ?: "") + nameToken.value
-    }
+    override fun toString(): String = (parent?.toString()?.plus(".") ?: "") + nameToken.value
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true

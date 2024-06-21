@@ -1,4 +1,0 @@
-// This is a test class holding a single integer field
-class TestClass {
-    val i: int = 0;
-}

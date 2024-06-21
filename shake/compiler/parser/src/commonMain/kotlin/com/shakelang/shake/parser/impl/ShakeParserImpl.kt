@@ -176,9 +176,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * @param declarationScope The scope of the declaration
      * @return The parsed declaration
      */
-    private fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode {
-        return expectDeclaration(DeclarationContextInformation(declarationScope))
-    }
+    private fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode = expectDeclaration(DeclarationContextInformation(declarationScope))
 
     /**
      * Expect a declaration (function declaration, class declaration, field declaration, etc.).
@@ -186,118 +184,116 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      */
     private fun expectDeclaration(
         info: DeclarationContextInformation,
-    ): ShakeNode {
-        return when (input.peek().type) {
-            //
-            // Access modifiers
-            // Just adds the modifier to the info (recursively calls expectDeclaration)
-            // Modifiers: public, protected, private, static, final, abstract, synchronized, const, native, override, operator, inline
-            //
+    ): ShakeNode = when (input.peek().type) {
+        //
+        // Access modifiers
+        // Just adds the modifier to the info (recursively calls expectDeclaration)
+        // Modifiers: public, protected, private, static, final, abstract, synchronized, const, native, override, operator, inline
+        //
 
-            ShakeTokenType.KEYWORD_PUBLIC -> {
-                if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
-                info.access = ShakeAccessDescriber.of(input.next())
-                expectDeclaration(info)
+        ShakeTokenType.KEYWORD_PUBLIC -> {
+            if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
+            info.access = ShakeAccessDescriber.of(input.next())
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_PROTECTED -> {
+            if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
+            info.access = ShakeAccessDescriber.of(input.next())
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_PRIVATE -> {
+            if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
+            info.access = ShakeAccessDescriber.of(input.next())
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_STATIC -> {
+            if (info.isStatic) throw errorFactory.createErrorAtCurrent("Static keyword is only allowed once")
+            info.staticToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_FINAL -> {
+            if (info.isFinal) throw errorFactory.createErrorAtCurrent("Final keyword is only allowed once")
+            info.finalToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_ABSTRACT -> {
+            if (info.isAbstract) throw errorFactory.createErrorAtCurrent("Abstract keyword is only allowed once")
+            info.abstractToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_SYNCHRONIZED -> {
+            if (info.isSynchronized) throw errorFactory.createErrorAtCurrent("Synchronized keyword is only allowed once")
+            info.synchronizedToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_CONST -> {
+            if (info.isConst) throw errorFactory.createErrorAtCurrent("Const keyword is only allowed once")
+            info.constToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_NATIVE -> {
+            if (info.isNative) throw errorFactory.createErrorAtCurrent("Native keyword is only allowed once")
+            info.nativeToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_OVERRIDE -> {
+            if (info.isOverride) throw errorFactory.createErrorAtCurrent("Override keyword is only allowed once")
+            info.overrideToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_OPERATOR -> {
+            if (info.isOperator) throw errorFactory.createErrorAtCurrent("Operator keyword is only allowed once")
+            info.operatorToken = input.next()
+            expectDeclaration(info)
+        }
+
+        ShakeTokenType.KEYWORD_INLINE -> {
+            if (info.isInline) throw errorFactory.createErrorAtCurrent("Inline keyword is only allowed once")
+            info.inlineToken = input.next()
+            expectDeclaration(info)
+        }
+
+        //
+        // class, interface, object, enum
+        //
+
+        ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
+        ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
+        ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
+        ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(info)
+
+        //
+        // constructor
+        //
+        ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
+            if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM) {
+                throw errorFactory.createErrorAtCurrent("Constructor is only allowed in classes")
             }
+            expectConstructorDeclaration(info)
+        }
 
-            ShakeTokenType.KEYWORD_PROTECTED -> {
-                if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
-                info.access = ShakeAccessDescriber.of(input.next())
-                expectDeclaration(info)
-            }
+        //
+        // function
+        //
+        ShakeTokenType.KEYWORD_FUN -> expectFunctionDeclaration(info)
 
-            ShakeTokenType.KEYWORD_PRIVATE -> {
-                if (info.access != null) throw errorFactory.createErrorAtCurrent("Access modifier is only allowed once")
-                info.access = ShakeAccessDescriber.of(input.next())
-                expectDeclaration(info)
-            }
+        //
+        // field
+        //
+        ShakeTokenType.KEYWORD_VAL, ShakeTokenType.KEYWORD_VAR -> expectFieldDeclaration(info)
 
-            ShakeTokenType.KEYWORD_STATIC -> {
-                if (info.isStatic) throw errorFactory.createErrorAtCurrent("Static keyword is only allowed once")
-                info.staticToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_FINAL -> {
-                if (info.isFinal) throw errorFactory.createErrorAtCurrent("Final keyword is only allowed once")
-                info.finalToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_ABSTRACT -> {
-                if (info.isAbstract) throw errorFactory.createErrorAtCurrent("Abstract keyword is only allowed once")
-                info.abstractToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_SYNCHRONIZED -> {
-                if (info.isSynchronized) throw errorFactory.createErrorAtCurrent("Synchronized keyword is only allowed once")
-                info.synchronizedToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_CONST -> {
-                if (info.isConst) throw errorFactory.createErrorAtCurrent("Const keyword is only allowed once")
-                info.constToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_NATIVE -> {
-                if (info.isNative) throw errorFactory.createErrorAtCurrent("Native keyword is only allowed once")
-                info.nativeToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_OVERRIDE -> {
-                if (info.isOverride) throw errorFactory.createErrorAtCurrent("Override keyword is only allowed once")
-                info.overrideToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_OPERATOR -> {
-                if (info.isOperator) throw errorFactory.createErrorAtCurrent("Operator keyword is only allowed once")
-                info.operatorToken = input.next()
-                expectDeclaration(info)
-            }
-
-            ShakeTokenType.KEYWORD_INLINE -> {
-                if (info.isInline) throw errorFactory.createErrorAtCurrent("Inline keyword is only allowed once")
-                info.inlineToken = input.next()
-                expectDeclaration(info)
-            }
-
-            //
-            // class, interface, object, enum
-            //
-
-            ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
-            ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
-            ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
-            ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(info)
-
-            //
-            // constructor
-            //
-            ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
-                if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM) {
-                    throw errorFactory.createErrorAtCurrent("Constructor is only allowed in classes")
-                }
-                expectConstructorDeclaration(info)
-            }
-
-            //
-            // function
-            //
-            ShakeTokenType.KEYWORD_FUN -> expectFunctionDeclaration(info)
-
-            //
-            // field
-            //
-            ShakeTokenType.KEYWORD_VAL, ShakeTokenType.KEYWORD_VAR -> expectFieldDeclaration(info)
-
-            else -> {
-                throw errorFactory.createErrorAtCurrent("Unexpected token (${input.next().type})")
-            }
+        else -> {
+            throw errorFactory.createErrorAtCurrent("Unexpected token (${input.next().type})")
         }
     }
 
@@ -477,7 +473,30 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     /**
      * Expect a type.
      */
-    private fun expectType() = expectNamespace().toType()
+    private fun expectType(): ShakeVariableType {
+        val type = expectNamespace().toType()
+
+        if (nextToken(ShakeTokenType.SMALLER)) {
+            val lt = input.next()
+            val types = mutableListOf<ShakeVariableType>()
+            types.add(expectType())
+            val commas = mutableListOf<ShakeToken>()
+            while (nextToken(ShakeTokenType.COMMA)) {
+                input.skip()
+                types.add(expectType())
+            }
+            val gt = expectToken(ShakeTokenType.BIGGER)
+            return ShakeVariableType(
+                type.namespace,
+                lt,
+                gt,
+                commas.toList(),
+                types.toList(),
+            )
+        }
+
+        return type
+    }
 
     // ****************************************************************************
     // Imports
@@ -668,7 +687,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         val args = mutableListOf<ShakeParameterNode>()
         val commas = mutableListOf<ShakeToken>()
         if (!input.skipIgnorable()
-                .hasNext() || input.peek().type != ShakeTokenType.LPAREN
+                .hasNext() ||
+            input.peek().type != ShakeTokenType.LPAREN
         ) {
             throw errorFactory.createErrorAtCurrent("Expecting '('")
         }
@@ -843,17 +863,11 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     private class ConditionResult(val condition: ShakeValuedNode, val lparen: ShakeToken, val rparen: ShakeToken) {
-        operator fun component1(): ShakeValuedNode {
-            return condition
-        }
+        operator fun component1(): ShakeValuedNode = condition
 
-        operator fun component2(): ShakeToken {
-            return lparen
-        }
+        operator fun component2(): ShakeToken = lparen
 
-        operator fun component3(): ShakeToken {
-            return rparen
-        }
+        operator fun component3(): ShakeToken = rparen
     }
 
     private fun expectParseConditionStatement(): ConditionResult {
@@ -896,7 +910,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     private fun expectValuedAssignment(): ShakeValuedNode {
         var left = expectValuedLogicalOr()
-        if (input.hasNext() && (
+        if (input.hasNext() &&
+            (
                 input.peek().type == ShakeTokenType.ASSIGN ||
                     input.peek().type == ShakeTokenType.ADD_ASSIGN ||
                     input.peek().type == ShakeTokenType.SUB_ASSIGN ||
@@ -993,7 +1008,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     private fun expectValuedBitwiseOr(): ShakeValuedNode {
         var result = expectValuedBitwiseXOr()
-        while (input.hasNext() && (
+        while (input.hasNext() &&
+            (
                 input.peek().type == ShakeTokenType.BITWISE_OR ||
                     input.peek().type == ShakeTokenType.BITWISE_NOR
                 )
@@ -1010,7 +1026,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     private fun expectValuedBitwiseXOr(): ShakeValuedNode {
         var result = expectValuedBitwiseAnd()
-        while (input.hasNext() && (
+        while (input.hasNext() &&
+            (
                 input.peek().type == ShakeTokenType.BITWISE_XOR ||
                     input.peek().type == ShakeTokenType.BITWISE_XNOR
                 )
@@ -1027,7 +1044,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     private fun expectValuedBitwiseAnd(): ShakeValuedNode {
         var result = expectValuedEquality()
-        while (input.hasNext() && (
+        while (input.hasNext() &&
+            (
                 input.peek().type == ShakeTokenType.BITWISE_AND ||
                     input.peek().type == ShakeTokenType.BITWISE_NAND
                 )
@@ -1127,7 +1145,9 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
                 input.peek().type
                     .also {
                         tmpType = it
-                    } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD
+                    } == ShakeTokenType.MUL ||
+                    tmpType == ShakeTokenType.DIV ||
+                    tmpType == ShakeTokenType.MOD
                 )
         ) {
             val operator = input.next()
@@ -1161,7 +1181,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
     private fun expectValuedFunctionReturning(): ShakeValuedNode {
         var value = expectValuedMandatory()
-        while (input.hasNext() && (
+        while (input.hasNext() &&
+            (
                 input.peek().type == ShakeTokenType.LPAREN ||
                     input.peek().type == ShakeTokenType.DOT
                 )
