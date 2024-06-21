@@ -22,9 +22,15 @@ enum class ShakeTokenType(
     BITWISE_NOR("~|", "'~|'"),
     BITWISE_NAND("~&", "'~&'"),
     BITWISE_XNOR("~^", "'~^'"),
-    BITWISE_SHL("<<", "'<<'"),
-    BITWISE_SHR(">>", "'>>'"),
-    BITWISE_SHRU(">>>", "'>>>'"),
+
+    // Shift operation handling in lexer causes problems with generic parsing
+    // For this reason we handle them in the parser
+    // Take a look at https://github.com/shakelang/shake/issues/237
+    //
+    // BITWISE_SHL("<<", "'<<'"),
+    // BITWISE_SHR(">>", "'>>'"),
+    // BITWISE_SHRU(">>>", "'>>>'"),
+
     CHARACTER(null, "[character]"),
     COLON(":", "':'"),
     COMMA(",", "','"),

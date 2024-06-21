@@ -1101,20 +1101,35 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     }
 
     private fun expectValuedBitShift(): ShakeValuedNode {
+        /* https://github.com/shakelang/shake/issues/237 */
         var left = expectValuedExpr()
-        var tmpType: ShakeTokenType? = null
-        while (input.hasNext() &&
+        while (input.has(2) &&
             (
-                input.peek().type.also { tmpType = it } == ShakeTokenType.BITWISE_SHL ||
-                    tmpType == ShakeTokenType.BITWISE_SHR ||
-                    tmpType == ShakeTokenType.BITWISE_SHRU
+                (
+                    // A << B
+                    (input.peek().type == ShakeTokenType.SMALLER) &&
+                        (input.peek(2).type == ShakeTokenType.SMALLER)
+                    ) ||
+                    // A >> B
+                    (
+                        input.peek().type == ShakeTokenType.BIGGER &&
+                            input.peek(2).type == ShakeTokenType.BIGGER
+                        )
                 )
         ) {
             val operator = input.next()
-            left = when (tmpType) {
-                ShakeTokenType.BITWISE_SHL -> ShakeBitwiseShiftLeftNode(map, left, expectValuedExpr(), operator)
-                ShakeTokenType.BITWISE_SHR -> ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), operator)
-                else -> ShakeBitwiseShiftRightUnsignedNode(map, left, expectValuedExpr(), operator)
+            val operator2 = input.next()
+            left = when (operator.type) {
+                ShakeTokenType.SMALLER -> ShakeBitwiseShiftLeftNode(map, left, expectValuedExpr(), operator, operator2)
+                else -> {
+                    // A >>> B
+                    if (input.hasNext() && input.peek().type == ShakeTokenType.BIGGER) {
+                        val operator3 = input.next()
+                        ShakeBitwiseShiftRightUnsignedNode(map, left, expectValuedExpr(), operator, operator2, operator3)
+                    } else {
+                        ShakeBitwiseShiftRightNode(map, left, expectValuedExpr(), operator, operator2)
+                    }
+                }
             }
         }
         return left

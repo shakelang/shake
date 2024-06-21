@@ -11,8 +11,7 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String get() = "&"
 }
 
@@ -23,8 +22,7 @@ class ShakeBitwiseAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeV
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "|"
 }
@@ -36,8 +34,7 @@ class ShakeBitwiseOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeVa
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "^"
 }
@@ -49,8 +46,7 @@ class ShakeBitwiseXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeV
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseNAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseNAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "~&"
 }
@@ -62,8 +58,7 @@ class ShakeBitwiseNAndNode(map: PositionMap, left: ShakeValuedNode, right: Shake
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "~|"
 }
@@ -75,8 +70,7 @@ class ShakeBitwiseNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeV
  * @param right The right node
  * @param operatorToken The operator token
  */
-class ShakeBitwiseXNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+class ShakeBitwiseXNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorToken: ShakeToken) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "~^"
 }
@@ -87,8 +81,7 @@ class ShakeBitwiseXNOrNode(map: PositionMap, left: ShakeValuedNode, right: Shake
  * @param node The node to negate
  * @param operatorToken The operator token
  */
-class ShakeBitwiseNotNode(map: PositionMap, node: ShakeValuedNode, operatorToken: ShakeToken) :
-    ShakeUnaryNode(map, node, operatorToken) {
+class ShakeBitwiseNotNode(map: PositionMap, node: ShakeValuedNode, operatorToken: ShakeToken) : ShakeUnaryNode(map, node, operatorToken) {
     override val operator: String
         get() = "~"
 }
@@ -105,8 +98,8 @@ class ShakeBitwiseShiftLeftNode(
     left: ShakeValuedNode,
     right: ShakeValuedNode,
     operatorToken: ShakeToken,
-) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+    val operatorToken2: ShakeToken,
+) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = "<<"
 }
@@ -123,8 +116,9 @@ class ShakeBitwiseShiftRightNode(
     left: ShakeValuedNode,
     right: ShakeValuedNode,
     operatorToken: ShakeToken,
-) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+    val operatorToken2: ShakeToken,
+
+) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = ">>"
 }
@@ -141,8 +135,9 @@ class ShakeBitwiseShiftRightUnsignedNode(
     left: ShakeValuedNode,
     right: ShakeValuedNode,
     operatorToken: ShakeToken,
-) :
-    ShakeExpressionNode(map, left, right, operatorToken) {
+    val operatorToken2: ShakeToken,
+    val operatorToken3: ShakeToken,
+) : ShakeExpressionNode(map, left, right, operatorToken) {
     override val operator: String
         get() = ">>>"
 }

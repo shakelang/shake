@@ -101,11 +101,14 @@ class LexerBaseTests :
                 generateToken("~&", ShakeTokenType.BITWISE_NAND)
             }
 
+            /* https://github.com/shakelang/shake/issues/237 */
+            /*
             "bit shifts" {
                 generateToken("<<", ShakeTokenType.BITWISE_SHL)
                 generateToken(">>", ShakeTokenType.BITWISE_SHR)
                 generateToken(">>>", ShakeTokenType.BITWISE_SHRU)
             }
+             */
 
             "brackets" {
                 generateToken("(", ShakeTokenType.LPAREN)

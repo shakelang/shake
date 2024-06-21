@@ -121,6 +121,10 @@ class ShakeLexer(
             next == '*' -> factory.create(ShakeTokenType.MUL)
             next == '-' -> factory.create(ShakeTokenType.SUB)
             next == '+' -> factory.create(ShakeTokenType.ADD)
+
+            /*
+            Take a look at https://github.com/shakelang/shake/issues/237
+
             next == '<' && peek == '<' -> {
                 input.skip()
                 factory.create(ShakeTokenType.BITWISE_SHL)
@@ -135,6 +139,7 @@ class ShakeLexer(
                     factory.create(ShakeTokenType.BITWISE_SHR)
                 }
             }
+             */
 
             next == '|' && peek == '|' -> {
                 input.skip()
