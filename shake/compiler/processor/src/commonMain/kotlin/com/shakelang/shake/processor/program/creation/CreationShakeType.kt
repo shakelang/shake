@@ -2,6 +2,7 @@ package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.conventions.descriptor.TypeDescriptor
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
+import com.shakelang.shake.processor.program.types.GenericMap
 import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
@@ -388,6 +389,11 @@ abstract class CreationShakeType(
     ) : CreationShakeType(clazz.qualifiedName),
         ShakeType.Object {
 
+        override val genericMap: CreationGenericMap
+            get() = CreationGenericMap(
+                clazz.generics.zip(genericArguments ?: emptyList()).toMap(),
+            )
+
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.OBJECT
 
@@ -398,6 +404,27 @@ abstract class CreationShakeType(
         override fun compatibilityDistance(other: ShakeType): Int = if (other is Object) clazz.compatibilityDistance(other.clazz) else -1
 
         override fun toJson(): Map<String, Any?> = mapOf("type" to "object", "class" to clazz.qualifiedName)
+    }
+
+    class Generic(
+        override val name: String,
+        override val base: ShakeType?,
+    ) : CreationShakeType(name),
+        ShakeType.Generic {
+
+        override val qualifiedName: String
+            get() = name // TODO Qualified name for generic?
+
+        override val kind: ShakeType.Kind
+            get() = ShakeType.Kind.GENERIC
+
+        override fun castableTo(other: ShakeType): Boolean = super.castableTo(other)
+
+        override fun compatibleTo(other: ShakeType): Boolean = super<ShakeType.Generic>.compatibleTo(other)
+
+        override fun compatibilityDistance(other: ShakeType): Int = super.compatibilityDistance(other)
+
+        override fun toJson(): Map<String, Any?> = mapOf("type" to "generic", "name" to name)
     }
 
     class Lambda(
@@ -553,3 +580,8 @@ internal class TypeStorage(
         fun from(type: String): TypeStorage = from(TypeDescriptor.parse(type))
     }
 }
+
+class CreationGenericMap(
+    map: Map<CreationShakeType.Generic, CreationShakeType>,
+) : GenericMap<CreationShakeType.Generic, CreationShakeType>(map),
+    Map<CreationShakeType.Generic, CreationShakeType>

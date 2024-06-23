@@ -27,10 +27,10 @@ class ShakeClassDeclarationNode(
     val finalToken: ShakeToken? = null,
     val abstractToken: ShakeToken? = null,
     val nativeToken: ShakeToken? = null,
-    val typeArgs: ShakeTypeArgumentsDeclaration? = null,
+    val generics: ShakeTypeArgumentsDeclaration? = null,
 ) : ShakeFileChildNodeImpl(map) {
     val name: String
-        get() = nameToken.value ?: throw IllegalStateException("Name token has no value")
+        get() = nameToken.value
 
     val isStatic: Boolean
         get() = staticToken != null
@@ -129,7 +129,7 @@ class ShakeInterfaceDeclarationNode(
     val nativeToken: ShakeToken? = null,
 ) : ShakeFileChildNodeImpl(map) {
     val name: String
-        get() = nameToken.value ?: throw IllegalStateException("Name token has no value")
+        get() = nameToken.value
 
     val isStatic: Boolean
         get() = staticToken != null

@@ -9,7 +9,11 @@ class ShakeTypeArgumentDeclaration(
     val nameToken: ShakeToken,
     val colonToken: ShakeToken?,
     val type: ShakeVariableType?,
-) : ShakeNodeImpl(map) {
+) : ShakeNodeImpl(map = map) {
+
+    val name: String
+        get() = nameToken.value
+
     override fun equals(other: Any?): Boolean {
         if (other !is ShakeTypeArgumentDeclaration) return false
         if (other.nameToken != nameToken) return false
@@ -37,7 +41,7 @@ class ShakeTypeArgumentDeclaration(
 class ShakeTypeArgumentsDeclaration(
     map: PositionMap,
     val openToken: ShakeToken,
-    val arguments: Array<ShakeTypeArgumentDeclaration>,
+    val generics: Array<ShakeTypeArgumentDeclaration>,
     val commaTokens: Array<ShakeToken>,
     val closeToken: ShakeToken,
 ) : ShakeNodeImpl(map) {
@@ -45,7 +49,7 @@ class ShakeTypeArgumentsDeclaration(
     override fun equals(other: Any?): Boolean {
         if (other !is ShakeTypeArgumentsDeclaration) return false
         if (other.openToken != openToken) return false
-        if (!other.arguments.contentEquals(arguments)) return false
+        if (!other.generics.contentEquals(generics)) return false
         if (!other.commaTokens.contentEquals(commaTokens)) return false
         if (other.closeToken != closeToken) return false
         return true
@@ -54,7 +58,7 @@ class ShakeTypeArgumentsDeclaration(
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (other !is ShakeTypeArgumentsDeclaration) return false
         if (other.openToken != openToken) return false
-        if (!other.arguments.contentEquals(arguments)) return false
+        if (!other.generics.contentEquals(generics)) return false
         if (!other.commaTokens.contentEquals(commaTokens)) return false
         if (other.closeToken != closeToken) return false
         return true
@@ -62,7 +66,7 @@ class ShakeTypeArgumentsDeclaration(
 
     override fun hashCode(): Int {
         var result = openToken.hashCode()
-        result = 31 * result + arguments.contentHashCode()
+        result = 31 * result + generics.contentHashCode()
         result = 31 * result + commaTokens.contentHashCode()
         result = 31 * result + closeToken.hashCode()
         return result

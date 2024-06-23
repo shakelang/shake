@@ -1621,6 +1621,7 @@ interface ShakeType {
         PRIMITIVE,
         OBJECT,
         LAMBDA,
+        GENERIC,
     }
 
     enum class PrimitiveType {
@@ -1666,6 +1667,9 @@ interface ShakeType {
     interface Object : ShakeType {
         val clazz: ShakeClass
         val genericArguments: List<ShakeType>?
+
+        // Generic map for resolving the generic types
+        val genericMap: GenericMap<out Generic, out ShakeType>
 
         override val kind: Kind get() = Kind.OBJECT
 
@@ -1777,6 +1781,113 @@ interface ShakeType {
             get() = "L${clazz.qualifiedName};"
     }
 
+    interface Generic : ShakeType {
+        val base: ShakeType?
+
+        override val kind: Kind get() = Kind.GENERIC
+
+        override fun childField(name: String, scope: ShakeScope): ShakeField? {
+            val field = base?.childField(name, scope)
+            if (field != null) return field
+            return super.childField(name, scope)
+        }
+
+        override fun assignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.assignOverloads(scope) ?: emptyList()
+
+        override fun additionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.additionAssignOverloads(scope) ?: emptyList()
+
+        override fun subtractionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.subtractionAssignOverloads(scope) ?: emptyList()
+
+        override fun multiplicationAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.multiplicationAssignOverloads(scope) ?: emptyList()
+
+        override fun divisionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.divisionAssignOverloads(scope) ?: emptyList()
+
+        override fun modulusAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.modulusAssignOverloads(scope) ?: emptyList()
+
+        override fun powerAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.powerAssignOverloads(scope) ?: emptyList()
+
+        override fun incrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.incrementBeforeOverloads(scope) ?: emptyList()
+
+        override fun incrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.incrementAfterOverloads(scope) ?: emptyList()
+
+        override fun decrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.decrementBeforeOverloads(scope) ?: emptyList()
+
+        override fun decrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.decrementAfterOverloads(scope) ?: emptyList()
+
+        override fun additionOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.additionOverloads(scope) ?: emptyList()
+
+        override fun subtractionOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.subtractionOverloads(scope) ?: emptyList()
+
+        override fun multiplicationOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.multiplicationOverloads(scope) ?: emptyList()
+
+        override fun divisionOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.divisionOverloads(scope) ?: emptyList()
+
+        override fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.modulusOverloads(scope) ?: emptyList()
+
+        override fun powerOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.powerOverloads(scope) ?: emptyList()
+
+        override fun equalsOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.equalsOverloads(scope) ?: emptyList()
+
+        override fun notEqualsOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.notEqualsOverloads(scope) ?: emptyList()
+
+        override fun greaterThanOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.greaterThanOverloads(scope) ?: emptyList()
+
+        override fun greaterThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.greaterThanOrEqualOverloads(scope) ?: emptyList()
+
+        override fun lessThanOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.lessThanOverloads(scope) ?: emptyList()
+
+        override fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.lessThanOrEqualOverloads(scope) ?: emptyList()
+
+        override fun logicalAndOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.logicalAndOverloads(scope) ?: emptyList()
+
+        override fun logicalOrOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.logicalOrOverloads(scope) ?: emptyList()
+
+        override fun notOverloads(scope: ShakeScope): List<ShakeMethod> =
+            base?.notOverloads(scope) ?: emptyList()
+
+        override fun childType(name: String, scope: ShakeScope): ShakeType? =
+            base?.childType(name, scope)
+
+        override fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod> =
+            base?.childFunctions(name, scope) ?: emptyList()
+
+        override fun castableTo(other: ShakeType): Boolean = base?.castableTo(other) ?: false
+
+        override fun compatibleTo(other: ShakeType): Boolean = base?.compatibleTo(other) ?: false
+
+        override fun compatibilityDistance(other: ShakeType): Int = base?.compatibilityDistance(other) ?: -1
+
+        override fun toJson(): Map<String, Any?> = mapOf(
+            "type" to "generic",
+            "base" to base?.toJson(),
+        )
+    }
+
     interface Lambda : ShakeType {
         val parameters: List<ShakeParameter>
         val returnType: ShakeType
@@ -1793,3 +1904,7 @@ class ShakeOperatorRequestResult(
     val returnType: ShakeType,
     val overload: ShakeMethod,
 )
+
+open class GenericMap<K : ShakeType.Generic, V : ShakeType>(
+    open val map: Map<K, V>,
+) : Map<K, V> by map

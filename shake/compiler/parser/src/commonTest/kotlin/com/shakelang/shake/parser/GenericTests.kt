@@ -135,9 +135,9 @@ class GenericTests :
 
                 val clazz = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeClassDeclarationNode::class)
                 clazz.name shouldBe "Test"
-                clazz.typeArgs shouldNotBe null
+                clazz.generics shouldNotBe null
 
-                val typeArgs = clazz.typeArgs!!
+                val typeArgs = clazz.generics!!
                 typeArgs.openToken shouldNotBe null
                 typeArgs.openToken.value shouldBe "<"
                 typeArgs.closeToken shouldNotBe null
@@ -146,10 +146,10 @@ class GenericTests :
                 typeArgs.commaTokens shouldNotBe null
                 typeArgs.commaTokens.size shouldBe 0
 
-                typeArgs.arguments shouldNotBe null
-                typeArgs.arguments.size shouldBe 1
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
 
-                val arg = typeArgs.arguments[0]
+                val arg = typeArgs.generics[0]
                 arg.nameToken shouldNotBe null
                 arg.nameToken.value shouldBe "T"
 
@@ -166,9 +166,9 @@ class GenericTests :
 
                 val clazz = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeClassDeclarationNode::class)
                 clazz.name shouldBe "Test"
-                clazz.typeArgs shouldNotBe null
+                clazz.generics shouldNotBe null
 
-                val typeArgs = clazz.typeArgs!!
+                val typeArgs = clazz.generics!!
                 typeArgs.openToken shouldNotBe null
                 typeArgs.openToken.value shouldBe "<"
                 typeArgs.closeToken shouldNotBe null
@@ -177,10 +177,10 @@ class GenericTests :
                 typeArgs.commaTokens shouldNotBe null
                 typeArgs.commaTokens.size shouldBe 0
 
-                typeArgs.arguments shouldNotBe null
-                typeArgs.arguments.size shouldBe 1
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
 
-                val arg = typeArgs.arguments[0]
+                val arg = typeArgs.generics[0]
                 arg.nameToken shouldNotBe null
                 arg.nameToken.value shouldBe "T"
 
@@ -223,9 +223,9 @@ class GenericTests :
 
                 val clazz = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeClassDeclarationNode::class)
                 clazz.name shouldBe "Test"
-                clazz.typeArgs shouldNotBe null
+                clazz.generics shouldNotBe null
 
-                val typeArgs = clazz.typeArgs!!
+                val typeArgs = clazz.generics!!
                 typeArgs.openToken shouldNotBe null
                 typeArgs.openToken.value shouldBe "<"
                 typeArgs.closeToken shouldNotBe null
@@ -234,10 +234,10 @@ class GenericTests :
                 typeArgs.commaTokens shouldNotBe null
                 typeArgs.commaTokens.size shouldBe 0
 
-                typeArgs.arguments shouldNotBe null
-                typeArgs.arguments.size shouldBe 1
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
 
-                val arg = typeArgs.arguments[0]
+                val arg = typeArgs.generics[0]
                 arg.nameToken shouldNotBe null
                 arg.nameToken.value shouldBe "T"
 
@@ -254,9 +254,9 @@ class GenericTests :
 
                 val clazz = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeClassDeclarationNode::class)
                 clazz.name shouldBe "Test"
-                clazz.typeArgs shouldNotBe null
+                clazz.generics shouldNotBe null
 
-                val typeArgs = clazz.typeArgs!!
+                val typeArgs = clazz.generics!!
                 typeArgs.openToken shouldNotBe null
                 typeArgs.openToken.value shouldBe "<"
                 typeArgs.closeToken shouldNotBe null
@@ -265,10 +265,10 @@ class GenericTests :
                 typeArgs.commaTokens shouldNotBe null
                 typeArgs.commaTokens.size shouldBe 0
 
-                typeArgs.arguments shouldNotBe null
-                typeArgs.arguments.size shouldBe 1
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
 
-                val arg = typeArgs.arguments[0]
+                val arg = typeArgs.generics[0]
                 arg.nameToken shouldNotBe null
                 arg.nameToken.value shouldBe "T"
 

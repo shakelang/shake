@@ -41,6 +41,7 @@ internal constructor(
     fields: List<CreationShakeField>,
     constructors: List<CreationShakeConstructor>,
     private val superClassNames: List<TypeStorage>,
+    generics: List<CreationShakeType.Generic>,
 ) : ShakeClass {
 
     // The phase of the class
@@ -75,6 +76,7 @@ internal constructor(
         emptyList(),
         emptyList(),
         clz.superClasses.map { TypeStorage.from(it.type) },
+        emptyList(),
     )
 
     constructor(
@@ -107,6 +109,7 @@ internal constructor(
         emptyList(),
         emptyList(),
         emptyList(),
+        emptyList(),
     )
 
     constructor(
@@ -128,18 +131,26 @@ internal constructor(
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
     override val prj: CreationShakeProject = baseProject
-    override val methods: MutableList<CreationShakeMethod> = methods.toMutableList()
-    override val fields: MutableList<CreationShakeField> = fields.toMutableList()
-    override val classes: MutableList<CreationShakeClass> = classes.toMutableList()
-    override val constructors: MutableList<CreationShakeConstructor> = constructors.toMutableList()
 
-    override val instanceClasses: List<ShakeClass> get() = classes.filter { !it.isStatic }
-    override val instanceMethods: List<CreationShakeMethod> get() = methods.filter { !it.isStatic }
-    override val instanceFields: List<CreationShakeField> get() = fields.filter { !it.isStatic }
+    private val _methods: MutableList<CreationShakeMethod> = methods.toMutableList()
+    private val _constructors: MutableList<CreationShakeConstructor> = constructors.toMutableList()
+    private val _fields: MutableList<CreationShakeField> = fields.toMutableList()
+    private val _classes: MutableList<CreationShakeClass> = classes.toMutableList()
+    private val _generics: MutableList<CreationShakeType.Generic> = generics.toMutableList()
 
-    override val staticMethods: List<CreationShakeMethod> get() = methods.filter { it.isStatic }
-    override val staticFields: List<CreationShakeField> get() = fields.filter { it.isStatic }
-    override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
+    override val methods: List<CreationShakeMethod> get() = _methods.toList()
+    override val fields: List<CreationShakeField> get() = _fields.toList()
+    override val classes: List<CreationShakeClass> get() = _classes.toList()
+    override val constructors: List<CreationShakeConstructor> get() = _constructors.toList()
+    override val generics: List<CreationShakeType.Generic> get() = _generics.toList()
+
+    override val instanceClasses: List<ShakeClass> get() = _classes.filter { !it.isStatic }
+    override val instanceMethods: List<CreationShakeMethod> get() = _methods.filter { !it.isStatic }
+    override val instanceFields: List<CreationShakeField> get() = _fields.filter { !it.isStatic }
+
+    override val staticMethods: List<CreationShakeMethod> get() = _methods.filter { it.isStatic }
+    override val staticFields: List<CreationShakeField> get() = _fields.filter { it.isStatic }
+    override val staticClasses: List<CreationShakeClass> get() = _classes.filter { it.isStatic }
 
     override lateinit var superClass: CreationShakeType.Object
         private set
@@ -167,10 +178,10 @@ internal constructor(
         declarationNode?.classes?.forEach {
             if (it.isStatic) {
                 val clz = from(prj, pkg, this.staticScope, it)
-                this.classes.add(clz)
+                this._classes.add(clz)
             } else {
                 val clz = from(prj, pkg, this.instanceScope, it)
-                this.classes.add(clz)
+                this._classes.add(clz)
             }
         }
 
@@ -215,6 +226,15 @@ internal constructor(
         if (!this::superClass.isInitialized) {
             this.superClass = parentScope.getClass("shake.lang.Object")?.asType() ?: throw IllegalStateException("shake.lang.Object not found in classpath")
         }
+
+        // Resolve generics
+        if (declarationNode != null) {
+            _generics.addAll(
+                declarationNode.generics?.generics?.map {
+                    CreationShakeType.Generic(it.name, it.type?.let { it1 -> parentScope.getType(it1) })
+                } ?: emptyList(),
+            )
+        }
     }
 
     /**
@@ -235,16 +255,16 @@ internal constructor(
         declarationNode?.methods?.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val method = CreationShakeMethod.from(this, scope, it)
-            this.methods.add(method)
+            this._methods.add(method)
         }
         declarationNode?.fields?.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val field = CreationShakeField.from(this, scope, it)
-            this.fields.add(field)
+            this._fields.add(field)
         }
         declarationNode?.constructors?.forEach {
             val constructor = CreationShakeConstructor.from(this, instanceScope, it)
-            this.constructors.add(constructor)
+            this._constructors.add(constructor)
         }
 
         methods.forEach { it.phase3() }

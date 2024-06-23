@@ -60,6 +60,11 @@ interface ShakeClass {
     val name: String
 
     /**
+     * Generic Declarations of this class
+     */
+    val generics: List<ShakeType.Generic>
+
+    /**
      * The methods of this class
      */
     val methods: List<ShakeMethod>
