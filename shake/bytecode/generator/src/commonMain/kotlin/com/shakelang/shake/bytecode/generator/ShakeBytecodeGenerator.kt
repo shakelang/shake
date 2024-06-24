@@ -211,29 +211,27 @@ class ShakeBytecodeGenerator {
     fun visitStatement(
         ctx: BytecodeGenerationContext,
         s: ShakeStatement,
-    ) {
-        return when (s) {
-            is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
-            is ShakeInvocation -> visitInvocation(ctx, s, false)
-            is ShakeAssignment -> visitAssignment(ctx, s, false)
+    ) = when (s) {
+        is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
+        is ShakeInvocation -> visitInvocation(ctx, s, false)
+        is ShakeAssignment -> visitAssignment(ctx, s, false)
 //            is ShakeAddAssignment -> visitAdditionAssignment(s)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(s)
 //            is ShakeMulAssignment -> visitMultiplicationAssignment(s)
 //            is ShakeDivAssignment -> visitDivisionAssignment(s)
 //            is ShakeModAssignment -> visitModulusAssignment(s)
 //            is ShakePowAssignment -> visitPowerAssignment(s)
-            is ShakeIncrementBefore -> visitIncrementBefore(ctx, s, false)
-            is ShakeIncrementAfter -> visitIncrementAfter(ctx, s, false)
-            is ShakeDecrementBefore -> visitDecrementBefore(ctx, s, false)
-            is ShakeDecrementAfter -> visitDecrementAfter(ctx, s, false)
+        is ShakeIncrementBefore -> visitIncrementBefore(ctx, s, false)
+        is ShakeIncrementAfter -> visitIncrementAfter(ctx, s, false)
+        is ShakeDecrementBefore -> visitDecrementBefore(ctx, s, false)
+        is ShakeDecrementAfter -> visitDecrementAfter(ctx, s, false)
 //            is ShakeNew -> visitNew(s)
-            is ShakeDoWhile -> visitDoWhile(ctx, s)
-            is ShakeWhile -> visitWhile(ctx, s)
-            is ShakeFor -> visitFor(ctx, s)
-            is ShakeIf -> visitIf(ctx, s)
-            is ShakeReturn -> visitReturn(ctx, s)
-            else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
-        }
+        is ShakeDoWhile -> visitDoWhile(ctx, s)
+        is ShakeWhile -> visitWhile(ctx, s)
+        is ShakeFor -> visitFor(ctx, s)
+        is ShakeIf -> visitIf(ctx, s)
+        is ShakeReturn -> visitReturn(ctx, s)
+        else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
     }
 
     private fun visitReturn(ctx: BytecodeGenerationContext, s: ShakeReturn) {
@@ -553,67 +551,62 @@ class ShakeBytecodeGenerator {
     }
 
     companion object {
-        fun generateTypeDescriptor(type: ShakeType): String {
-            return when (type.kind) {
-                ShakeType.Kind.PRIMITIVE -> {
-                    when ((type as ShakeType.Primitive).type) {
-                        ShakeType.PrimitiveType.BYTE -> "B"
-                        ShakeType.PrimitiveType.SHORT -> "S"
-                        ShakeType.PrimitiveType.INT -> "I"
-                        ShakeType.PrimitiveType.LONG -> "J"
-                        ShakeType.PrimitiveType.UNSIGNED_BYTE -> "b"
-                        ShakeType.PrimitiveType.UNSIGNED_SHORT -> "s"
-                        ShakeType.PrimitiveType.UNSIGNED_INT -> "i"
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> "j"
-                        ShakeType.PrimitiveType.FLOAT -> "F"
-                        ShakeType.PrimitiveType.DOUBLE -> "D"
-                        ShakeType.PrimitiveType.BOOLEAN -> "Z"
-                        ShakeType.PrimitiveType.CHAR -> "C"
-                        ShakeType.PrimitiveType.NULL -> "Lshakelang/lang/Object;"
-                        ShakeType.PrimitiveType.VOID -> "V"
-                        ShakeType.PrimitiveType.DYNAMIC -> "Lshakelang/lang/Object;"
-                    }
+        fun generateTypeDescriptor(type: ShakeType): String = when (type.kind) {
+            ShakeType.Kind.PRIMITIVE -> {
+                when ((type as ShakeType.Primitive).type) {
+                    ShakeType.PrimitiveType.BYTE -> "B"
+                    ShakeType.PrimitiveType.SHORT -> "S"
+                    ShakeType.PrimitiveType.INT -> "I"
+                    ShakeType.PrimitiveType.LONG -> "J"
+                    ShakeType.PrimitiveType.UNSIGNED_BYTE -> "b"
+                    ShakeType.PrimitiveType.UNSIGNED_SHORT -> "s"
+                    ShakeType.PrimitiveType.UNSIGNED_INT -> "i"
+                    ShakeType.PrimitiveType.UNSIGNED_LONG -> "j"
+                    ShakeType.PrimitiveType.FLOAT -> "F"
+                    ShakeType.PrimitiveType.DOUBLE -> "D"
+                    ShakeType.PrimitiveType.BOOLEAN -> "Z"
+                    ShakeType.PrimitiveType.CHAR -> "C"
+                    ShakeType.PrimitiveType.NULL -> "Lshakelang/lang/Object;"
+                    ShakeType.PrimitiveType.VOID -> "V"
+                    ShakeType.PrimitiveType.DYNAMIC -> "Lshakelang/lang/Object;"
                 }
-
-                ShakeType.Kind.ARRAY -> {
-                    val array = type as ShakeType.Array
-                    val subType = generateTypeDescriptor(array.elementType)
-                    "[$subType"
-                }
-
-                ShakeType.Kind.OBJECT -> {
-                    val clazz = type as ShakeType.Object
-                    "L${clazz.name};"
-                }
-
-                ShakeType.Kind.LAMBDA -> TODO()
             }
+
+            ShakeType.Kind.GENERIC -> {
+                val clazz = type as ShakeType.Generic
+                type.qualifiedName
+            }
+
+            ShakeType.Kind.OBJECT -> {
+                val clazz = type as ShakeType.Object
+                "L${clazz.name};"
+            }
+
+            ShakeType.Kind.LAMBDA -> TODO()
         }
 
-        fun getTypeSize(type: ShakeType): Int {
-            return when (type.kind) {
-                ShakeType.Kind.PRIMITIVE -> {
-                    when ((type as ShakeType.Primitive).type) {
-                        ShakeType.PrimitiveType.BYTE -> 1
-                        ShakeType.PrimitiveType.SHORT -> 2
-                        ShakeType.PrimitiveType.INT -> 4
-                        ShakeType.PrimitiveType.LONG -> 8
-                        ShakeType.PrimitiveType.UNSIGNED_BYTE -> 1
-                        ShakeType.PrimitiveType.UNSIGNED_SHORT -> 2
-                        ShakeType.PrimitiveType.UNSIGNED_INT -> 4
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> 8
-                        ShakeType.PrimitiveType.FLOAT -> 4
-                        ShakeType.PrimitiveType.DOUBLE -> 8
-                        ShakeType.PrimitiveType.BOOLEAN -> 1
-                        ShakeType.PrimitiveType.CHAR -> 2
-                        ShakeType.PrimitiveType.NULL -> 1
-                        ShakeType.PrimitiveType.VOID -> 0
-                        ShakeType.PrimitiveType.DYNAMIC -> 8
-                    }
+        fun getTypeSize(type: ShakeType): Int = when (type.kind) {
+            ShakeType.Kind.PRIMITIVE -> {
+                when ((type as ShakeType.Primitive).type) {
+                    ShakeType.PrimitiveType.BYTE -> 1
+                    ShakeType.PrimitiveType.SHORT -> 2
+                    ShakeType.PrimitiveType.INT -> 4
+                    ShakeType.PrimitiveType.LONG -> 8
+                    ShakeType.PrimitiveType.UNSIGNED_BYTE -> 1
+                    ShakeType.PrimitiveType.UNSIGNED_SHORT -> 2
+                    ShakeType.PrimitiveType.UNSIGNED_INT -> 4
+                    ShakeType.PrimitiveType.UNSIGNED_LONG -> 8
+                    ShakeType.PrimitiveType.FLOAT -> 4
+                    ShakeType.PrimitiveType.DOUBLE -> 8
+                    ShakeType.PrimitiveType.BOOLEAN -> 1
+                    ShakeType.PrimitiveType.CHAR -> 2
+                    ShakeType.PrimitiveType.NULL -> 1
+                    ShakeType.PrimitiveType.VOID -> 0
+                    ShakeType.PrimitiveType.DYNAMIC -> 8
                 }
-
-                ShakeType.Kind.ARRAY, ShakeType.Kind.OBJECT, ShakeType.Kind.LAMBDA -> 8
             }
+
+            ShakeType.Kind.GENERIC, ShakeType.Kind.OBJECT, ShakeType.Kind.LAMBDA -> 8
         }
     }
 
@@ -622,9 +615,7 @@ class ShakeBytecodeGenerator {
         var size: Int = 0,
     ) {
 
-        fun containsLocal(name: String): Boolean {
-            return locals.containsKey(name)
-        }
+        fun containsLocal(name: String): Boolean = locals.containsKey(name)
 
         fun createLocal(name: String, size: Int): UShort {
             locals[name] = this.size
@@ -632,9 +623,7 @@ class ShakeBytecodeGenerator {
             return locals[name]!!.toUShort()
         }
 
-        fun getLocal(name: String): UShort {
-            return (locals[name] ?: throw IllegalStateException("Local $name is not defined")).toUShort()
-        }
+        fun getLocal(name: String): UShort = (locals[name] ?: throw IllegalStateException("Local $name is not defined")).toUShort()
     }
 
     class BytecodeGenerationContext(
