@@ -41,6 +41,9 @@ object InformationConverter {
             info.interfaces.map {
                 it.qualifiedName
             },
+            info.generics.map {
+                GenericInformation(it.name, it.base?.qualifiedName ?: "")
+            },
             (info.classes + info.staticClasses).map {
                 toInformation(it)
             },
@@ -173,7 +176,7 @@ class InformationRecreator(
 
         classList.add(info to clazz)
 
-        clazz.classes.addAll(
+        CreationShakeClass.exposeMutableClasses(clazz).addAll(
             info.classInformation.map {
                 recreate(it, pkg, clazz)
             },
@@ -191,6 +194,15 @@ class InformationRecreator(
                 clazz,
                 info.interfaces.map {
                     TypeStorage.from(it).resolve(project) as? CreationShakeType.Object ?: error("Interface '$it' not found")
+                },
+            )
+
+            CreationShakeClass.exposeMutableGenerics(clazz).addAll(
+                info.genericInformation.map {
+                    CreationShakeType.Generic(
+                        it.name,
+                        TypeStorage.from(it.type).resolve(project) as? CreationShakeType.Object ?: error("Base type '${it.type}' not found"),
+                    )
                 },
             )
         }
@@ -213,12 +225,12 @@ class InformationRecreator(
         }
 
         for ((info, clazz) in classList) {
-            clazz.methods.addAll(
+            CreationShakeClass.exposeMutableMethods(clazz).addAll(
                 info.methodInformation.map {
                     recreate(it, clazz.pkg, clazz)
                 },
             )
-            clazz.fields.addAll(
+            CreationShakeClass.exposeMutableFields(clazz).addAll(
                 info.fieldInformation.map {
                     recreate(it, clazz.pkg, clazz)
                 },

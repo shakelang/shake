@@ -1,6 +1,5 @@
 package com.shakelang.shake.processor.program.map
 
-import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.map.information.*
 import com.shakelang.util.io.streaming.input.bytes.DataInputStream
 
@@ -29,8 +28,6 @@ class MapReader(
         for (i in 0 until packageCount) {
             packages.add(readPackage())
         }
-
-        val codeProcessor = ShakeASTProcessor()
         return ProjectInformation(packages)
     }
 
@@ -46,19 +43,19 @@ class MapReader(
         val classCount = inputStream.readUnsignedShortBE().toInt()
         val classInformation = mutableListOf<ClassInformation>()
         for (i in 0 until classCount) {
-            classInformation.add(readClass(PackageInformation(name, subpackages, classInformation, mutableListOf(), mutableListOf())))
+            classInformation.add(readClass())
         }
 
         val methodCount = inputStream.readUnsignedShortBE().toInt()
         val methodInformation = mutableListOf<MethodInformation>()
         for (i in 0 until methodCount) {
-            methodInformation.add(readMethod(PackageInformation(name, subpackages, classInformation, methodInformation, mutableListOf())))
+            methodInformation.add(readMethod())
         }
 
         val fieldCount = inputStream.readUnsignedShortBE().toInt()
         val fieldInformation = mutableListOf<FieldInformation>()
         for (i in 0 until fieldCount) {
-            fieldInformation.add(readField(PackageInformation(name, subpackages, classInformation, methodInformation, fieldInformation)))
+            fieldInformation.add(readField())
         }
 
         return PackageInformation(
@@ -70,7 +67,7 @@ class MapReader(
         )
     }
 
-    fun readClass(parent: PackageInformation): ClassInformation {
+    fun readClass(): ClassInformation {
         val name = inputStream.readUTF8()
 
         val flags = inputStream.readShortBE()
@@ -82,34 +79,44 @@ class MapReader(
             interfaces.add(inputStream.readUTF8())
         }
 
+        val genericCount = inputStream.readUnsignedShortBE().toInt()
+        val genericInformation = mutableListOf<GenericInformation>()
+        for (i in 0 until genericCount) {
+            genericInformation.add(readGeneric())
+        }
+
         val classCount = inputStream.readUnsignedShortBE().toInt()
         val classInformation = mutableListOf<ClassInformation>()
         for (i in 0 until classCount) {
-            classInformation.add(readClass(parent))
+            classInformation.add(readClass())
         }
 
         val constructorCount = inputStream.readUnsignedShortBE().toInt()
         val constructorInformation = mutableListOf<ConstructorInformation>()
         for (i in 0 until constructorCount) {
-            constructorInformation.add(readConstructor(parent))
+            constructorInformation.add(readConstructor())
         }
 
         val methodCount = inputStream.readUnsignedShortBE().toInt()
         val methodInformation = mutableListOf<MethodInformation>()
         for (i in 0 until methodCount) {
-            methodInformation.add(readMethod(parent))
+            methodInformation.add(readMethod())
         }
 
         val fieldCount = inputStream.readUnsignedShortBE().toInt()
         val fieldInformation = mutableListOf<FieldInformation>()
         for (i in 0 until fieldCount) {
-            fieldInformation.add(readField(parent))
+            fieldInformation.add(readField())
         }
 
-        return ClassInformation(name, flags, superClass, interfaces, classInformation, constructorInformation, methodInformation, fieldInformation)
+        return ClassInformation(
+            name, flags, superClass, interfaces,
+            genericInformation,
+            classInformation, constructorInformation, methodInformation, fieldInformation,
+        )
     }
 
-    private fun readMethod(parent: PackageInformation): MethodInformation {
+    private fun readMethod(): MethodInformation {
         val signa = inputStream.readUTF8()
 
         val parameterCount = inputStream.readUnsignedShortBE().toInt()
@@ -122,7 +129,7 @@ class MapReader(
         return MethodInformation(signa, parameterNames, flags)
     }
 
-    private fun readField(parent: PackageInformation): FieldInformation {
+    private fun readField(): FieldInformation {
         val name = inputStream.readUTF8()
         val flags = inputStream.readShortBE()
         val type = inputStream.readUTF8()
@@ -130,9 +137,15 @@ class MapReader(
         return FieldInformation(name, flags, type, expanding)
     }
 
-    fun readConstructor(parent: PackageInformation): ConstructorInformation {
+    fun readConstructor(): ConstructorInformation {
         val signature = inputStream.readUTF8()
         val flags = inputStream.readShortBE()
         return ConstructorInformation(signature, flags)
+    }
+
+    private fun readGeneric(): GenericInformation {
+        val name = inputStream.readUTF8()
+        val type = inputStream.readUTF8()
+        return GenericInformation(name, type)
     }
 }

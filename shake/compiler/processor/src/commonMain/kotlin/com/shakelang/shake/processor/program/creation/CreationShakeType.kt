@@ -495,10 +495,10 @@ fun ShakeType?.asCreation() = this as CreationShakeType
 
 internal class TypeStorage(
     val type: String,
-    val genericArguments: List<TypeStorage>? = null,
+    val generics: List<TypeStorage>? = null,
 ) {
     fun resolve(scope: CreationShakeScope): CreationShakeType {
-        val generics = genericArguments?.map { it.resolve(scope) }
+        val generics = generics?.map { it.resolve(scope) }
         return scope.getType(type, generics)
     }
 
@@ -520,7 +520,7 @@ internal class TypeStorage(
         "dynamic" -> CreationShakeType.Primitives.DYNAMIC
         "void" -> CreationShakeType.Primitives.VOID
         else -> {
-            val generics = genericArguments?.map { it.resolve(prj) }
+            val generics = generics?.map { it.resolve(prj) }
             val clazz = prj.getClass(type) ?: throw IllegalArgumentException("Class $type not found")
             CreationShakeType.objectType(clazz, generics)
         }
@@ -571,7 +571,7 @@ internal class TypeStorage(
                 val genericTypes = type.genericTypes.map { from(it) }
                 TypeStorage(
                     type.className,
-                    if (genericTypes.isEmpty()) null else genericTypes,
+                    genericTypes.ifEmpty { null },
                 )
             }
             else -> throw IllegalArgumentException("Type $type not supported")

@@ -7,6 +7,7 @@ import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeAssignable
 import com.shakelang.shake.processor.program.types.ShakeClass
 
+@Suppress("ktlint:standard:backing-property-naming")
 class CreationShakeClass
 // TODO implement abstract
 
@@ -488,5 +489,11 @@ internal constructor(
         fun initInterfaces(e: CreationShakeClass, interfaces: List<CreationShakeType.Object>) {
             e._interfaces = interfaces.toMutableList()
         }
+
+        fun exposeMutableFields(e: CreationShakeClass): MutableList<CreationShakeField> = e._fields
+        fun exposeMutableMethods(e: CreationShakeClass): MutableList<CreationShakeMethod> = e._methods
+        fun exposeMutableConstructors(e: CreationShakeClass): MutableList<CreationShakeConstructor> = e._constructors
+        fun exposeMutableClasses(e: CreationShakeClass): MutableList<CreationShakeClass> = e._classes
+        fun exposeMutableGenerics(e: CreationShakeClass): MutableList<CreationShakeType.Generic> = e._generics
     }
 }
