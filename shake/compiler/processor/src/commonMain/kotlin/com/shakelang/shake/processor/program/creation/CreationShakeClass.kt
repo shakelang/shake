@@ -76,7 +76,9 @@ internal constructor(
         emptyList(),
         emptyList(),
         emptyList(),
-        clz.superClasses.map { TypeStorage.from(it.type) },
+        clz.superClasses.map {
+            TypeStorage.from(it.type)
+        },
         emptyList(),
     )
 
@@ -232,7 +234,11 @@ internal constructor(
         if (declarationNode != null) {
             _generics.addAll(
                 declarationNode.generics?.generics?.map {
-                    CreationShakeType.Generic(it.name, it.type?.let { it1 -> parentScope.getType(it1) })
+                    CreationShakeType.Generic(
+                        it.name,
+                        it.type?.let { it1 -> parentScope.getType(it1) },
+                        qualifiedName,
+                    )
                 } ?: emptyList(),
             )
         }
@@ -406,6 +412,15 @@ internal constructor(
                 debug("scope", "Searching for method $name in $uniqueName had no result")
             }
             return methods + parent.getFunctions(name)
+        }
+
+        override fun internalGetType(type: String, generics: List<CreationShakeType>?): CreationShakeType {
+            val genericType = this@CreationShakeClass.generics.find { it.name == type }
+            if (genericType != null) {
+                debug("scope", "Searching for generic type $type in $uniqueName successful")
+                return genericType
+            }
+            return super.internalGetType(type, generics)
         }
 
         override fun getDirectClass(name: String): CreationShakeClass? = classes.find { it.name == name }

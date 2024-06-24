@@ -409,11 +409,11 @@ abstract class CreationShakeType(
     class Generic(
         override val name: String,
         override val base: ShakeType?,
+        override val owner: String,
     ) : CreationShakeType(name),
         ShakeType.Generic {
-
         override val qualifiedName: String
-            get() = name // TODO Qualified name for generic?
+            get() = "G$owner#$name;"
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.GENERIC
@@ -497,6 +497,7 @@ internal class TypeStorage(
     val type: String,
     val generics: List<TypeStorage>? = null,
 ) {
+
     fun resolve(scope: CreationShakeScope): CreationShakeType {
         val generics = generics?.map { it.resolve(scope) }
         return scope.getType(type, generics)
@@ -544,7 +545,7 @@ internal class TypeStorage(
         private val Void = TypeStorage("void")
 
         fun from(type: ShakeVariableType): TypeStorage = TypeStorage(
-            type.type.toString(),
+            type.namespace.toArray().joinToString("."),
             type.genericTypes?.map { from(it) },
         )
 

@@ -14,6 +14,14 @@ class CreationShakeProject(
 
     val cores = Cores()
 
+    private val genericMap = mutableMapOf<String, CreationShakeType.Generic>()
+
+    fun registerGeneric(it: CreationShakeType.Generic) {
+        genericMap[it.qualifiedName] = it
+    }
+
+    fun getGeneric(name: String): CreationShakeType.Generic? = genericMap[name]
+
     override val projectScope = object : CreationShakeScope() {
         override val uniqueName: String
             get() = "project"

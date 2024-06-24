@@ -575,6 +575,58 @@ interface TypeDescriptor {
     }
 
     /**
+     * A [GenericType] represents a generic type in shake
+     * It has the descriptor `G<receiver>#<genericName>;` and a size of 8
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/map-format#Generics)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    class GenericType(val owner: String, val name: String) : TypeDescriptor {
+
+        /**
+         * The descriptor of the [GenericType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override val descriptor: String get() = "G$owner#$name;"
+
+        /**
+         * The size of the [GenericType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override val byteSize: Int get() = 8
+
+        /**
+         * Get the [String] representation of the [GenericType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is GenericType) return false
+
+            if (owner != other.owner) return false
+            if (name != other.name) return false
+
+            return true
+        }
+
+        /**
+         * Get the [Int] hash of the [GenericType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override fun hashCode(): Int {
+            var result = owner.hashCode()
+            result = 31 * result + name.hashCode()
+            return result
+        }
+    }
+
+    /**
      * An [ArrayType] represents an array type in shake
      * It has the descriptor `[<type>;` and a size of 8
      *
@@ -790,6 +842,7 @@ interface TypeDescriptor {
          */
         fun parse(name: InputStream): TypeDescriptor {
             when (val next = name.read().toChar()) {
+                (-1).toChar() -> throw Exception("Unexpected end of type descriptor")
                 'B' -> return BYTE
                 'S' -> return SHORT
                 'I' -> return INT
@@ -806,6 +859,25 @@ interface TypeDescriptor {
                 'N' -> return NEW_TYPE
                 '?' -> return DYNAMIC_TYPE
                 '[' -> return ArrayType(parse(name))
+                'G' -> {
+                    val receiver = StringBuilder()
+                    var next2 = name.read().toChar()
+                    while (next2 != '#') {
+                        receiver.append(next2)
+                        if (name.available() == 0) throw Exception("Unexpected end of type descriptor: G$receiver...")
+                        next2 = name.read().toChar()
+                    }
+
+                    val genericName = StringBuilder()
+                    next2 = name.read().toChar()
+                    while (next2 != ';') {
+                        genericName.append(next2)
+                        if (name.available() == 0) throw Exception("Unexpected end of type descriptor: G$receiver#$genericName...")
+                        next2 = name.read().toChar()
+                    }
+
+                    return GenericType(receiver.toString(), genericName.toString())
+                }
                 'L' -> {
                     val className = StringBuilder()
                     var next2 = name.read().toChar()
@@ -825,7 +897,7 @@ interface TypeDescriptor {
                     return ObjectType(className.toString(), genericTypes)
                 }
 
-                else -> throw Exception("Unknown type: $next")
+                else -> throw Exception("Unknown type: $next (0x${next.code.toString(16)}) in ")
             }
         }
 
@@ -834,6 +906,12 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun parse(name: String): TypeDescriptor = parse(name.byteStream())
+        fun parse(name: String): TypeDescriptor {
+            try {
+                return parse(name.byteStream())
+            } catch (e: Exception) {
+                throw Exception("Error while parsing type descriptor: \"$name\"", e)
+            }
+        }
     }
 }

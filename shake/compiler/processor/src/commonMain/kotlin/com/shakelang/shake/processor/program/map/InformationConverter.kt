@@ -201,7 +201,8 @@ class InformationRecreator(
                 info.genericInformation.map {
                     CreationShakeType.Generic(
                         it.name,
-                        TypeStorage.from(it.type).resolve(project) as? CreationShakeType.Object ?: error("Base type '${it.type}' not found"),
+                        if (it.type.isNotEmpty()) TypeStorage.from(it.type).resolve(project) as? CreationShakeType.Object ?: error("Base type '${it.type}' not found") else null,
+                        clazz.qualifiedName,
                     )
                 },
             )
@@ -264,8 +265,13 @@ class InformationRecreator(
                 recreateType(it)
             },
         )
+        is TypeDescriptor.GenericType -> CreationShakeType.Generic(
+            type.name,
+            project.getGeneric(type.descriptor),
+            type.owner,
+        )
         else -> {
-            throw Exception("Unknown type descriptor for reconstruction: $type")
+            throw Exception("Unknown type descriptor for reconstruction: ${type.descriptor}")
         }
     }
 

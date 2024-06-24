@@ -1768,10 +1768,7 @@ interface ShakeType {
 
         override fun castableTo(other: ShakeType): Boolean = other is Object && other.clazz.compatibleTo(clazz)
 
-        override fun compatibleTo(other: ShakeType): Boolean {
-            println("Checking compatibility of $this and $other")
-            return other is Object && clazz.compatibleTo(other.clazz)
-        }
+        override fun compatibleTo(other: ShakeType): Boolean = other is Object && clazz.compatibleTo(other.clazz)
 
         override fun compatibilityDistance(other: ShakeType): Int = if (other is Object) clazz.compatibilityDistance(other.clazz) else -1
 
@@ -1783,6 +1780,7 @@ interface ShakeType {
 
     interface Generic : ShakeType {
         val base: ShakeType?
+        val owner: String
 
         override val kind: Kind get() = Kind.GENERIC
 

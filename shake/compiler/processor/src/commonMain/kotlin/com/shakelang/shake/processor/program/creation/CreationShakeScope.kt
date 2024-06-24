@@ -75,9 +75,13 @@ abstract class CreationShakeScope : ShakeScope {
             "void" -> return CreationShakeType.Primitives.VOID
         }
 
+        return internalGetType(type, generics)
+    }
+
+    protected open fun internalGetType(type: String, generics: List<CreationShakeType>? = null): CreationShakeType {
         val clazz = this.getDirectClass(type)
         if (clazz != null) return CreationShakeType.objectType(clazz, generics)
-        return parent?.getType(type, generics) ?: throw Exception("Type $type not found")
+        return parent?.getType(type, generics) ?: throw Exception("Type \"$type\" not found")
     }
 
     fun getType(

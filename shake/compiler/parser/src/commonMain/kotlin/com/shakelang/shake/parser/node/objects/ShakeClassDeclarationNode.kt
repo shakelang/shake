@@ -59,6 +59,12 @@ class ShakeClassDeclarationNode(
             "methods" to methods.map { it.json },
             "classes" to classes.map { it.json },
             "constructors" to constructors.map { it.json },
+            "generics" to generics?.json,
+            "super_classes" to superClasses.map { it.type.json },
+            "is_class" to isClass,
+            "is_interface" to isInterface,
+            "is_enum" to isEnum,
+            "is_object" to isObject,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
