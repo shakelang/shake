@@ -130,15 +130,9 @@ class CreationShakeMethod(
             return parentScope.getFunctions(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
-            return parentScope.getClass(name)
-        }
+        override fun getDirectClass(name: String): CreationShakeClass? = null
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
-            debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
-            return parentScope.getClasses(name)
-        }
+        override fun getDirectClasses(name: String): List<CreationShakeClass> = listOf()
 
         override val processor: ShakeASTProcessor
             get() = prj.projectScope.processor

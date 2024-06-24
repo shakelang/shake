@@ -354,25 +354,9 @@ internal constructor(
             return constructors + parent.getConstructors(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            val clazz = staticClasses.find { it.name == name }
-            if (clazz != null) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return clazz ?: parent.getClass(name)
-        }
+        override fun getDirectClass(name: String): CreationShakeClass? = staticClasses.find { it.name == name }
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
-            val classes = staticClasses.filter { it.name == name }
-            if (classes.isNotEmpty()) {
-                debug("scope", "Searching for classes $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for classes $name in $uniqueName had no result")
-            }
-            return classes + parent.getClasses(name)
-        }
+        override fun getDirectClasses(name: String): List<CreationShakeClass> = staticClasses.filter { it.name == name }
 
         override fun getThis(): ShakeAssignable? = parent.getThis()
 
@@ -424,25 +408,9 @@ internal constructor(
             return methods + parent.getFunctions(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            val clazz = classes.find { it.name == name }
-            if (clazz != null) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return clazz ?: parent.getClass(name)
-        }
+        override fun getDirectClass(name: String): CreationShakeClass? = classes.find { it.name == name }
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
-            val classes = classes.filter { it.name == name }
-            if (classes.isNotEmpty()) {
-                debug("scope", "Searching for classes $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for classes $name in $uniqueName had no result")
-            }
-            return classes + parent.getClasses(name)
-        }
+        override fun getDirectClasses(name: String): List<CreationShakeClass> = classes.filter { it.name == name }
 
         override fun getThis(): ShakeAssignable? {
             TODO()

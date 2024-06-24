@@ -23,8 +23,20 @@ abstract class CreationShakeScope : ShakeScope {
         return parent?.getConstructors(name) ?: emptyList()
     }
 
-    abstract override fun getClass(name: String): CreationShakeClass?
-    abstract override fun getClasses(name: String): List<CreationShakeClass>
+    final override fun getClass(name: String): CreationShakeClass? {
+        val directClass = getDirectClass(name)
+        if (directClass != null) return directClass
+        return parent?.getClass(name)
+    }
+    final override fun getClasses(name: String): List<CreationShakeClass> {
+        val directClasses = getDirectClasses(name)
+        val parentClasses = parent?.getClasses(name) ?: emptyList()
+        return directClasses + parentClasses
+    }
+
+    abstract override fun getDirectClass(name: String): CreationShakeClass?
+    abstract override fun getDirectClasses(name: String): List<CreationShakeClass>
+
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
         val functions = getFunctions(name)
         val variable = getField(name)
@@ -46,27 +58,26 @@ abstract class CreationShakeScope : ShakeScope {
     }
 
     fun getType(type: String, generics: List<CreationShakeType>? = null): CreationShakeType {
-        return when (type) {
-            "byte" -> CreationShakeType.Primitives.BYTE
-            "short" -> CreationShakeType.Primitives.SHORT
-            "int" -> CreationShakeType.Primitives.INT
-            "long" -> CreationShakeType.Primitives.LONG
-            "float" -> CreationShakeType.Primitives.FLOAT
-            "double" -> CreationShakeType.Primitives.DOUBLE
-            "ubyte" -> CreationShakeType.Primitives.UBYTE
-            "ushort" -> CreationShakeType.Primitives.USHORT
-            "uint" -> CreationShakeType.Primitives.UINT
-            "ulong" -> CreationShakeType.Primitives.ULONG
-            "boolean" -> CreationShakeType.Primitives.BOOLEAN
-            "char" -> CreationShakeType.Primitives.CHAR
-            "dynamic" -> CreationShakeType.Primitives.DYNAMIC
-            "void" -> CreationShakeType.Primitives.VOID
-            else -> return CreationShakeType.objectType(
-                this.getClass(type)
-                    ?: throw IllegalArgumentException("Class $type not found"),
-                generics,
-            )
+        when (type) {
+            "byte" -> return CreationShakeType.Primitives.BYTE
+            "short" -> return CreationShakeType.Primitives.SHORT
+            "int" -> return CreationShakeType.Primitives.INT
+            "long" -> return CreationShakeType.Primitives.LONG
+            "float" -> return CreationShakeType.Primitives.FLOAT
+            "double" -> return CreationShakeType.Primitives.DOUBLE
+            "ubyte" -> return CreationShakeType.Primitives.UBYTE
+            "ushort" -> return CreationShakeType.Primitives.USHORT
+            "uint" -> return CreationShakeType.Primitives.UINT
+            "ulong" -> return CreationShakeType.Primitives.ULONG
+            "boolean" -> return CreationShakeType.Primitives.BOOLEAN
+            "char" -> return CreationShakeType.Primitives.CHAR
+            "dynamic" -> return CreationShakeType.Primitives.DYNAMIC
+            "void" -> return CreationShakeType.Primitives.VOID
         }
+
+        val clazz = this.getDirectClass(type)
+        if (clazz != null) return CreationShakeType.objectType(clazz, generics)
+        return parent?.getType(type, generics) ?: throw Exception("Type $type not found")
     }
 
     fun getType(

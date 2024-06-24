@@ -67,9 +67,7 @@ class CreationShakeProject(
             return functions
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            debug("scope", "Searching for class $name in project scope")
-
+        override fun getDirectClass(name: String): CreationShakeClass? {
             lazyLoadImportedPackages()
             for (import in imported) {
                 val clazz = import.classes.find { it.name == name }
@@ -78,7 +76,7 @@ class CreationShakeProject(
             return this@CreationShakeProject.getClass(name)
         }
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
+        override fun getDirectClasses(name: String): List<CreationShakeClass> {
             debug("scope", "Searching for classes $name in project scope")
 
             lazyLoadImportedPackages()
@@ -89,13 +87,13 @@ class CreationShakeProject(
             return classes
         }
 
-        override fun getThis(): CreationShakeAssignable? = throw IllegalStateException("Cannot get this in the project scope")
+        override fun getThis(): CreationShakeAssignable = throw IllegalStateException("Cannot get this in the project scope")
 
-        override fun getThis(name: String): CreationShakeAssignable? = throw IllegalStateException("Cannot get this in the project scope")
+        override fun getThis(name: String): CreationShakeAssignable = throw IllegalStateException("Cannot get this in the project scope")
 
-        override fun getSuper(): CreationShakeAssignable? = throw IllegalStateException("Cannot get super in the project scope")
+        override fun getSuper(): CreationShakeAssignable = throw IllegalStateException("Cannot get super in the project scope")
 
-        override fun getSuper(name: String): CreationShakeAssignable? = throw IllegalStateException("Cannot get super in the project scope")
+        override fun getSuper(name: String): CreationShakeAssignable = throw IllegalStateException("Cannot get super in the project scope")
     }
 
     fun putFile(name: String, content: ShakeFileNode) {

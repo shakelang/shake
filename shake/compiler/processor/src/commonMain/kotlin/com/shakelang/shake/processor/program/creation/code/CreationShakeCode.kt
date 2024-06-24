@@ -68,15 +68,9 @@ open class CreationShakeCode(
             return parent.getFunctions(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            debug("scope", "Searching for class $name in $this (just redirecting to parent)")
-            return parent.getClass(name)
-        }
+        override fun getDirectClass(name: String): CreationShakeClass? = null
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
-            debug("scope", "Searching for class $name in $this (just redirecting to parent)")
-            return parent.getClasses(name)
-        }
+        override fun getDirectClasses(name: String): List<CreationShakeClass> = emptyList()
 
         override val processor: ShakeASTProcessor
             get() = parent.processor

@@ -71,6 +71,22 @@ interface ShakeScope {
     fun getClasses(name: String): List<ShakeClass>
 
     /**
+     * Retrieves a class by its name within this scope.
+     *
+     * @param name The name of the class to retrieve
+     * @return The class if found, or null if not found
+     */
+    fun getDirectClass(name: String): ShakeClass?
+
+    /**
+     * Retrieves all classes with the specified name within this scope.
+     *
+     * @param name The name of the classes to retrieve
+     * @return A list of classes with the specified name
+     */
+    fun getDirectClasses(name: String): List<ShakeClass>
+
+    /**
      * Retrieves all invokable entities (like functions or methods) with the specified name within this scope.
      *
      * @param name The name of the invokable entities to retrieve.

@@ -205,31 +205,15 @@ open class CreationShakePackage(
             return functions + parent.getFunctions(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
-            val clazz = classes.find { it.name == name }
-            if (clazz != null) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return clazz ?: parent.getClass(name)
-        }
+        override fun getDirectClass(name: String): CreationShakeClass? = classes.find { it.name == name }
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
-            val classes = classes.filter { it.name == name }
-            if (classes.isNotEmpty()) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return classes + parent.getClasses(name)
-        }
+        override fun getDirectClasses(name: String): List<CreationShakeClass> = classes.filter { it.name == name }
 
-        override fun getThis(): ShakeAssignable? = throw Error("Cannot get this in a package scope")
+        override fun getThis(): ShakeAssignable = throw Error("Cannot get this in a package scope")
 
-        override fun getThis(name: String): ShakeAssignable? = throw Error("Cannot get this in a package scope")
+        override fun getThis(name: String): ShakeAssignable = throw Error("Cannot get this in a package scope")
 
-        override fun getSuper(): ShakeAssignable? = throw Error("Cannot get super in a package scope")
+        override fun getSuper(): ShakeAssignable = throw Error("Cannot get super in a package scope")
 
         override fun getSuper(name: String): ShakeAssignable? = throw Error("Cannot get super in a package scope")
 
@@ -364,26 +348,14 @@ open class CreationShakePackage(
             return functions + parent.getFunctions(name)
         }
 
-        override fun getClass(name: String): CreationShakeClass? {
+        override fun getDirectClass(name: String): CreationShakeClass? {
             lazyLoadImportedClasses()
-            val clazz = importedClasses.find { it.name == name }
-            if (clazz != null) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return clazz ?: parent.getClass(name)
+            return importedClasses.find { it.name == name }
         }
 
-        override fun getClasses(name: String): List<CreationShakeClass> {
+        override fun getDirectClasses(name: String): List<CreationShakeClass> {
             lazyLoadImportedClasses()
-            val classes = importedClasses.filter { it.name == name }
-            if (classes.isNotEmpty()) {
-                debug("scope", "Searching for class $name in $uniqueName successful")
-            } else {
-                debug("scope", "Searching for class $name in $uniqueName had no result")
-            }
-            return classes + parent.getClasses(name)
+            return importedClasses.filter { it.name == name }
         }
 
         override fun getThis(): ShakeAssignable? = throw Error("Cannot get this in a package scope")
