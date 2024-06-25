@@ -286,7 +286,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         //
         // function
         //
-        ShakeTokenType.KEYWORD_FUN -> expectFunctionDeclaration(info)
+        ShakeTokenType.KEYWORD_FUN -> expectMethodDeclaration(info)
 
         //
         // field
@@ -403,16 +403,19 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      * @param info The context information of the declaration
      * @return The parsed function declaration
      */
-    private fun expectFunctionDeclaration(info: DeclarationContextInformation): ShakeMethodDeclarationNode {
+    private fun expectMethodDeclaration(info: DeclarationContextInformation): ShakeMethodDeclarationNode {
         //
-        // fun <[namespace]> ([args])? ([colon] <[type]>)? ([colon] <[type]>)? (<[block]>)?
+        // fun <[generics]> <[namespace]> ([args])? ([colon] <[type]>)? ([colon] <[type]>)? (<[block]>)?
         //
 
         val funToken = input.next()
 
+        val generics = checkGenericsDeclaration()
+
         val namespace = expectNamespace()
         val expanding = namespace.parent?.toType()
         val expandingDot = namespace.dotToken
+
         val name = namespace.nameToken
 
         val (argList, lparen, rparen, commas) = expectFunctionArguments()
@@ -452,6 +455,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             colonToken = colon,
             commaTokens = commas,
             expandingDotToken = expandingDot,
+            generics = generics,
         )
     }
 
@@ -537,7 +541,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         return ShakeTypeArgumentDeclaration(map, name, colon, type)
     }
 
-    private fun expectTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclaration {
+    private fun expectGenericsDeclaration(): ShakeTypeArgumentsDeclaration {
         val open = expectToken(ShakeTokenType.SMALLER)
         val args = mutableListOf<ShakeTypeArgumentDeclaration>()
         val commas = mutableListOf<ShakeToken>()
@@ -553,8 +557,8 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         return ShakeTypeArgumentsDeclaration(map, open, args.toTypedArray(), commas.toTypedArray(), close)
     }
 
-    private fun checkTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclaration? = if (nextToken(ShakeTokenType.SMALLER)) {
-        expectTypeArgumentsDeclaration()
+    private fun checkGenericsDeclaration(): ShakeTypeArgumentsDeclaration? = if (nextToken(ShakeTokenType.SMALLER)) {
+        expectGenericsDeclaration()
     } else {
         null
     }
@@ -572,7 +576,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
 
-        val typeargs = checkTypeArgumentsDeclaration()
+        val typeargs = checkGenericsDeclaration()
 
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
         val methods = mutableListOf<ShakeMethodDeclarationNode>()
@@ -641,7 +645,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
 
         val name = expectToken(ShakeTokenType.IDENTIFIER)
 
-        val typeargs = checkTypeArgumentsDeclaration()
+        val typeargs = checkGenericsDeclaration()
 
         val fields = mutableListOf<ShakeFieldDeclarationNode>()
         val methods = mutableListOf<ShakeMethodDeclarationNode>()

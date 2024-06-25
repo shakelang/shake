@@ -3,6 +3,7 @@ package com.shakelang.shake.parser.node.outer
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeTypeArgumentsDeclaration
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
@@ -114,6 +115,11 @@ class ShakeMethodDeclarationNode(
      * The expanding dot token of the method
      */
     val expandingDotToken: ShakeToken?,
+
+    /**
+     * The generics of this method declaration
+     */
+    val generics: ShakeTypeArgumentsDeclaration?,
 ) : ShakeFileChildNodeImpl(map) {
 
     /**
@@ -191,6 +197,13 @@ class ShakeMethodDeclarationNode(
             "access" to access.toString(),
             "is_static" to isStatic,
             "is_final" to isFinal,
+            "is_abstract" to isAbstract,
+            "is_override" to isOverride,
+            "is_synchronized" to isSynchronized,
+            "is_native" to isNative,
+            "is_operator" to isOperator,
+            "is_inline" to isInline,
+            "generics" to generics?.json,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

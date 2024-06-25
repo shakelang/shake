@@ -2,6 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -301,6 +302,72 @@ class GenericTests :
                 superClass.type.genericTypes shouldNotBe null
                 superClass.type.genericTypes!!.size shouldBe 1
                 superClass.type.genericTypes!![0].namespace.stringify() shouldBe "int"
+            }
+
+            "test declaration of a generic function" {
+
+                val code = """
+                    fun <T> test(a: T): T {
+                        return a
+                    }
+                """.trimIndent()
+
+                val method = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeMethodDeclarationNode::class)
+                method.name shouldBe "test"
+                method.generics shouldNotBe null
+
+                val typeArgs = method.generics!!
+                typeArgs.openToken shouldNotBe null
+                typeArgs.openToken.value shouldBe "<"
+                typeArgs.closeToken shouldNotBe null
+                typeArgs.closeToken.value shouldBe ">"
+
+                typeArgs.commaTokens shouldNotBe null
+                typeArgs.commaTokens.size shouldBe 0
+
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
+
+                val arg = typeArgs.generics[0]
+                arg.nameToken shouldNotBe null
+                arg.nameToken.value shouldBe "T"
+
+                arg.type shouldBe null
+                arg.colonToken shouldBe null
+            }
+
+            "test declaration of a generic function with extends" {
+
+                val code = """
+                    fun <T : Object> test(a: T): T {
+                        return a
+                    }
+                """.trimIndent()
+
+                val method = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeMethodDeclarationNode::class)
+                method.name shouldBe "test"
+                method.generics shouldNotBe null
+
+                val typeArgs = method.generics!!
+                typeArgs.openToken shouldNotBe null
+                typeArgs.openToken.value shouldBe "<"
+                typeArgs.closeToken shouldNotBe null
+                typeArgs.closeToken.value shouldBe ">"
+
+                typeArgs.commaTokens shouldNotBe null
+                typeArgs.commaTokens.size shouldBe 0
+
+                typeArgs.generics shouldNotBe null
+                typeArgs.generics.size shouldBe 1
+
+                val arg = typeArgs.generics[0]
+                arg.nameToken shouldNotBe null
+                arg.nameToken.value shouldBe "T"
+
+                arg.type shouldNotBe null
+                arg.type!!.namespace.stringify() shouldBe "Object"
+                arg.colonToken shouldNotBe null
+                arg.colonToken!!.value shouldBe ":"
             }
         },
     )

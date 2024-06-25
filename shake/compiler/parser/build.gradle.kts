@@ -37,34 +37,3 @@ kotlin {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
-
-apply<Embed>()
-
-getEmbedExtension(project).configuration {
-    sourceSet.set("commonTest")
-    distPackage.set("com.shakelang.shake.parser.test")
-    distName.set("ShakeParserTestResources")
-    embed("**/*")
-}
-
-// tasks.withType(FileBuilder::class).configureEach {
-//    dependsOn("generateTests")
-// }
-
-val generateTests by tasks.registering(NodeTask::class) {
-    group = "build"
-    description = "Generates the test files for the parser"
-    dependsOn("npmInstall")
-    script.set(file("test-generator/index.js"))
-    inputs.dir(file("test-generator"))
-    outputs.dir(file("src/commonTest/resources/generated-tests"))
-    args.set(listOf())
-}
-
-val cleanGeneratedTests by tasks.registering(Delete::class) {
-    group = "build"
-    description = "Cleans the generated test files"
-    delete(file("src/commonTest/resources/generated-tests"))
-}
-
-tasks.getByName("clean").dependsOn(cleanGeneratedTests)
