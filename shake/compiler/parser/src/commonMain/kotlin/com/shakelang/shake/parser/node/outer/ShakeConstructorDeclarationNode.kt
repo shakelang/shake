@@ -1,9 +1,8 @@
-package com.shakelang.shake.parser.node.objects
+package com.shakelang.shake.parser.node.outer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.outer.ShakeParameterNode
 import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 

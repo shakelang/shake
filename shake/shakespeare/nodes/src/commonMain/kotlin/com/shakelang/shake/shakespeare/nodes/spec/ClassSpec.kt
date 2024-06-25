@@ -10,8 +10,8 @@ package com.shakelang.shake.shakespeare.nodes.spec
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeConstructorDeclarationNode
 import com.shakelang.shake.shakespeare.nodes.spec.code.CodeNodeSpec
 import com.shakelang.shake.shakespeare.spec.*
 
@@ -87,7 +87,9 @@ open class ConstructorNodeSpec(
     }
 }
 
-interface ClassLikeNodeSpec : AbstractNodeSpec, ClassLikeSpec
+interface ClassLikeNodeSpec :
+    AbstractNodeSpec,
+    ClassLikeSpec
 
 @Suppress("UNCHECKED_CAST")
 open class ClassNodeSpec(

@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFileNode
 import com.shakelang.shake.parser.node.outer.ShakeImportNode

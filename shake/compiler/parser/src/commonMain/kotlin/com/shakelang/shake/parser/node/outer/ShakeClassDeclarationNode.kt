@@ -1,4 +1,4 @@
-package com.shakelang.shake.parser.node.objects
+package com.shakelang.shake.parser.node.outer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
@@ -7,8 +7,6 @@ import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
 import com.shakelang.shake.parser.node.misc.ShakeTypeArgumentsDeclaration
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
-import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
-import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
 

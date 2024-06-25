@@ -1,6 +1,6 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
 import io.kotest.core.spec.style.FreeSpec

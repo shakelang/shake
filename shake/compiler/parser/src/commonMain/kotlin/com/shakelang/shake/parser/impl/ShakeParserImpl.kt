@@ -10,10 +10,10 @@ import com.shakelang.shake.parser.node.ShakeStatementNode
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.misc.*
 import com.shakelang.shake.parser.node.mixed.*
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationSuperClassEntry
-import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.outer.*
+import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationSuperClassEntry
+import com.shakelang.shake.parser.node.outer.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.statements.*
 import com.shakelang.shake.parser.node.values.ShakeCastNode
 import com.shakelang.shake.parser.node.values.ShakeVariableUsageNode

@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
+import com.shakelang.shake.parser.node.outer.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
