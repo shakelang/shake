@@ -1,29 +1,34 @@
 package com.shakelang.shake.parser.node.misc
 
 import com.shakelang.shake.lexer.token.ShakeToken
-import com.shakelang.shake.parser.node.ShakeNodeImpl
-import com.shakelang.util.parseutils.characters.position.PositionMap
 
-class ShakeTypeArgumentDeclaration(
-    map: PositionMap,
+class ShakeGenericDeclaration(
     val nameToken: ShakeToken,
     val colonToken: ShakeToken?,
     val type: ShakeVariableType?,
-) : ShakeNodeImpl(map = map) {
+) {
 
     val name: String
         get() = nameToken.value
 
+    val json: Any
+        get() = toJson()
+
+    fun toJson(): Map<String, *> = mapOf(
+        "name" to name,
+        "type" to type?.json,
+    )
+
     override fun equals(other: Any?): Boolean {
-        if (other !is ShakeTypeArgumentDeclaration) return false
+        if (other !is ShakeGenericDeclaration) return false
         if (other.nameToken != nameToken) return false
         if (other.colonToken != colonToken) return false
         if (other.type != type) return false
         return true
     }
 
-    override fun equalsIgnorePosition(other: Any?): Boolean {
-        if (other !is ShakeTypeArgumentDeclaration) return false
+    fun equalsIgnorePosition(other: Any?): Boolean {
+        if (other !is ShakeGenericDeclaration) return false
         if (other.nameToken != nameToken) return false
         if (other.colonToken != colonToken) return false
         if (other.type != type) return false
@@ -38,16 +43,15 @@ class ShakeTypeArgumentDeclaration(
     }
 }
 
-class ShakeTypeArgumentsDeclaration(
-    map: PositionMap,
+class ShakeGenericsDeclaration(
     val openToken: ShakeToken,
-    val generics: Array<ShakeTypeArgumentDeclaration>,
+    val generics: Array<ShakeGenericDeclaration>,
     val commaTokens: Array<ShakeToken>,
     val closeToken: ShakeToken,
-) : ShakeNodeImpl(map) {
+) {
 
     override fun equals(other: Any?): Boolean {
-        if (other !is ShakeTypeArgumentsDeclaration) return false
+        if (other !is ShakeGenericsDeclaration) return false
         if (other.openToken != openToken) return false
         if (!other.generics.contentEquals(generics)) return false
         if (!other.commaTokens.contentEquals(commaTokens)) return false
@@ -55,14 +59,24 @@ class ShakeTypeArgumentsDeclaration(
         return true
     }
 
-    override fun equalsIgnorePosition(other: Any?): Boolean {
-        if (other !is ShakeTypeArgumentsDeclaration) return false
+    fun equalsIgnorePosition(other: Any?): Boolean {
+        if (other !is ShakeGenericsDeclaration) return false
         if (other.openToken != openToken) return false
         if (!other.generics.contentEquals(generics)) return false
         if (!other.commaTokens.contentEquals(commaTokens)) return false
         if (other.closeToken != closeToken) return false
         return true
     }
+
+    val json: Any
+        get() = toJson()
+
+    fun toJson(): Map<String, *> = mapOf(
+        "open" to openToken.value,
+        "generics" to generics.map { it.json },
+        "comma" to commaTokens.map { it.value },
+        "close" to closeToken.value,
+    )
 
     override fun hashCode(): Int {
         var result = openToken.hashCode()

@@ -475,32 +475,41 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         return namespaceNode
     }
 
+    private fun expectTypeArguments(): ShakeTypeArguments {
+        val open = expectToken(ShakeTokenType.LT)
+        val args = mutableListOf<ShakeVariableType>()
+        val commas = mutableListOf<ShakeToken>()
+        do {
+            args.add(expectType())
+            if (nextToken(ShakeTokenType.COMMA)) {
+                commas.add(input.next())
+            } else {
+                break
+            }
+        } while (true)
+        val close = expectToken(ShakeTokenType.GT)
+        return ShakeTypeArguments(open, args.toTypedArray(), commas.toTypedArray(), close)
+    }
+
+    private fun checkTypeArguments(): ShakeTypeArguments? = if (nextToken(ShakeTokenType.LT)) {
+        expectTypeArguments()
+    } else {
+        null
+    }
+
     /**
      * Expect a type.
      */
     private fun expectType(): ShakeVariableType {
         val type = expectNamespace().toType()
 
-        if (nextToken(ShakeTokenType.LT)) {
-            val lt = input.next()
-            val types = mutableListOf<ShakeVariableType>()
-            types.add(expectType())
-            val commas = mutableListOf<ShakeToken>()
-            while (nextToken(ShakeTokenType.COMMA)) {
-                commas.add(input.next())
-                types.add(expectType())
-            }
-            val gt = expectToken(ShakeTokenType.GT)
-            return ShakeVariableType(
-                type.namespace,
-                lt,
-                gt,
-                commas.toList(),
-                types.toList(),
-            )
-        }
+        val typeargs = checkTypeArguments()
 
-        return type
+        return if (typeargs != null) {
+            ShakeVariableType(type.namespace, typeargs)
+        } else {
+            type
+        }
     }
 
     // ****************************************************************************
@@ -534,16 +543,16 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     // ****************************************************************************
     // Classes
 
-    private fun expectTypeArgumentDefinition(): ShakeTypeArgumentDeclaration {
+    private fun expectTypeArgumentDefinition(): ShakeGenericDeclaration {
         val name = expectToken(ShakeTokenType.IDENTIFIER)
         val colon = if (nextToken(ShakeTokenType.COLON)) input.next() else null
         val type = if (nextToken(ShakeTokenType.IDENTIFIER)) expectType() else null
-        return ShakeTypeArgumentDeclaration(map, name, colon, type)
+        return ShakeGenericDeclaration(name, colon, type)
     }
 
-    private fun expectGenericsDeclaration(): ShakeTypeArgumentsDeclaration {
+    private fun expectGenericsDeclaration(): ShakeGenericsDeclaration {
         val open = expectToken(ShakeTokenType.LT)
-        val args = mutableListOf<ShakeTypeArgumentDeclaration>()
+        val args = mutableListOf<ShakeGenericDeclaration>()
         val commas = mutableListOf<ShakeToken>()
         do {
             args.add(expectTypeArgumentDefinition())
@@ -554,10 +563,10 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
         } while (true)
         val close = expectToken(ShakeTokenType.GT)
-        return ShakeTypeArgumentsDeclaration(map, open, args.toTypedArray(), commas.toTypedArray(), close)
+        return ShakeGenericsDeclaration(open, args.toTypedArray(), commas.toTypedArray(), close)
     }
 
-    private fun checkGenericsDeclaration(): ShakeTypeArgumentsDeclaration? = if (nextToken(ShakeTokenType.LT)) {
+    private fun checkGenericsDeclaration(): ShakeGenericsDeclaration? = if (nextToken(ShakeTokenType.LT)) {
         expectGenericsDeclaration()
     } else {
         null
@@ -786,6 +795,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
      */
     private fun expectInvocation(function: ShakeValuedNode): ShakeInvocationNode {
         val args: MutableList<ShakeValuedNode> = ArrayList()
+        val typeArgs = checkTypeArguments()
         val lp = expectToken(ShakeTokenType.LPAREN)
         val commas = mutableListOf<ShakeToken>()
         if (!nextToken(ShakeTokenType.RPAREN)) {
@@ -798,7 +808,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             }
         }
         val rp = expectToken(ShakeTokenType.RPAREN)
-        return ShakeInvocationNode(map, function, args.toTypedArray(), lp, rp, commas.toTypedArray())
+        return ShakeInvocationNode(map, function, args.toTypedArray(), lp, rp, commas.toTypedArray(), typeArgs)
     }
 
     /**
@@ -1245,16 +1255,48 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         return result
     }
 
+    private fun lookaheadCheckFunctionCall(): Boolean {
+        val next = input.peek()
+
+        var i = 2
+        var level = 1
+
+        while (input.has(i)) {
+            val token = input.peek(i)
+            if (token.type == ShakeTokenType.LT) {
+                level++
+            } else if (token.type == ShakeTokenType.GT) {
+                level--
+            }
+
+            // TODO Multi line max be possible?
+            // val test = mutableListOf<
+            //   ShakeToken
+            // >()
+            if (token.type == ShakeTokenType.LINE_SEPARATOR || token.type == ShakeTokenType.SEMICOLON) {
+                return false
+            }
+
+            i++
+        }
+
+        return level == 0
+    }
+
     private fun expectValuedFunctionReturning(): ShakeValuedNode {
         var value = expectValuedMandatory()
         while (input.hasNext() &&
             (
                 input.peek().type == ShakeTokenType.LPAREN ||
-                    input.peek().type == ShakeTokenType.DOT
+                    input.peek().type == ShakeTokenType.DOT ||
+                    (input.peek().type == ShakeTokenType.LT && lookaheadCheckFunctionCall())
                 )
         ) {
             when (input.peek().type) {
-                ShakeTokenType.LPAREN -> value = expectInvocation(value)
+                ShakeTokenType.LPAREN,
+                ShakeTokenType.LT,
+                -> value = expectInvocation(value)
+
                 ShakeTokenType.DOT -> {
                     input.skip()
                     value = expectValueIdentifier(value)

@@ -3,6 +3,7 @@ package com.shakelang.shake.parser.node.mixed
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.ShakeValuedStatementNodeImpl
+import com.shakelang.shake.parser.node.misc.ShakeTypeArguments
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeInvocationNode(
@@ -12,8 +13,8 @@ class ShakeInvocationNode(
     val lparenToken: ShakeToken,
     val rparenToken: ShakeToken,
     val commas: Array<ShakeToken>,
-) :
-    ShakeValuedStatementNodeImpl(map) {
+    val typeArguments: ShakeTypeArguments?,
+) : ShakeValuedStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to nodeName, "function" to function.json, "args" to args.map { it.json })

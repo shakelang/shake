@@ -1,5 +1,6 @@
 package com.shakelang.shake.parser
 
+import com.shakelang.shake.parser.node.mixed.ShakeInvocationNode
 import com.shakelang.shake.parser.node.outer.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeFieldDeclarationNode
 import com.shakelang.shake.parser.node.outer.ShakeMethodDeclarationNode
@@ -20,17 +21,17 @@ class GenericTests :
                 val type = field.type!!
                 type.namespace.stringify() shouldBe "List"
 
-                type.genericOpen shouldNotBe null
-                type.genericOpen!!.value shouldBe "<"
-                type.genericClose shouldNotBe null
-                type.genericClose!!.value shouldBe ">"
+                type.genericTypes?.openToken shouldNotBe null
+                type.genericTypes?.openToken!!.value shouldBe "<"
+                type.genericTypes?.closeToken shouldNotBe null
+                type.genericTypes?.closeToken!!.value shouldBe ">"
 
-                type.genericCommas shouldNotBe null
-                type.genericCommas!!.size shouldBe 0
+                type.genericTypes?.commaTokens shouldNotBe null
+                type.genericTypes?.commaTokens!!.size shouldBe 0
 
-                type.genericTypes shouldNotBe null
-                type.genericTypes!!.size shouldBe 1
-                type.genericTypes!![0].namespace.stringify() shouldBe "int"
+                type.genericTypes?.arguments shouldNotBe null
+                type.genericTypes?.arguments!!.size shouldBe 1
+                type.genericTypes?.arguments!![0].namespace.stringify() shouldBe "int"
 
                 type.isGeneric shouldBe true
             }
@@ -44,19 +45,19 @@ class GenericTests :
                 val type = field.type!!
                 type.namespace.stringify() shouldBe "Map"
 
-                type.genericOpen shouldNotBe null
-                type.genericOpen!!.value shouldBe "<"
-                type.genericClose shouldNotBe null
-                type.genericClose!!.value shouldBe ">"
+                type.genericTypes?.openToken shouldNotBe null
+                type.genericTypes?.openToken!!.value shouldBe "<"
+                type.genericTypes?.closeToken shouldNotBe null
+                type.genericTypes?.closeToken!!.value shouldBe ">"
 
-                type.genericCommas shouldNotBe null
-                type.genericCommas!!.size shouldBe 1
-                type.genericCommas!![0].value shouldBe ","
+                type.genericTypes?.commaTokens shouldNotBe null
+                type.genericTypes?.commaTokens!!.size shouldBe 1
+                type.genericTypes?.commaTokens!![0].value shouldBe ","
 
                 type.genericTypes shouldNotBe null
-                type.genericTypes!!.size shouldBe 2
-                type.genericTypes!![0].namespace.stringify() shouldBe "int"
-                type.genericTypes!![1].namespace.stringify() shouldBe "string"
+                type.genericTypes!!.arguments.size shouldBe 2
+                type.genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
+                type.genericTypes!!.arguments[1].namespace.stringify() shouldBe "string"
 
                 type.isGeneric shouldBe true
             }
@@ -70,19 +71,19 @@ class GenericTests :
                 val type = field.type!!
                 type.namespace.stringify() shouldBe "Map"
 
-                type.genericOpen shouldNotBe null
-                type.genericOpen!!.value shouldBe "<"
-                type.genericClose shouldNotBe null
-                type.genericClose!!.value shouldBe ">"
+                type.genericTypes?.openToken shouldNotBe null
+                type.genericTypes?.openToken!!.value shouldBe "<"
+                type.genericTypes?.closeToken shouldNotBe null
+                type.genericTypes?.closeToken!!.value shouldBe ">"
 
-                type.genericCommas shouldNotBe null
-                type.genericCommas!!.size shouldBe 1
-                type.genericCommas!![0].value shouldBe ","
+                type.genericTypes?.commaTokens shouldNotBe null
+                type.genericTypes?.commaTokens!!.size shouldBe 1
+                type.genericTypes?.commaTokens!![0].value shouldBe ","
 
                 type.genericTypes shouldNotBe null
-                type.genericTypes!!.size shouldBe 2
-                type.genericTypes!![0].namespace.stringify() shouldBe "int"
-                type.genericTypes!![1].namespace.stringify() shouldBe "string"
+                type.genericTypes!!.arguments.size shouldBe 2
+                type.genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
+                type.genericTypes!!.arguments[1].namespace.stringify() shouldBe "string"
 
                 type.isGeneric shouldBe true
             }
@@ -96,33 +97,33 @@ class GenericTests :
                 val type = field.type!!
                 type.namespace.stringify() shouldBe "List"
 
-                type.genericOpen shouldNotBe null
-                type.genericOpen!!.value shouldBe "<"
-                type.genericClose shouldNotBe null
-                type.genericClose!!.value shouldBe ">"
+                type.genericTypes?.openToken shouldNotBe null
+                type.genericTypes?.openToken!!.value shouldBe "<"
+                type.genericTypes?.closeToken shouldNotBe null
+                type.genericTypes?.closeToken!!.value shouldBe ">"
 
-                type.genericCommas shouldNotBe null
-                type.genericCommas!!.size shouldBe 0
+                type.genericTypes?.commaTokens shouldNotBe null
+                type.genericTypes?.commaTokens!!.size shouldBe 0
 
                 type.isGeneric shouldBe true
 
                 type.genericTypes shouldNotBe null
-                type.genericTypes!!.size shouldBe 1
+                type.genericTypes!!.arguments.size shouldBe 1
 
-                val innerType = type.genericTypes!![0]
+                val innerType = type.genericTypes!!.arguments[0]
                 innerType.namespace.stringify() shouldBe "List"
 
-                innerType.genericOpen shouldNotBe null
-                innerType.genericOpen!!.value shouldBe "<"
-                innerType.genericClose shouldNotBe null
-                innerType.genericClose!!.value shouldBe ">"
+                innerType.genericTypes?.openToken shouldNotBe null
+                innerType.genericTypes?.openToken!!.value shouldBe "<"
+                innerType.genericTypes?.closeToken shouldNotBe null
+                innerType.genericTypes?.closeToken!!.value shouldBe ">"
 
-                innerType.genericCommas shouldNotBe null
-                innerType.genericCommas!!.size shouldBe 0
+                innerType.genericTypes?.commaTokens shouldNotBe null
+                innerType.genericTypes?.commaTokens!!.size shouldBe 0
 
                 innerType.genericTypes shouldNotBe null
-                innerType.genericTypes!!.size shouldBe 1
-                innerType.genericTypes!![0].namespace.stringify() shouldBe "int"
+                innerType.genericTypes!!.arguments.size shouldBe 1
+                innerType.genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
 
                 innerType.isGeneric shouldBe true
             }
@@ -206,13 +207,13 @@ class GenericTests :
 
                 val superClass = clazz.superClasses[0]
                 superClass.type.namespace.stringify() shouldBe "List"
-                superClass.type.genericOpen shouldNotBe null
-                superClass.type.genericOpen!!.value shouldBe "<"
-                superClass.type.genericClose shouldNotBe null
-                superClass.type.genericClose!!.value shouldBe ">"
+                superClass.type.genericTypes?.openToken shouldNotBe null
+                superClass.type.genericTypes?.openToken!!.value shouldBe "<"
+                superClass.type.genericTypes?.closeToken shouldNotBe null
+                superClass.type.genericTypes?.closeToken!!.value shouldBe ">"
                 superClass.type.genericTypes shouldNotBe null
-                superClass.type.genericTypes!!.size shouldBe 1
-                superClass.type.genericTypes!![0].namespace.stringify() shouldBe "int"
+                superClass.type.genericTypes!!.arguments.size shouldBe 1
+                superClass.type.genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
             }
 
             "test interface with generic type" {
@@ -295,13 +296,13 @@ class GenericTests :
 
                 val superClass = clazz.superClasses[0]
                 superClass.type.namespace.stringify() shouldBe "List"
-                superClass.type.genericOpen shouldNotBe null
-                superClass.type.genericOpen!!.value shouldBe "<"
-                superClass.type.genericClose shouldNotBe null
-                superClass.type.genericClose!!.value shouldBe ">"
+                superClass.type.genericTypes?.openToken shouldNotBe null
+                superClass.type.genericTypes?.openToken!!.value shouldBe "<"
+                superClass.type.genericTypes?.closeToken shouldNotBe null
+                superClass.type.genericTypes?.closeToken!!.value shouldBe ">"
                 superClass.type.genericTypes shouldNotBe null
-                superClass.type.genericTypes!!.size shouldBe 1
-                superClass.type.genericTypes!![0].namespace.stringify() shouldBe "int"
+                superClass.type.genericTypes!!.arguments.size shouldBe 1
+                superClass.type.genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
             }
 
             "test declaration of a generic function" {
@@ -368,6 +369,61 @@ class GenericTests :
                 arg.type!!.namespace.stringify() shouldBe "Object"
                 arg.colonToken shouldNotBe null
                 arg.colonToken!!.value shouldBe ":"
+            }
+
+            "test function call with generic args" {
+
+                val code = """
+                    val a = test<int>(5)
+                """.trimIndent()
+
+                val field = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeFieldDeclarationNode::class)
+                field.name shouldBe "a"
+                field.type shouldBe null
+                field.value shouldNotBe null
+                (field.value!! is ShakeInvocationNode) shouldBe true
+                val invocation = field.value!! as ShakeInvocationNode
+                invocation.typeArguments shouldNotBe null
+                invocation.typeArguments!!.openToken shouldNotBe null
+                invocation.typeArguments!!.openToken.value shouldBe "<"
+                invocation.typeArguments!!.closeToken shouldNotBe null
+                invocation.typeArguments!!.closeToken.value shouldBe ">"
+                invocation.typeArguments!!.commaTokens shouldNotBe null
+                invocation.typeArguments!!.commaTokens.size shouldBe 0
+                invocation.typeArguments!!.arguments.size shouldBe 1
+                invocation.typeArguments!!.arguments[0].namespace.stringify() shouldBe "int"
+            }
+
+            "test function call with deep generic args" {
+
+                val code = """
+                    val a = test<List<int>>(5)
+                """.trimIndent()
+
+                val field = ParserTestUtil.parseSingle("<GenericTest>", code, ShakeFieldDeclarationNode::class)
+                field.name shouldBe "a"
+                field.type shouldBe null
+                field.value shouldNotBe null
+                (field.value!! is ShakeInvocationNode) shouldBe true
+                val invocation = field.value!! as ShakeInvocationNode
+                invocation.typeArguments shouldNotBe null
+                invocation.typeArguments!!.openToken shouldNotBe null
+                invocation.typeArguments!!.openToken.value shouldBe "<"
+                invocation.typeArguments!!.closeToken shouldNotBe null
+                invocation.typeArguments!!.closeToken.value shouldBe ">"
+                invocation.typeArguments!!.commaTokens shouldNotBe null
+                invocation.typeArguments!!.commaTokens.size shouldBe 0
+                invocation.typeArguments!!.arguments.size shouldBe 1
+                invocation.typeArguments!!.arguments[0].namespace.stringify() shouldBe "List"
+                invocation.typeArguments!!.arguments[0].genericTypes shouldNotBe null
+                invocation.typeArguments!!.arguments[0].genericTypes!!.openToken shouldNotBe null
+                invocation.typeArguments!!.arguments[0].genericTypes!!.openToken.value shouldBe "<"
+                invocation.typeArguments!!.arguments[0].genericTypes!!.closeToken shouldNotBe null
+                invocation.typeArguments!!.arguments[0].genericTypes!!.closeToken.value shouldBe ">"
+                invocation.typeArguments!!.arguments[0].genericTypes!!.commaTokens shouldNotBe null
+                invocation.typeArguments!!.arguments[0].genericTypes!!.commaTokens.size shouldBe 0
+                invocation.typeArguments!!.arguments[0].genericTypes!!.arguments.size shouldBe 1
+                invocation.typeArguments!!.arguments[0].genericTypes!!.arguments[0].namespace.stringify() shouldBe "int"
             }
         },
     )

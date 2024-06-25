@@ -4,8 +4,8 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.misc.ShakeGenericsDeclaration
 import com.shakelang.shake.parser.node.misc.ShakeNamespaceNode
-import com.shakelang.shake.parser.node.misc.ShakeTypeArgumentsDeclaration
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.statements.ShakeLocalDeclarationNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
@@ -25,7 +25,7 @@ class ShakeClassDeclarationNode(
     val finalToken: ShakeToken? = null,
     val abstractToken: ShakeToken? = null,
     val nativeToken: ShakeToken? = null,
-    val generics: ShakeTypeArgumentsDeclaration? = null,
+    val generics: ShakeGenericsDeclaration? = null,
 ) : ShakeFileChildNodeImpl(map) {
     val name: String
         get() = nameToken.value

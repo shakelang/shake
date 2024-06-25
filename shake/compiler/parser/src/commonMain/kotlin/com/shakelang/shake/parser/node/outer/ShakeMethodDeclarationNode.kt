@@ -3,7 +3,7 @@ package com.shakelang.shake.parser.node.outer
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.misc.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.misc.ShakeTypeArgumentsDeclaration
+import com.shakelang.shake.parser.node.misc.ShakeGenericsDeclaration
 import com.shakelang.shake.parser.node.misc.ShakeVariableType
 import com.shakelang.shake.parser.node.statements.ShakeBlockNode
 import com.shakelang.util.parseutils.characters.position.PositionMap
@@ -119,7 +119,7 @@ class ShakeMethodDeclarationNode(
     /**
      * The generics of this method declaration
      */
-    val generics: ShakeTypeArgumentsDeclaration?,
+    val generics: ShakeGenericsDeclaration?,
 ) : ShakeFileChildNodeImpl(map) {
 
     /**

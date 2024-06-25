@@ -15,7 +15,7 @@ class ShakeNamespaceNode(
     val name: String
         get() = nameToken.value
 
-    fun toType(): ShakeVariableType = ShakeVariableType(this, null, null, null, null)
+    fun toType(): ShakeVariableType = ShakeVariableType(this, null)
 
     fun toIdentifier(): ShakeIdentifierNode {
         if (parent == null) return ShakeIdentifierNode(map, null, nameToken, null)
