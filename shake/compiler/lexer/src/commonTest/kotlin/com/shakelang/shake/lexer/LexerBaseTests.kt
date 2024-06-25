@@ -75,30 +75,30 @@ class LexerBaseTests :
             }
 
             "logical comparison" {
-                generateToken("==", ShakeTokenType.EQ_EQUALS)
-                generateToken(">=", ShakeTokenType.BIGGER_EQUALS)
-                generateToken("<=", ShakeTokenType.SMALLER_EQUALS)
-                generateToken(">", ShakeTokenType.BIGGER)
-                generateToken("<", ShakeTokenType.SMALLER)
-                generateToken("!=", ShakeTokenType.NOT_EQUALS)
+                generateToken("==", ShakeTokenType.EQ)
+                generateToken(">=", ShakeTokenType.GE)
+                generateToken("<=", ShakeTokenType.LE)
+                generateToken(">", ShakeTokenType.GT)
+                generateToken("<", ShakeTokenType.LT)
+                generateToken("!=", ShakeTokenType.NEQ)
             }
 
             "logical concatenation" {
-                generateToken("||", ShakeTokenType.LOGICAL_OR)
-                generateToken("^^", ShakeTokenType.LOGICAL_XOR)
-                generateToken("&&", ShakeTokenType.LOGICAL_AND)
-                generateToken("!", ShakeTokenType.LOGICAL_NOT)
+                generateToken("||", ShakeTokenType.LOGIC_OR)
+                generateToken("^^", ShakeTokenType.LOGIC_XOR)
+                generateToken("&&", ShakeTokenType.LOGIC_AND)
+                generateToken("!", ShakeTokenType.LOGIC_NOT)
             }
 
             "bitwise concatenation" {
-                generateToken("|", ShakeTokenType.BITWISE_OR)
-                generateToken("^", ShakeTokenType.BITWISE_XOR)
-                generateToken("&", ShakeTokenType.BITWISE_AND)
-                generateToken("~", ShakeTokenType.BITWISE_NOT)
+                generateToken("|", ShakeTokenType.BIT_OR)
+                generateToken("^", ShakeTokenType.BIT_XOR)
+                generateToken("&", ShakeTokenType.BIT_AND)
+                generateToken("~", ShakeTokenType.BIT_NOT)
 
-                generateToken("~|", ShakeTokenType.BITWISE_NOR)
-                generateToken("~^", ShakeTokenType.BITWISE_XNOR)
-                generateToken("~&", ShakeTokenType.BITWISE_NAND)
+                generateToken("~|", ShakeTokenType.BIT_NOR)
+                generateToken("~^", ShakeTokenType.BIT_XNOR)
+                generateToken("~&", ShakeTokenType.BIT_NAND)
             }
 
             /* https://github.com/shakelang/shake/issues/237 */

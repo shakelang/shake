@@ -143,66 +143,66 @@ class ShakeLexer(
 
             next == '|' && peek == '|' -> {
                 input.skip()
-                factory.create(ShakeTokenType.LOGICAL_OR)
+                factory.create(ShakeTokenType.LOGIC_OR)
             }
 
             next == '|' && peek == '|' -> {
                 input.skip()
-                factory.create(ShakeTokenType.LOGICAL_OR)
+                factory.create(ShakeTokenType.LOGIC_OR)
             }
 
             next == '&' && peek == '&' -> {
                 input.skip()
-                factory.create(ShakeTokenType.LOGICAL_AND)
+                factory.create(ShakeTokenType.LOGIC_AND)
             }
 
             next == '^' && peek == '^' -> {
                 input.skip()
-                factory.create(ShakeTokenType.LOGICAL_XOR)
+                factory.create(ShakeTokenType.LOGIC_XOR)
             }
 
             next == '=' && peek == '=' -> {
                 input.skip()
-                factory.create(ShakeTokenType.EQ_EQUALS)
+                factory.create(ShakeTokenType.EQ)
             }
 
             next == '>' && peek == '=' -> {
                 input.skip()
-                factory.create(ShakeTokenType.BIGGER_EQUALS)
+                factory.create(ShakeTokenType.GE)
             }
 
             next == '<' && peek == '=' -> {
                 input.skip()
-                factory.create(ShakeTokenType.SMALLER_EQUALS)
+                factory.create(ShakeTokenType.LE)
             }
 
             next == '!' && peek == '=' -> {
                 input.skip()
-                factory.create(ShakeTokenType.NOT_EQUALS)
+                factory.create(ShakeTokenType.NEQ)
             }
 
-            next == '>' -> factory.create(ShakeTokenType.BIGGER)
-            next == '<' -> factory.create(ShakeTokenType.SMALLER)
-            next == '!' -> factory.create(ShakeTokenType.LOGICAL_NOT)
+            next == '>' -> factory.create(ShakeTokenType.GT)
+            next == '<' -> factory.create(ShakeTokenType.LT)
+            next == '!' -> factory.create(ShakeTokenType.LOGIC_NOT)
             next == '~' && peek == '&' -> {
                 input.skip()
-                factory.create(ShakeTokenType.BITWISE_NAND)
+                factory.create(ShakeTokenType.BIT_NAND)
             }
 
             next == '~' && peek == '|' -> {
                 input.skip()
-                factory.create(ShakeTokenType.BITWISE_NOR)
+                factory.create(ShakeTokenType.BIT_NOR)
             }
 
             next == '~' && peek == '^' -> {
                 input.skip()
-                factory.create(ShakeTokenType.BITWISE_XNOR)
+                factory.create(ShakeTokenType.BIT_XNOR)
             }
 
-            next == '~' -> factory.create(ShakeTokenType.BITWISE_NOT)
-            next == '&' -> factory.create(ShakeTokenType.BITWISE_AND)
-            next == '|' -> factory.create(ShakeTokenType.BITWISE_OR)
-            next == '^' -> factory.create(ShakeTokenType.BITWISE_XOR)
+            next == '~' -> factory.create(ShakeTokenType.BIT_NOT)
+            next == '&' -> factory.create(ShakeTokenType.BIT_AND)
+            next == '|' -> factory.create(ShakeTokenType.BIT_OR)
+            next == '^' -> factory.create(ShakeTokenType.BIT_XOR)
             next == '=' -> factory.create(ShakeTokenType.ASSIGN)
             next == '(' -> factory.create(ShakeTokenType.LPAREN)
             next == ')' -> factory.create(ShakeTokenType.RPAREN)
