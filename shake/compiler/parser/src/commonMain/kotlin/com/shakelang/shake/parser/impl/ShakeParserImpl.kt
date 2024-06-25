@@ -543,7 +543,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
     // ****************************************************************************
     // Classes
 
-    private fun expectTypeArgumentDefinition(): ShakeGenericDeclaration {
+    private fun expectGenericDeclaration(): ShakeGenericDeclaration {
         val name = expectToken(ShakeTokenType.IDENTIFIER)
         val colon = if (nextToken(ShakeTokenType.COLON)) input.next() else null
         val type = if (nextToken(ShakeTokenType.IDENTIFIER)) expectType() else null
@@ -555,7 +555,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         val args = mutableListOf<ShakeGenericDeclaration>()
         val commas = mutableListOf<ShakeToken>()
         do {
-            args.add(expectTypeArgumentDefinition())
+            args.add(expectGenericDeclaration())
             if (nextToken(ShakeTokenType.COMMA)) {
                 commas.add(input.next())
             } else {
@@ -1261,7 +1261,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
         var i = 2
         var level = 1
 
-        while (input.has(i)) {
+        while (input.has(i) && level > 0) {
             val token = input.peek(i)
             if (token.type == ShakeTokenType.LT) {
                 level++
@@ -1280,7 +1280,16 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             i++
         }
 
-        return level == 0
+        if (level != 0) {
+            return false
+        }
+
+        while (input.has(i) && input.peek(i).type == ShakeTokenType.LINE_SEPARATOR) {
+            // Skip line separators / Ignorable tokens
+            i++
+        }
+
+        return input.has(i) && input.peek(i).type == ShakeTokenType.LPAREN
     }
 
     private fun expectValuedFunctionReturning(): ShakeValuedNode {
