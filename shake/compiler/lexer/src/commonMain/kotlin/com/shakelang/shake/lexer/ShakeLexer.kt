@@ -58,8 +58,8 @@ class ShakeLexer(
             next == '.' -> factory.create(ShakeTokenType.DOT)
             Characters.isNumberCharacter(next) -> makeNumber()
             Characters.isIdentifierStartCharacter(next) -> makeIdentifier()
-            next == '"' -> makeString()
             next == '`' -> makeIdentifier2()
+            next == '"' -> makeString()
             next == '\'' -> makeCharacter()
             next == '/' && peek == '/' -> {
                 singleLineComment()
@@ -145,12 +145,7 @@ class ShakeLexer(
                 input.skip()
                 factory.create(ShakeTokenType.LOGIC_OR)
             }
-
-            next == '|' && peek == '|' -> {
-                input.skip()
-                factory.create(ShakeTokenType.LOGIC_OR)
-            }
-
+                
             next == '&' && peek == '&' -> {
                 input.skip()
                 factory.create(ShakeTokenType.LOGIC_AND)
