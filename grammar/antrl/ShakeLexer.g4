@@ -18,4 +18,4 @@ lexer grammar ShakeLexer;
 
 import UnicodeClasses;
 
-// Keywords
+// Lexer Steps

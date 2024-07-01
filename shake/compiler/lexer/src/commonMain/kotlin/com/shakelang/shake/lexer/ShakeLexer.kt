@@ -203,6 +203,8 @@ class ShakeLexer(
             next == ')' -> factory.create(ShakeTokenType.RPAREN)
             next == '{' -> factory.create(ShakeTokenType.LCURL)
             next == '}' -> factory.create(ShakeTokenType.RCURL)
+            next == '[' -> factory.create(ShakeTokenType.LSQBR)
+            next == ']' -> factory.create(ShakeTokenType.RSQBR)
             else -> throw errorFactory.createErrorAtCurrent("Unrecognised Token: '$next'")
         }
     }
