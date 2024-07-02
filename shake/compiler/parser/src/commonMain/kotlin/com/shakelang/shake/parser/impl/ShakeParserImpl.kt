@@ -397,7 +397,7 @@ class ShakeParserImpl(input: ShakeTokenInputStream) : ShakeParserHelper(input) {
             varToken,
         )
     }
-w
+
     /**
      * Expect a function declaration.
      * @param info The context information of the declaration
